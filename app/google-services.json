@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "839855923713",
+    "firebase_url": "https://campus-rush.firebaseio.com",
+    "project_id": "campus-rush",
+    "storage_bucket": "campus-rush.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:839855923713:android:9fa79ad04a0581c6",
+        "android_client_info": {
+          "package_name": "com.blackviking.campusrush"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "839855923713-doodkp4l5p89s9202pvsh3iuvorq741g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4EAfMlJEwynwSMMB9ak3w9frDujxL-W8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "839855923713-doodkp4l5p89s9202pvsh3iuvorq741g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
