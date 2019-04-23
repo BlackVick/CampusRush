@@ -26,7 +26,7 @@
     </style>
 
     <style name="AppBackground" parent="AppTheme">
-        <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:windowBackground">@color/white</item>
     </style>
 
     <style name="LoginBackground" parent="AppTheme">

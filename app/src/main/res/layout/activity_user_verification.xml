@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UserVerification">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            android:layout_margin="10dp">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:src="@drawable/warning_image"
+                android:adjustViewBounds="true"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ACCESS DENIED !"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="20sp"/>
+
+            <ImageView
+                android:layout_marginTop="40dp"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_gravity="center"
+                android:src="@drawable/confused_image"
+                android:adjustViewBounds="true"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sorry User, You have not verified your E-Mail"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="18sp"/>
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/buttons"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="10dp"
+            android:text="RESEND VERIFICATION"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:id="@+id/resendVerification"/>
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/reloadPage"
+            android:layout_margin="4dp"
+            android:background="@drawable/white_backround_ripple"
+            android:src="@drawable/ic_reload_red"
+            android:padding="6dp"
+            android:layout_alignParentEnd="true"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

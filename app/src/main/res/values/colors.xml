@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#F51119</color>
     <color name="colorPrimaryDark">#ECE0E0</color>
-    <color name="colorAccent">#4E0101</color>
+    <color name="colorAccent">#EB9191</color>
     <color name="backgroundColor">#D6F6BC</color>
     <color name="black">#ff000000</color>
     <color name="offBlack">#212121</color>
@@ -17,6 +17,7 @@
     <color name="ButtonSign">#1e90ff</color>
     <color name="transparentBTShaded">#3DD54A4A</color>
     <color name="proceed">#36FF8D</color>
+    <color name="proceedTransparent">#3140FD3A</color>
     <color name="rippleEffectColor">#8A972626</color>
     <color name="btnSignIn">#1fbad6</color>
     <color name="btnRegister">#83838c</color>

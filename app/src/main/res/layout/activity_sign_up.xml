@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignUp"
+    android:id="@+id/signUpRootLayout">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:animateLayoutChanges="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:descendantFocusability="beforeDescendants"
+        android:layout_above="@id/policyLayout">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SIGN UP WITH EMAIL"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="7dp"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:animateLayoutChanges="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:descendantFocusability="beforeDescendants"
+                android:layout_margin="7dp">
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/signUpUserName"
+                    android:hint="Username"
+                    android:textColorHint="@color/white"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="17sp"
+                    android:inputType="textPersonName"
+                    android:layout_margin="3dp"
+                    android:padding="5dp"
+                    android:drawableStart="@drawable/ic_username_white"
+                    android:drawablePadding="10dp"
+                    app:met_clearButton="true"
+                    app:met_baseColor="@color/white"
+                    app:met_floatingLabelAnimating="true"
+                    app:met_floatingLabel="highlight"
+                    app:met_primaryColor="@color/white"
+                    app:met_singleLineEllipsis="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:digits="abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ"/>
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/signUpFirstName"
+                    android:hint="First Name"
+                    android:textColorHint="@color/white"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="17sp"
+                    android:inputType="textCapSentences"
+                    android:layout_margin="3dp"
+                    android:padding="5dp"
+                    android:drawableStart="@drawable/ic_name_white"
+                    android:drawablePadding="10dp"
+                    app:met_clearButton="true"
+                    app:met_baseColor="@color/white"
+                    app:met_floatingLabelAnimating="true"
+                    app:met_floatingLabel="highlight"
+                    app:met_primaryColor="@color/white"
+                    app:met_singleLineEllipsis="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/signUpLastName"
+                    android:hint="Last Name"
+                    android:textColorHint="@color/white"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="17sp"
+                    android:inputType="textCapSentences"
+                    android:layout_margin="3dp"
+                    android:padding="5dp"
+                    android:drawableStart="@drawable/ic_name_white"
+                    android:drawablePadding="10dp"
+                    app:met_clearButton="true"
+                    app:met_baseColor="@color/white"
+                    app:met_floatingLabelAnimating="true"
+                    app:met_floatingLabel="highlight"
+                    app:met_primaryColor="@color/white"
+                    app:met_singleLineEllipsis="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/signUpEmail"
+                    android:hint="E - Mail"
+                    android:textColorHint="@color/white"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="17sp"
+                    android:inputType="textEmailAddress"
+                    android:layout_margin="3dp"
+                    android:padding="5dp"
+                    app:met_clearButton="true"
+                    app:met_baseColor="@color/white"
+                    android:drawableStart="@drawable/ic_email_white"
+                    android:drawablePadding="10dp"
+                    app:met_floatingLabelAnimating="true"
+                    app:met_floatingLabel="highlight"
+                    app:met_primaryColor="@color/white"
+                    app:met_singleLineEllipsis="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <Spinner
+                    android:id="@+id/genderSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_margin="7dp"
+                    android:textSize="18sp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/white_backround_ripple_news"/>
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/signUpPassword"
+                    android:hint="Password"
+                    android:textColorHint="@color/white"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="17sp"
+                    android:inputType="textPassword"
+                    android:layout_margin="3dp"
+                    android:padding="5dp"
+                    android:drawableStart="@drawable/ic_password_white"
+                    android:drawablePadding="10dp"
+                    app:met_clearButton="true"
+                    app:met_baseColor="@color/white"
+                    app:met_floatingLabelAnimating="true"
+                    app:met_floatingLabel="highlight"
+                    app:met_primaryColor="@color/white"
+                    app:met_singleLineEllipsis="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/signUpConfirmPassword"
+                    android:hint="Confirm Password"
+                    android:textColorHint="@color/white"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="17sp"
+                    android:inputType="textPassword"
+                    android:layout_margin="3dp"
+                    android:padding="5dp"
+                    android:drawableStart="@drawable/ic_password_white"
+                    android:drawablePadding="10dp"
+                    app:met_clearButton="true"
+                    app:met_baseColor="@color/white"
+                    app:met_floatingLabelAnimating="true"
+                    app:met_floatingLabel="highlight"
+                    app:met_primaryColor="@color/white"
+                    app:met_singleLineEllipsis="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/policyLayout"
+        android:weightSum="10"
+        android:layout_margin="4dp"
+        android:layout_above="@id/signUserUp">
+
+        <com.rey.material.widget.CheckBox
+            android:id="@+id/privacyPolicyCheck"
+            android:layout_width="0dp"
+            android:layout_weight="1.5"
+            android:layout_height="wrap_content"
+            style="@style/Material.Drawable.CheckBox"
+            android:gravity="center_vertical|center_horizontal"
+            app:cbd_strokeColor="@color/white"
+            app:cbd_tickColor="@color/colorPrimaryDark"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="8.5"
+            android:layout_height="wrap_content"
+            android:id="@+id/policyTextView"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:gravity="start"
+            android:layout_gravity="center_vertical"/>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/buttons"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/signUserUp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="7dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="7dp"
+        android:text="SIGN UP"
+        android:textColor="@color/white"
+        android:textSize="19sp"/>
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_margin="2dp"
+        android:layout_centerInParent="true"/>
+
+</RelativeLayout>

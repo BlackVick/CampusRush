@@ -15,8 +15,8 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="220dp"
-            android:layout_height="120dp"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
             android:layout_gravity="center"
             android:src="@drawable/campus_rush_name_logo"
             android:adjustViewBounds="true"/>
@@ -28,21 +28,21 @@
             android:layout_margin="35dp"
             android:padding="15dp"
             app:corner_radius="10dp"
-            android:background="@color/transparentBTShaded"
             android:visibility="gone">
 
             <Button
                 android:id="@+id/signInBtn"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="@drawable/white_backround_ripple"
+                android:background="@drawable/sign_in_btn"
                 android:text="Sign In"
+                android:textColor="@color/white"
                 android:drawablePadding="7dp"
                 android:padding="7dp"
                 android:textSize="18sp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="25dp"
-                android:layout_marginStart="25dp"
+                android:layout_marginEnd="35dp"
+                android:layout_marginStart="35dp"
                 android:layout_marginBottom="10dp"/>
 
             <Button
@@ -50,14 +50,15 @@
                 android:id="@+id/signUpBtn"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="@drawable/white_backround_ripple"
+                android:background="@drawable/buttons"
                 android:text="Sign Up"
                 android:drawablePadding="7dp"
                 android:padding="7dp"
                 android:textSize="18sp"
+                android:textColor="@color/white"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="25dp"
-                android:layout_marginStart="25dp"
+                android:layout_marginEnd="35dp"
+                android:layout_marginStart="35dp"
                 android:layout_marginBottom="10dp"/>
 
         </com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>
@@ -68,15 +69,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="2019 | Black Viking &#169; | TeenQ Technologies &#169;"
-        android:textSize="16sp"
+        android:text="2019 | TeenQ Technologies &#169;"
+        android:textSize="15sp"
         android:textColor="@color/white"
         android:gravity="center"
         android:layout_margin="3dp"/>
 
     <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:layout_margin="8dp"
