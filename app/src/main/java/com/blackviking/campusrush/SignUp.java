@@ -337,6 +337,11 @@ public class SignUp extends AppCompatActivity {
                         newUserMap.put("email", theEmail);
                         newUserMap.put("gender", selectGender);
                         newUserMap.put("status", "New to Campus Rush");
+                        newUserMap.put("profilePicture", "");
+                        newUserMap.put("profilePictureThumb", "");
+                        newUserMap.put("department", "");
+                        newUserMap.put("privacy", "public");
+                        newUserMap.put("userType", "User");
 
 
                         /*---   REGISTER USER   ---*/

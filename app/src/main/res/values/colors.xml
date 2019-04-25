@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#85FC2929</color>
-    <color name="colorPrimaryDark">#90DD000B</color>
+    <color name="colorPrimary">#CC2933</color>
+    <color name="colorPrimaryDark">#CC2933</color>
     <color name="colorAccent">#CC2626</color>
     <color name="backgroundColor">#D6F6BC</color>
     <color name="black">#ff000000</color>
@@ -13,6 +13,8 @@
     <color name="offWhite">#dad7d7</color>
     <color name="transparent">#00000000</color>
     <color name="red">#FF0000</color>
+    <color name="bottomNavSelected">#1D0202</color>
+    <color name="bottomNavUnselected">#85FC2929</color>
     <color name="ButtonAlt">#b22222</color>
     <color name="ButtonSign">#1e90ff</color>
     <color name="transparentBTShaded">#3DD54A4A</color>

@@ -10,11 +10,14 @@ public class UserModel {
     private String status;
     private String profilePicture;
     private String profilePictureThumb;
+    private String department;
+    private String privacy;
+    private String userType;
 
     public UserModel() {
     }
 
-    public UserModel(String username, String firstName, String lastName, String email, String gender, String status, String profilePicture, String profilePictureThumb) {
+    public UserModel(String username, String firstName, String lastName, String email, String gender, String status, String profilePicture, String profilePictureThumb, String department, String privacy, String userType) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -23,6 +26,9 @@ public class UserModel {
         this.status = status;
         this.profilePicture = profilePicture;
         this.profilePictureThumb = profilePictureThumb;
+        this.department = department;
+        this.privacy = privacy;
+        this.userType = userType;
     }
 
     public String getUsername() {
@@ -87,5 +93,29 @@ public class UserModel {
 
     public void setProfilePictureThumb(String profilePictureThumb) {
         this.profilePictureThumb = profilePictureThumb;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public String getPrivacy() {
+        return privacy;
+    }
+
+    public void setPrivacy(String privacy) {
+        this.privacy = privacy;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 }

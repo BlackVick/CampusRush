@@ -1,8 +1,12 @@
 package com.blackviking.campusrush.Common;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.v7.app.AlertDialog;
+
+import com.blackviking.campusrush.R;
 
 public class Common {
 
@@ -48,6 +52,28 @@ public class Common {
             }
         }
         return false;
+    }
+
+
+    /*---   WARNING DIALOG   ---*/
+    public static void showErrorDialog(Context context, String theWarning){
+
+        AlertDialog alertDialog = new AlertDialog.Builder(context)
+                .setTitle("Attention !")
+                .setIcon(R.drawable.ic_attention_red)
+                .setMessage(theWarning)
+                .setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+
+        alertDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
+
+        alertDialog.show();
+
     }
 
 }

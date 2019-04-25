@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Settings.Settings">
+
+    <include layout="@layout/snippet_for_general"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:animateLayoutChanges="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_backround_ripple_info"
+                android:id="@+id/appInfoLayout">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="10"
+                    android:animateLayoutChanges="true">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_weight="2.5"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/campus_rush_colored_logo"
+                        android:adjustViewBounds="true"
+                        android:layout_margin="10dp"/>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="7.5"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:animateLayoutChanges="true">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Campus Rush"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="24sp"
+                            android:textStyle="bold"
+                            android:padding="3dp"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Unilag Faction"
+                            android:textColor="@color/offBlack"
+                            android:textSize="17sp"
+                            android:padding="3dp"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Version 1.0.1"
+                            android:textColor="@color/black"
+                            android:textSize="13sp"
+                            android:padding="7dp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:background="@color/offBlack"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/white_backround_ripple_news"
+                android:id="@+id/accountSettingsLayout"
+                android:weightSum="10">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_account_setting"
+                    android:tint="@color/colorPrimaryDark"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"/>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="8"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Account"
+                        android:textSize="16dp"
+                        android:textColor="@color/black"
+                        android:layout_centerVertical="true"
+                        android:padding="10dp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.2dp"
+                        android:background="@color/offBlack"
+                        android:layout_alignParentBottom="true"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/white_backround_ripple_news"
+                android:id="@+id/notificationSettingLayout"
+                android:weightSum="10">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_notification_setting"
+                    android:tint="@color/colorPrimaryDark"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"/>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="8"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Notifications"
+                        android:textSize="16dp"
+                        android:textColor="@color/black"
+                        android:layout_centerVertical="true"
+                        android:padding="10dp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.2dp"
+                        android:background="@color/offBlack"
+                        android:layout_alignParentBottom="true"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/white_backround_ripple_news"
+                android:id="@+id/inviteFriendsLayout"
+                android:weightSum="10">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_invite_friends"
+                    android:tint="@color/colorPrimaryDark"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"/>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="8"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Invite Friends"
+                        android:textSize="16dp"
+                        android:textColor="@color/black"
+                        android:layout_centerVertical="true"
+                        android:padding="10dp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.2dp"
+                        android:background="@color/offBlack"
+                        android:layout_alignParentBottom="true"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/white_backround_ripple_news"
+                android:id="@+id/helpLayout"
+                android:weightSum="10">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_help_red"
+                    android:tint="@color/colorPrimaryDark"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"/>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="8"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Help"
+                        android:textSize="16dp"
+                        android:textColor="@color/black"
+                        android:layout_centerVertical="true"
+                        android:padding="10dp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.2dp"
+                        android:background="@color/offBlack"
+                        android:layout_alignParentBottom="true"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

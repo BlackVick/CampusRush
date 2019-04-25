@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Settings.AppInfo">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CAMPUS RUSH"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="28sp"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Unilag Faction"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Version 1.0.1"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+
+        <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:corner_radius="20dp"
+            android:layout_margin="40dp"
+            android:padding="10dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/campus_rush_name_logo"
+                android:layout_gravity="center" />
+
+        </com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="&#169;   2019   TeenQ Technologies Int."
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="All rights reserved."
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -22,6 +22,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".FeedDetails"></activity>
         <activity
             android:name=".Splash"
             android:theme="@style/SplashTheme">
@@ -43,6 +44,12 @@
         </provider>
 
         <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:configChanges="orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/Base.Theme.AppCompat" />
+        <activity
             android:name=".Login"
             android:theme="@style/LoginBackground" />
         <activity
@@ -57,7 +64,21 @@
         <activity
             android:name=".Home"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Settings.Settings"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Settings.AppInfo"
+            android:theme="@style/LoginBackground" />
+        <activity
+            android:name=".Settings.Help"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Settings.Faq"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".Settings.AccountSettings" />
+        <activity android:name=".Settings.PrivacySetting" />
     </application>
 
 </manifest>

@@ -1,0 +1,70 @@
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <RelativeLayout
+        android:id="@+id/navLayout"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/white_grey_border_top">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:animateLayoutChanges="true"
+            android:gravity="center"
+            android:weightSum="10">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_feed"
+                android:adjustViewBounds="true"
+                android:padding="14dp"
+                android:id="@+id/feed"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_materials"
+                android:adjustViewBounds="true"
+                android:padding="14dp"
+                android:id="@+id/materials"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_feed_update"
+                android:adjustViewBounds="true"
+                android:padding="14dp"
+                android:id="@+id/feedPost"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_campus_rant"
+                android:adjustViewBounds="true"
+                android:padding="14dp"
+                android:id="@+id/schoolRant"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_account"
+                android:adjustViewBounds="true"
+                android:padding="14dp"
+                android:id="@+id/account"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</merge>
