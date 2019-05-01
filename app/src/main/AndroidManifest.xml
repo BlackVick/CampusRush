@@ -22,7 +22,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Profile.OtherUserProfile"></activity>
+        <activity android:name=".RantRoom"></activity>
+        <activity android:name=".Profile.OtherUserProfile" />
         <activity android:name=".Profile.MyProfile" />
         <activity android:name=".FeedDetails" />
         <activity
