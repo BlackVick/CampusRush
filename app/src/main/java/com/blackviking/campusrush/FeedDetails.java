@@ -32,6 +32,8 @@ import android.widget.TextView;
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.Model.CommentModel;
 import com.blackviking.campusrush.Model.FeedModel;
+import com.blackviking.campusrush.Profile.MyProfile;
+import com.blackviking.campusrush.Profile.OtherUserProfile;
 import com.blackviking.campusrush.Settings.Faq;
 import com.blackviking.campusrush.Settings.Help;
 import com.blackviking.campusrush.ViewHolder.CommentViewHolder;
@@ -215,7 +217,7 @@ public class FeedDetails extends AppCompatActivity {
                 userRef.child(model.getCommenter()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        viewHolder.username.setText(dataSnapshot.child("userName").getValue().toString());
+                        viewHolder.username.setText(dataSnapshot.child("username").getValue().toString());
                     }
 
                     @Override
@@ -495,8 +497,8 @@ public class FeedDetails extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
 
-                                /*Intent posterProfile = new Intent(FeedDetails.this, MyProfile.class);
-                                startActivity(posterProfile);*/
+                                Intent posterProfile = new Intent(FeedDetails.this, MyProfile.class);
+                                startActivity(posterProfile);
 
                             }
                         });
@@ -507,8 +509,8 @@ public class FeedDetails extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
 
-                                /*Intent posterProfile = new Intent(FeedDetails.this, MyProfile.class);
-                                startActivity(posterProfile);*/
+                                Intent posterProfile = new Intent(FeedDetails.this, MyProfile.class);
+                                startActivity(posterProfile);
 
                             }
                         });
@@ -520,9 +522,9 @@ public class FeedDetails extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
 
-                                /*Intent posterProfile = new Intent(FeedDetails.this, OtherUserProfile.class);
+                                Intent posterProfile = new Intent(FeedDetails.this, OtherUserProfile.class);
                                 posterProfile.putExtra("UserId", currentUpdate.getSender());
-                                startActivity(posterProfile);*/
+                                startActivity(posterProfile);
 
                             }
                         });
@@ -533,9 +535,9 @@ public class FeedDetails extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
 
-                                /*Intent posterProfile = new Intent(FeedDetails.this, OtherUserProfile.class);
+                                Intent posterProfile = new Intent(FeedDetails.this, OtherUserProfile.class);
                                 posterProfile.putExtra("UserId", currentUpdate.getSender());
-                                startActivity(posterProfile);*/
+                                startActivity(posterProfile);
 
 
                             }

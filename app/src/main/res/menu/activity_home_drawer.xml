@@ -9,10 +9,6 @@
             android:icon="@drawable/ic_app_bar_award"
             android:title="Awards" />
         <item
-            android:id="@+id/nav_voting"
-            android:icon="@drawable/ic_app_bar_voting"
-            android:title="Elections" />
-        <item
             android:id="@+id/nav_scholarships"
             android:icon="@drawable/ic_app_bar_scholarship"
             android:title="Scholarships" />

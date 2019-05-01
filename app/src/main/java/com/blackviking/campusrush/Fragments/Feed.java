@@ -32,6 +32,8 @@ import android.widget.TextView;
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.FeedDetails;
 import com.blackviking.campusrush.Model.FeedModel;
+import com.blackviking.campusrush.Profile.MyProfile;
+import com.blackviking.campusrush.Profile.OtherUserProfile;
 import com.blackviking.campusrush.R;
 import com.blackviking.campusrush.ViewHolder.FeedViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -444,8 +446,8 @@ public class Feed extends Fragment {
                         @Override
                         public void onClick(View v) {
 
-                            /*Intent posterProfile = new Intent(getContext(), MyProfile.class);
-                            startActivity(posterProfile);*/
+                            Intent posterProfile = new Intent(getContext(), MyProfile.class);
+                            startActivity(posterProfile);
 
                         }
                     });
@@ -456,8 +458,8 @@ public class Feed extends Fragment {
                         @Override
                         public void onClick(View v) {
 
-                            /*Intent posterProfile = new Intent(getContext(), MyProfile.class);
-                            startActivity(posterProfile);*/
+                            Intent posterProfile = new Intent(getContext(), MyProfile.class);
+                            startActivity(posterProfile);
 
                         }
                     });
@@ -469,9 +471,9 @@ public class Feed extends Fragment {
                         @Override
                         public void onClick(View v) {
 
-                            /*Intent posterProfile = new Intent(getContext(), OtherUserProfile.class);
+                            Intent posterProfile = new Intent(getContext(), OtherUserProfile.class);
                             posterProfile.putExtra("UserId", model.getSender());
-                            startActivity(posterProfile);*/
+                            startActivity(posterProfile);
 
                         }
                     });
@@ -482,9 +484,9 @@ public class Feed extends Fragment {
                         @Override
                         public void onClick(View v) {
 
-                            /*Intent posterProfile = new Intent(getContext(), OtherUserProfile.class);
+                            Intent posterProfile = new Intent(getContext(), OtherUserProfile.class);
                             posterProfile.putExtra("UserId", model.getSender());
-                            startActivity(posterProfile);*/
+                            startActivity(posterProfile);
 
                         }
                     });

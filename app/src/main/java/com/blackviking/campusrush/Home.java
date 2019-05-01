@@ -25,6 +25,7 @@ import com.blackviking.campusrush.Fragments.CampusRant;
 import com.blackviking.campusrush.Fragments.Feed;
 import com.blackviking.campusrush.Fragments.FeedUpdate;
 import com.blackviking.campusrush.Fragments.Materials;
+import com.blackviking.campusrush.Profile.MyProfile;
 import com.blackviking.campusrush.Settings.Settings;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -141,6 +142,15 @@ public class Home extends AppCompatActivity
                     });
 
                 }
+
+                userImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent myProfileIntent = new Intent(Home.this, MyProfile.class);
+                        startActivity(myProfileIntent);
+                        overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+                    }
+                });
 
             }
 
@@ -301,8 +311,6 @@ public class Home extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_award) {
-            // Handle the camera action
-        } else if (id == R.id.nav_voting) {
 
         } else if (id == R.id.nav_scholarships) {
 

@@ -342,6 +342,7 @@ public class SignUp extends AppCompatActivity {
                         newUserMap.put("department", "");
                         newUserMap.put("privacy", "public");
                         newUserMap.put("userType", "User");
+                        newUserMap.put("bio", "");
 
 
                         /*---   REGISTER USER   ---*/

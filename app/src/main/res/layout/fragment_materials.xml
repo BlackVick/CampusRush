@@ -1,14 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragments.Materials">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <include layout="@layout/snippet_for_materials"/>
+
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Materials" />
+        android:id="@+id/materialRecycler"
+        android:layout_marginTop="?attr/actionBarSize"/>
 
-</FrameLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/emptyMaterialLayout"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/warning_image"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No Data Received !"
+                android:textSize="34sp"
+                android:textColor="@color/colorPrimaryDark"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/addMaterial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_add_material"
+        app:backgroundTint="@color/white"
+        app:elevation="6dp"
+        android:layout_margin="16dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>
