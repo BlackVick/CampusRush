@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/theAll"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="2dp"
+    android:layout_marginTop ="1dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginBottom="3dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/chat_back"
+        android:orientation="vertical"
+        android:padding="1dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rantUsername"
+            android:textSize="12sp"
+            android:textColor="@color/colorPrimary"
+            android:text=""
+            android:padding="1dp"
+            android:layout_gravity="start"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxHeight="200dp"
+            android:maxWidth="200dp"
+            android:adjustViewBounds="true"
+            android:id="@+id/rantImage"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rantText"
+            android:textSize="17sp"
+            android:textColor="@color/black"
+            android:text=""
+            android:padding="4dp"
+            android:visibility="gone"
+            android:gravity="start"
+            android:layout_margin="2dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rantTimeStamp"
+            android:textSize="12sp"
+            android:textColor="@color/grey"
+            android:text=""
+            android:padding="2dp"
+            android:gravity="end"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

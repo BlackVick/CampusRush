@@ -16,6 +16,14 @@
             android:id="@+id/nav_vacancies"
             android:icon="@drawable/ic_app_bar_vacancies"
             android:title="Vacancies" />
+        <item
+            android:id="@+id/nav_gamers"
+            android:icon="@drawable/campus_rush_gamers_hub"
+            android:title="Gamers Hub" />
+        <item
+            android:id="@+id/nav_skit_center"
+            android:icon="@drawable/ic_skit_center"
+            android:title="Skit Center" />
     </group>
 
     <item android:title="">

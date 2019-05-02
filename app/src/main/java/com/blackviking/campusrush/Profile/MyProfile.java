@@ -465,7 +465,7 @@ public class MyProfile extends AppCompatActivity {
 
     private File getOutputMediaFile(int type){
         File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES), "Campus Rush");
+                Environment.DIRECTORY_PICTURES), "Campus Rush/Images");
 
         /**Create the storage directory if it does not exist*/
         if (! mediaStorageDir.exists()){

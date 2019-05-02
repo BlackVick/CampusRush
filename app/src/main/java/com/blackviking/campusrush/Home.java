@@ -299,6 +299,12 @@ public class Home extends AppCompatActivity
             startActivity(settingIntent);
             overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
             return true;
+
+        } else if (id == R.id.action_about) {
+
+
+
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -315,6 +321,10 @@ public class Home extends AppCompatActivity
         } else if (id == R.id.nav_scholarships) {
 
         } else if (id == R.id.nav_vacancies) {
+
+        } else if (id == R.id.nav_gamers) {
+
+        } else if (id == R.id.nav_skit_center) {
 
         } else if (id == R.id.nav_settings) {
 

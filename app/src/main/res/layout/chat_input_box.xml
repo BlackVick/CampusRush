@@ -47,8 +47,9 @@
                     android:background="@color/white"
                     android:id="@+id/rantEditText"
                     android:inputType="textMultiLine"
+                    android:maxLength="160"
                     android:textColor="@color/black"
-                    android:hint="Type A Message . . ."
+                    android:hint="Rant Away . . ."
                     android:layout_toStartOf="@+id/attachmentIcon"
                     android:maxLines="6"/>
 
