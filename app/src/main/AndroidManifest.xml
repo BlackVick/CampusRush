@@ -19,6 +19,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Plugins.GamersHub.GameInfo"></activity>
         <activity
             android:name=".Splash"
             android:theme="@style/SplashTheme">
@@ -73,30 +74,18 @@
         <activity
             android:name=".Settings.Faq"
             android:theme="@style/AppTheme" />
-        <activity
-            android:name=".Settings.AccountSettings" />
-        <activity
-            android:name=".Settings.PrivacySetting" />
-        <activity
-            android:name=".FeedDetails" />
-        <activity
-            android:name=".Profile.MyProfile" />
-        <activity
-            android:name=".Profile.OtherUserProfile" />
-        <activity
-            android:name=".RantRoom" />
-        <activity
-            android:name=".Plugins.Awards" />
-        <activity
-            android:name=".Plugins.Scholarships" />
-        <activity
-            android:name=".Plugins.Vacancies" />
-        <activity
-            android:name=".Plugins.GamersHub" />
-        <activity
-            android:name=".Plugins.SkitCenter" />
-        <activity
-            android:name=".About"></activity>
+        <activity android:name=".Settings.AccountSettings" />
+        <activity android:name=".Settings.PrivacySetting" />
+        <activity android:name=".FeedDetails" />
+        <activity android:name=".Profile.MyProfile" />
+        <activity android:name=".Profile.OtherUserProfile" />
+        <activity android:name=".RantRoom" />
+        <activity android:name=".Plugins.Awards" />
+        <activity android:name=".Plugins.Scholarships" />
+        <activity android:name=".Plugins.Vacancies" />
+        <activity android:name=".Plugins.GamersHub.GamersHub" />
+        <activity android:name=".Plugins.SkitCenter" />
+        <activity android:name=".About" />
     </application>
 
 </manifest>
