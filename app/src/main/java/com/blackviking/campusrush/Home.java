@@ -25,6 +25,11 @@ import com.blackviking.campusrush.Fragments.CampusRant;
 import com.blackviking.campusrush.Fragments.Feed;
 import com.blackviking.campusrush.Fragments.FeedUpdate;
 import com.blackviking.campusrush.Fragments.Materials;
+import com.blackviking.campusrush.Plugins.Awards;
+import com.blackviking.campusrush.Plugins.GamersHub;
+import com.blackviking.campusrush.Plugins.Scholarships;
+import com.blackviking.campusrush.Plugins.SkitCenter;
+import com.blackviking.campusrush.Plugins.Vacancies;
 import com.blackviking.campusrush.Profile.MyProfile;
 import com.blackviking.campusrush.Settings.Settings;
 import com.google.firebase.auth.FirebaseAuth;
@@ -302,8 +307,9 @@ public class Home extends AppCompatActivity
 
         } else if (id == R.id.action_about) {
 
-
-
+            Intent aboutIntent = new Intent(Home.this, About.class);
+            startActivity(aboutIntent);
+            overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
             return true;
         }
 
@@ -318,13 +324,33 @@ public class Home extends AppCompatActivity
 
         if (id == R.id.nav_award) {
 
+            Intent awardIntent = new Intent(Home.this, Awards.class);
+            startActivity(awardIntent);
+            overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+
         } else if (id == R.id.nav_scholarships) {
+
+            Intent scholarshipIntent = new Intent(Home.this, Scholarships.class);
+            startActivity(scholarshipIntent);
+            overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
 
         } else if (id == R.id.nav_vacancies) {
 
+            Intent vacanciesIntent = new Intent(Home.this, Vacancies.class);
+            startActivity(vacanciesIntent);
+            overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+
         } else if (id == R.id.nav_gamers) {
 
+            Intent gamersIntent = new Intent(Home.this, GamersHub.class);
+            startActivity(gamersIntent);
+            overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+
         } else if (id == R.id.nav_skit_center) {
+
+            Intent skitIntent = new Intent(Home.this, SkitCenter.class);
+            startActivity(skitIntent);
+            overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
 
         } else if (id == R.id.nav_settings) {
 

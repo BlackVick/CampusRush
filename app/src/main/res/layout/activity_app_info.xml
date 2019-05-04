@@ -37,6 +37,16 @@
             android:text="Version 1.0.1"
             android:textColor="@color/white"
             android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Running on Ghost Engine 3.0"
+            android:textColor="@color/white"
+            android:textSize="15sp"
             android:layout_gravity="center"
             android:gravity="center"/>
 

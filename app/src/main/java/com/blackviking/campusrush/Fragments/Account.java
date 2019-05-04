@@ -26,6 +26,7 @@ import android.widget.TextView;
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.FeedDetails;
 import com.blackviking.campusrush.Model.FeedModel;
+import com.blackviking.campusrush.Profile.MyProfile;
 import com.blackviking.campusrush.R;
 import com.blackviking.campusrush.Settings.AccountSettings;
 import com.blackviking.campusrush.Settings.Settings;
@@ -138,6 +139,10 @@ public class Account extends Fragment {
         profileSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Intent posterProfile = new Intent(getContext(), MyProfile.class);
+                startActivity(posterProfile);
+                getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
 
             }
         });
@@ -277,6 +282,7 @@ public class Account extends Fragment {
                     viewHolder.posterImage.setImageResource(R.drawable.profile);
 
                 }
+                viewHolder.posterName.setText("@"+theUsername);
 
 
                 /*---   POST IMAGE   ---*/
@@ -310,7 +316,7 @@ public class Account extends Fragment {
                 }
 
 
-                /*---   HOPDATE   ---*/
+                /*---   UPDATE   ---*/
                 if (!model.getUpdate().equals("")){
 
                     viewHolder.postText.setVisibility(View.VISIBLE);

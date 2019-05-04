@@ -276,7 +276,7 @@ public class Feed extends Fragment {
 
                         }
 
-                        viewHolder.posterName.setText(username);
+                        viewHolder.posterName.setText("@"+username);
 
                     }
 
@@ -448,6 +448,7 @@ public class Feed extends Fragment {
 
                             Intent posterProfile = new Intent(getContext(), MyProfile.class);
                             startActivity(posterProfile);
+                            getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
 
                         }
                     });
@@ -460,6 +461,7 @@ public class Feed extends Fragment {
 
                             Intent posterProfile = new Intent(getContext(), MyProfile.class);
                             startActivity(posterProfile);
+                            getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
 
                         }
                     });
@@ -474,6 +476,7 @@ public class Feed extends Fragment {
                             Intent posterProfile = new Intent(getContext(), OtherUserProfile.class);
                             posterProfile.putExtra("UserId", model.getSender());
                             startActivity(posterProfile);
+                            getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
 
                         }
                     });
@@ -487,6 +490,7 @@ public class Feed extends Fragment {
                             Intent posterProfile = new Intent(getContext(), OtherUserProfile.class);
                             posterProfile.putExtra("UserId", model.getSender());
                             startActivity(posterProfile);
+                            getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
 
                         }
                     });
