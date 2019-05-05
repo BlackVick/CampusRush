@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Plugins.Awards">
+    tools:context=".Plugins.Awards.Awards">
 
     <include layout="@layout/snippet_for_general"/>
 
@@ -14,5 +14,38 @@
         android:layout_height="match_parent"
         android:id="@+id/awardsRecycler"
         android:layout_marginTop="?attr/actionBarSize"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/emptyMaterialLayout"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/warning_image"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No Award Polls Online \nCurrently !"
+                android:textSize="34sp"
+                android:textColor="@color/colorPrimaryDark"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
 
 </RelativeLayout>

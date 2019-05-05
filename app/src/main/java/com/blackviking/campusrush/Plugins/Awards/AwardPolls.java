@@ -1,4 +1,4 @@
-package com.blackviking.campusrush.Plugins;
+package com.blackviking.campusrush.Plugins.Awards;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,21 +8,28 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.blackviking.campusrush.FeedDetails;
 import com.blackviking.campusrush.R;
 import com.blackviking.campusrush.Settings.Help;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class Awards extends AppCompatActivity {
+public class AwardPolls extends AppCompatActivity {
 
     private TextView activityName;
     private ImageView exitActivity, helpActivity;
     private RecyclerView awardsRecycler;
     private LinearLayoutManager layoutManager;
+    private FirebaseRecyclerAdapter<AwardListModel, AwardListViewHolder> adapter;
+    private FirebaseDatabase db = FirebaseDatabase.getInstance();
+    private DatabaseReference awardRef;
+    private String currentAward;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -39,7 +46,15 @@ public class Awards extends AppCompatActivity {
                 .setFontAttrId(R.attr.fontPath)
                 .build());
 
-        setContentView(R.layout.activity_awards);
+        setContentView(R.layout.activity_award_polls);
+
+
+        /*---   LOCAL   ---*/
+        currentAward = getIntent().getStringExtra("AwardId");
+
+
+        /*---   FIREBASE   ---*/
+        awardRef = db.getReference("Awards");
 
 
         /*---   WIDGETS   ---*/
@@ -57,11 +72,11 @@ public class Awards extends AppCompatActivity {
             }
         });
 
-        activityName.setText("Awards");
+        activityName.setText("Polls");
         helpActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent helpIntent = new Intent(Awards.this, Help.class);
+                Intent helpIntent = new Intent(AwardPolls.this, Help.class);
                 startActivity(helpIntent);
                 overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
             }

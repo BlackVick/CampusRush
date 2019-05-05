@@ -5,14 +5,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Plugins.SkitCenter.SkitCenter">
+    tools:context=".Plugins.Awards.AwardPolls">
 
     <include layout="@layout/snippet_for_general"/>
 
-    <android.support.v7.widget.RecyclerView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/skitRecycler"
-        android:layout_marginTop="?attr/actionBarSize"/>
+        android:layout_marginTop="?attr/actionBarSize">
+
+
+
+    </RelativeLayout>
 
 </RelativeLayout>
