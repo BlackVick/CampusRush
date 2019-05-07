@@ -35,27 +35,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/editYourDepartment"
-            android:hint="Department"
-            android:textColorHint="@color/colorPrimaryDark"
-            android:text=""
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:inputType="textCapSentences"
-            android:layout_margin="3dp"
-            android:maxLength="70"
-            android:padding="5dp"
-            app:met_clearButton="true"
-            app:met_maxCharacters="70"
-            app:met_baseColor="@color/colorPrimaryDark"
-            app:met_floatingLabelAnimating="true"
-            app:met_floatingLabel="highlight"
-            app:met_primaryColor="@color/colorPrimaryDark"
-            app:met_singleLineEllipsis="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

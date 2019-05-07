@@ -43,7 +43,7 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_weight="7.5"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:gravity="center"
                         android:animateLayoutChanges="true">
@@ -55,15 +55,15 @@
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="24sp"
                             android:textStyle="bold"
-                            android:padding="3dp"/>
+                            android:padding="2dp"/>
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Unilag Faction"
                             android:textColor="@color/offBlack"
-                            android:textSize="17sp"
-                            android:padding="3dp"/>
+                            android:textSize="15sp"
+                            android:padding="2dp"/>
 
                         <TextView
                             android:layout_width="match_parent"
@@ -71,7 +71,7 @@
                             android:text="Version 1.0.1"
                             android:textColor="@color/black"
                             android:textSize="13sp"
-                            android:padding="7dp"/>
+                            android:padding="4dp"/>
 
                     </LinearLayout>
 

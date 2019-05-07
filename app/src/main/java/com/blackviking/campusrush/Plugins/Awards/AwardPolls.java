@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.blackviking.campusrush.Interface.ItemClickListener;
 import com.blackviking.campusrush.R;
 import com.blackviking.campusrush.Settings.Help;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -24,9 +25,9 @@ public class AwardPolls extends AppCompatActivity {
 
     private TextView activityName;
     private ImageView exitActivity, helpActivity;
-    private RecyclerView awardsRecycler;
+    private RecyclerView pollsRecycler;
     private LinearLayoutManager layoutManager;
-    private FirebaseRecyclerAdapter<AwardListModel, AwardListViewHolder> adapter;
+    private FirebaseRecyclerAdapter<PollModel, AwardListViewHolder> adapter;
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
     private DatabaseReference awardRef;
     private String currentAward;
@@ -61,7 +62,7 @@ public class AwardPolls extends AppCompatActivity {
         activityName = (TextView)findViewById(R.id.activityName);
         exitActivity = (ImageView)findViewById(R.id.exitActivity);
         helpActivity = (ImageView)findViewById(R.id.helpIcon);
-        awardsRecycler = (RecyclerView)findViewById(R.id.awardsRecycler);
+        pollsRecycler = (RecyclerView)findViewById(R.id.pollsRecycler);
 
 
         /*---   ACTIVITY BAR FUNCTIONS   ---*/
@@ -81,5 +82,48 @@ public class AwardPolls extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
             }
         });
+
+
+        loadPolls();
+
+    }
+
+    private void loadPolls() {
+
+        pollsRecycler.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(AwardPolls.this);
+        pollsRecycler.setLayoutManager(layoutManager);
+
+
+        adapter = new FirebaseRecyclerAdapter<PollModel, AwardListViewHolder>(
+                PollModel.class,
+                R.layout.award_list_item,
+                AwardListViewHolder.class,
+                awardRef.child(currentAward).child("Polls")
+        ) {
+            @Override
+            protected void populateViewHolder(AwardListViewHolder viewHolder, PollModel model, int position) {
+
+                viewHolder.awardDepartment.setVisibility(View.GONE);
+                viewHolder.awardFaculty.setVisibility(View.GONE);
+
+                viewHolder.awardName.setText(model.getName());
+
+                viewHolder.setItemClickListener(new ItemClickListener() {
+                    @Override
+                    public void onClick(View view, int position, boolean isLongClick) {
+                        Intent awardsIntent = new Intent(AwardPolls.this, PollCandidates.class);
+                        awardsIntent.putExtra("AwardId", currentAward);
+                        awardsIntent.putExtra("PollId", adapter.getRef(position).getKey());
+                        startActivity(awardsIntent);
+                        overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+                    }
+                });
+
+            }
+        };
+        pollsRecycler.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
     }
 }

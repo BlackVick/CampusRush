@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Plugins.Awards.AwardPolls">
+    tools:context=".Plugins.Awards.PollCandidates"
+    android:animateLayoutChanges="true">
 
     <include layout="@layout/snippet_for_general"/>
 
@@ -13,6 +14,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"
-        android:id="@+id/pollsRecycler"/>
+        android:id="@+id/candidateRecycler"/>
+
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:padding="100dp"
+        android:background="@color/transparentBTShaded"
+        android:id="@+id/progressBar"
+        android:visibility="gone"/>
 
 </RelativeLayout>

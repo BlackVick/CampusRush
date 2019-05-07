@@ -9,4 +9,66 @@
 
     <include layout="@layout/snippet_for_general"/>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="WE ARE TEENQ TECHNOLOGIES"
+                android:textSize="25sp"
+                android:textColor="@color/teenqGreen"
+                android:gravity="center"
+                android:layout_marginTop="18dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/teenqGreen"
+                android:layout_margin="40dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="A COMMUNITY OF PASSIONATE AND DEVELOPMENT DRIVEN INDIVIDUALS WHOSE PURPOSE IS TO REVOLUTIONIZE SOFTWARE DESIGN, CREATION AND DELIVERY WITH RESPECT TO HELPING HUMANS SOLVE DAILY PROBLEMS EASILY."
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:layout_margin="18dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="WHAT MAKES US UNIQUE?"
+                android:textSize="25sp"
+                android:textColor="@color/teenqGreen"
+                android:gravity="center"
+                android:layout_marginTop="18dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/teenqGreen"
+                android:layout_margin="40dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="WE DO NOT GIVE A FUCK WHATSOEVER."
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:layout_margin="18dp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
 </RelativeLayout>

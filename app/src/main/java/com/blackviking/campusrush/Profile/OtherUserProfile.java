@@ -33,6 +33,7 @@ import android.widget.TextView;
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.FeedDetails;
 import com.blackviking.campusrush.ImageController.BlurImage;
+import com.blackviking.campusrush.ImageController.ImageViewer;
 import com.blackviking.campusrush.Model.FeedModel;
 import com.blackviking.campusrush.R;
 import com.blackviking.campusrush.ViewHolder.FeedViewHolder;
@@ -78,7 +79,7 @@ public class OtherUserProfile extends AppCompatActivity {
     private FirebaseRecyclerAdapter<FeedModel, FeedViewHolder> adapter;
     private Target target;
     private String offenceString = "";
-    private String serverUsername, serverFullName, serverGender, serverStatus, serverDepartment, serverBio, serverProfilePictureThumb;
+    private String serverUsername, serverFullName, serverGender, serverStatus, serverDepartment, serverBio, serverProfilePictureThumb, serverProfilePicture;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -142,6 +143,7 @@ public class OtherUserProfile extends AppCompatActivity {
         if (Common.isConnectedToInternet(getBaseContext())){
 
             loadUserProfile(userId);
+            loadUserTimeline(userId);
 
         } else {
             Common.showErrorDialog(OtherUserProfile.this, "Could Not Load User Profile Because There Is No Internet Access !");
@@ -490,6 +492,7 @@ public class OtherUserProfile extends AppCompatActivity {
                 serverDepartment = dataSnapshot.child("department").getValue().toString();
                 serverBio = dataSnapshot.child("bio").getValue().toString();
                 serverProfilePictureThumb = dataSnapshot.child("profilePictureThumb").getValue().toString();
+                serverProfilePicture = dataSnapshot.child("profilePicture").getValue().toString();
 
                 /*---   DETAILS   ---*/
                 collapsingToolbarLayout.setTitle("@"+serverUsername);
@@ -536,8 +539,11 @@ public class OtherUserProfile extends AppCompatActivity {
                     userProfileImage.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            /*Intent profileImgIntent = new Intent(MyProfile.this, ProfileImageView.class);
-                            startActivity(profileImgIntent);*/
+                            Intent profileImgIntent = new Intent(OtherUserProfile.this, ImageViewer.class);
+                            profileImgIntent.putExtra("ImageLink", serverProfilePicture);
+                            profileImgIntent.putExtra("ImageThumbLink", serverProfilePictureThumb);
+                            startActivity(profileImgIntent);
+                            overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
                         }
                     });
                 }

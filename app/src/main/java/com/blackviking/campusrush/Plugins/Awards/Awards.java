@@ -1,7 +1,9 @@
 package com.blackviking.campusrush.Plugins.Awards;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,10 +13,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.Interface.ItemClickListener;
 import com.blackviking.campusrush.R;
 import com.blackviking.campusrush.Settings.Help;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,7 +38,9 @@ public class Awards extends AppCompatActivity {
     private LinearLayoutManager layoutManager;
     private FirebaseRecyclerAdapter<AwardListModel, AwardListViewHolder> adapter;
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
-    private DatabaseReference awardRef;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private DatabaseReference awardRef, userRef;
+    private String currentUid, currentDept;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -54,7 +61,10 @@ public class Awards extends AppCompatActivity {
 
 
         /*---   FIREBASE   ---*/
+        if (mAuth.getCurrentUser() != null)
+            currentUid = mAuth.getCurrentUser().getUid();
         awardRef = db.getReference("Awards");
+        userRef = db.getReference("Users").child(currentUid);
 
 
         /*---   WIDGETS   ---*/
@@ -84,31 +94,57 @@ public class Awards extends AppCompatActivity {
         });
 
 
-        /*---   EMPTY CHECK   ---*/
-        awardRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+        if (Common.isConnectedToInternet(getBaseContext())) {
 
-                if (dataSnapshot.exists()){
+            /*---   CURRENT USER   ---*/
+            userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
 
-                    emptyData.setVisibility(View.GONE);
+                    String theDept = dataSnapshot.child("department").getValue().toString();
 
-                } else {
-
-                    emptyData.setVisibility(View.VISIBLE);
+                    currentDept = theDept;
 
                 }
 
-            }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+                }
+            });
 
 
-        loadAwards();
+            /*---   EMPTY CHECK   ---*/
+            awardRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    if (dataSnapshot.exists()) {
+
+                        emptyData.setVisibility(View.GONE);
+
+                    } else {
+
+                        emptyData.setVisibility(View.VISIBLE);
+
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+
+            loadAwards();
+
+        } else {
+
+            Common.showErrorDialog(this, "No Internet Access !");
+
+        }
     }
 
     private void loadAwards() {
@@ -125,7 +161,7 @@ public class Awards extends AppCompatActivity {
                 awardRef
         ) {
             @Override
-            protected void populateViewHolder(AwardListViewHolder viewHolder, AwardListModel model, int position) {
+            protected void populateViewHolder(AwardListViewHolder viewHolder, final AwardListModel model, int position) {
 
                 viewHolder.awardName.setText(model.getAwardName());
                 viewHolder.awardFaculty.setText(model.getAwardFaculty());
@@ -134,10 +170,23 @@ public class Awards extends AppCompatActivity {
                 viewHolder.setItemClickListener(new ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
-                        Intent awardsIntent = new Intent(Awards.this, AwardPolls.class);
-                        awardsIntent.putExtra("AwardId", adapter.getRef(position).getKey());
-                        startActivity(awardsIntent);
-                        overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+
+                        if (currentDept.equalsIgnoreCase(model.getAwardDepartment())) {
+
+                            Intent awardsIntent = new Intent(Awards.this, AwardPolls.class);
+                            awardsIntent.putExtra("AwardId", adapter.getRef(position).getKey());
+                            startActivity(awardsIntent);
+                            overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+
+                        } else if (!currentDept.equalsIgnoreCase(model.getAwardDepartment()) && !currentDept.equalsIgnoreCase("")){
+
+                            Common.showErrorDialog(Awards.this, "This Is Either Not Your Department Or Someone Has Already Used This Account To Vote In Another Department !");
+
+                        } else if (currentDept.equalsIgnoreCase("")){
+
+                            showConfirmationDialog("Are You Sure You Are A Student Of The Department Of "+model.getAwardDepartment()+" ? \nRemember, This Is A Permanent Choice!", model.getAwardDepartment(), adapter.getRef(position).getKey());
+
+                        }
                     }
                 });
 
@@ -145,6 +194,45 @@ public class Awards extends AppCompatActivity {
         };
         awardsRecycler.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
+    }
+
+    public void showConfirmationDialog(String theWarning, final String department, final String awardId){
+
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setTitle("Attention !")
+                .setIcon(R.drawable.ic_attention_red)
+                .setMessage(theWarning)
+                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        userRef.child("department")
+                                .setValue(department).addOnSuccessListener(
+                                new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Intent awardsIntent = new Intent(Awards.this, AwardPolls.class);
+                                        awardsIntent.putExtra("AwardId", awardId);
+                                        startActivity(awardsIntent);
+                                        overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+                                    }
+                                }
+                        );
+
+                    }
+                })
+                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+
+        alertDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
+
+        alertDialog.show();
 
     }
 }

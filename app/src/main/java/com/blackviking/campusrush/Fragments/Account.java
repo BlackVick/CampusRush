@@ -188,7 +188,7 @@ public class Account extends Fragment {
                     @Override
                     public void onClick(View v) {
 
-                        /*---   POPUP MENU FOR HOPDATE   ---*/
+                        /*---   POPUP MENU FOR UPDATE   ---*/
                         PopupMenu popup = new PopupMenu(getContext(), viewHolder.options);
                         popup.inflate(R.menu.feed_item_menu);
                         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {

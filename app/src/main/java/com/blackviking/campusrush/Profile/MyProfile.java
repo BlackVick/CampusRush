@@ -38,6 +38,7 @@ import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.Common.Permissions;
 import com.blackviking.campusrush.Fragments.FeedUpdate;
 import com.blackviking.campusrush.ImageController.BlurImage;
+import com.blackviking.campusrush.ImageController.ImageViewer;
 import com.blackviking.campusrush.Model.UserModel;
 import com.blackviking.campusrush.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -95,7 +96,7 @@ public class MyProfile extends AppCompatActivity {
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference imageRef;
     private String originalImageUrl, thumbDownloadUrl;
-    private String serverUsername, serverFullName, serverGender, serverStatus, serverDepartment, serverBio, serverProfilePictureThumb;
+    private String serverUsername, serverFullName, serverGender, serverStatus, serverDepartment, serverBio, serverProfilePictureThumb, serverProfilePicture;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -243,7 +244,6 @@ public class MyProfile extends AppCompatActivity {
         View viewOptions = inflater.inflate(R.layout.edit_profile_layout,null);
 
         final MaterialEditText statusEdt = (MaterialEditText) viewOptions.findViewById(R.id.editYourStatus);
-        final MaterialEditText departmentEdit = (MaterialEditText) viewOptions.findViewById(R.id.editYourDepartment);
         final EditText editBio = (EditText) viewOptions.findViewById(R.id.changeYourBio);
         final Button saveChanges = (Button) viewOptions.findViewById(R.id.saveProfileChanges);
 
@@ -252,7 +252,6 @@ public class MyProfile extends AppCompatActivity {
 
         /*---   TEXT   ---*/
         statusEdt.setText(serverStatus);
-        departmentEdit.setText(serverDepartment);
         editBio.setText(serverBio);
 
 
@@ -280,18 +279,11 @@ public class MyProfile extends AppCompatActivity {
 
 
                 final String newStatus = statusEdt.getText().toString().trim();
-                final String newDepartment = departmentEdit.getText().toString().trim();
                 final String newBio = editBio.getText().toString().trim();
 
                 if (!newStatus.equalsIgnoreCase("") && !newStatus.equalsIgnoreCase(serverStatus)){
 
                     userRef.child("status").setValue(newStatus);
-
-                }
-
-                if (!newDepartment.equalsIgnoreCase("") && !newDepartment.equalsIgnoreCase(serverDepartment)){
-
-                    userRef.child("department").setValue(newDepartment);
 
                 }
 
@@ -341,6 +333,7 @@ public class MyProfile extends AppCompatActivity {
                 serverDepartment = dataSnapshot.child("department").getValue().toString();
                 serverBio = dataSnapshot.child("bio").getValue().toString();
                 serverProfilePictureThumb = dataSnapshot.child("profilePictureThumb").getValue().toString();
+                serverProfilePicture = dataSnapshot.child("profilePicture").getValue().toString();
 
                 /*---   DETAILS   ---*/
                 collapsingToolbarLayout.setTitle("@"+serverUsername);
@@ -387,8 +380,11 @@ public class MyProfile extends AppCompatActivity {
                     userProfileImage.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            /*Intent profileImgIntent = new Intent(MyProfile.this, ProfileImageView.class);
-                            startActivity(profileImgIntent);*/
+                            Intent profileImgIntent = new Intent(MyProfile.this, ImageViewer.class);
+                            profileImgIntent.putExtra("ImageLink", serverProfilePicture);
+                            profileImgIntent.putExtra("ImageThumbLink", serverProfilePictureThumb);
+                            startActivity(profileImgIntent);
+                            overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
                         }
                     });
                 }

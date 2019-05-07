@@ -11,6 +11,7 @@
     <color name="overlayActionBar">#4f0e0d0e</color>
     <color name="white">#ffffff</color>
     <color name="offWhite">#dad7d7</color>
+    <color name="transparentWhite">#A8FFFFFF</color>
     <color name="transparent">#00000000</color>
     <color name="red">#FF0000</color>
     <color name="bottomNavSelected">#1D0202</color>
@@ -19,6 +20,7 @@
     <color name="ButtonSign">#1e90ff</color>
     <color name="transparentBTShaded">#3DD54A4A</color>
     <color name="proceed">#36FF8D</color>
+    <color name="teenqGreen">#007A35</color>
     <color name="proceedTransparent">#3140FD3A</color>
     <color name="rippleEffectColor">#8A972626</color>
     <color name="btnSignIn">#1fbad6</color>

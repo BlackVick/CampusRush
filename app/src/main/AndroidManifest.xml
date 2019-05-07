@@ -19,9 +19,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Plugins.Awards.AwardPolls"></activity>
-        <activity android:name=".Plugins.SkitCenter.SkitDetails" />
-        <activity android:name=".Plugins.GamersHub.GameInfo" />
         <activity
             android:name=".Splash"
             android:theme="@style/SplashTheme">
@@ -88,6 +85,13 @@
         <activity android:name=".Plugins.GamersHub.GamersHub" />
         <activity android:name=".Plugins.SkitCenter.SkitCenter" />
         <activity android:name=".About" />
+        <activity android:name=".Plugins.GamersHub.GameInfo" />
+        <activity android:name=".Plugins.SkitCenter.SkitDetails" />
+        <activity android:name=".Plugins.Awards.AwardPolls" />
+        <activity android:name=".Plugins.Awards.PollCandidates" />
+        <activity
+            android:name=".ImageController.ImageViewer"
+            android:theme="@style/ImageViewTheme"></activity>
     </application>
 
 </manifest>
