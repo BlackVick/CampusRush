@@ -19,6 +19,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Plugins.GamersHub.GameFeedDetail"></activity>
+        <activity android:name=".Plugins.GamersHub.AddGameFeed" />
         <activity
             android:name=".Splash"
             android:theme="@style/SplashTheme">
@@ -91,7 +93,7 @@
         <activity android:name=".Plugins.Awards.PollCandidates" />
         <activity
             android:name=".ImageController.ImageViewer"
-            android:theme="@style/ImageViewTheme"></activity>
+            android:theme="@style/ImageViewTheme" />
     </application>
 
 </manifest>

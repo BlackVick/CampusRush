@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Plugins.GamersHub.GameFeedDetail">
+
+    <include layout="@layout/snippet_for_general"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/gameFeedDetailTitle"
+                    android:text=""
+                    android:textSize="22sp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:layout_marginTop="10dp"
+                    android:padding="5dp"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/gameFeedDetailImage"
+                    android:adjustViewBounds="true"
+                    android:layout_marginTop="13dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/gameFeedDetailDescription"
+                    android:text=""
+                    android:textSize="17sp"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="13dp"
+                    android:padding="5dp"
+                    android:autoLink="all"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/gameFeedDetailTimeStamp"
+                    android:text=""
+                    android:textSize="13sp"
+                    android:gravity="end"
+                    android:textColor="@color/grey"
+                    android:layout_marginTop="13dp"
+                    android:padding="5dp"/>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </RelativeLayout>
+
+</RelativeLayout>

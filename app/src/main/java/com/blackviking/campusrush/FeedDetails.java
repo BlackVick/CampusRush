@@ -30,6 +30,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.blackviking.campusrush.Common.Common;
+import com.blackviking.campusrush.Fragments.FeedUpdate;
 import com.blackviking.campusrush.Model.CommentModel;
 import com.blackviking.campusrush.Model.FeedModel;
 import com.blackviking.campusrush.Profile.MyProfile;
@@ -46,6 +47,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -245,31 +248,120 @@ public class FeedDetails extends AppCompatActivity {
 
                 if (currentUpdate != null) {
 
-                    userRef.child(currentUpdate.getSender()).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
+                    /*---   POSTER DETAILS   ---*/
+                    if (currentUpdate.getSender().equalsIgnoreCase("")) {
 
-                            final String imageThumbLink = dataSnapshot.child("profilePictureThumb").getValue().toString();
-                            final String username = dataSnapshot.child("username").getValue().toString();
+                        posterName.setText("PROTECTED");
+                        posterImage.setImageResource(R.drawable.profile);
 
-                            if (!imageThumbLink.equals("")) {
+                    } else {
 
-                                Picasso.with(getBaseContext())
-                                        .load(imageThumbLink)
-                                        .placeholder(R.drawable.ic_loading_animation)
-                                        .into(posterImage);
+                        userRef.child(currentUpdate.getSender()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                String imageLink = dataSnapshot.child("profilePicture").getValue().toString();
+                                final String imageThumbLink = dataSnapshot.child("profilePictureThumb").getValue().toString();
+                                String username = dataSnapshot.child("username").getValue().toString();
+
+                                if (!imageThumbLink.equals("")) {
+
+                                    Picasso.with(getBaseContext())
+                                            .load(imageThumbLink)
+                                            .networkPolicy(NetworkPolicy.OFFLINE)
+                                            .placeholder(R.drawable.ic_loading_animation)
+                                            .into(posterImage, new Callback() {
+                                                @Override
+                                                public void onSuccess() {
+
+                                                }
+
+                                                @Override
+                                                public void onError() {
+                                                    Picasso.with(getBaseContext())
+                                                            .load(imageThumbLink)
+                                                            .placeholder(R.drawable.ic_loading_animation)
+                                                            .into(posterImage);
+                                                }
+                                            });
+
+                                } else {
+
+                                    posterImage.setImageResource(R.drawable.profile);
+
+                                }
+
+                                posterName.setText("@" + username);
 
                             }
 
-                            posterName.setText(username);
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+                        if (currentUpdate.getSender().equals(currentUid)) {
+
+                            /*---   POSTER NAME CLICK   ---*/
+                            posterName.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    Intent posterProfile = new Intent(FeedDetails.this, MyProfile.class);
+                                    startActivity(posterProfile);
+                                    overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+
+                                }
+                            });
+
+
+                            /*---   POSTER IMAGE CLICK   ---*/
+                            posterImage.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    Intent posterProfile = new Intent(FeedDetails.this, MyProfile.class);
+                                    startActivity(posterProfile);
+                                    overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+
+                                }
+                            });
+
+                        } else {
+
+                            /*---   POSTER NAME CLICK   ---*/
+                            posterName.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    Intent posterProfile = new Intent(FeedDetails.this, OtherUserProfile.class);
+                                    posterProfile.putExtra("UserId", currentUpdate.getSender());
+                                    startActivity(posterProfile);
+                                    overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+
+                                }
+                            });
+
+
+                            /*---   POSTER IMAGE CLICK   ---*/
+                            posterImage.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    Intent posterProfile = new Intent(FeedDetails.this, OtherUserProfile.class);
+                                    posterProfile.putExtra("UserId", currentUpdate.getSender());
+                                    startActivity(posterProfile);
+                                    overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+
+                                }
+                            });
 
                         }
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
 
-                        }
-                    });
+                    }
 
 
 
@@ -486,64 +578,6 @@ public class FeedDetails extends AppCompatActivity {
 
                         }
                     });
-
-
-
-                    /*---   POSTER DETS CLICK   ---*/
-                    if (currentUpdate.getSender().equals(currentUid)) {
-
-                        /*---   POSTER NAME CLICK   ---*/
-                        posterName.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-
-                                Intent posterProfile = new Intent(FeedDetails.this, MyProfile.class);
-                                startActivity(posterProfile);
-
-                            }
-                        });
-
-
-                        /*---   POSTER IMAGE CLICK   ---*/
-                        posterImage.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-
-                                Intent posterProfile = new Intent(FeedDetails.this, MyProfile.class);
-                                startActivity(posterProfile);
-
-                            }
-                        });
-
-                    } else {
-
-                        /*---   POSTER NAME CLICK   ---*/
-                        posterName.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-
-                                Intent posterProfile = new Intent(FeedDetails.this, OtherUserProfile.class);
-                                posterProfile.putExtra("UserId", currentUpdate.getSender());
-                                startActivity(posterProfile);
-
-                            }
-                        });
-
-
-                        /*---   POSTER IMAGE CLICK   ---*/
-                        posterImage.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-
-                                Intent posterProfile = new Intent(FeedDetails.this, OtherUserProfile.class);
-                                posterProfile.putExtra("UserId", currentUpdate.getSender());
-                                startActivity(posterProfile);
-
-
-                            }
-                        });
-
-                    }
 
                 }
 

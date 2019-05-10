@@ -239,12 +239,7 @@ public class RantRoom extends AppCompatActivity {
                 } else if (model.getRantPrivacyState().equalsIgnoreCase("public")){
 
                     viewHolder.rantUsername.setText("@"+model.getRantUsername());
-                    viewHolder.rantUsername.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
 
-                        }
-                    });
                 }
 
                 /*---   RANT TEXT   ---*/

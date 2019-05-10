@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Plugins.GamersHub.AddGameFeed">
+
+    <include layout="@layout/snippet_for_general"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_above="@id/updateShare">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:animateLayoutChanges="true"
+                android:orientation="vertical">
+
+                <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_margin="30dp"
+                    app:corner_radius="15dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/share_photo_icon"
+                        android:adjustViewBounds="true"
+                        android:id="@+id/updateImage"/>
+
+                </com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:id="@+id/updateTitle"
+                    android:hint="Title . . ."
+                    android:textColorHint="@color/grey"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:drawableStart="@drawable/campus_rush_gamers_hub"
+                    android:drawableTint="@color/grey"
+                    android:drawablePadding="7dp"
+                    android:maxLength="170"
+                    android:maxLines="2"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:id="@+id/updateDetails"
+                    android:hint="Feed Update . . ."
+                    android:textColorHint="@color/grey"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:drawableStart="@drawable/campus_rush_gamers_hub"
+                    android:drawableTint="@color/grey"
+                    android:drawablePadding="7dp"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/white_backround_ripple"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="5dp"
+        android:text="SHARE"
+        android:drawableStart="@drawable/campus_rush_gamers_hub"
+        android:drawablePadding="10dp"
+        android:drawableTint="@color/colorPrimaryDark"
+        android:padding="7dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="16sp"
+        android:id="@+id/updateShare"/>
+
+</RelativeLayout>

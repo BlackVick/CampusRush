@@ -241,50 +241,119 @@ public class Feed extends Fragment {
 
 
                 /*---   POSTER DETAILS   ---*/
-                userRef.child(model.getSender()).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+                if (model.getSender().equalsIgnoreCase("")) {
 
-                        String imageLink = dataSnapshot.child("profilePicture").getValue().toString();
-                        final String imageThumbLink = dataSnapshot.child("profilePictureThumb").getValue().toString();
-                        String username = dataSnapshot.child("username").getValue().toString();
+                    viewHolder.posterName.setText("PROTECTED");
+                    viewHolder.posterImage.setImageResource(R.drawable.profile);
 
-                        if (!imageThumbLink.equals("")){
+                } else {
 
-                            Picasso.with(getContext())
-                                    .load(imageThumbLink)
-                                    .networkPolicy(NetworkPolicy.OFFLINE)
-                                    .placeholder(R.drawable.ic_loading_animation)
-                                    .into(viewHolder.posterImage, new Callback() {
-                                        @Override
-                                        public void onSuccess() {
+                    userRef.child(model.getSender()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                        }
+                            String imageLink = dataSnapshot.child("profilePicture").getValue().toString();
+                            final String imageThumbLink = dataSnapshot.child("profilePictureThumb").getValue().toString();
+                            String username = dataSnapshot.child("username").getValue().toString();
 
-                                        @Override
-                                        public void onError() {
-                                            Picasso.with(getContext())
-                                                    .load(imageThumbLink)
-                                                    .placeholder(R.drawable.ic_loading_animation)
-                                                    .into(viewHolder.posterImage);
-                                        }
-                                    });
+                            if (!imageThumbLink.equals("")) {
 
-                        } else {
+                                Picasso.with(getContext())
+                                        .load(imageThumbLink)
+                                        .networkPolicy(NetworkPolicy.OFFLINE)
+                                        .placeholder(R.drawable.ic_loading_animation)
+                                        .into(viewHolder.posterImage, new Callback() {
+                                            @Override
+                                            public void onSuccess() {
 
-                            viewHolder.posterImage.setImageResource(R.drawable.profile);
+                                            }
+
+                                            @Override
+                                            public void onError() {
+                                                Picasso.with(getContext())
+                                                        .load(imageThumbLink)
+                                                        .placeholder(R.drawable.ic_loading_animation)
+                                                        .into(viewHolder.posterImage);
+                                            }
+                                        });
+
+                            } else {
+
+                                viewHolder.posterImage.setImageResource(R.drawable.profile);
+
+                            }
+
+                            viewHolder.posterName.setText("@" + username);
 
                         }
 
-                        viewHolder.posterName.setText("@"+username);
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
+                    if (model.getSender().equals(currentUid)) {
+
+                        /*---   POSTER NAME CLICK   ---*/
+                        viewHolder.posterName.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                Intent posterProfile = new Intent(getContext(), MyProfile.class);
+                                startActivity(posterProfile);
+                                getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+
+                            }
+                        });
+
+
+                        /*---   POSTER IMAGE CLICK   ---*/
+                        viewHolder.posterImage.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                Intent posterProfile = new Intent(getContext(), MyProfile.class);
+                                startActivity(posterProfile);
+                                getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+
+                            }
+                        });
+
+                    } else {
+
+                        /*---   POSTER NAME CLICK   ---*/
+                        viewHolder.posterName.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                Intent posterProfile = new Intent(getContext(), OtherUserProfile.class);
+                                posterProfile.putExtra("UserId", model.getSender());
+                                startActivity(posterProfile);
+                                getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+
+                            }
+                        });
+
+
+                        /*---   POSTER IMAGE CLICK   ---*/
+                        viewHolder.posterImage.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                Intent posterProfile = new Intent(getContext(), OtherUserProfile.class);
+                                posterProfile.putExtra("UserId", model.getSender());
+                                startActivity(posterProfile);
+                                getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+
+                            }
+                        });
 
                     }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
 
-                    }
-                });
+                }
 
 
                 /*---   POST IMAGE   ---*/
@@ -438,64 +507,6 @@ public class Feed extends Fragment {
                     }
                 });
 
-
-                if (model.getSender().equals(currentUid)) {
-
-                    /*---   POSTER NAME CLICK   ---*/
-                    viewHolder.posterName.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            Intent posterProfile = new Intent(getContext(), MyProfile.class);
-                            startActivity(posterProfile);
-                            getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
-
-                        }
-                    });
-
-
-                    /*---   POSTER IMAGE CLICK   ---*/
-                    viewHolder.posterImage.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            Intent posterProfile = new Intent(getContext(), MyProfile.class);
-                            startActivity(posterProfile);
-                            getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
-
-                        }
-                    });
-
-                } else {
-
-                    /*---   POSTER NAME CLICK   ---*/
-                    viewHolder.posterName.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            Intent posterProfile = new Intent(getContext(), OtherUserProfile.class);
-                            posterProfile.putExtra("UserId", model.getSender());
-                            startActivity(posterProfile);
-                            getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
-
-                        }
-                    });
-
-
-                    /*---   POSTER IMAGE CLICK   ---*/
-                    viewHolder.posterImage.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            Intent posterProfile = new Intent(getContext(), OtherUserProfile.class);
-                            posterProfile.putExtra("UserId", model.getSender());
-                            startActivity(posterProfile);
-                            getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
-
-                        }
-                    });
-
-                }
 
             }
         };

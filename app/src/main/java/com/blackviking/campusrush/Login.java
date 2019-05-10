@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.blackviking.campusrush.Common.Common;
+import com.blackviking.campusrush.Settings.Help;
 import com.google.firebase.auth.FirebaseAuth;
 import com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout;
 
@@ -82,6 +83,17 @@ public class Login extends AppCompatActivity {
                 startActivity(signInIntent);
                 overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
                 finish();
+            }
+        });
+
+
+        /*---   HELP   ---*/
+        helpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent helpIntent = new Intent(Login.this, Help.class);
+                startActivity(helpIntent);
+                overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
             }
         });
     }
