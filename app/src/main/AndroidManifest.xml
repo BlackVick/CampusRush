@@ -19,7 +19,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Plugins.GamersHub.GameFeedDetail"></activity>
+        <activity android:name=".Plugins.SkitCenter.SkitManagement"></activity>
+        <activity android:name=".Plugins.SkitCenter.AddNewSkit" />
+        <activity android:name=".Plugins.GamersHub.GameFeedDetail" />
         <activity android:name=".Plugins.GamersHub.AddGameFeed" />
         <activity
             android:name=".Splash"

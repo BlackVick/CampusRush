@@ -7,16 +7,18 @@ public class SkitModel {
     private String mediaUrl;
     private String thumbnail;
     private String description;
+    private String status;
 
     public SkitModel() {
     }
 
-    public SkitModel(String title, String owner, String mediaUrl, String thumbnail, String description) {
+    public SkitModel(String title, String owner, String mediaUrl, String thumbnail, String description, String status) {
         this.title = title;
         this.owner = owner;
         this.mediaUrl = mediaUrl;
         this.thumbnail = thumbnail;
         this.description = description;
+        this.status = status;
     }
 
     public String getTitle() {
@@ -57,5 +59,13 @@ public class SkitModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

@@ -15,8 +15,6 @@ import com.blackviking.campusrush.Interface.ItemClickListener;
 import com.blackviking.campusrush.R;
 import com.blackviking.campusrush.Settings.Help;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,11 +28,10 @@ import com.squareup.picasso.Picasso;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class SkitCenter extends AppCompatActivity {
+public class SkitManagement extends AppCompatActivity {
 
     private TextView activityName;
     private ImageView exitActivity, helpActivity;
-    private FloatingActionButton skitManagement, addSkit;
     private RecyclerView skitRecycler;
     private LinearLayoutManager layoutManager;
     private FirebaseRecyclerAdapter<SkitModel, SkitViewHolder> adapter;
@@ -42,9 +39,6 @@ public class SkitCenter extends AppCompatActivity {
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
     private DatabaseReference skitRef, skitLikesRef, userRef;
     private String currentUid;
-    private enum VolumeState {ON, OFF};
-    private PlayerView videoSurfaceView;
-    private SimpleExoPlayer videoPlayer;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -61,15 +55,14 @@ public class SkitCenter extends AppCompatActivity {
                 .setFontAttrId(R.attr.fontPath)
                 .build());
 
-        setContentView(R.layout.activity_skit_center);
-        
-        
+        setContentView(R.layout.activity_skit_management);
+
+
         /*---   FIREBASE   ---*/
         if (mAuth.getCurrentUser() != null)
             currentUid = mAuth.getCurrentUser().getUid();
         skitRef = db.getReference("Skits");
         skitLikesRef = db.getReference("SkitLikes");
-        userRef = db.getReference("Users").child(currentUid);
 
 
         /*---   WIDGETS   ---*/
@@ -77,8 +70,6 @@ public class SkitCenter extends AppCompatActivity {
         exitActivity = (ImageView)findViewById(R.id.exitActivity);
         helpActivity = (ImageView)findViewById(R.id.helpIcon);
         skitRecycler = (RecyclerView)findViewById(R.id.skitRecycler);
-        skitManagement = (FloatingActionButton)findViewById(R.id.skitManagement);
-        addSkit = (FloatingActionButton)findViewById(R.id.addSkit);
 
 
         /*---   ACTIVITY BAR FUNCTIONS   ---*/
@@ -89,64 +80,17 @@ public class SkitCenter extends AppCompatActivity {
             }
         });
 
-        activityName.setText("Skit Center");
+        activityName.setText("Skit Management");
         helpActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent helpIntent = new Intent(SkitCenter.this, Help.class);
+                Intent helpIntent = new Intent(SkitManagement.this, Help.class);
                 startActivity(helpIntent);
                 overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
             }
         });
 
-
-        /*---   ADD SKIT   ---*/
-        addSkit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent addSkitIntent = new Intent(SkitCenter.this, AddNewSkit.class);
-                startActivity(addSkitIntent);
-                overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
-            }
-        });
-
-
-        /*---   CURRENT USER   ---*/
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                String userType = dataSnapshot.child("userType").getValue().toString();
-
-                if (userType.equalsIgnoreCase("Admin")){
-
-                    skitManagement.show();
-                    skitManagement.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent managementIntent = new Intent(SkitCenter.this, SkitManagement.class);
-                            startActivity(managementIntent);
-                            overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
-                        }
-                    });
-
-                } else {
-
-                    skitManagement.hide();
-
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-        
-        
         loadSkits();
-        
     }
 
     private void loadSkits() {
@@ -162,7 +106,7 @@ public class SkitCenter extends AppCompatActivity {
                 SkitModel.class,
                 R.layout.skit_item,
                 SkitViewHolder.class,
-                skitRef.orderByChild("status").equalTo("Approved")
+                skitRef.orderByChild("status").equalTo("Pending")
         ) {
             @Override
             protected void populateViewHolder(final SkitViewHolder viewHolder, final SkitModel model, int position) {
@@ -245,7 +189,7 @@ public class SkitCenter extends AppCompatActivity {
                 viewHolder.setItemClickListener(new ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
-                        Intent skitDetailsIntent = new Intent(SkitCenter.this, SkitDetails.class);
+                        Intent skitDetailsIntent = new Intent(SkitManagement.this, SkitDetails.class);
                         skitDetailsIntent.putExtra("SkitId", theId);
                         skitDetailsIntent.putExtra("SkitOwner", model.getOwner());
                         startActivity(skitDetailsIntent);

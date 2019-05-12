@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Plugins.GamersHub.AddGameFeed"
+    tools:context=".Plugins.SkitCenter.AddNewSkit"
     android:animateLayoutChanges="true">
 
     <include layout="@layout/snippet_for_general"/>
@@ -32,6 +32,7 @@
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:layout_margin="30dp"
+                    android:layout_gravity="center"
                     app:corner_radius="15dp">
 
                     <ImageView
@@ -39,7 +40,7 @@
                         android:layout_height="match_parent"
                         android:src="@drawable/share_photo_icon"
                         android:adjustViewBounds="true"
-                        android:id="@+id/updateImage"/>
+                        android:id="@+id/uploadSkit"/>
 
                 </com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>
 
@@ -48,11 +49,11 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:id="@+id/updateTitle"
-                    android:hint="Title . . ."
+                    android:hint="Skit Title . . ."
                     android:textColorHint="@color/grey"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:drawableStart="@drawable/campus_rush_gamers_hub"
+                    android:drawableStart="@drawable/ic_skit_center"
                     android:drawableTint="@color/grey"
                     android:drawablePadding="7dp"
                     android:maxLength="170"
@@ -63,11 +64,11 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:id="@+id/updateDetails"
-                    android:hint="Feed Update . . ."
+                    android:hint="Skit Description . . ."
                     android:textColorHint="@color/grey"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:drawableStart="@drawable/campus_rush_gamers_hub"
+                    android:drawableStart="@drawable/ic_skit_center"
                     android:drawableTint="@color/grey"
                     android:drawablePadding="7dp"/>
 
@@ -85,7 +86,7 @@
         android:layout_alignParentEnd="true"
         android:layout_margin="5dp"
         android:text="SHARE"
-        android:drawableStart="@drawable/campus_rush_gamers_hub"
+        android:drawableStart="@drawable/ic_skit_center"
         android:drawablePadding="10dp"
         android:drawableTint="@color/colorPrimaryDark"
         android:padding="7dp"

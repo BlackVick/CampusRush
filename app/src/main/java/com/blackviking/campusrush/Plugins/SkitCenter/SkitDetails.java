@@ -1,13 +1,17 @@
 package com.blackviking.campusrush.Plugins.SkitCenter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -29,6 +33,7 @@ import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -52,6 +57,9 @@ public class SkitDetails extends AppCompatActivity {
     private ProgressBar progressBar;
     private ImageView likeBtn;
     private SimpleExoPlayer exoPlayer;
+    private LinearLayout adminLayout;
+    private Button approveBtn, denyBtn;
+    private String userType;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -95,6 +103,9 @@ public class SkitDetails extends AppCompatActivity {
         videoPlayer = (SimpleExoPlayerView)findViewById(R.id.videoPlayer);
         progressBar = (ProgressBar)findViewById(R.id.loadingProgress);
         likeBtn = (ImageView)findViewById(R.id.currentLikeBtn);
+        adminLayout = (LinearLayout)findViewById(R.id.adminLayout);
+        approveBtn = (Button) findViewById(R.id.approveBtn);
+        denyBtn = (Button) findViewById(R.id.denyBtn);
 
 
         /*---   ACTIVITY BAR FUNCTIONS   ---*/
@@ -120,7 +131,7 @@ public class SkitDetails extends AppCompatActivity {
         });
 
 
-        /*---   CURRENT USER   ---*/
+        /*---   CURRENT SKIT USER   ---*/
         userRef.orderByChild("username").equalTo(currentSkitOwner).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -139,6 +150,44 @@ public class SkitDetails extends AppCompatActivity {
             }
         });
 
+
+        /*---   CURRENT USER   ---*/
+        userRef.child(currentUid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                userType = dataSnapshot.child("userType").getValue().toString();
+
+                if (userType.equalsIgnoreCase("Admin")){
+
+                    adminLayout.setVisibility(View.VISIBLE);
+                    approveBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            showApprovalDialog();
+                        }
+                    });
+
+                    denyBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            showDenialDialog();
+                        }
+                    });
+
+                } else {
+
+                    adminLayout.setVisibility(View.GONE);
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
 
         owner.setText("@"+currentSkitOwner);
@@ -274,6 +323,88 @@ public class SkitDetails extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    public void showApprovalDialog(){
+
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setTitle("Attention !")
+                .setIcon(R.drawable.ic_attention_red)
+                .setMessage("Are You Sure You Want To Approve Skit?")
+                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        skitRef.child(currentSkitId)
+                                .child("status")
+                                .setValue("Approved").addOnSuccessListener(
+                                new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        if (exoPlayer != null) {
+                                            exoPlayer.release();
+                                            exoPlayer.stop();
+                                        }
+                                        finish();
+                                    }
+                                }
+                        );
+
+                    }
+                })
+                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+
+        alertDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
+
+        alertDialog.show();
+
+    }
+
+    public void showDenialDialog(){
+
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setTitle("Attention !")
+                .setIcon(R.drawable.ic_attention_red)
+                .setMessage("Are You Sure You Want To Deny This Skit?")
+                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        skitRef.child(currentSkitId)
+                                .removeValue()
+                                .addOnSuccessListener(
+                                new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        if (exoPlayer != null) {
+                                            exoPlayer.release();
+                                            exoPlayer.stop();
+                                        }
+                                        finish();
+                                    }
+                                }
+                        );
+
+                    }
+                })
+                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+
+        alertDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
+
+        alertDialog.show();
 
     }
 
