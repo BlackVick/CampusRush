@@ -24,7 +24,7 @@ import com.blackviking.campusrush.Fragments.FeedUpdate;
 import com.blackviking.campusrush.Fragments.Materials;
 import com.blackviking.campusrush.Plugins.Awards.Awards;
 import com.blackviking.campusrush.Plugins.GamersHub.GamersHub;
-import com.blackviking.campusrush.Plugins.Scholarships;
+import com.blackviking.campusrush.Plugins.Scholarships.Scholarships;
 import com.blackviking.campusrush.Plugins.SkitCenter.SkitCenter;
 import com.blackviking.campusrush.Plugins.Vacancies;
 import com.blackviking.campusrush.Profile.MyProfile;

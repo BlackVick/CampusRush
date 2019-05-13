@@ -345,8 +345,8 @@ public class SkitDetails extends AppCompatActivity {
                                         if (exoPlayer != null) {
                                             exoPlayer.release();
                                             exoPlayer.stop();
+                                            finish();
                                         }
-                                        finish();
                                     }
                                 }
                         );
@@ -386,8 +386,8 @@ public class SkitDetails extends AppCompatActivity {
                                         if (exoPlayer != null) {
                                             exoPlayer.release();
                                             exoPlayer.stop();
+                                            finish();
                                         }
-                                        finish();
                                     }
                                 }
                         );

@@ -19,7 +19,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Plugins.SkitCenter.SkitManagement"></activity>
+        <activity android:name=".Plugins.Scholarships.ScholarshipInfo"></activity>
+        <activity android:name=".Plugins.SkitCenter.SkitManagement" />
         <activity android:name=".Plugins.SkitCenter.AddNewSkit" />
         <activity android:name=".Plugins.GamersHub.GameFeedDetail" />
         <activity android:name=".Plugins.GamersHub.AddGameFeed" />
@@ -84,7 +85,7 @@
         <activity android:name=".Profile.OtherUserProfile" />
         <activity android:name=".RantRoom" />
         <activity android:name=".Plugins.Awards.Awards" />
-        <activity android:name=".Plugins.Scholarships" />
+        <activity android:name=".Plugins.Scholarships.Scholarships" />
         <activity android:name=".Plugins.Vacancies" />
         <activity android:name=".Plugins.GamersHub.GamersHub" />
         <activity android:name=".Plugins.SkitCenter.SkitCenter" />
