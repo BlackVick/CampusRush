@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.blackviking.campusrush">
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -18,12 +19,8 @@
         android:launchMode="singleTop"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".Plugins.Scholarships.ScholarshipInfo"></activity>
-        <activity android:name=".Plugins.SkitCenter.SkitManagement" />
-        <activity android:name=".Plugins.SkitCenter.AddNewSkit" />
-        <activity android:name=".Plugins.GamersHub.GameFeedDetail" />
-        <activity android:name=".Plugins.GamersHub.AddGameFeed" />
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".Splash"
             android:theme="@style/SplashTheme">
@@ -86,7 +83,7 @@
         <activity android:name=".RantRoom" />
         <activity android:name=".Plugins.Awards.Awards" />
         <activity android:name=".Plugins.Scholarships.Scholarships" />
-        <activity android:name=".Plugins.Vacancies" />
+        <activity android:name=".Plugins.Vacancies.Vacancies" />
         <activity android:name=".Plugins.GamersHub.GamersHub" />
         <activity android:name=".Plugins.SkitCenter.SkitCenter" />
         <activity android:name=".About" />
@@ -97,6 +94,12 @@
         <activity
             android:name=".ImageController.ImageViewer"
             android:theme="@style/ImageViewTheme" />
+        <activity android:name=".Plugins.GamersHub.AddGameFeed" />
+        <activity android:name=".Plugins.GamersHub.GameFeedDetail" />
+        <activity android:name=".Plugins.SkitCenter.AddNewSkit" />
+        <activity android:name=".Plugins.SkitCenter.SkitManagement" />
+        <activity android:name=".Plugins.Scholarships.ScholarshipInfo" />
+        <activity android:name=".Plugins.Vacancies.VacancyInfo"></activity>
     </application>
 
 </manifest>

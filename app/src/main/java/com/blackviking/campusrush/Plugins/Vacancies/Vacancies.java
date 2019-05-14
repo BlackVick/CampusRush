@@ -1,4 +1,4 @@
-package com.blackviking.campusrush.Plugins;
+package com.blackviking.campusrush.Plugins.Vacancies;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,8 +10,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blackviking.campusrush.Interface.ItemClickListener;
 import com.blackviking.campusrush.R;
 import com.blackviking.campusrush.Settings.Help;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -22,6 +26,9 @@ public class Vacancies extends AppCompatActivity {
     private ImageView exitActivity, helpActivity;
     private RecyclerView vacancyRecycler;
     private LinearLayoutManager layoutManager;
+    private FirebaseDatabase db = FirebaseDatabase.getInstance();
+    private DatabaseReference vacancyRef;
+    private FirebaseRecyclerAdapter<VacancyModel, VacancyViewHolder> adapter;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -39,6 +46,10 @@ public class Vacancies extends AppCompatActivity {
                 .build());
 
         setContentView(R.layout.activity_vacancies);
+
+
+        /*---   FIREBASE   ---*/
+        vacancyRef = db.getReference("Vacancies");
 
 
         /*---   WIDGETS   ---*/
@@ -65,5 +76,46 @@ public class Vacancies extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
             }
         });
+
+
+        loadVacancies();
+    }
+
+    private void loadVacancies() {
+
+        vacancyRecycler.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+        vacancyRecycler.setLayoutManager(layoutManager);
+
+        adapter = new FirebaseRecyclerAdapter<VacancyModel, VacancyViewHolder>(
+                VacancyModel.class,
+                R.layout.vacancy_item,
+                VacancyViewHolder.class,
+                vacancyRef
+        ) {
+            @Override
+            protected void populateViewHolder(VacancyViewHolder viewHolder, VacancyModel model, int position) {
+
+                viewHolder.title.setText(model.getTitle());
+                viewHolder.company.setText(model.getCompany());
+                viewHolder.location.setText(model.getLocation());
+
+                viewHolder.setItemClickListener(new ItemClickListener() {
+                    @Override
+                    public void onClick(View view, int position, boolean isLongClick) {
+                        Intent vacancyIntent = new Intent(Vacancies.this, VacancyInfo.class);
+                        vacancyIntent.putExtra("VacancyId", adapter.getRef(position).getKey());
+                        startActivity(vacancyIntent);
+                        overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+                    }
+                });
+
+            }
+        };
+        vacancyRecycler.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
     }
 }

@@ -26,7 +26,7 @@ import com.blackviking.campusrush.Plugins.Awards.Awards;
 import com.blackviking.campusrush.Plugins.GamersHub.GamersHub;
 import com.blackviking.campusrush.Plugins.Scholarships.Scholarships;
 import com.blackviking.campusrush.Plugins.SkitCenter.SkitCenter;
-import com.blackviking.campusrush.Plugins.Vacancies;
+import com.blackviking.campusrush.Plugins.Vacancies.Vacancies;
 import com.blackviking.campusrush.Profile.MyProfile;
 import com.blackviking.campusrush.Settings.Settings;
 import com.google.firebase.auth.FirebaseAuth;
