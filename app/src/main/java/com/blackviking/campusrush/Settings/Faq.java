@@ -76,75 +76,60 @@ public class Faq extends AppCompatActivity {
         listFaqTitle = new ArrayList<>();
         listHash = new HashMap<>();
 
-        listFaqTitle.add("SIGNING UP");
-        listFaqTitle.add("LOGGING IN");
-        listFaqTitle.add("HOME");
-        listFaqTitle.add("HOSH FEED");
-        listFaqTitle.add("HOOKUP");
-        listFaqTitle.add("HOPDATE");
-        listFaqTitle.add("MESSAGING");
-        listFaqTitle.add("ACCOUNT");
+        listFaqTitle.add("SIGNING UP AND SIGNING IN");
+        listFaqTitle.add("ARE MY DETAILS SAFE?");
+        listFaqTitle.add("HOW DO I MANAGE MY PROFILE?");
+        listFaqTitle.add("HOW TO MANAGE FEED AND TIMELINE");
+        listFaqTitle.add("HOW TO UPLOAD AND DOWNLOAD MATERIALS");
+        listFaqTitle.add("HOW TO RANT SAFELY");
+        listFaqTitle.add("HOW TO HOST DEPARTMENTAL AWARDS");
+        listFaqTitle.add("HOW DO I UPLOAD MY SKITS?");
+        listFaqTitle.add("WHY ARE MY SKITS NOT ONLINE?");
+        listFaqTitle.add("HOW DO I MAINTAIN MY PRIVACY?");
 
 
-        List<String> signUp = new ArrayList<>();
-        signUp.add("There are 3 sign up options");
-        signUp.add("New users can sign up with either their google account, valid email address or anonymously");
-        signUp.add("Google Step 1 : Click on the Google Sign In button below the Hosh logo");
-        signUp.add("Google Step 2 : Select Account you want as your personal login Account");
-        signUp.add("Google Step 3 : Fill in the details required by the app in the next page.");
-        signUp.add("Email Step 1 : Click on the Email Sign In button below the Hosh logo");
-        signUp.add("Email Step 2 : A verification would be sent to your mail.");
-        signUp.add("Email Step 3 : After verifying Fill in the details required by the app in the next page.");
-        signUp.add("Anonymous Step 1 : Click on the Anonymous Sign In button below the Hosh logo");
-        signUp.add("Anonymous Step 2 : Fill in the details required by the app in the next page.");
-        signUp.add("Anonymous Step 3 : The Catch here is, Once user signs out, All the details are gone");
 
-        List<String> login = new ArrayList<>();
-        login.add("Once user is signed up, logging in from another phone is quite easy.");
-        login.add("Step 1 : Click the sign in button you used to sign up and you are taken to your homepage.");
+        List<String> signUpAndSignIn = new ArrayList<>();
+        signUpAndSignIn.add("");
 
+        List<String> amISafe = new ArrayList<>();
+        amISafe.add("");
 
-        List<String> homePage = new ArrayList<>();
-        homePage.add("The home page consist of (5) main Pages that can be accessed by clicking on the bottom navigation");
-        homePage.add("1. Hosh Feed, 2. Hookup, 3. Hopdate, 4. Messages, 5. Account");
-        homePage.add("1. Hosh Feed : This contains updates from every user on the Hosh App");
-        homePage.add("2. Hookup : This is a search medium to find other users close to you");
-        homePage.add("3. Hopdate : This is where you can add content to your timeline for everyone to see");
-        homePage.add("4. Messages : This contains messages to and from every contact you make.");
-        homePage.add("5. Account : This contains brief details about user and also timeline.");
+        List<String> manageProfile = new ArrayList<>();
+        manageProfile.add("");
 
-        List<String> hoshFeed = new ArrayList<>();
-        hoshFeed.add("Each feed can be ;");
-        hoshFeed.add("1. Viewed for more details");
-        hoshFeed.add("2. Liked / Unliked");
-        hoshFeed.add("3. Commented on");
-        hoshFeed.add("4. Shared");
-        hoshFeed.add("5. Reported");
-        hoshFeed.add("6. Viewing Poster's Profile is also possible");
+        List<String> manageTimeline = new ArrayList<>();
+        manageTimeline.add("");
 
-        List<String> hookup = new ArrayList<>();
-        hookup.add("The Search results on this page shows people you are interested in and is also based on proximity");
+        List<String> manageMaterials = new ArrayList<>();
+        manageMaterials.add("");
 
-        List<String> hopdate = new ArrayList<>();
-        hopdate.add("Hopdate can contain Image Only, Text Only or Both");
+        List<String> manageRant = new ArrayList<>();
+        manageRant.add("");
 
-        List<String> messaging = new ArrayList<>();
-        messaging.add("This contains all messages sent and received");
+        List<String> hostAwards = new ArrayList<>();
+        hostAwards.add("");
 
-        List<String> account = new ArrayList<>();
-        account.add("Here Users can find their details by clicking on the profile button and also make adjustments as they like");
-        account.add("Each user also have an image gallery where they can pick their profile pictures from");
-        account.add("Each user has a list of other users that are followers and they are following");
+        List<String> uploadSkits = new ArrayList<>();
+        uploadSkits.add("");
+
+        List<String> missingSkits = new ArrayList<>();
+        missingSkits.add("");
+
+        List<String> privacyFaq = new ArrayList<>();
+        privacyFaq.add("");
 
 
-        listHash.put(listFaqTitle.get(0), signUp);
-        listHash.put(listFaqTitle.get(1), login);
-        listHash.put(listFaqTitle.get(2), homePage);
-        listHash.put(listFaqTitle.get(3), hoshFeed);
-        listHash.put(listFaqTitle.get(4), hookup);
-        listHash.put(listFaqTitle.get(5), hopdate);
-        listHash.put(listFaqTitle.get(6), messaging);
-        listHash.put(listFaqTitle.get(7), account);
+        listHash.put(listFaqTitle.get(0), signUpAndSignIn);
+        listHash.put(listFaqTitle.get(1), amISafe);
+        listHash.put(listFaqTitle.get(2), manageProfile);
+        listHash.put(listFaqTitle.get(3), manageTimeline);
+        listHash.put(listFaqTitle.get(4), manageMaterials);
+        listHash.put(listFaqTitle.get(5), manageRant);
+        listHash.put(listFaqTitle.get(6), hostAwards);
+        listHash.put(listFaqTitle.get(7), uploadSkits);
+        listHash.put(listFaqTitle.get(8), missingSkits);
+        listHash.put(listFaqTitle.get(9), privacyFaq);
 
     }
 
