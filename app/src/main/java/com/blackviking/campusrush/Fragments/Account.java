@@ -392,6 +392,7 @@ public class Account extends Fragment {
                                 Intent feedDetail = new Intent(getContext(), FeedDetails.class);
                                 feedDetail.putExtra("CurrentFeedId", adapter.getRef(position).getKey());
                                 startActivity(feedDetail);
+                                getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
                             }
                         });
 
@@ -412,6 +413,7 @@ public class Account extends Fragment {
                         Intent feedDetail = new Intent(getContext(), FeedDetails.class);
                         feedDetail.putExtra("CurrentFeedId", adapter.getRef(position).getKey());
                         startActivity(feedDetail);
+                        getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
 
                     }
                 });
@@ -425,6 +427,7 @@ public class Account extends Fragment {
                         Intent feedDetail = new Intent(getContext(), FeedDetails.class);
                         feedDetail.putExtra("CurrentFeedId", adapter.getRef(position).getKey());
                         startActivity(feedDetail);
+                        getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
 
                     }
                 });

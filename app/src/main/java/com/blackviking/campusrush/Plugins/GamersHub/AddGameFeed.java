@@ -538,4 +538,9 @@ public class AddGameFeed extends AppCompatActivity {
 
         return mediaFile;
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

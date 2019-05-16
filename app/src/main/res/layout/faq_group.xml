@@ -11,8 +11,8 @@
     <TextView
         android:id="@+id/faqTitle"
         android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
-        android:textSize="20sp"
-        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:textColor="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

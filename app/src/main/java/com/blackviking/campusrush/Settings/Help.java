@@ -54,7 +54,6 @@ public class Help extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
-                overridePendingTransition(R.anim.slide_right, R.anim.slide_right);
             }
         });
 
@@ -134,6 +133,5 @@ public class Help extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         finish();
-        overridePendingTransition(R.anim.slide_right, R.anim.slide_right);
     }
 }

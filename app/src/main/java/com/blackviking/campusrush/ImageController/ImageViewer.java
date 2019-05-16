@@ -77,4 +77,9 @@ public class ImageViewer extends AppCompatActivity {
 
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

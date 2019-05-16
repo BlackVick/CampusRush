@@ -149,4 +149,9 @@ public class GameFeedDetail extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

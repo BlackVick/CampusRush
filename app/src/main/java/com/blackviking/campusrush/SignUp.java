@@ -343,6 +343,7 @@ public class SignUp extends AppCompatActivity {
                         newUserMap.put("privacy", "public");
                         newUserMap.put("userType", "User");
                         newUserMap.put("bio", "");
+                        newUserMap.put("riskLevel", "Normal");
 
 
                         /*---   REGISTER USER   ---*/
@@ -484,6 +485,5 @@ public class SignUp extends AppCompatActivity {
         Intent goBack = new Intent(SignUp.this, Login.class);
         startActivity(goBack);
         finish();
-        overridePendingTransition(R.anim.slide_right, R.anim.slide_right);
     }
 }

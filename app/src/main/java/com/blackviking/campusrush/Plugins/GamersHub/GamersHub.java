@@ -272,4 +272,9 @@ public class GamersHub extends AppCompatActivity {
         adapter.notifyDataSetChanged();
 
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

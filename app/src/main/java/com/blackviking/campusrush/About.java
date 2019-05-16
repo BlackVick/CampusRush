@@ -60,4 +60,9 @@ public class About extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

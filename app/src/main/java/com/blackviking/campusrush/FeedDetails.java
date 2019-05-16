@@ -311,7 +311,7 @@ public class FeedDetails extends AppCompatActivity {
 
                                     Intent posterProfile = new Intent(FeedDetails.this, MyProfile.class);
                                     startActivity(posterProfile);
-                                    overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+                                    overridePendingTransition(R.anim.slide_left, R.anim.slide_out);
 
                                 }
                             });

@@ -118,4 +118,9 @@ public class Vacancies extends AppCompatActivity {
         adapter.notifyDataSetChanged();
 
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

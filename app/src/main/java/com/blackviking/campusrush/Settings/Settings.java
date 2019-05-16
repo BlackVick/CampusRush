@@ -56,7 +56,6 @@ public class Settings extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
-                overridePendingTransition(R.anim.slide_right, R.anim.slide_right);
             }
         });
 

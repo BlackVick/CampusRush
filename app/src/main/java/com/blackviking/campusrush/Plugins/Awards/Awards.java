@@ -235,4 +235,9 @@ public class Awards extends AppCompatActivity {
         alertDialog.show();
 
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

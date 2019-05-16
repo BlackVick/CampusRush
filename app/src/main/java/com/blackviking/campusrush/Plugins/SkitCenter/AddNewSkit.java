@@ -337,4 +337,9 @@ public class AddNewSkit extends AppCompatActivity {
         String path = MediaStore.Images.Media.insertImage(this.getContentResolver(), theBitmap, "Bit_Map", null);
         return Uri.parse(path);
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

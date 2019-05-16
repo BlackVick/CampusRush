@@ -118,4 +118,9 @@ public class VacancyInfo extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

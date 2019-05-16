@@ -146,7 +146,6 @@ public class AccountSettings extends AppCompatActivity {
                         signoutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(signoutIntent);
                         finish();
-                        overridePendingTransition(R.anim.slide_right, R.anim.slide_right);
 
                     }
                 })
@@ -167,6 +166,5 @@ public class AccountSettings extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         finish();
-        overridePendingTransition(R.anim.slide_right, R.anim.slide_right);
     }
 }

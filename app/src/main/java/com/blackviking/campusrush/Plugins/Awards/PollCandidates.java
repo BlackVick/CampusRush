@@ -241,4 +241,9 @@ public class PollCandidates extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

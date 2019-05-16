@@ -260,4 +260,9 @@ public class SkitCenter extends AppCompatActivity {
         adapter.notifyDataSetChanged();
 
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

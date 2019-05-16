@@ -255,6 +255,5 @@ public class SignIn extends AppCompatActivity {
         Intent goBack = new Intent(SignIn.this, Login.class);
         startActivity(goBack);
         finish();
-        overridePendingTransition(R.anim.slide_right, R.anim.slide_right);
     }
 }

@@ -316,6 +316,7 @@ public class OtherUserProfile extends AppCompatActivity {
                                 Intent feedDetail = new Intent(OtherUserProfile.this, FeedDetails.class);
                                 feedDetail.putExtra("CurrentFeedId", adapter.getRef(position).getKey());
                                 startActivity(feedDetail);
+                                overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
                             }
                         });
 
@@ -336,6 +337,7 @@ public class OtherUserProfile extends AppCompatActivity {
                         Intent feedDetail = new Intent(OtherUserProfile.this, FeedDetails.class);
                         feedDetail.putExtra("CurrentFeedId", adapter.getRef(position).getKey());
                         startActivity(feedDetail);
+                        overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
 
                     }
                 });
@@ -349,6 +351,7 @@ public class OtherUserProfile extends AppCompatActivity {
                         Intent feedDetail = new Intent(OtherUserProfile.this, FeedDetails.class);
                         feedDetail.putExtra("CurrentFeedId", adapter.getRef(position).getKey());
                         startActivity(feedDetail);
+                        overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
 
                     }
                 });

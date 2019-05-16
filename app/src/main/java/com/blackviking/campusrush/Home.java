@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.Fragments.Account;
 import com.blackviking.campusrush.Fragments.CampusRant;
 import com.blackviking.campusrush.Fragments.Feed;
@@ -114,7 +115,7 @@ public class Home extends AppCompatActivity
 
 
         /*---   CURRENT USER   ---*/
-        userRef.child(currentUid).addListenerForSingleValueEvent(new ValueEventListener() {
+        userRef.child(currentUid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -122,6 +123,18 @@ public class Home extends AppCompatActivity
                 String theFullName = dataSnapshot.child("lastName").getValue().toString()
                         + " " + dataSnapshot.child("firstName").getValue().toString();
                 final String theImage = dataSnapshot.child("profilePictureThumb").getValue().toString();
+                String security = dataSnapshot.child("riskLevel").getValue().toString();
+
+                if (security.equalsIgnoreCase("Danger")){
+
+                    Paper.book().destroy();
+                    mAuth.signOut();
+                    Intent signoutIntent = new Intent(Home.this, Login.class);
+                    signoutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(signoutIntent);
+                    finish();
+
+                }
 
 
                 userName.setText("@"+theUsername);
@@ -363,7 +376,6 @@ public class Home extends AppCompatActivity
             signoutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(signoutIntent);
             finish();
-            overridePendingTransition(R.anim.slide_right, R.anim.slide_right);
 
         }
 

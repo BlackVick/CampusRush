@@ -122,4 +122,9 @@ public class ScholarshipInfo extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

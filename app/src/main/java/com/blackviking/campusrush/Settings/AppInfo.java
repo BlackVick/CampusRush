@@ -32,6 +32,5 @@ public class AppInfo extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         finish();
-        overridePendingTransition(R.anim.slide_right, R.anim.slide_right);
     }
 }

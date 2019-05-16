@@ -204,4 +204,9 @@ public class SkitManagement extends AppCompatActivity {
         adapter.notifyDataSetChanged();
 
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

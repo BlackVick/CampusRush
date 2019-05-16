@@ -86,7 +86,14 @@ public class GameInfo extends AppCompatActivity {
         exitActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                if (gameWebPage.canGoBack()){
+
+                    gameWebPage.goBack();
+
+                } else {
+
+                    finish();
+                }
             }
         });
 

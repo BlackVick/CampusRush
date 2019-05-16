@@ -10,7 +10,7 @@
     <TextView
         android:id="@+id/faqItem"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
