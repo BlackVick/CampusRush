@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import io.paperdb.Paper;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
@@ -122,6 +123,15 @@ public class UserVerification extends AppCompatActivity {
                     if (mAuth.getCurrentUser().isEmailVerified()) {
 
                         Paper.book().write(Common.USER_ID, currentUid);
+
+                        FirebaseMessaging.getInstance().subscribeToTopic(currentUid);
+                        Paper.book().write(Common.NOTIFICATION_STATE, "true");
+
+                        FirebaseMessaging.getInstance().subscribeToTopic(Common.FEED_NOTIFICATION_TOPIC+currentUid);
+                        Paper.book().write(Common.MY_FEED_NOTIFICATION_STATE, "true");
+
+                        FirebaseMessaging.getInstance().subscribeToTopic(Common.FEED_NOTIFICATION_TOPIC);
+                        Paper.book().write(Common.FEED_NOTIFICATION_TOPIC, "true");
 
                         Intent homeIntent = new Intent(UserVerification.this, Home.class);
                         startActivity(homeIntent);

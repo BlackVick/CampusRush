@@ -1,10 +1,19 @@
 package com.blackviking.campusrush;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,6 +24,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.blackviking.campusrush.Common.Common;
@@ -30,12 +40,14 @@ import com.blackviking.campusrush.Plugins.SkitCenter.SkitCenter;
 import com.blackviking.campusrush.Plugins.Vacancies.Vacancies;
 import com.blackviking.campusrush.Profile.MyProfile;
 import com.blackviking.campusrush.Settings.Settings;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -50,11 +62,12 @@ public class Home extends AppCompatActivity
 
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
-    private DatabaseReference userRef;
+    private DatabaseReference userRef, rateRef;
     private CircleImageView userImage;
     private TextView userFullName, userName;
     private ImageView feed, materials, feedUpdate, campusRant, account;
     private DrawerLayout rootLayout;
+    private BroadcastReceiver mMessageReceiver = null;
     private String currentUid;
 
     @Override
@@ -80,10 +93,12 @@ public class Home extends AppCompatActivity
 
         /*---   LOCAL   ---*/
         Paper.init(this);
+        Paper.book().write(Common.APP_STATE, "Foreground");
 
 
         /*---   FIREBASE   ---*/
         userRef = db.getReference("Users");
+        rateRef = db.getReference("Rating");
         if (mAuth.getCurrentUser() != null)
             currentUid = mAuth.getCurrentUser().getUid();
 
@@ -128,6 +143,13 @@ public class Home extends AppCompatActivity
                 if (security.equalsIgnoreCase("Danger")){
 
                     Paper.book().destroy();
+
+                    FirebaseMessaging.getInstance().unsubscribeFromTopic(currentUid);
+                    FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.FEED_NOTIFICATION_TOPIC+currentUid);
+                    FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.FEED_NOTIFICATION_TOPIC);
+                    FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.SKIT_NOTIFICATION_TOPIC);
+                    FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.GAMERS_NOTIFICATION_TOPIC);
+
                     mAuth.signOut();
                     Intent signoutIntent = new Intent(Home.this, Login.class);
                     signoutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -175,12 +197,51 @@ public class Home extends AppCompatActivity
             }
         });
 
+        /*---   RATING   ---*/
+        rateRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                String rateStatus = dataSnapshot.child("status").getValue().toString();
+
+                if (rateStatus.equalsIgnoreCase("Active")){
+
+                    openRatingDialog();
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
         /*---   DRAWER LAYOUT   ---*/
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, rootLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         rootLayout.addDrawerListener(toggle);
         toggle.syncState();
+
+
+        /*---   IN APP NOTIFICATION   ---*/
+        mMessageReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String message = intent.getStringExtra("Message");
+
+                Snackbar snackbar = Snackbar
+                        .make(rootLayout, message, Snackbar.LENGTH_LONG);
+                View sbView = snackbar.getView();
+                TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+                textView.setTextColor(Color.WHITE);
+                sbView.setBackgroundColor(ContextCompat.getColor(Home.this, R.color.colorPrimaryDark));
+                snackbar.setDuration(2500);
+                snackbar.show();
+            }
+        };
 
 
         /*---   BOTTOM NAVIGATION   ---*/
@@ -263,6 +324,36 @@ public class Home extends AppCompatActivity
         /*---   SET BASE FRAGMENT   ---*/
         setBaseFragment(feedFragment, toolbar);
 
+
+    }
+
+    private void openRatingDialog() {
+
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setTitle("Rate Us !")
+                .setIcon(R.drawable.ic_rate_us)
+                .setMessage("How well do you like Campus Rush and how likely are you to recommend to a friend?\n\nLet us know on Playstore.\nRate Now?")
+                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+                        Intent rateIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getApplicationContext().getPackageName()));
+                        startActivity(rateIntent);
+
+                    }
+                })
+                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+
+        alertDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
+
+        alertDialog.show();
 
     }
 
@@ -371,6 +462,13 @@ public class Home extends AppCompatActivity
         } else if (id == R.id.nav_sign_out) {
 
             Paper.book().destroy();
+
+            FirebaseMessaging.getInstance().unsubscribeFromTopic(currentUid);
+            FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.FEED_NOTIFICATION_TOPIC+currentUid);
+            FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.FEED_NOTIFICATION_TOPIC);
+            FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.SKIT_NOTIFICATION_TOPIC);
+            FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.GAMERS_NOTIFICATION_TOPIC);
+
             mAuth.signOut();
             Intent signoutIntent = new Intent(Home.this, Login.class);
             signoutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -382,5 +480,21 @@ public class Home extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        /*---   ONLINE STATE   ---*/
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("NOTIFICATION_BROADCAST"));
+        Paper.book().write(Common.APP_STATE, "Foreground");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        /*---   ONLINE STATE   ---*/
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+        Paper.book().write(Common.APP_STATE, "Background");
     }
 }

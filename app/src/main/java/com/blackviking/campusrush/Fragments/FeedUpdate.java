@@ -26,12 +26,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.blackviking.campusrush.BuildConfig;
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.Common.Permissions;
 import com.blackviking.campusrush.Home;
 import com.blackviking.campusrush.Model.FeedModel;
+import com.blackviking.campusrush.Notification.APIService;
+import com.blackviking.campusrush.Notification.DataMessage;
+import com.blackviking.campusrush.Notification.MyResponse;
 import com.blackviking.campusrush.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -65,6 +69,8 @@ import java.util.Map;
 import dmax.dialog.SpotsDialog;
 import id.zelory.compressor.Compressor;
 import io.paperdb.Paper;
+import retrofit2.Call;
+import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -89,6 +95,7 @@ public class FeedUpdate extends Fragment {
     private StorageReference imageRef;
     private String originalImageUrl, thumbDownloadUrl;
     private String privacyState, userType;
+    private APIService mService;
 
     public FeedUpdate() {
         // Required empty public constructor
@@ -101,6 +108,10 @@ public class FeedUpdate extends Fragment {
 
         /*---   PAPER DB   ---*/
         Paper.init(getContext());
+
+
+        /*---   FCM   ---*/
+        mService = Common.getFCMService();
 
 
         /*---   FIREBASE   ---*/
@@ -207,6 +218,8 @@ public class FeedUpdate extends Fragment {
                     final String pushId = pushRef.getKey();
                     updateRef.child(pushId).setValue(newFeedMap);
 
+                    sendNewFeedNotification(pushId);
+
                     Intent i = new Intent(getContext(), Home.class);
                     startActivity(i);
                     getActivity().finish();
@@ -239,6 +252,8 @@ public class FeedUpdate extends Fragment {
                     final String pushId = pushRef.getKey();
                     updateRef.child(pushId).setValue(newFeedMap);
 
+                    sendNewFeedNotification(pushId);
+
                     Intent i = new Intent(getContext(), Home.class);
                     startActivity(i);
                     getActivity().finish();
@@ -256,6 +271,43 @@ public class FeedUpdate extends Fragment {
             Common.showErrorDialog(getContext(), "Update Has To Contain Valid Stuff . . .");
 
         }
+
+    }
+
+    private void sendNewFeedNotification(final String pushId) {
+
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                String userName = dataSnapshot.child("username").getValue().toString();
+
+                Map<String, String> dataSend = new HashMap<>();
+                dataSend.put("title", "New Feed");
+                dataSend.put("message", "@"+userName+" Just dropped a new post check it out");
+                dataSend.put("feed_id", pushId);
+                DataMessage dataMessage = new DataMessage(new StringBuilder("/topics/").append(Common.FEED_NOTIFICATION_TOPIC).toString(), dataSend);
+
+                mService.sendNotification(dataMessage)
+                        .enqueue(new retrofit2.Callback<MyResponse>() {
+                            @Override
+                            public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<MyResponse> call, Throwable t) {
+                                Toast.makeText(getContext(), "Error sending notification", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 

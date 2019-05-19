@@ -22,6 +22,7 @@ import android.widget.PopupMenu;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.FeedDetails;
@@ -178,7 +179,7 @@ public class Account extends Fragment {
                 FeedModel.class,
                 R.layout.feed_item,
                 FeedViewHolder.class,
-                myTimeline
+                myTimeline.limitToLast(50)
         ) {
             @Override
             protected void populateViewHolder(final FeedViewHolder viewHolder, final FeedModel model, final int position) {
@@ -209,7 +210,7 @@ public class Account extends Fragment {
                                                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                     @Override
                                                                     public void onSuccess(Void aVoid) {
-                                                                        Snackbar.make(getView(), "Update Deleted !", Snackbar.LENGTH_LONG).show();
+                                                                        Toast.makeText(getContext(), "Deleted", Toast.LENGTH_SHORT).show();
                                                                     }
                                                                 });
 
@@ -239,11 +240,6 @@ public class Account extends Fragment {
 
                                         return true;
 
-                                    case R.id.action_feed_stop_notification:
-
-                                        openNotificationDialog(adapter.getRef(position).getKey());
-
-                                        return true;
                                     default:
                                         return false;
                                 }

@@ -162,7 +162,7 @@ public class SkitCenter extends AppCompatActivity {
                 SkitModel.class,
                 R.layout.skit_item,
                 SkitViewHolder.class,
-                skitRef.orderByChild("status").equalTo("Approved")
+                skitRef.orderByChild("status").equalTo("Approved").limitToLast(50)
         ) {
             @Override
             protected void populateViewHolder(final SkitViewHolder viewHolder, final SkitModel model, int position) {

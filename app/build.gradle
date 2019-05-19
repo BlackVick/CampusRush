@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 28
@@ -68,7 +69,6 @@ dependencies {
     implementation 'com.iceteck.silicompressorr:silicompressor:2.1'
     implementation 'id.zelory:compressor:2.1.0'
     implementation 'com.squareup.picasso:picasso:2.5.2'
-    implementation 'com.github.aryarohit07:picasso-facedetection-transformation:0.3.0'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.+'
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'

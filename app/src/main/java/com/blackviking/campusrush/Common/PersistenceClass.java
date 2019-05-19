@@ -7,6 +7,8 @@ import android.app.NotificationManager;
 import android.media.AudioAttributes;
 import android.net.Uri;
 import android.os.Build;
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 
 import com.blackviking.campusrush.R;
 import com.google.firebase.database.FirebaseDatabase;
@@ -19,13 +21,17 @@ import com.squareup.picasso.Picasso;
 
 public class PersistenceClass extends Application {
 
-    public static final String CHANNEL_1_ID = "messagingChannel";
-    public static final String CHANNEL_2_ID = "feedChannel";
-    public static final String CHANNEL_3_ID = "accountChannel";
+    public static final String CHANNEL_1_ID = "FeedChannel";
+    public static final String CHANNEL_2_ID = "AdminChannel";
+    public static final String CHANNEL_3_ID = "AccountChannel";
+    public static final String CHANNEL_4_ID = "GamersChannel";
+    public static final String CHANNEL_5_ID = "SkitChannel";
 
     @Override
     public void onCreate() {
         super.onCreate();
+
+        Fabric.with(this, new Crashlytics());
 
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
@@ -37,7 +43,7 @@ public class PersistenceClass extends Application {
         built.setLoggingEnabled(true);
         Picasso.setSingletonInstance(built);
 
-        /*createNotificationChannels();*/
+        createNotificationChannels();
 
     }
 
@@ -55,37 +61,74 @@ public class PersistenceClass extends Application {
 
             NotificationChannel channel1 = new NotificationChannel(
                     CHANNEL_1_ID,
-                    "Messaging",
+                    "FeedChannel",
                     NotificationManager.IMPORTANCE_HIGH
             );
             channel1.enableVibration(true);
             channel1.enableLights(true);
             channel1.setShowBadge(true);
-            channel1.setDescription("Messaging Channel");
+            channel1.setDescription("Feed Channel");
             channel1.setSound(sound, attributes);
-            channel1.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+
+
 
             NotificationChannel channel2 = new NotificationChannel(
                     CHANNEL_2_ID,
-                    "Hosh Feed",
+                    "AdminChannel",
                     NotificationManager.IMPORTANCE_DEFAULT
             );
-            channel2.setDescription("Feed Channel");
+            channel1.enableVibration(true);
+            channel1.enableLights(true);
+            channel1.setShowBadge(true);
+            channel2.setDescription("Admin Channel");
             channel2.setSound(sound, attributes);
+
+
 
             NotificationChannel channel3 = new NotificationChannel(
                     CHANNEL_3_ID,
-                    "Account",
+                    "AccountChannel",
                     NotificationManager.IMPORTANCE_DEFAULT
             );
+            channel1.enableVibration(true);
+            channel1.enableLights(true);
+            channel1.setShowBadge(true);
             channel3.setDescription("Account Channel");
             channel3.setSound(sound, attributes);
+
+
+
+            NotificationChannel channel4 = new NotificationChannel(
+                    CHANNEL_4_ID,
+                    "GamersChannel",
+                    NotificationManager.IMPORTANCE_DEFAULT
+            );
+            channel1.enableVibration(true);
+            channel1.enableLights(true);
+            channel1.setShowBadge(true);
+            channel4.setDescription("Gamers Channel");
+            channel4.setSound(sound, attributes);
+
+
+
+            NotificationChannel channel5 = new NotificationChannel(
+                    CHANNEL_5_ID,
+                    "SkitChannel",
+                    NotificationManager.IMPORTANCE_DEFAULT
+            );
+            channel1.enableVibration(true);
+            channel1.enableLights(true);
+            channel1.setShowBadge(true);
+            channel5.setDescription("Skit Channel");
+            channel5.setSound(sound, attributes);
 
 
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel1);
             manager.createNotificationChannel(channel2);
             manager.createNotificationChannel(channel3);
+            manager.createNotificationChannel(channel4);
+            manager.createNotificationChannel(channel5);
         }
 
     }

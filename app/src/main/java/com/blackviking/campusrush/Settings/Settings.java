@@ -2,6 +2,7 @@ package com.blackviking.campusrush.Settings;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,7 +20,7 @@ public class Settings extends AppCompatActivity {
 
     private TextView activityName;
     private ImageView exitActivity, helpActivity;
-    private LinearLayout accountSetting, notificationSetting, inviteFriends, helpSettings;
+    private LinearLayout accountSetting, notificationSetting, inviteFriends, helpSettings, rateLayout;
     private RelativeLayout appInfoSetting;
 
     @Override
@@ -48,6 +49,7 @@ public class Settings extends AppCompatActivity {
         notificationSetting = (LinearLayout)findViewById(R.id.notificationSettingLayout);
         inviteFriends = (LinearLayout)findViewById(R.id.inviteFriendsLayout);
         helpSettings = (LinearLayout)findViewById(R.id.helpLayout);
+        rateLayout = (LinearLayout)findViewById(R.id.rateLayout);
         appInfoSetting = (RelativeLayout)findViewById(R.id.appInfoLayout);
 
 
@@ -78,6 +80,9 @@ public class Settings extends AppCompatActivity {
         notificationSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent notificationIntent = new Intent(Settings.this, NotificationSetting.class);
+                startActivity(notificationIntent);
+                overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
             }
         });
 
@@ -102,6 +107,16 @@ public class Settings extends AppCompatActivity {
                 Intent helpIntent = new Intent(Settings.this, Help.class);
                 startActivity(helpIntent);
                 overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+            }
+        });
+
+
+        /*---   RATE US   ---*/
+        rateLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent rateIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getApplicationContext().getPackageName()));
+                startActivity(rateIntent);
             }
         });
 

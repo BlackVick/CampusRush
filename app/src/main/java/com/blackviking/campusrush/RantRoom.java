@@ -33,6 +33,7 @@ import android.widget.Toast;
 
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.Common.GetTimeAgo;
+import com.blackviking.campusrush.ImageController.ImageViewer;
 import com.blackviking.campusrush.Model.RantModel;
 import com.blackviking.campusrush.Profile.MyProfile;
 import com.blackviking.campusrush.Settings.Help;
@@ -278,6 +279,18 @@ public class RantRoom extends AppCompatActivity {
                                             .into(viewHolder.rantImage);
                                 }
                             });
+
+
+                    viewHolder.rantImage.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent rantImageIntent = new Intent(RantRoom.this, ImageViewer.class);
+                            rantImageIntent.putExtra("ImageLink", model.getRantImage());
+                            rantImageIntent.putExtra("ImageThumbLink", model.getRantImageThumb());
+                            startActivity(rantImageIntent);
+                            overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+                        }
+                    });
 
                 } else {
 

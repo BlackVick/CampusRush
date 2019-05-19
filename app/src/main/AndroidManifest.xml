@@ -21,6 +21,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".Settings.NotificationSetting"></activity>
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="97c5e0bb9711d1cf829d94e2147e8567b6542b37"
+            tools:replace="android:value" />
+
         <activity
             android:name=".Splash"
             android:theme="@style/SplashTheme">
@@ -47,6 +54,16 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/Base.Theme.AppCompat" />
+
+        <service
+            android:name=".Notification.MyFirebaseMessaging"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".Login"
             android:theme="@style/LoginBackground" />
@@ -99,7 +116,7 @@
         <activity android:name=".Plugins.SkitCenter.AddNewSkit" />
         <activity android:name=".Plugins.SkitCenter.SkitManagement" />
         <activity android:name=".Plugins.Scholarships.ScholarshipInfo" />
-        <activity android:name=".Plugins.Vacancies.VacancyInfo"></activity>
+        <activity android:name=".Plugins.Vacancies.VacancyInfo" />
     </application>
 
 </manifest>

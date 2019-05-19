@@ -29,12 +29,16 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.FeedDetails;
 import com.blackviking.campusrush.ImageController.BlurImage;
 import com.blackviking.campusrush.ImageController.ImageViewer;
 import com.blackviking.campusrush.Model.FeedModel;
+import com.blackviking.campusrush.Notification.APIService;
+import com.blackviking.campusrush.Notification.DataMessage;
+import com.blackviking.campusrush.Notification.MyResponse;
 import com.blackviking.campusrush.R;
 import com.blackviking.campusrush.ViewHolder.FeedViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -79,6 +83,7 @@ public class OtherUserProfile extends AppCompatActivity {
     private FirebaseRecyclerAdapter<FeedModel, FeedViewHolder> adapter;
     private Target target;
     private String offenceString = "";
+    private APIService mService;
     private String serverUsername, serverFullName, serverGender, serverStatus, serverDepartment, serverBio, serverProfilePictureThumb, serverProfilePicture;
 
     @Override
@@ -106,6 +111,10 @@ public class OtherUserProfile extends AppCompatActivity {
 
         /*---   LOCAL   ---*/
         Paper.init(this);
+
+
+        /*---   FCM   ---*/
+        mService = Common.getFCMService();
 
 
         /*---   INTENT DATA   ---*/
@@ -165,7 +174,7 @@ public class OtherUserProfile extends AppCompatActivity {
                 FeedModel.class,
                 R.layout.feed_item,
                 FeedViewHolder.class,
-                myTimeline
+                myTimeline.limitToLast(50)
         ) {
             @Override
             protected void populateViewHolder(final FeedViewHolder viewHolder, final FeedModel model, final int position) {
@@ -287,6 +296,8 @@ public class OtherUserProfile extends AppCompatActivity {
                                 @Override
                                 public void onClick(View v) {
                                     likeRef.child(feedId).child(currentUid).setValue("liked");
+                                    sendLikeNotification(feedId);
+
                                 }
                             });
 
@@ -364,6 +375,43 @@ public class OtherUserProfile extends AppCompatActivity {
 
     }
 
+    private void sendLikeNotification(final String feedId) {
+
+        userRef.child(currentUid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                String userName = dataSnapshot.child("username").getValue().toString();
+
+                Map<String, String> dataSend = new HashMap<>();
+                dataSend.put("title", "Campus Feed");
+                dataSend.put("message", "@"+userName+" Just Liked Your Post");
+                dataSend.put("feed_id", feedId);
+                DataMessage dataMessage = new DataMessage(new StringBuilder("/topics/").append(Common.FEED_NOTIFICATION_TOPIC+userId).toString(), dataSend);
+
+                mService.sendNotification(dataMessage)
+                        .enqueue(new retrofit2.Callback<MyResponse>() {
+                            @Override
+                            public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<MyResponse> call, Throwable t) {
+                                Toast.makeText(OtherUserProfile.this, "Error Sending Notification", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
     private void openReportDialog(final String sender) {
 
         final android.app.AlertDialog alertDialog = new android.app.AlertDialog.Builder(OtherUserProfile.this).create();
@@ -433,7 +481,7 @@ public class OtherUserProfile extends AppCompatActivity {
 
                     if (offenceString.equals("") || TextUtils.isEmpty(offenceDetails.getText().toString())){
 
-                        Snackbar.make(rootLayout, "Invalid Report", Snackbar.LENGTH_SHORT).show();
+                        Toast.makeText(OtherUserProfile.this, "Invalid Report", Toast.LENGTH_SHORT).show();
 
                     } else {
 
@@ -446,7 +494,7 @@ public class OtherUserProfile extends AppCompatActivity {
                         reportRef.push().setValue(reportUserMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Snackbar.make(rootLayout, "Snitch", Snackbar.LENGTH_SHORT).show();
+                                Toast.makeText(OtherUserProfile.this, "B***h Snitch", Toast.LENGTH_SHORT).show();
                             }
                         });
 
@@ -454,7 +502,7 @@ public class OtherUserProfile extends AppCompatActivity {
 
                 }else {
 
-                    Snackbar.make(rootLayout, "No Internet Access !", Snackbar.LENGTH_LONG).show();
+                    Common.showErrorDialog(OtherUserProfile.this, "No Internet Access !");
                 }
                 alertDialog.dismiss();
 

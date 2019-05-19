@@ -28,10 +28,14 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.FeedDetails;
 import com.blackviking.campusrush.Model.FeedModel;
+import com.blackviking.campusrush.Notification.APIService;
+import com.blackviking.campusrush.Notification.DataMessage;
+import com.blackviking.campusrush.Notification.MyResponse;
 import com.blackviking.campusrush.Profile.MyProfile;
 import com.blackviking.campusrush.Profile.OtherUserProfile;
 import com.blackviking.campusrush.R;
@@ -71,6 +75,7 @@ public class Feed extends Fragment {
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private DatabaseReference feedRef, userRef, likeRef, commentRef;
     private String offenceString = "";
+    private APIService mService;
 
     public Feed() {
         // Required empty public constructor
@@ -85,6 +90,10 @@ public class Feed extends Fragment {
 
         /*---   PAPER DB   ---*/
         Paper.init(getContext());
+
+
+        /*---   FCM   ---*/
+        mService = Common.getFCMService();
 
 
         /*---   FIREBASE   ---*/
@@ -119,7 +128,7 @@ public class Feed extends Fragment {
                 FeedModel.class,
                 R.layout.feed_item,
                 FeedViewHolder.class,
-                feedRef.limitToLast(50)
+                feedRef.limitToLast(75)
         ) {
             @Override
             protected void populateViewHolder(final FeedViewHolder viewHolder, final FeedModel model, final int position) {
@@ -152,7 +161,7 @@ public class Feed extends Fragment {
                                                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                         @Override
                                                                         public void onSuccess(Void aVoid) {
-                                                                            Snackbar.make(getView(), "Update Deleted !", Snackbar.LENGTH_LONG).show();
+                                                                            Toast.makeText(getContext(), "Deleted", Toast.LENGTH_SHORT).show();
                                                                         }
                                                                     });
 
@@ -182,11 +191,6 @@ public class Feed extends Fragment {
 
                                             return true;
 
-                                        case R.id.action_feed_stop_notification:
-
-                                            openNotificationDialog(adapter.getRef(position).getKey());
-
-                                            return true;
                                         default:
                                             return false;
                                     }
@@ -352,7 +356,6 @@ public class Feed extends Fragment {
 
                     }
 
-
                 }
 
 
@@ -436,7 +439,7 @@ public class Feed extends Fragment {
                                     likeRef.child(feedId).child(currentUid).setValue("liked");
 
                                     if (!model.getSender().equalsIgnoreCase(currentUid)){
-                                        sendLikeNotification(feedId);
+                                        sendLikeNotification(adapter.getRef(position).getKey(), model.getRealSender());
                                     }
                                 }
                             });
@@ -515,60 +518,6 @@ public class Feed extends Fragment {
 
     }
 
-    private void openNotificationDialog(final String key) {
-
-        final android.app.AlertDialog alertDialog = new android.app.AlertDialog.Builder(getContext()).create();
-        LayoutInflater inflater = this.getLayoutInflater();
-        View viewOptions = inflater.inflate(R.layout.feed_notification_layout,null);
-
-        final RadioGroup notificationGroup = (RadioGroup) viewOptions.findViewById(R.id.notificationGroup);
-        final RadioButton notificationOn = (RadioButton) viewOptions.findViewById(R.id.notificationOn);
-        final RadioButton notificationOff = (RadioButton) viewOptions.findViewById(R.id.notificationOff);
-        String notiState = Paper.book().read(Common.FEED_NOTIFICATION_TOPIC+key);
-
-        /*---   NOTIFICATION SWITCH SETTINGS HANDLER   ---*/
-        if (notiState == null || TextUtils.isEmpty(notiState) || notiState.equals("false")) {
-            notificationOff.setChecked(true);
-            notificationOn.setChecked(false);
-        } else {
-            notificationOff.setChecked(false);
-            notificationOn.setChecked(true);
-        }
-
-        notificationGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId){
-
-                    case R.id.notificationOn:
-                        FirebaseMessaging.getInstance().subscribeToTopic(Common.FEED_NOTIFICATION_TOPIC+key);
-                        Paper.book().write(Common.FEED_NOTIFICATION_TOPIC+key, "true");
-
-                    case R.id.notificationOff:
-                        FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.FEED_NOTIFICATION_TOPIC+key);
-                        Paper.book().write(Common.FEED_NOTIFICATION_TOPIC+key, "false");
-                }
-            }
-        });
-
-        alertDialog.setView(viewOptions);
-
-        alertDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
-
-        alertDialog.getWindow().setGravity(Gravity.BOTTOM);
-        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-
-        WindowManager.LayoutParams layoutParams = alertDialog.getWindow().getAttributes();
-        //layoutParams.x = 100; // left margin
-        layoutParams.y = 200; // bottom margin
-        alertDialog.getWindow().setAttributes(layoutParams);
-
-
-        alertDialog.show();
-
-    }
-
     private void openReportDialog(final String sender) {
 
         final android.app.AlertDialog alertDialog = new android.app.AlertDialog.Builder(getContext()).create();
@@ -638,7 +587,7 @@ public class Feed extends Fragment {
 
                     if (offenceString.equals("") || TextUtils.isEmpty(offenceDetails.getText().toString())){
 
-                        Snackbar.make(getView(), "Invalid Report", Snackbar.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Invalid Report", Toast.LENGTH_SHORT).show();
 
                     } else {
 
@@ -651,7 +600,7 @@ public class Feed extends Fragment {
                         reportRef.push().setValue(reportUserMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Snackbar.make(getView(), "Snitch", Snackbar.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "B***h Snitch", Toast.LENGTH_SHORT).show();
                             }
                         });
 
@@ -659,7 +608,7 @@ public class Feed extends Fragment {
 
                 }else {
 
-                    Snackbar.make(getView(), "No Internet Access !", Snackbar.LENGTH_LONG).show();
+                    Common.showErrorDialog(getContext(), "No Internet Access !");
                 }
                 alertDialog.dismiss();
 
@@ -670,19 +619,19 @@ public class Feed extends Fragment {
 
     }
 
-    private void sendLikeNotification(final String feedId) {
+    private void sendLikeNotification(final String feedId, final String feederId) {
 
-        /*userRef.child(currentUid).addListenerForSingleValueEvent(new ValueEventListener() {
+        userRef.child(currentUid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                String userName = dataSnapshot.child("userName").getValue().toString();
+                String userName = dataSnapshot.child("username").getValue().toString();
 
                 Map<String, String> dataSend = new HashMap<>();
-                dataSend.put("title", "Hosh Feed");
+                dataSend.put("title", "Campus Feed");
                 dataSend.put("message", "@"+userName+" Just Liked Your Post");
                 dataSend.put("feed_id", feedId);
-                DataMessage dataMessage = new DataMessage(new StringBuilder("/topics/").append(Common.FEED_NOTIFICATION_TOPIC+feedId).toString(), dataSend);
+                DataMessage dataMessage = new DataMessage(new StringBuilder("/topics/").append(Common.FEED_NOTIFICATION_TOPIC+feederId).toString(), dataSend);
 
                 mService.sendNotification(dataMessage)
                         .enqueue(new retrofit2.Callback<MyResponse>() {
@@ -693,7 +642,7 @@ public class Feed extends Fragment {
 
                             @Override
                             public void onFailure(Call<MyResponse> call, Throwable t) {
-                                Snackbar.make(getView(), "Error Sending Notification !", Snackbar.LENGTH_LONG).show();
+                                Toast.makeText(getContext(), "Error Sending Notification", Toast.LENGTH_SHORT).show();
                             }
                         });
 
@@ -703,7 +652,7 @@ public class Feed extends Fragment {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });*/
+        });
 
     }
 

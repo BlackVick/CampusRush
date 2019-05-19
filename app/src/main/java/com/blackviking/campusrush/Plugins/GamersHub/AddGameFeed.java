@@ -27,12 +27,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.blackviking.campusrush.BuildConfig;
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.Common.Permissions;
 import com.blackviking.campusrush.Fragments.FeedUpdate;
 import com.blackviking.campusrush.Home;
+import com.blackviking.campusrush.Notification.APIService;
+import com.blackviking.campusrush.Notification.DataMessage;
+import com.blackviking.campusrush.Notification.MyResponse;
+import com.blackviking.campusrush.Plugins.SkitCenter.SkitDetails;
 import com.blackviking.campusrush.R;
 import com.blackviking.campusrush.Settings.Help;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -61,6 +66,8 @@ import java.util.Map;
 
 import dmax.dialog.SpotsDialog;
 import id.zelory.compressor.Compressor;
+import retrofit2.Call;
+import retrofit2.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -69,7 +76,7 @@ public class AddGameFeed extends AppCompatActivity {
     private TextView activityName;
     private ImageView exitActivity, helpActivity;
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
-    private DatabaseReference gameFeedRef;
+    private DatabaseReference gameFeedRef, pushRef;
     private ImageView updateImage;
     private EditText updateText, title;
     private Button updateShare;
@@ -81,6 +88,7 @@ public class AddGameFeed extends AppCompatActivity {
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference imageRef;
     private String originalImageUrl, thumbDownloadUrl;
+    private APIService mService;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -98,6 +106,10 @@ public class AddGameFeed extends AppCompatActivity {
                 .build());
 
         setContentView(R.layout.activity_add_game_feed);
+
+
+        /*---   FCM   ---*/
+        mService = Common.getFCMService();
 
 
         /*---   FIREBASE   ---*/
@@ -165,7 +177,6 @@ public class AddGameFeed extends AppCompatActivity {
         });
     }
 
-
     private void shareUpdate() {
 
         final String theUpdate = updateText.getText().toString().trim();
@@ -179,6 +190,9 @@ public class AddGameFeed extends AppCompatActivity {
 
             if (Common.isConnectedToInternet(AddGameFeed.this)){
 
+                pushRef = gameFeedRef.push();
+                final String pushId = pushRef.getKey();
+
                 if (imageUri != null || originalImageUrl != null || thumbDownloadUrl != null){
 
                     if (!TextUtils.isEmpty(theTitle)) {
@@ -190,10 +204,11 @@ public class AddGameFeed extends AppCompatActivity {
                         newFeedMap.put("description", theUpdate);
                         newFeedMap.put("timeStamp", ServerValue.TIMESTAMP);
 
-                        gameFeedRef.push().setValue(newFeedMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        gameFeedRef.child(pushId).setValue(newFeedMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
 
+                                sendNotification(pushId, theTitle);
                                 finish();
                             }
                         });
@@ -215,10 +230,11 @@ public class AddGameFeed extends AppCompatActivity {
                         newFeedMap.put("description", theUpdate);
                         newFeedMap.put("timeStamp", ServerValue.TIMESTAMP);
 
-                        gameFeedRef.push().setValue(newFeedMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        gameFeedRef.child(pushId).setValue(newFeedMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
 
+                                sendNotification(pushId, theTitle);
                                 finish();
                             }
                         });
@@ -242,6 +258,29 @@ public class AddGameFeed extends AppCompatActivity {
             Common.showErrorDialog(AddGameFeed.this, "Update Has To Contain Valid Stuff . . .");
 
         }
+
+    }
+
+    private void sendNotification(String pushId, String notiTitle) {
+
+        Map<String, String> dataSend = new HashMap<>();
+        dataSend.put("title", "Gamers Hub");
+        dataSend.put("message", notiTitle);
+        dataSend.put("game_feed_id", pushId);
+        DataMessage dataMessage = new DataMessage(new StringBuilder("/topics/").append(Common.GAMERS_NOTIFICATION_TOPIC).toString(), dataSend);
+
+        mService.sendNotification(dataMessage)
+                .enqueue(new retrofit2.Callback<MyResponse>() {
+                    @Override
+                    public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<MyResponse> call, Throwable t) {
+                        Toast.makeText(AddGameFeed.this, "Error sending notification", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
     }
 

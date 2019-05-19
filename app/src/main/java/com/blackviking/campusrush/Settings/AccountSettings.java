@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.Home;
 import com.blackviking.campusrush.Login;
 import com.blackviking.campusrush.R;
@@ -141,6 +142,14 @@ public class AccountSettings extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
 
                         Paper.book().destroy();
+
+                        FirebaseMessaging.getInstance().unsubscribeFromTopic(currentUid);
+                        FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.FEED_NOTIFICATION_TOPIC+currentUid);
+                        FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.FEED_NOTIFICATION_TOPIC);
+                        FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.SKIT_NOTIFICATION_TOPIC);
+                        FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.GAMERS_NOTIFICATION_TOPIC);
+
+
                         mAuth.signOut();
                         Intent signoutIntent = new Intent(AccountSettings.this, Login.class);
                         signoutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

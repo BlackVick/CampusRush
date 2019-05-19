@@ -92,6 +92,15 @@
                         android:id="@+id/currentLikeCount"
                         android:layout_marginStart="5dp"/>
 
+                    <ImageView
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"
+                        android:src="@drawable/ic_file_download"
+                        android:adjustViewBounds="true"
+                        android:layout_marginStart="24dp"
+                        android:layout_gravity="end|center"
+                        android:id="@+id/downloadSkit"/>
+
                 </LinearLayout>
 
                 <LinearLayout

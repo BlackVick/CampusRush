@@ -2,9 +2,7 @@
 
 buildscript {
     repositories {
-        maven {
-            url 'https://maven.fabric.io/public'
-        }
+        maven { url 'https://maven.fabric.io/public' }
         mavenCentral()
         google()
         jcenter()
@@ -12,7 +10,9 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.3.2'
         classpath 'com.google.gms:google-services:4.0.1'
-        
+        classpath 'io.fabric.tools:gradle:1.+'
+
+
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -28,9 +28,7 @@ allprojects {
         maven {
             url 'https://dl.bintray.com/glomadrian/maven'
         }
-        maven {
-            url 'https://maven.fabric.io/public'
-        }
+        maven { url 'https://maven.fabric.io/public' }
         jcenter()
     }
 }

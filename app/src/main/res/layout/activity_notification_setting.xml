@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    tools:context=".Settings.NotificationSetting">
+
+    <include layout="@layout/snippet_for_general"/>
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="?attr/actionBarSize">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/white"
+                android:weightSum="10"
+                android:padding="4dp"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="8.5"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Personal Notification"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="22sp"
+                        android:gravity="start"
+                        android:padding="4dp"
+                        android:layout_gravity="center_vertical"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Get personal notifications from admin when your attention is needed"
+                        android:textColor="@color/black"
+                        android:textSize="17sp"
+                        android:gravity="start"
+                        android:padding="4dp"
+                        android:layout_gravity="center_vertical"/>
+
+                </LinearLayout>
+
+                <android.support.v7.widget.SwitchCompat
+                    android:layout_width="0dp"
+                    android:layout_weight="1.5"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:theme="@style/SCBSwitch"
+                    android:padding="5dp"
+                    android:id="@+id/personalNotificationSwitch"
+                    android:textOff="OFF"
+                    android:textOn="ON"
+                    android:textColor="@color/colorPrimary"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.4dp"
+                android:background="@color/black"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/white"
+                android:weightSum="10"
+                android:padding="4dp"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="8.5"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Campus Feed Notification"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="22sp"
+                        android:gravity="start"
+                        android:padding="4dp"
+                        android:layout_gravity="center_vertical"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Get notification when a new campus feed is uploaded by other users"
+                        android:textColor="@color/black"
+                        android:textSize="17sp"
+                        android:gravity="start"
+                        android:padding="4dp"
+                        android:layout_gravity="center_vertical"/>
+
+                </LinearLayout>
+
+                <android.support.v7.widget.SwitchCompat
+                    android:layout_width="0dp"
+                    android:layout_weight="1.5"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:theme="@style/SCBSwitch"
+                    android:padding="5dp"
+                    android:id="@+id/feedNotificationSwitch"
+                    android:textOff="OFF"
+                    android:textOn="ON"
+                    android:textColor="@color/colorPrimary"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.4dp"
+                android:background="@color/black"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/white"
+                android:weightSum="10"
+                android:padding="4dp"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="8.5"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="My Feed Notification"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="22sp"
+                        android:gravity="start"
+                        android:padding="4dp"
+                        android:layout_gravity="center_vertical"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Get personal notification when another user likes or comments on your posted feed"
+                        android:textColor="@color/black"
+                        android:textSize="17sp"
+                        android:gravity="start"
+                        android:padding="4dp"
+                        android:layout_gravity="center_vertical"/>
+
+                </LinearLayout>
+
+                <android.support.v7.widget.SwitchCompat
+                    android:layout_width="0dp"
+                    android:layout_weight="1.5"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:theme="@style/SCBSwitch"
+                    android:padding="5dp"
+                    android:id="@+id/myFeedNotificationSwitch"
+                    android:textOff="OFF"
+                    android:textOn="ON"
+                    android:textColor="@color/colorPrimary"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.4dp"
+                android:background="@color/black"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/white"
+                android:weightSum="10"
+                android:padding="4dp"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="8.5"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Gamers Hub Notification"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="22sp"
+                        android:gravity="start"
+                        android:padding="4dp"
+                        android:layout_gravity="center_vertical"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Get personal notification when there are new game items in Gamers Hub"
+                        android:textColor="@color/black"
+                        android:textSize="17sp"
+                        android:gravity="start"
+                        android:padding="4dp"
+                        android:layout_gravity="center_vertical"/>
+
+                </LinearLayout>
+
+                <android.support.v7.widget.SwitchCompat
+                    android:layout_width="0dp"
+                    android:layout_weight="1.5"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:theme="@style/SCBSwitch"
+                    android:padding="5dp"
+                    android:id="@+id/gamersNotificationSwitch"
+                    android:textOff="OFF"
+                    android:textOn="ON"
+                    android:textColor="@color/colorPrimary"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.4dp"
+                android:background="@color/black"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/white"
+                android:weightSum="10"
+                android:padding="4dp"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="8.5"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Skit Center Notification"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="22sp"
+                        android:gravity="start"
+                        android:padding="4dp"
+                        android:layout_gravity="center_vertical"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Get notification when a new skit goes online for streaming and download"
+                        android:textColor="@color/black"
+                        android:textSize="17sp"
+                        android:gravity="start"
+                        android:padding="4dp"
+                        android:layout_gravity="center_vertical"/>
+
+                </LinearLayout>
+
+                <android.support.v7.widget.SwitchCompat
+                    android:layout_width="0dp"
+                    android:layout_weight="1.5"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:theme="@style/SCBSwitch"
+                    android:padding="5dp"
+                    android:id="@+id/skitNotificationSwitch"
+                    android:textOff="OFF"
+                    android:textOn="ON"
+                    android:textColor="@color/colorPrimary"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

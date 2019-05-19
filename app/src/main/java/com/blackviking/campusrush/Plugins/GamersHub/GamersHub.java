@@ -153,7 +153,7 @@ public class GamersHub extends AppCompatActivity {
                 GameFeedModel.class,
                 R.layout.game_feed_item,
                 GameFeedViewHolder.class,
-                gameFeedRef
+                gameFeedRef.limitToLast(35)
         ) {
             @Override
             protected void populateViewHolder(final GameFeedViewHolder viewHolder, final GameFeedModel model, int position) {

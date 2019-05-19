@@ -25,6 +25,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.HashMap;
@@ -164,6 +165,15 @@ public class SignIn extends AppCompatActivity {
 
                 /*---   LOCAL   ---*/
                 Paper.book().write(Common.USER_ID, currentUid);
+
+                FirebaseMessaging.getInstance().subscribeToTopic(currentUid);
+                Paper.book().write(Common.NOTIFICATION_STATE, "true");
+
+                FirebaseMessaging.getInstance().subscribeToTopic(Common.FEED_NOTIFICATION_TOPIC+currentUid);
+                Paper.book().write(Common.MY_FEED_NOTIFICATION_STATE, "true");
+
+                FirebaseMessaging.getInstance().subscribeToTopic(Common.FEED_NOTIFICATION_TOPIC);
+                Paper.book().write(Common.FEED_NOTIFICATION_TOPIC, "true");
 
                 Intent checkForVerification = new Intent(SignIn.this, Home.class);
                 startActivity(checkForVerification);
