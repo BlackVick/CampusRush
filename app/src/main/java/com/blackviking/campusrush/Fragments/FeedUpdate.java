@@ -204,7 +204,7 @@ public class FeedUpdate extends Fragment {
                     /*---   PRIVACY   ---*/
                     if (privacyState.equalsIgnoreCase("public"))
                         newFeedMap.put("sender", currentUid);
-                    else if (privacyState.equalsIgnoreCase("classified"))
+                    else if (privacyState.equalsIgnoreCase("private"))
                         newFeedMap.put("sender", "");
 
                     newFeedMap.put("realSender", currentUid);

@@ -139,7 +139,7 @@ public class Feed extends Fragment {
                 /*---   OPTIONS   ---*/
 
                 final String feedId = adapter.getRef(position).getKey();
-                if (model.getSender().equals(currentUid)){
+                if (model.getRealSender().equals(currentUid)){
 
                     viewHolder.options.setOnClickListener(new View.OnClickListener() {
                         @Override

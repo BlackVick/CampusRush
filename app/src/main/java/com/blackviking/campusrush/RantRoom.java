@@ -233,7 +233,7 @@ public class RantRoom extends AppCompatActivity {
 
 
                 /*---   PRIVACY   ---*/
-                if (model.getRantPrivacyState().equalsIgnoreCase("classified")) {
+                if (model.getRantPrivacyState().equalsIgnoreCase("private")) {
 
                     viewHolder.rantUsername.setText("PROTECTED");
 

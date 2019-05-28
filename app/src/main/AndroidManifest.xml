@@ -18,6 +18,7 @@
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:launchMode="singleInstance"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
@@ -28,6 +29,8 @@
 
         <activity
             android:name=".Splash"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -64,58 +67,147 @@
 
         <activity
             android:name=".Login"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:theme="@style/LoginBackground" />
         <activity
             android:name=".SignUp"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:theme="@style/LoginBackground" />
         <activity
             android:name=".SignIn"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:theme="@style/LoginBackground" />
         <activity
             android:name=".UserVerification"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:theme="@style/LoginBackground" />
         <activity
             android:name=".Home"
             android:label="@string/title_activity_home"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".Settings.Settings"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".Settings.AppInfo"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:theme="@style/LoginBackground" />
         <activity
             android:name=".Settings.Help"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".Settings.Faq"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-        <activity android:name=".Settings.AccountSettings" />
-        <activity android:name=".Settings.PrivacySetting" />
-        <activity android:name=".FeedDetails" />
-        <activity android:name=".Profile.MyProfile" />
-        <activity android:name=".Profile.OtherUserProfile" />
-        <activity android:name=".RantRoom" />
-        <activity android:name=".Plugins.Awards.Awards" />
-        <activity android:name=".Plugins.Scholarships.Scholarships" />
-        <activity android:name=".Plugins.Vacancies.Vacancies" />
-        <activity android:name=".Plugins.GamersHub.GamersHub" />
-        <activity android:name=".Plugins.SkitCenter.SkitCenter" />
-        <activity android:name=".About" />
-        <activity android:name=".Plugins.GamersHub.GameInfo" />
-        <activity android:name=".Plugins.SkitCenter.SkitDetails" />
-        <activity android:name=".Plugins.Awards.AwardPolls" />
-        <activity android:name=".Plugins.Awards.PollCandidates" />
+        <activity
+            android:name=".Settings.AccountSettings"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Settings.PrivacySetting"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FeedDetails"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Profile.MyProfile"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Profile.OtherUserProfile"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".RantRoom"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Plugins.Awards.Awards"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Plugins.Scholarships.Scholarships"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Plugins.Vacancies.Vacancies"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Plugins.GamersHub.GamersHub"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Plugins.SkitCenter.SkitCenter"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".About"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Plugins.GamersHub.GameInfo"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Plugins.SkitCenter.SkitDetails"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Plugins.Awards.AwardPolls"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Plugins.Awards.PollCandidates"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ImageController.ImageViewer"
-            android:theme="@style/ImageViewTheme" />
-        <activity android:name=".Plugins.GamersHub.AddGameFeed" />
-        <activity android:name=".Plugins.GamersHub.GameFeedDetail" />
-        <activity android:name=".Plugins.SkitCenter.AddNewSkit" />
-        <activity android:name=".Plugins.SkitCenter.SkitManagement" />
-        <activity android:name=".Plugins.Scholarships.ScholarshipInfo" />
-        <activity android:name=".Plugins.Vacancies.VacancyInfo" />
-        <activity android:name=".Settings.NotificationSetting"></activity>
+            android:theme="@style/ImageViewTheme"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Plugins.GamersHub.AddGameFeed"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Plugins.GamersHub.GameFeedDetail"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Plugins.SkitCenter.AddNewSkit"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Plugins.SkitCenter.SkitManagement"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Plugins.Scholarships.ScholarshipInfo"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Plugins.Vacancies.VacancyInfo"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Settings.NotificationSetting"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
