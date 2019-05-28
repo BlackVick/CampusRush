@@ -13,7 +13,7 @@
 
 
             <stroke
-                android:color="@color/teenqGreen"
+                android:color="@color/green"
                 android:width="4dp"/>
             <corners
                 android:radius="10dp"/>

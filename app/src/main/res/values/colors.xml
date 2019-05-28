@@ -20,8 +20,9 @@
     <color name="ButtonSign">#1e90ff</color>
     <color name="transparentBTShaded">#3DD54A4A</color>
     <color name="proceed">#36FF8D</color>
-    <color name="teenqGreen">#007A35</color>
+    <color name="bvYellow">#C4B629</color>
     <color name="proceedTransparent">#3140FD3A</color>
+    <color name="green">#066903</color>
     <color name="rippleEffectColor">#8A972626</color>
     <color name="btnSignIn">#1fbad6</color>
     <color name="btnRegister">#83838c</color>

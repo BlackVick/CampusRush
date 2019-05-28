@@ -13,6 +13,7 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.FeedDetails;
+import com.blackviking.campusrush.Home;
 import com.blackviking.campusrush.Plugins.GamersHub.GameFeedDetail;
 import com.blackviking.campusrush.Plugins.SkitCenter.SkitDetails;
 import com.blackviking.campusrush.R;
@@ -179,10 +180,10 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
         /*---   MAIN NOTIFICATION LOGIC   ---*/
         if (title.equalsIgnoreCase("Campus Feed")) {
 
-            Intent feedIntent = new Intent(this, FeedDetails.class);
-            feedIntent.putExtra("CurrentFeedId", feedId);
+            Intent notificationsIntent = new Intent(this, Home.class);
+            notificationsIntent.putExtra("IntentInstruction", "Notification");
             PendingIntent contentIntent = PendingIntent.getActivity(this,
-                    0, feedIntent, 0);
+                    0, notificationsIntent, 0);
 
 
             Notification notification = new NotificationCompat.Builder(this, CHANNEL_1_ID)
@@ -190,7 +191,6 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
                     .setContentTitle(title)
                     .setContentText(message)
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
-                    .setCategory(NotificationCompat.CATEGORY_EVENT)
                     .setColor(getResources().getColor(R.color.colorPrimaryDark))
                     .setContentIntent(contentIntent)
                     .setAutoCancel(true)
@@ -199,30 +199,6 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
 
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.notify(1, notification);
-
-        } else if (title.equalsIgnoreCase("New Feed")) {
-
-            Intent feedIntent = new Intent(this, FeedDetails.class);
-            feedIntent.putExtra("CurrentFeedId", feedId);
-            PendingIntent contentIntent = PendingIntent.getActivity(this,
-                    0, feedIntent, 0);
-
-
-            Notification notification = new NotificationCompat.Builder(this, CHANNEL_1_ID)
-                    .setSmallIcon(R.drawable.ic_stat_campus_rush_notification)
-                    .setContentTitle(title)
-                    .setContentText(message)
-                    .setPriority(NotificationCompat.PRIORITY_HIGH)
-                    .setCategory(NotificationCompat.CATEGORY_EVENT)
-                    .setColor(getResources().getColor(R.color.colorPrimaryDark))
-                    .setContentIntent(contentIntent)
-                    .setAutoCancel(true)
-                    .addAction(R.drawable.campus_rush_red_logo, "View Feed", contentIntent)
-                    .build();
-
-            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.notify(2, notification);
-
 
         } else if (title.equalsIgnoreCase("Skit Approval")) {
 
@@ -238,7 +214,6 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
                     .setContentTitle(title)
                     .setContentText(message)
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
-                    .setCategory(NotificationCompat.CATEGORY_EVENT)
                     .setColor(getResources().getColor(R.color.colorPrimaryDark))
                     .setContentIntent(contentIntent)
                     .setAutoCancel(true)
@@ -262,7 +237,6 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
                     .setContentTitle(title)
                     .setContentText(message)
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
-                    .setCategory(NotificationCompat.CATEGORY_EVENT)
                     .setColor(getResources().getColor(R.color.colorPrimaryDark))
                     .setContentIntent(contentIntent)
                     .setAutoCancel(true)
@@ -275,7 +249,7 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
         } else if (title.equalsIgnoreCase("Gamers Hub")) {
 
             Intent intent = new Intent(this, GameFeedDetail.class);
-            intent.putExtra("FeedId", gameFeedId);
+            intent.putExtra("GameFeedId", gameFeedId);
             PendingIntent contentIntent = PendingIntent.getActivity(this,
                     0, intent, 0);
 
@@ -285,7 +259,6 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
                     .setContentTitle(title)
                     .setContentText(message)
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
-                    .setCategory(NotificationCompat.CATEGORY_EVENT)
                     .setColor(getResources().getColor(R.color.colorPrimaryDark))
                     .setContentIntent(contentIntent)
                     .setAutoCancel(true)
@@ -313,17 +286,16 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
         /*---   MAIN NOTIFICATION LOGIC   ---*/
         if (title.equalsIgnoreCase("Campus Feed")) {
 
-            Intent feedIntent = new Intent(this, FeedDetails.class);
-            feedIntent.putExtra("CurrentFeedId", feedId);
+            Intent notificationsIntent = new Intent(this, Home.class);
+            notificationsIntent.putExtra("IntentInstruction", "Notification");
             PendingIntent contentIntent = PendingIntent.getActivity(this,
-                    0, feedIntent, 0);
+                    0, notificationsIntent, 0);
 
             Notification notification = new NotificationCompat.Builder(this, CHANNEL_1_ID)
                     .setSmallIcon(R.drawable.ic_stat_campus_rush_notification)
                     .setContentTitle(title)
                     .setContentText(message)
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
-                    .setCategory(NotificationCompat.CATEGORY_EVENT)
                     .setColor(getResources().getColor(R.color.colorPrimaryDark))
                     .setContentIntent(contentIntent)
                     .setAutoCancel(true)
@@ -333,32 +305,6 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
 
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.notify(1, notification);
-
-        } else if (title.equalsIgnoreCase("New Feed")) {
-
-
-            Intent feedIntent = new Intent(this, FeedDetails.class);
-            feedIntent.putExtra("CurrentFeedId", feedId);
-            PendingIntent contentIntent = PendingIntent.getActivity(this,
-                    0, feedIntent, 0);
-
-            Notification notification = new NotificationCompat.Builder(this, CHANNEL_1_ID)
-                    .setSmallIcon(R.drawable.ic_stat_campus_rush_notification)
-                    .setContentTitle(title)
-                    .setContentText(message)
-                    .setSubText("Campus Rush")
-                    .setPriority(NotificationCompat.PRIORITY_HIGH)
-                    .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                    .setColor(getResources().getColor(R.color.colorPrimaryDark))
-                    .setContentIntent(contentIntent)
-                    .setAutoCancel(true)
-                    .addAction(R.drawable.campus_rush_red_logo, "Open Feed", contentIntent)
-                    .setSound(Uri.parse("android.resource://" + this.getPackageName() + "/" + R.raw.notification_sound))
-                    .build();
-
-            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.notify(2, notification);
-
 
         } else if (title.equalsIgnoreCase("Skit Approval")) {
 
@@ -373,7 +319,6 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
                     .setContentTitle(title)
                     .setContentText(message)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    .setCategory(NotificationCompat.CATEGORY_EMAIL)
                     .setColor(getResources().getColor(R.color.colorPrimaryDark))
                     .setContentIntent(contentIntent)
                     .setAutoCancel(true)
@@ -397,7 +342,6 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
                     .setContentTitle(title)
                     .setContentText(message)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    .setCategory(NotificationCompat.CATEGORY_EMAIL)
                     .setColor(getResources().getColor(R.color.colorPrimaryDark))
                     .setContentIntent(contentIntent)
                     .setAutoCancel(true)
@@ -411,7 +355,7 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
         } else if (title.equalsIgnoreCase("Gamers Hub")) {
 
             Intent intent = new Intent(this, GameFeedDetail.class);
-            intent.putExtra("FeedId", gameFeedId);
+            intent.putExtra("GameFeedId", gameFeedId);
             PendingIntent contentIntent = PendingIntent.getActivity(this,
                     0, intent, 0);
 
@@ -421,7 +365,6 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
                     .setContentTitle(title)
                     .setContentText(message)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    .setCategory(NotificationCompat.CATEGORY_EMAIL)
                     .setColor(getResources().getColor(R.color.colorPrimaryDark))
                     .setContentIntent(contentIntent)
                     .setAutoCancel(true)
@@ -434,13 +377,5 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
 
         }
 
-    }
-
-    public static class NotificationID {
-        private static final AtomicInteger c = new AtomicInteger(0);
-
-        public static int getID() {
-            return c.incrementAndGet();
-        }
     }
 }

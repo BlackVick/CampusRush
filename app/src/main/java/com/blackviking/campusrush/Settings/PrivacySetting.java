@@ -79,7 +79,7 @@ public class PrivacySetting extends AppCompatActivity {
 
                     privacyToggle.setChecked(false);
 
-                } else if (privacyState.equalsIgnoreCase("classified")) {
+                } else if (privacyState.equalsIgnoreCase("private")) {
 
                     privacyToggle.setChecked(true);
 
@@ -113,7 +113,7 @@ public class PrivacySetting extends AppCompatActivity {
 
                 if (isChecked){
 
-                    userRef.child("privacy").setValue("classified");
+                    userRef.child("privacy").setValue("private");
 
                 } else {
 

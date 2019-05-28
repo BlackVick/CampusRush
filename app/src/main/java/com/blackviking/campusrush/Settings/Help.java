@@ -78,7 +78,7 @@ public class Help extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setData(Uri.parse("mailto:"));
-                String[] to = {"campus_rush@teenqtech.com"};
+                String[] to = {"blackvikinc@gmail.com"};
                 intent.putExtra(Intent.EXTRA_EMAIL, to);
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Campus Rush !");
                 intent.putExtra(Intent.EXTRA_TEXT, "Please Describe Your Enquiry Below, Also Provide Screenshots If Available As Well For Complaints");
@@ -94,7 +94,7 @@ public class Help extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String policyUrl = "http://www.teenqtech.com/customer-service-privacy-policy";
+                String policyUrl = "https://www.freeprivacypolicy.com/privacy/view/7d8afef4e00e3de0461b9a7c962efddb";
 
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(policyUrl));
@@ -109,7 +109,7 @@ public class Help extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String termsUrl = "http://www.teenqtech.com/customer-service-privacy-policy";
+                String termsUrl = "https://www.freeprivacypolicy.com/privacy/view/7d8afef4e00e3de0461b9a7c962efddb";
 
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(termsUrl));

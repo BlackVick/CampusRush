@@ -23,22 +23,22 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="WE ARE TEENQ TECHNOLOGIES"
+                android:text="BLACK VIKING SOFTWARE"
                 android:textSize="25sp"
-                android:textColor="@color/teenqGreen"
+                android:textColor="@color/black"
                 android:gravity="center"
                 android:layout_marginTop="18dp"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/teenqGreen"
+                android:background="@color/colorPrimaryDark"
                 android:layout_margin="40dp"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="A SPECIALIZED COMMUNITY OF PASSIONATE AND INNOVATION DRIVEN INDIVIDUALS WITH THE PURPOSE OF REVOLUTIONIZING SOFTWARE DESIGN, CREATION AND DELIVERY WITH RESPECT TO SEAMLESSLY SOLVING DAILY HUMAN PROBLEMS. \n\n\nContact us at info@teenqtech.com \n\nOR\n\nVisit our website at www.teenqtech.com"
+                android:text="BLACK VIKING SOFTWARE, IS A SUBSIDIARY OF BLACK VIKING INC. &#169;, AN INTERNATIONAL IT FIRM THAT SPECIALIZES IN HUMAN-MACHINE INTERACTIONS WITH RESPECT TO ALL AREAS."
                 android:textSize="18sp"
                 android:textColor="@color/black"
                 android:gravity="center"
@@ -48,29 +48,20 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="ABOUT DEVELOPER"
-                android:textSize="25sp"
-                android:textColor="@color/teenqGreen"
-                android:gravity="center"
-                android:layout_marginTop="18dp"
-                android:visibility="gone"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/teenqGreen"
-                android:layout_margin="40dp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="BLACK VIKING SOLUTIONS, is subsidiary of Black Viking Inc &#169;, an international IT firm that specializes in the use of mobile handheld devices to solve the human everyday problems. \n\nYou can contact us at blackvikinc@gmail.com"
+                android:text="WE ARE A SPECIALIZED COMMUNITY OF PASSIONATE AND INNOVATION DRIVEN INDIVIDUALS WITH THE PURPOSE OF REVOLUTIONIZING SOFTWARE DESIGN, CREATION AND DELIVERY WITH RESPECT TO SEAMLESSLY SOLVING DAILY HUMAN PROBLEMS. \n\n\nContact us at blackvikinc@gmail.com"
                 android:textSize="18sp"
                 android:textColor="@color/black"
                 android:gravity="center"
                 android:layout_margin="18dp"
-                android:autoLink="all"
-                android:visibility="gone"/>
+                android:autoLink="all"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimaryDark"
+                android:layout_margin="40dp"/>
+
+
 
 
         </LinearLayout>

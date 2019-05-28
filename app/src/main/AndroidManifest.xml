@@ -16,12 +16,10 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
-        android:launchMode="singleTop"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Settings.NotificationSetting"></activity>
 
         <meta-data
             android:name="io.fabric.ApiKey"
@@ -117,6 +115,7 @@
         <activity android:name=".Plugins.SkitCenter.SkitManagement" />
         <activity android:name=".Plugins.Scholarships.ScholarshipInfo" />
         <activity android:name=".Plugins.Vacancies.VacancyInfo" />
+        <activity android:name=".Settings.NotificationSetting"></activity>
     </application>
 
 </manifest>

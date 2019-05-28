@@ -9,14 +9,6 @@
             android:icon="@drawable/ic_app_bar_award"
             android:title="Awards" />
         <item
-            android:id="@+id/nav_scholarships"
-            android:icon="@drawable/ic_app_bar_scholarship"
-            android:title="Scholarships" />
-        <item
-            android:id="@+id/nav_vacancies"
-            android:icon="@drawable/ic_app_bar_vacancies"
-            android:title="Vacancies" />
-        <item
             android:id="@+id/nav_gamers"
             android:icon="@drawable/campus_rush_gamers_hub"
             android:title="Gamers Hub" />

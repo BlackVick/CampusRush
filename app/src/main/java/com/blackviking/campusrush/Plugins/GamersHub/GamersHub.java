@@ -199,7 +199,7 @@ public class GamersHub extends AppCompatActivity {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
                         Intent detailsIntent = new Intent(GamersHub.this, GameFeedDetail.class);
-                        detailsIntent.putExtra("FeedId", gameFeedAdapter.getRef(position).getKey());
+                        detailsIntent.putExtra("GameFeedId", gameFeedAdapter.getRef(position).getKey());
                         startActivity(detailsIntent);
                         overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
                     }

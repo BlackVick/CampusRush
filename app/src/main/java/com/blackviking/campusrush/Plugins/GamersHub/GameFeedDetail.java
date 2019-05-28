@@ -53,7 +53,7 @@ public class GameFeedDetail extends AppCompatActivity {
 
 
         /*---   INTENT   ---*/
-        currentFeedId = getIntent().getStringExtra("FeedId");
+        currentFeedId = getIntent().getStringExtra("GameFeedId");
 
 
         /*---   FIREBASE   ---*/

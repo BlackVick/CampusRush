@@ -362,7 +362,7 @@ public class SkitDetails extends AppCompatActivity {
                     downloadManager = (DownloadManager) SkitDetails.this.getSystemService(Context.DOWNLOAD_SERVICE);
                     Uri uri = Uri.parse(link);
                     DownloadManager.Request request = new DownloadManager.Request(uri);
-                    request.setDestinationInExternalPublicDir("/Campus Rush/Videos/", theFileName);
+                    request.setDestinationInExternalPublicDir("/Campus Rush/Videos/", theTitle+".mp4");
                     request.allowScanningByMediaScanner();
                     Long reference = downloadManager.enqueue(request);
 

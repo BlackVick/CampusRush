@@ -216,13 +216,22 @@ public class FeedUpdate extends Fragment {
 
                     pushRef = updateRef.push();
                     final String pushId = pushRef.getKey();
-                    updateRef.child(pushId).setValue(newFeedMap);
+                    updateRef.child(pushId).setValue(newFeedMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
 
-                    sendNewFeedNotification(pushId);
+                            if (task.isSuccessful()){
 
-                    Intent i = new Intent(getContext(), Home.class);
-                    startActivity(i);
-                    getActivity().finish();
+                                Intent i = new Intent(getContext(), Home.class);
+                                startActivity(i);
+                                getActivity().finish();
+
+                            }
+
+                        }
+                    });
+
+
 
                 } else {
 
@@ -238,7 +247,7 @@ public class FeedUpdate extends Fragment {
                     /*---   PRIVACY   ---*/
                     if (privacyState.equalsIgnoreCase("public"))
                         newFeedMap.put("sender", currentUid);
-                    else if (privacyState.equalsIgnoreCase("classified"))
+                    else if (privacyState.equalsIgnoreCase("private"))
                         newFeedMap.put("sender", "");
 
                     newFeedMap.put("realSender", currentUid);
@@ -250,13 +259,23 @@ public class FeedUpdate extends Fragment {
 
                     pushRef = updateRef.push();
                     final String pushId = pushRef.getKey();
-                    updateRef.child(pushId).setValue(newFeedMap);
+                    updateRef.child(pushId).setValue(newFeedMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
 
-                    sendNewFeedNotification(pushId);
+                            if (task.isSuccessful()){
 
-                    Intent i = new Intent(getContext(), Home.class);
-                    startActivity(i);
-                    getActivity().finish();
+                                sendNewFeedNotification(pushId);
+
+                                Intent i = new Intent(getContext(), Home.class);
+                                startActivity(i);
+                                getActivity().finish();
+
+                            }
+
+                        }
+                    });
+
 
                 }
 
@@ -280,10 +299,12 @@ public class FeedUpdate extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+
+                Toast.makeText(getContext(), ""+pushId, Toast.LENGTH_SHORT).show();
                 String userName = dataSnapshot.child("username").getValue().toString();
 
                 Map<String, String> dataSend = new HashMap<>();
-                dataSend.put("title", "New Feed");
+                dataSend.put("title", "Campus Feed");
                 dataSend.put("message", "@"+userName+" Just dropped a new post check it out");
                 dataSend.put("feed_id", pushId);
                 DataMessage dataMessage = new DataMessage(new StringBuilder("/topics/").append(Common.FEED_NOTIFICATION_TOPIC).toString(), dataSend);

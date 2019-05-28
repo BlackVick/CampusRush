@@ -172,9 +172,6 @@ public class SignIn extends AppCompatActivity {
                 FirebaseMessaging.getInstance().subscribeToTopic(Common.FEED_NOTIFICATION_TOPIC+currentUid);
                 Paper.book().write(Common.MY_FEED_NOTIFICATION_STATE, "true");
 
-                FirebaseMessaging.getInstance().subscribeToTopic(Common.FEED_NOTIFICATION_TOPIC);
-                Paper.book().write(Common.FEED_NOTIFICATION_TOPIC, "true");
-
                 Intent checkForVerification = new Intent(SignIn.this, Home.class);
                 startActivity(checkForVerification);
                 finish();

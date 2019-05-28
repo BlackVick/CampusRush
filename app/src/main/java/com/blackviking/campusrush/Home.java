@@ -33,6 +33,7 @@ import com.blackviking.campusrush.Fragments.CampusRant;
 import com.blackviking.campusrush.Fragments.Feed;
 import com.blackviking.campusrush.Fragments.FeedUpdate;
 import com.blackviking.campusrush.Fragments.Materials;
+import com.blackviking.campusrush.Fragments.Notifications;
 import com.blackviking.campusrush.Plugins.Awards.Awards;
 import com.blackviking.campusrush.Plugins.GamersHub.GamersHub;
 import com.blackviking.campusrush.Plugins.Scholarships.Scholarships;
@@ -62,13 +63,13 @@ public class Home extends AppCompatActivity
 
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
-    private DatabaseReference userRef, rateRef;
+    private DatabaseReference userRef, rateRef, notificationRef;
     private CircleImageView userImage;
-    private TextView userFullName, userName;
-    private ImageView feed, materials, feedUpdate, campusRant, account;
+    private TextView userFullName, userName, notificationCount;
+    private ImageView feed, materials, feedUpdate, campusRant, notifications,  account;
     private DrawerLayout rootLayout;
     private BroadcastReceiver mMessageReceiver = null;
-    private String currentUid;
+    private String currentUid, intentInstruction;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -88,7 +89,7 @@ public class Home extends AppCompatActivity
         setContentView(R.layout.activity_home);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitle("Feed");
+
 
 
         /*---   LOCAL   ---*/
@@ -96,9 +97,15 @@ public class Home extends AppCompatActivity
         Paper.book().write(Common.APP_STATE, "Foreground");
 
 
+        /*---   INTENT CLAUSE   ---*/
+        if (getIntent() != null)
+            intentInstruction = getIntent().getStringExtra("IntentInstruction");
+
+
         /*---   FIREBASE   ---*/
         userRef = db.getReference("Users");
         rateRef = db.getReference("Rating");
+        notificationRef = db.getReference("Notifications");
         if (mAuth.getCurrentUser() != null)
             currentUid = mAuth.getCurrentUser().getUid();
 
@@ -109,6 +116,8 @@ public class Home extends AppCompatActivity
         feedUpdate = (ImageView)findViewById(R.id.feedPost);
         campusRant = (ImageView)findViewById(R.id.schoolRant);
         account = (ImageView)findViewById(R.id.account);
+        notifications = (ImageView)findViewById(R.id.notifications);
+        notificationCount = (TextView)findViewById(R.id.notificationCount);
 
 
         /*---   FRAGMENTS   ---*/
@@ -116,6 +125,7 @@ public class Home extends AppCompatActivity
         final Materials materialsFragment = new Materials();
         final FeedUpdate updateFragment = new FeedUpdate();
         final CampusRant rantFragment = new CampusRant();
+        final Notifications notificationFragment = new Notifications();
         final Account accountFragment = new Account();
 
 
@@ -197,6 +207,36 @@ public class Home extends AppCompatActivity
             }
         });
 
+
+        /*---   NOTIFICATIONS   ---*/
+        notificationRef
+                .child(currentUid)
+                .orderByChild("status").equalTo("Unread")
+                .addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int notificationCountInt = (int) dataSnapshot.getChildrenCount();
+
+                if (notificationCountInt > 0){
+
+                    notificationCount.setVisibility(View.VISIBLE);
+                    notificationCount.setText(String.valueOf(notificationCountInt));
+
+                } else {
+
+                    notificationCount.setVisibility(View.GONE);
+
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         /*---   RATING   ---*/
         rateRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -252,6 +292,7 @@ public class Home extends AppCompatActivity
                 materials.setBackgroundResource(R.drawable.white_grey_border_top);
                 feedUpdate.setBackgroundResource(R.drawable.white_grey_border_top);
                 campusRant.setBackgroundResource(R.drawable.white_grey_border_top);
+                notifications.setBackgroundResource(R.drawable.white_grey_border_top);
                 account.setBackgroundResource(R.drawable.white_grey_border_top);
 
                 toolbar.setTitle("Feed");
@@ -267,6 +308,7 @@ public class Home extends AppCompatActivity
                 materials.setBackgroundResource(R.color.bottom_nav_clicked);
                 feedUpdate.setBackgroundResource(R.drawable.white_grey_border_top);
                 campusRant.setBackgroundResource(R.drawable.white_grey_border_top);
+                notifications.setBackgroundResource(R.drawable.white_grey_border_top);
                 account.setBackgroundResource(R.drawable.white_grey_border_top);
 
                 toolbar.setTitle("Materials");
@@ -282,6 +324,7 @@ public class Home extends AppCompatActivity
                 materials.setBackgroundResource(R.drawable.white_grey_border_top);
                 feedUpdate.setBackgroundResource(R.color.bottom_nav_clicked);
                 campusRant.setBackgroundResource(R.drawable.white_grey_border_top);
+                notifications.setBackgroundResource(R.drawable.white_grey_border_top);
                 account.setBackgroundResource(R.drawable.white_grey_border_top);
 
                 toolbar.setTitle("Update");
@@ -297,11 +340,28 @@ public class Home extends AppCompatActivity
                 materials.setBackgroundResource(R.drawable.white_grey_border_top);
                 feedUpdate.setBackgroundResource(R.drawable.white_grey_border_top);
                 campusRant.setBackgroundResource(R.color.bottom_nav_clicked);
+                notifications.setBackgroundResource(R.drawable.white_grey_border_top);
                 account.setBackgroundResource(R.drawable.white_grey_border_top);
 
                 toolbar.setTitle("Campus Rant");
 
                 setFragment(rantFragment);
+            }
+        });
+
+        notifications.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                feed.setBackgroundResource(R.drawable.white_grey_border_top);
+                materials.setBackgroundResource(R.drawable.white_grey_border_top);
+                feedUpdate.setBackgroundResource(R.drawable.white_grey_border_top);
+                campusRant.setBackgroundResource(R.drawable.white_grey_border_top);
+                notifications.setBackgroundResource(R.color.bottom_nav_clicked);
+                account.setBackgroundResource(R.drawable.white_grey_border_top);
+
+                toolbar.setTitle("Notifications");
+
+                setFragment(notificationFragment);
             }
         });
 
@@ -312,6 +372,7 @@ public class Home extends AppCompatActivity
                 materials.setBackgroundResource(R.drawable.white_grey_border_top);
                 feedUpdate.setBackgroundResource(R.drawable.white_grey_border_top);
                 campusRant.setBackgroundResource(R.drawable.white_grey_border_top);
+                notifications.setBackgroundResource(R.drawable.white_grey_border_top);
                 account.setBackgroundResource(R.color.bottom_nav_clicked);
 
                 toolbar.setTitle("Account");
@@ -322,8 +383,35 @@ public class Home extends AppCompatActivity
 
 
         /*---   SET BASE FRAGMENT   ---*/
-        setBaseFragment(feedFragment, toolbar);
+        if (intentInstruction != null) {
 
+            if (intentInstruction.equalsIgnoreCase("Notification")) {
+
+                toolbar.setTitle("Notifications");
+                setNotificationFragment(notificationFragment, toolbar);
+
+            }
+
+        } else {
+
+            toolbar.setTitle("Feed");
+            setBaseFragment(feedFragment, toolbar);
+
+        }
+
+
+    }
+
+    private void setNotificationFragment(Notifications notificationFragment, Toolbar toolbar) {
+
+        setFragment(notificationFragment);
+
+        feed.setBackgroundResource(R.drawable.white_grey_border_top);
+        materials.setBackgroundResource(R.drawable.white_grey_border_top);
+        feedUpdate.setBackgroundResource(R.drawable.white_grey_border_top);
+        campusRant.setBackgroundResource(R.drawable.white_grey_border_top);
+        notifications.setBackgroundResource(R.color.bottom_nav_clicked);
+        account.setBackgroundResource(R.drawable.white_grey_border_top);
 
     }
 
@@ -365,6 +453,7 @@ public class Home extends AppCompatActivity
         materials.setBackgroundResource(R.drawable.white_grey_border_top);
         feedUpdate.setBackgroundResource(R.drawable.white_grey_border_top);
         campusRant.setBackgroundResource(R.drawable.white_grey_border_top);
+        notifications.setBackgroundResource(R.drawable.white_grey_border_top);
         account.setBackgroundResource(R.drawable.white_grey_border_top);
 
     }
@@ -429,7 +518,7 @@ public class Home extends AppCompatActivity
             startActivity(awardIntent);
             overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
 
-        } else if (id == R.id.nav_scholarships) {
+        } /*else if (id == R.id.nav_scholarships) {
 
             Intent scholarshipIntent = new Intent(Home.this, Scholarships.class);
             startActivity(scholarshipIntent);
@@ -441,7 +530,7 @@ public class Home extends AppCompatActivity
             startActivity(vacanciesIntent);
             overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
 
-        } else if (id == R.id.nav_gamers) {
+        }*/ else if (id == R.id.nav_gamers) {
 
             Intent gamersIntent = new Intent(Home.this, GamersHub.class);
             startActivity(gamersIntent);

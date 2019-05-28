@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Campus Rush</string>
+    <string name="app_name">Campus Rush (Unilag)</string>
     <string name="title_activity_home">Feed</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -42,7 +43,9 @@ import com.blackviking.campusrush.Notification.MyResponse;
 import com.blackviking.campusrush.R;
 import com.blackviking.campusrush.ViewHolder.FeedViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -159,7 +162,7 @@ public class OtherUserProfile extends AppCompatActivity {
         }
     }
 
-    private void loadUserTimeline(String userId) {
+    private void loadUserTimeline(final String userId) {
 
         /*---   TIMELINE RECYCLER   ---*/
         timelineRecycler.setHasFixedSize(true);
@@ -295,8 +298,45 @@ public class OtherUserProfile extends AppCompatActivity {
                             viewHolder.likeBtn.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    likeRef.child(feedId).child(currentUid).setValue("liked");
-                                    sendLikeNotification(feedId);
+                                    likeRef.child(feedId).child(currentUid).setValue("liked").addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+
+                                            if (task.isSuccessful()){
+
+                                                DatabaseReference notificationRef = db.getReference("Notifications")
+                                                        .child(userId);
+
+                                                final Map<String, Object> notificationMap = new HashMap<>();
+                                                notificationMap.put("title", "Campus Feed");
+                                                notificationMap.put("details", "Just liked your post");
+                                                notificationMap.put("comment", "");
+                                                notificationMap.put("type", "Like");
+                                                notificationMap.put("status", "Unread");
+                                                notificationMap.put("intentPrimaryKey", feedId);
+                                                notificationMap.put("intentSecondaryKey", "");
+                                                notificationMap.put("user", currentUid);
+                                                notificationMap.put("timestamp", ServerValue.TIMESTAMP);
+
+                                                notificationRef.push().setValue(notificationMap).addOnCompleteListener(
+                                                        new OnCompleteListener<Void>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<Void> task) {
+
+                                                                if (task.isComplete()){
+                                                                    sendLikeNotification(feedId);
+                                                                }
+
+                                                            }
+                                                        }
+                                                );
+
+
+
+                                            }
+
+                                        }
+                                    });
 
                                 }
                             });

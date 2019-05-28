@@ -8,14 +8,16 @@ public class CommentModel {
 
     private String comment;
     private String commenter;
-    private String commentTime;
+    private String realCommenter;
+    private long commentTime;
 
     public CommentModel() {
     }
 
-    public CommentModel(String comment, String commenter, String commentTime) {
+    public CommentModel(String comment, String commenter, String realCommenter, long commentTime) {
         this.comment = comment;
         this.commenter = commenter;
+        this.realCommenter = realCommenter;
         this.commentTime = commentTime;
     }
 
@@ -35,11 +37,19 @@ public class CommentModel {
         this.commenter = commenter;
     }
 
-    public String getCommentTime() {
+    public String getRealCommenter() {
+        return realCommenter;
+    }
+
+    public void setRealCommenter(String realCommenter) {
+        this.realCommenter = realCommenter;
+    }
+
+    public long getCommentTime() {
         return commentTime;
     }
 
-    public void setCommentTime(String commentTime) {
+    public void setCommentTime(long commentTime) {
         this.commentTime = commentTime;
     }
 }

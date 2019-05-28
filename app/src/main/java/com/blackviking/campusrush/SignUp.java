@@ -131,7 +131,7 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onClick(View widget) {
 
-                String termUrl = "http://www.teenqtech.com/customer-service-privacy-policy";
+                String termUrl = "https://www.freeprivacypolicy.com/privacy/view/7d8afef4e00e3de0461b9a7c962efddb";
 
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(termUrl));
@@ -144,7 +144,7 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onClick(View widget) {
 
-                String privacyUrl = "http://www.teenqtech.com/customer-service-privacy-policy";
+                String privacyUrl = "https://www.freeprivacypolicy.com/privacy/view/7d8afef4e00e3de0461b9a7c962efddb";
 
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(privacyUrl));

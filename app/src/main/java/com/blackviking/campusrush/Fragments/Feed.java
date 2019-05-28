@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -41,12 +42,15 @@ import com.blackviking.campusrush.Profile.OtherUserProfile;
 import com.blackviking.campusrush.R;
 import com.blackviking.campusrush.ViewHolder.FeedViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Callback;
@@ -80,7 +84,6 @@ public class Feed extends Fragment {
     public Feed() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -134,6 +137,8 @@ public class Feed extends Fragment {
             protected void populateViewHolder(final FeedViewHolder viewHolder, final FeedModel model, final int position) {
 
                 /*---   OPTIONS   ---*/
+
+                final String feedId = adapter.getRef(position).getKey();
                 if (model.getSender().equals(currentUid)){
 
                     viewHolder.options.setOnClickListener(new View.OnClickListener() {
@@ -157,7 +162,7 @@ public class Feed extends Fragment {
                                                         @Override
                                                         public void onClick(DialogInterface dialog, int which) {
 
-                                                            feedRef.child(adapter.getRef(position).getKey()).removeValue()
+                                                            feedRef.child(feedId).removeValue()
                                                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                         @Override
                                                                         public void onSuccess(Void aVoid) {
@@ -186,7 +191,7 @@ public class Feed extends Fragment {
                                             i.setType("text/plain");
                                             i.putExtra(android.content.Intent.EXTRA_SUBJECT,"Campus Rush Share");
                                             i.putExtra(android.content.Intent.EXTRA_TEXT, "Hey There, \n \nCheck Out My Latest Post On The CAMPUS RUSH App.");
-                                            i.putExtra("FeedId", adapter.getRef(position).getKey());
+                                            i.putExtra("FeedId", feedId);
                                             startActivity(Intent.createChooser(i,"Share via"));
 
                                             return true;
@@ -225,7 +230,7 @@ public class Feed extends Fragment {
                                             i.setType("text/plain");
                                             i.putExtra(android.content.Intent.EXTRA_SUBJECT,"Campus Rush Share");
                                             i.putExtra(android.content.Intent.EXTRA_TEXT, "Hey There, \n \nCheck Out My Latest Post On The CAMPUS RUSH App.");
-                                            i.putExtra("FeedId", adapter.getRef(position).getKey());
+                                            i.putExtra("FeedId", feedId);
                                             startActivity(Intent.createChooser(i,"Share via"));
 
                                             return true;
@@ -408,7 +413,6 @@ public class Feed extends Fragment {
 
 
                 /*---   LIKES   ---*/
-                final String feedId = adapter.getRef(position).getKey();
                 likeRef.child(feedId).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -436,11 +440,49 @@ public class Feed extends Fragment {
                             viewHolder.likeBtn.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    likeRef.child(feedId).child(currentUid).setValue("liked");
+                                    likeRef.child(feedId).child(currentUid).setValue("liked").addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
 
-                                    if (!model.getSender().equalsIgnoreCase(currentUid)){
-                                        sendLikeNotification(adapter.getRef(position).getKey(), model.getRealSender());
-                                    }
+                                            if (task.isSuccessful()){
+
+                                                if (!model.getRealSender().equalsIgnoreCase(currentUid)){
+
+                                                    DatabaseReference notificationRef = db.getReference("Notifications")
+                                                            .child(model.getRealSender());
+
+                                                    final Map<String, Object> notificationMap = new HashMap<>();
+                                                    notificationMap.put("title", "Campus Feed");
+                                                    notificationMap.put("details", "Just liked your post");
+                                                    notificationMap.put("comment", "");
+                                                    notificationMap.put("type", "Like");
+                                                    notificationMap.put("status", "Unread");
+                                                    notificationMap.put("intentPrimaryKey", feedId);
+                                                    notificationMap.put("intentSecondaryKey", "");
+                                                    notificationMap.put("user", currentUid);
+                                                    notificationMap.put("timestamp", ServerValue.TIMESTAMP);
+
+                                                    notificationRef.push().setValue(notificationMap).addOnCompleteListener(
+                                                            new OnCompleteListener<Void>() {
+                                                                @Override
+                                                                public void onComplete(@NonNull Task<Void> task) {
+
+                                                                    if (task.isComplete()){
+                                                                        sendLikeNotification(feedId, model.getRealSender());
+                                                                    }
+
+                                                                }
+                                                            }
+                                                    );
+
+                                                }
+
+                                            }
+
+                                        }
+                                    });
+
+
                                 }
                             });
 

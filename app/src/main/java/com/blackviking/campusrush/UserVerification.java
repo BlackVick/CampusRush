@@ -130,9 +130,6 @@ public class UserVerification extends AppCompatActivity {
                         FirebaseMessaging.getInstance().subscribeToTopic(Common.FEED_NOTIFICATION_TOPIC+currentUid);
                         Paper.book().write(Common.MY_FEED_NOTIFICATION_STATE, "true");
 
-                        FirebaseMessaging.getInstance().subscribeToTopic(Common.FEED_NOTIFICATION_TOPIC);
-                        Paper.book().write(Common.FEED_NOTIFICATION_TOPIC, "true");
-
                         Intent homeIntent = new Intent(UserVerification.this, Home.class);
                         startActivity(homeIntent);
                         finish();

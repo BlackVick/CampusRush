@@ -5,31 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    tools:context=".Fragments.CampusRant">
+    tools:context=".Fragments.CampusRant"
+    android:background="@drawable/campus_rant_background">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <Button
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_centerInParent="true">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/campus_rush_rant_warning"
-            android:adjustViewBounds="true"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="40dp"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:id="@+id/enterRantRoom"
-            android:layout_margin="40dp"
-            android:background="@drawable/campus_rush_rant_button"/>
-
-    </LinearLayout>
+        android:layout_gravity="center"
+        android:id="@+id/enterRantRoom"
+        android:layout_margin="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/campus_rush_rant_button"/>
 
 </RelativeLayout>
