@@ -190,7 +190,7 @@ public class Feed extends Fragment {
                                             Intent i = new Intent(android.content.Intent.ACTION_SEND);
                                             i.setType("text/plain");
                                             i.putExtra(android.content.Intent.EXTRA_SUBJECT,"Campus Rush Share");
-                                            i.putExtra(android.content.Intent.EXTRA_TEXT, "Hey There, \n \nCheck Out My Latest Post On The CAMPUS RUSH App.");
+                                            i.putExtra(android.content.Intent.EXTRA_TEXT, "Hey There, \n \nCheck Out My Latest Post On The CAMPUS RUSH App.\n\nYou can download for free on playstore via the link below \nhttps://play.google.com/store/apps/details?id=com.blackviking.campusrush");
                                             i.putExtra("FeedId", feedId);
                                             startActivity(Intent.createChooser(i,"Share via"));
 
@@ -229,7 +229,7 @@ public class Feed extends Fragment {
                                             Intent i = new Intent(android.content.Intent.ACTION_SEND);
                                             i.setType("text/plain");
                                             i.putExtra(android.content.Intent.EXTRA_SUBJECT,"Campus Rush Share");
-                                            i.putExtra(android.content.Intent.EXTRA_TEXT, "Hey There, \n \nCheck Out My Latest Post On The CAMPUS RUSH App.");
+                                            i.putExtra(android.content.Intent.EXTRA_TEXT, "Hey There, \n \nCheck Out My Latest Post On The CAMPUS RUSH App.\n\nYou can download for free on playstore via the link below \nhttps://play.google.com/store/apps/details?id=com.blackviking.campusrush");
                                             i.putExtra("FeedId", feedId);
                                             startActivity(Intent.createChooser(i,"Share via"));
 

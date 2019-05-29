@@ -94,7 +94,7 @@ public class Settings extends AppCompatActivity {
                 Intent i = new Intent(android.content.Intent.ACTION_SEND);
                 i.setType("text/plain");
                 i.putExtra(android.content.Intent.EXTRA_SUBJECT,"Campus Rush Invite");
-                i.putExtra(android.content.Intent.EXTRA_TEXT, "Hey There, \n \nGet Latest Info Of Happenings Around The Campus On The CAMPUS RUSH App. You Can Download For Free On PlayStore And Connect With Other Students. \nUse The Link below \nhttps://play.google.com/store/apps/details?id=com.blackviking.hosh");
+                i.putExtra(android.content.Intent.EXTRA_TEXT, "Hey There, \n \nGet Latest Info Of Happenings Around The Campus On The CAMPUS RUSH App. You Can Download For Free On PlayStore And Connect With Other Students. \nUse The Link below \nhttps://play.google.com/store/apps/details?id=com.blackviking.campusrush");
                 startActivity(Intent.createChooser(i,"Share via"));
             }
         });
