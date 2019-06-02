@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,8 +23,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -33,15 +30,12 @@ import android.widget.Toast;
 
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.Common.GetTimeAgo;
-import com.blackviking.campusrush.Fragments.FeedUpdate;
 import com.blackviking.campusrush.Model.CommentModel;
-import com.blackviking.campusrush.Model.FeedModel;
 import com.blackviking.campusrush.Notification.APIService;
 import com.blackviking.campusrush.Notification.DataMessage;
 import com.blackviking.campusrush.Notification.MyResponse;
 import com.blackviking.campusrush.Profile.MyProfile;
 import com.blackviking.campusrush.Profile.OtherUserProfile;
-import com.blackviking.campusrush.Settings.Faq;
 import com.blackviking.campusrush.Settings.Help;
 import com.blackviking.campusrush.ViewHolder.CommentViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -55,7 +49,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -77,7 +70,7 @@ public class FeedDetails extends AppCompatActivity {
 
     private TextView activityName;
     private ImageView exitActivity, helpActivity;
-    private ImageView postImage, likeBtn, sendComment, options, deleteFeedBtn;
+    private ImageView postImage, likeBtn, sendComment, options;
     private CircleImageView posterImage;
     private TextView posterName, postText, likeCount, commentCount, postTime;
     private EditText commentBox;
@@ -143,7 +136,6 @@ public class FeedDetails extends AppCompatActivity {
         postImage = (ImageView)findViewById(R.id.feedDetailPostImage);
         likeBtn = (ImageView)findViewById(R.id.feedDetailLikeBtn);
         sendComment = (ImageView)findViewById(R.id.sendCommentBtn);
-        deleteFeedBtn = (ImageView)findViewById(R.id.deleteFeedBtn);
         options = (ImageView)findViewById(R.id.feedDetailOptions);
         posterName = (TextView)findViewById(R.id.feedDetailPosterUsername);
         postText = (TextView)findViewById(R.id.feedDetailPostText);
@@ -188,49 +180,6 @@ public class FeedDetails extends AppCompatActivity {
 
                 myUsername = dataSnapshot.child("username").getValue().toString();
                 privacyState = dataSnapshot.child("privacy").getValue().toString();
-                userType = dataSnapshot.child("userType").getValue().toString();
-
-                if (userType.equalsIgnoreCase("Admin")) {
-                    deleteFeedBtn.setVisibility(View.VISIBLE);
-                    deleteFeedBtn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            AlertDialog alertDialog = new AlertDialog.Builder(FeedDetails.this)
-                                    .setTitle("Delete Update !")
-                                    .setIcon(R.drawable.ic_delete_feed)
-                                    .setMessage("Are You Sure You Want To Delete This Update From Your Timeline?")
-                                    .setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-
-                                            updateRef.child(currentFeedId).removeValue()
-                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                        @Override
-                                                        public void onSuccess(Void aVoid) {
-                                                            finish();
-                                                        }
-                                                    });
-
-                                        }
-                                    })
-                                    .setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.dismiss();
-                                        }
-                                    })
-                                    .create();
-
-                            alertDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
-
-                            alertDialog.show();
-
-                        }
-                    });
-                } else {
-                    deleteFeedBtn.setVisibility(View.GONE);
-                }
 
             }
 

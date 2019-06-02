@@ -1,7 +1,7 @@
-package com.blackviking.campusrush.Fragments;
-
+package com.blackviking.campusrush;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,18 +9,16 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,15 +26,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.blackviking.campusrush.BuildConfig;
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.Common.Permissions;
-import com.blackviking.campusrush.Home;
-import com.blackviking.campusrush.Model.FeedModel;
 import com.blackviking.campusrush.Notification.APIService;
 import com.blackviking.campusrush.Notification.DataMessage;
 import com.blackviking.campusrush.Notification.MyResponse;
-import com.blackviking.campusrush.R;
+import com.blackviking.campusrush.Plugins.SkitCenter.AddNewSkit;
+import com.blackviking.campusrush.Settings.Help;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,7 +41,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -53,9 +48,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.NetworkPolicy;
-import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.ByteArrayOutputStream;
@@ -71,14 +63,13 @@ import id.zelory.compressor.Compressor;
 import io.paperdb.Paper;
 import retrofit2.Call;
 import retrofit2.Response;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-import static android.app.Activity.RESULT_OK;
+public class AddFeed extends AppCompatActivity {
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class FeedUpdate extends Fragment {
-
+    private TextView activityName;
+    private ImageView exitActivity, helpActivity;
     private ImageView updateImage;
     private EditText updateText;
     private Button updateShare;
@@ -90,24 +81,33 @@ public class FeedUpdate extends Fragment {
     private String currentUid;
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    private DatabaseReference updateRef, pushRef, userRef;
+    private DatabaseReference updateRef, justUserRef, pushRef, userRef, adminRef;
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference imageRef;
     private String originalImageUrl, thumbDownloadUrl;
     private String privacyState, userType;
     private APIService mService;
 
-    public FeedUpdate() {
-        // Required empty public constructor
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_feed_update, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        /*---   FONT MANAGEMENT   ---*/
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/Wigrum-Regular.otf")
+                .setFontAttrId(R.attr.fontPath)
+                .build());
+
+        setContentView(R.layout.activity_add_feed);
+
 
         /*---   PAPER DB   ---*/
-        Paper.init(getContext());
+        Paper.init(this);
 
 
         /*---   FCM   ---*/
@@ -120,12 +120,36 @@ public class FeedUpdate extends Fragment {
         updateRef = db.getReference("Feed");
         imageRef = storage.getReference("FeedImages");
         userRef = db.getReference("Users").child(currentUid);
+        adminRef = db.getReference("AdminManagement");
+        justUserRef = db.getReference("Users");
 
 
         /*---   WIDGETS   ---*/
-        updateImage = (ImageView)v.findViewById(R.id.updateImage);
-        updateText = (EditText)v.findViewById(R.id.updateDetails);
-        updateShare = (Button)v.findViewById(R.id.updateShare);
+        activityName = (TextView)findViewById(R.id.activityName);
+        exitActivity = (ImageView)findViewById(R.id.exitActivity);
+        helpActivity = (ImageView)findViewById(R.id.helpIcon);
+        updateImage = (ImageView)findViewById(R.id.updateImage);
+        updateText = (EditText)findViewById(R.id.updateDetails);
+        updateShare = (Button)findViewById(R.id.updateShare);
+
+
+        /*---   ACTIVITY BAR FUNCTIONS   ---*/
+        exitActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        activityName.setText("Add Feed");
+        helpActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent helpIntent = new Intent(AddFeed.this, Help.class);
+                startActivity(helpIntent);
+                overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+            }
+        });
 
 
         /*---   PERMISSIONS HANDLER   ---*/
@@ -175,7 +199,6 @@ public class FeedUpdate extends Fragment {
             }
         });
 
-        return v;
     }
 
     private void shareUpdate() {
@@ -188,11 +211,18 @@ public class FeedUpdate extends Fragment {
 
         if (imageUri != null || originalImageUrl != null || thumbDownloadUrl != null || !theUpdate.isEmpty()){
 
-            if (Common.isConnectedToInternet(getContext())){
+            if (Common.isConnectedToInternet(getBaseContext())){
 
                 if (imageUri != null || originalImageUrl != null || thumbDownloadUrl != null){
 
                     final Map<String, Object> newFeedMap = new HashMap<>();
+
+                    newFeedMap.put("title", "");
+                    newFeedMap.put("owner", "");
+                    newFeedMap.put("mediaUrl", "");
+                    newFeedMap.put("thumbnail", "");
+                    newFeedMap.put("description", "");
+
                     /*---   USER TYPE   ---*/
                     if (userType.equalsIgnoreCase("User"))
                         newFeedMap.put("sourceType", "User");
@@ -210,32 +240,35 @@ public class FeedUpdate extends Fragment {
                     newFeedMap.put("realSender", currentUid);
                     newFeedMap.put("imageUrl", originalImageUrl);
                     newFeedMap.put("imageThumbUrl", thumbDownloadUrl);
-                    newFeedMap.put("videoUrl", "");
                     newFeedMap.put("timestamp", dateString);
                     newFeedMap.put("updateType", "Image");
+                    newFeedMap.put("adminType", "Feed");
 
-                    pushRef = updateRef.push();
+                    pushRef = adminRef.push();
                     final String pushId = pushRef.getKey();
-                    updateRef.child(pushId).setValue(newFeedMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    adminRef.child(pushId).setValue(newFeedMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
 
                             if (task.isSuccessful()){
 
-                                Intent i = new Intent(getContext(), Home.class);
-                                startActivity(i);
-                                getActivity().finish();
+                                sendNotificationToAdmin();
+                                finish();
 
                             }
-
                         }
                     });
-
-
 
                 } else {
 
                     final Map<String, Object> newFeedMap = new HashMap<>();
+
+                    newFeedMap.put("title", "");
+                    newFeedMap.put("owner", "");
+                    newFeedMap.put("mediaUrl", "");
+                    newFeedMap.put("thumbnail", "");
+                    newFeedMap.put("description", "");
+
                     /*---   USER TYPE   ---*/
                     if (userType.equalsIgnoreCase("User"))
                         newFeedMap.put("sourceType", "User");
@@ -253,23 +286,20 @@ public class FeedUpdate extends Fragment {
                     newFeedMap.put("realSender", currentUid);
                     newFeedMap.put("imageUrl", "");
                     newFeedMap.put("imageThumbUrl", "");
-                    newFeedMap.put("videoUrl", "");
                     newFeedMap.put("timestamp", dateString);
                     newFeedMap.put("updateType", "Text");
+                    newFeedMap.put("adminType", "Feed");
 
-                    pushRef = updateRef.push();
+                    pushRef = adminRef.push();
                     final String pushId = pushRef.getKey();
-                    updateRef.child(pushId).setValue(newFeedMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    adminRef.child(pushId).setValue(newFeedMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
 
                             if (task.isSuccessful()){
 
-                                sendNewFeedNotification(pushId);
-
-                                Intent i = new Intent(getContext(), Home.class);
-                                startActivity(i);
-                                getActivity().finish();
+                                sendNotificationToAdmin();
+                                finish();
 
                             }
 
@@ -281,15 +311,53 @@ public class FeedUpdate extends Fragment {
 
             } else {
 
-                Common.showErrorDialog(getContext(), "No Internet Access !");
+                Common.showErrorDialog(this, "No Internet Access !");
 
             }
 
         } else {
 
-            Common.showErrorDialog(getContext(), "Update Has To Contain Valid Stuff . . .");
+            Common.showErrorDialog(this, "Update Has To Contain Valid Stuff . . .");
 
         }
+
+    }
+
+    private void sendNotificationToAdmin() {
+
+        justUserRef.orderByChild("userType").equalTo("Admin").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()){
+
+                    String key = child.getKey();
+
+                    Map<String, String> dataSend = new HashMap<>();
+                    dataSend.put("title", "Admin");
+                    dataSend.put("message", "There are new items to sort out. Lets Go");
+                    DataMessage dataMessage = new DataMessage(new StringBuilder("/topics/").append(key).toString(), dataSend);
+
+                    mService.sendNotification(dataMessage)
+                            .enqueue(new retrofit2.Callback<MyResponse>() {
+                                @Override
+                                public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+
+                                }
+
+                                @Override
+                                public void onFailure(Call<MyResponse> call, Throwable t) {
+                                    Toast.makeText(AddFeed.this, "Error sending notification", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
@@ -299,8 +367,6 @@ public class FeedUpdate extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-
-                Toast.makeText(getContext(), ""+pushId, Toast.LENGTH_SHORT).show();
                 String userName = dataSnapshot.child("username").getValue().toString();
 
                 Map<String, String> dataSend = new HashMap<>();
@@ -318,7 +384,7 @@ public class FeedUpdate extends Fragment {
 
                             @Override
                             public void onFailure(Call<MyResponse> call, Throwable t) {
-                                Toast.makeText(getContext(), "Error sending notification", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AddFeed.this, "Error sending notification", Toast.LENGTH_SHORT).show();
                             }
                         });
 
@@ -334,7 +400,7 @@ public class FeedUpdate extends Fragment {
 
     private void openChoiceDialog() {
 
-        final AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+        final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
         LayoutInflater inflater = this.getLayoutInflater();
         View viewOptions = inflater.inflate(R.layout.image_source_choice,null);
 
@@ -358,13 +424,13 @@ public class FeedUpdate extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if (Common.isConnectedToInternet(getContext())){
+                if (Common.isConnectedToInternet(getBaseContext())){
 
                     openCamera();
 
                 }else {
 
-                    Common.showErrorDialog(getContext(), "No Internet Access !");
+                    Common.showErrorDialog(AddFeed.this, "No Internet Access !");
                 }
                 alertDialog.dismiss();
 
@@ -398,7 +464,7 @@ public class FeedUpdate extends Fragment {
 
         File file=getOutputMediaFile(1);
         imageUri = FileProvider.getUriForFile(
-                getContext(),
+                this,
                 BuildConfig.APPLICATION_ID + ".provider",
                 file);
 
@@ -410,7 +476,7 @@ public class FeedUpdate extends Fragment {
     private void verifyPermissions(String[] permissions) {
 
         ActivityCompat.requestPermissions(
-                getActivity(),
+                this,
                 permissions,
                 VERIFY_PERMISSIONS_REQUEST
         );
@@ -431,7 +497,7 @@ public class FeedUpdate extends Fragment {
 
     private boolean checkPermissions(String permission) {
 
-        int permissionRequest = ActivityCompat.checkSelfPermission(getContext(), permission);
+        int permissionRequest = ActivityCompat.checkSelfPermission(this, permission);
 
         if (permissionRequest != PackageManager.PERMISSION_GRANTED){
 
@@ -451,7 +517,7 @@ public class FeedUpdate extends Fragment {
             Uri theUri = imageUri;
             CropImage.activity(imageUri)
                     .setAspectRatio(1,1)
-                    .start(getContext(), FeedUpdate.this);
+                    .start(AddFeed.this);
 
         }
 
@@ -462,7 +528,7 @@ public class FeedUpdate extends Fragment {
 
                 CropImage.activity(imageUri)
                         .setAspectRatio(1,1)
-                        .start(getContext(), FeedUpdate.this);
+                        .start(AddFeed.this);
             }
 
         }
@@ -472,7 +538,7 @@ public class FeedUpdate extends Fragment {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
 
-                mDialog = new SpotsDialog(getContext(), "Upload In Progress . . .");
+                mDialog = new SpotsDialog(this, "Upload In Progress . . .");
                 mDialog.setCancelable(false);
                 mDialog.setCanceledOnTouchOutside(false);
                 mDialog.show();
@@ -488,7 +554,7 @@ public class FeedUpdate extends Fragment {
 
 
                 try {
-                    Bitmap thumb_bitmap = new Compressor(getContext())
+                    Bitmap thumb_bitmap = new Compressor(this)
                             .setMaxWidth(400)
                             .setMaxHeight(400)
                             .setQuality(75)
@@ -576,7 +642,7 @@ public class FeedUpdate extends Fragment {
 
         ImageLoader loader = ImageLoader.getInstance();
 
-        loader.init(ImageLoaderConfiguration.createDefault(getContext()));
+        loader.init(ImageLoaderConfiguration.createDefault(this));
 
         loader.displayImage(imgUrl, image, new ImageLoadingListener() {
             @Override
@@ -626,4 +692,8 @@ public class FeedUpdate extends Fragment {
         return mediaFile;
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

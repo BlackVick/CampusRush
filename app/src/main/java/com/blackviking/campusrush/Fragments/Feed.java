@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -27,12 +28,15 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blackviking.campusrush.AddFeed;
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.FeedDetails;
+import com.blackviking.campusrush.Home;
 import com.blackviking.campusrush.Model.FeedModel;
 import com.blackviking.campusrush.Notification.APIService;
 import com.blackviking.campusrush.Notification.DataMessage;
@@ -80,6 +84,7 @@ public class Feed extends Fragment {
     private DatabaseReference feedRef, userRef, likeRef, commentRef;
     private String offenceString = "";
     private APIService mService;
+    private FloatingActionButton addFeedButton;
 
     public Feed() {
         // Required empty public constructor
@@ -111,7 +116,16 @@ public class Feed extends Fragment {
 
         /*---   WIDGETS   ---*/
         feedRecycler = (RecyclerView)v.findViewById(R.id.feedRecycler);
+        addFeedButton = (FloatingActionButton)v.findViewById(R.id.addFeed);
 
+        addFeedButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent addFeedIntent = new Intent(getContext(), AddFeed.class);
+                startActivity(addFeedIntent);
+                getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+            }
+        });
 
         loadFeed();
 
@@ -126,6 +140,29 @@ public class Feed extends Fragment {
         layoutManager.setStackFromEnd(true);
         layoutManager.setReverseLayout(true);
         feedRecycler.setLayoutManager(layoutManager);
+
+        final Home theHome = new Home();
+        final RelativeLayout theNavLayout = (RelativeLayout)getActivity().findViewById(R.id.navLayout);
+
+
+        feedRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+                if (dy < 0 && theNavLayout.getVisibility() == View.GONE)
+                    theNavLayout.setVisibility(View.VISIBLE);
+                else if(dy > 0 && theNavLayout.getVisibility() == View.VISIBLE)
+                    theNavLayout.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                /*if (newState == RecyclerView.SCROLL_STATE_IDLE)
+                    theNavLayout.setVisibility(View.VISIBLE);*/
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
 
         adapter = new FirebaseRecyclerAdapter<FeedModel, FeedViewHolder>(
                 FeedModel.class,

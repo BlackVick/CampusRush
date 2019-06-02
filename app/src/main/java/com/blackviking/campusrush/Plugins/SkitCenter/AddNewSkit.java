@@ -20,10 +20,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.blackviking.campusrush.AddFeed;
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.Common.Permissions;
 import com.blackviking.campusrush.Model.MaterialModel;
+import com.blackviking.campusrush.Notification.APIService;
+import com.blackviking.campusrush.Notification.DataMessage;
+import com.blackviking.campusrush.Notification.MyResponse;
 import com.blackviking.campusrush.Plugins.GamersHub.AddGameFeed;
 import com.blackviking.campusrush.R;
 import com.blackviking.campusrush.Settings.Help;
@@ -57,6 +62,8 @@ import java.util.Map;
 
 import dmax.dialog.SpotsDialog;
 import id.zelory.compressor.Compressor;
+import retrofit2.Call;
+import retrofit2.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -65,7 +72,7 @@ public class AddNewSkit extends AppCompatActivity {
     private TextView activityName;
     private ImageView exitActivity, helpActivity;
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
-    private DatabaseReference skitRef, userRef;
+    private DatabaseReference skitRef, userRef, theAdminRef, adminRef;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private ImageView uploadSkit;
     private EditText skitDescription, skitTitle;
@@ -77,6 +84,8 @@ public class AddNewSkit extends AppCompatActivity {
     private StorageReference skitVideoRef;
     private String skitDownloadUrl, currentUid, skitThumbUrl, currentUserName;
     private ProgressDialog progressDialog;
+    private APIService mService;
+    private android.app.AlertDialog mDialog;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -96,12 +105,18 @@ public class AddNewSkit extends AppCompatActivity {
         setContentView(R.layout.activity_add_new_skit);
 
 
+        /*---   FCM   ---*/
+        mService = Common.getFCMService();
+
+
         /*---   FIREBASE   ---*/
         if (mAuth.getCurrentUser() != null)
             currentUid = mAuth.getCurrentUser().getUid();
         userRef = db.getReference("Users").child(currentUid);
+        theAdminRef = db.getReference("Users");
         skitRef = db.getReference("Skits");
         skitVideoRef = storage.getReference("Skits");
+        adminRef = db.getReference("AdminManagement");
 
 
         /*---   WIDGETS   ---*/
@@ -193,13 +208,24 @@ public class AddNewSkit extends AppCompatActivity {
                 newSkitMap.put("mediaUrl", skitDownloadUrl);
                 newSkitMap.put("thumbnail", skitThumbUrl);
                 newSkitMap.put("description", theDescription);
-                newSkitMap.put("status", "Pending");
+
+                newSkitMap.put("sourceType", "");
+                newSkitMap.put("update", "");
+
+                newSkitMap.put("sender", "");
+                newSkitMap.put("realSender", "");
+                newSkitMap.put("imageUrl", "");
+                newSkitMap.put("imageThumbUrl", "");
+                newSkitMap.put("timestamp", "");
+                newSkitMap.put("updateType", "");
+                newSkitMap.put("adminType", "Skit");
 
 
-                skitRef.push().setValue(newSkitMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                adminRef.push().setValue(newSkitMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
 
+                        sendNotificationToAdmin();
                         finish();
                     }
                 });
@@ -215,6 +241,44 @@ public class AddNewSkit extends AppCompatActivity {
             Common.showErrorDialog(AddNewSkit.this, "Update Has To Contain Valid Stuff . . .");
 
         }
+
+    }
+
+    private void sendNotificationToAdmin() {
+
+        theAdminRef.orderByChild("userType").equalTo("Admin").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()){
+
+                    String key = child.getKey();
+
+                    Map<String, String> dataSend = new HashMap<>();
+                    dataSend.put("title", "Admin");
+                    dataSend.put("message", "There are new items to sort out. Lets Go");
+                    DataMessage dataMessage = new DataMessage(new StringBuilder("/topics/").append(key).toString(), dataSend);
+
+                    mService.sendNotification(dataMessage)
+                            .enqueue(new retrofit2.Callback<MyResponse>() {
+                                @Override
+                                public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+
+                                }
+
+                                @Override
+                                public void onFailure(Call<MyResponse> call, Throwable t) {
+                                    Toast.makeText(AddNewSkit.this, "Error sending notification", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
@@ -291,23 +355,9 @@ public class AddNewSkit extends AppCompatActivity {
 
                             skitDownloadUrl = taskSnapshot.getDownloadUrl().toString();
 
-                            MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-                            retriever.setDataSource(skitDownloadUrl, new HashMap<String, String>());
-                            Bitmap image = retriever.getFrameAtTime(2000, MediaMetadataRetriever.OPTION_CLOSEST_SYNC);
-                            uploadSkit.setImageBitmap(image);
+                            progressDialog.dismiss();
 
-                            fileThumbRef.putFile(getImageUri(image))
-                                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                        @Override
-                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-                                            skitThumbUrl = taskSnapshot.getDownloadUrl().toString();
-
-                                            progressDialog.dismiss();
-                                        }
-                                    });
-
-
+                            getThumbNail(fileThumbRef);
 
                         }
                     }).addOnFailureListener(new OnFailureListener() {
@@ -330,6 +380,33 @@ public class AddNewSkit extends AppCompatActivity {
         }
 
     }
+
+    private void getThumbNail(StorageReference fileThumbRef) {
+
+        mDialog = new SpotsDialog(this, "Fetching Thumbnail . . .");
+        mDialog.setCancelable(false);
+        mDialog.setCanceledOnTouchOutside(false);
+        mDialog.show();
+
+        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+        retriever.setDataSource(skitDownloadUrl, new HashMap<String, String>());
+        Bitmap image = retriever.getFrameAtTime(2000, MediaMetadataRetriever.OPTION_CLOSEST_SYNC);
+        uploadSkit.setImageBitmap(image);
+
+        fileThumbRef.putFile(getImageUri(image))
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                        skitThumbUrl = taskSnapshot.getDownloadUrl().toString();
+                        mDialog.dismiss();
+
+
+                    }
+                });
+
+    }
+
 
     public Uri getImageUri(Bitmap theBitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();

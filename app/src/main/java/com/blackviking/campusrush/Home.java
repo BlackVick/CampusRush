@@ -24,6 +24,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -31,17 +32,13 @@ import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.Fragments.Account;
 import com.blackviking.campusrush.Fragments.CampusRant;
 import com.blackviking.campusrush.Fragments.Feed;
-import com.blackviking.campusrush.Fragments.FeedUpdate;
 import com.blackviking.campusrush.Fragments.Materials;
 import com.blackviking.campusrush.Fragments.Notifications;
 import com.blackviking.campusrush.Plugins.Awards.Awards;
 import com.blackviking.campusrush.Plugins.GamersHub.GamersHub;
-import com.blackviking.campusrush.Plugins.Scholarships.Scholarships;
 import com.blackviking.campusrush.Plugins.SkitCenter.SkitCenter;
-import com.blackviking.campusrush.Plugins.Vacancies.Vacancies;
 import com.blackviking.campusrush.Profile.MyProfile;
 import com.blackviking.campusrush.Settings.Settings;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -63,13 +60,16 @@ public class Home extends AppCompatActivity
 
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
-    private DatabaseReference userRef, rateRef, notificationRef;
+    private DatabaseReference userRef, rateRef, notificationRef, adminRef;
     private CircleImageView userImage;
     private TextView userFullName, userName, notificationCount;
-    private ImageView feed, materials, feedUpdate, campusRant, notifications,  account;
+    private ImageView feed, materials, campusRant, account;
+    public RelativeLayout notifications, navLayout;
     private DrawerLayout rootLayout;
     private BroadcastReceiver mMessageReceiver = null;
     private String currentUid, intentInstruction;
+    private LinearLayout admin, awards, gamersHub, skitCenter, campusAds, settings, signOut;
+    private TextView adminCount;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -106,6 +106,7 @@ public class Home extends AppCompatActivity
         userRef = db.getReference("Users");
         rateRef = db.getReference("Rating");
         notificationRef = db.getReference("Notifications");
+        adminRef = db.getReference("AdminManagement");
         if (mAuth.getCurrentUser() != null)
             currentUid = mAuth.getCurrentUser().getUid();
 
@@ -113,17 +114,28 @@ public class Home extends AppCompatActivity
         /*---   WIDGETS   ---*/
         feed = (ImageView)findViewById(R.id.feed);
         materials = (ImageView)findViewById(R.id.materials);
-        feedUpdate = (ImageView)findViewById(R.id.feedPost);
         campusRant = (ImageView)findViewById(R.id.schoolRant);
         account = (ImageView)findViewById(R.id.account);
-        notifications = (ImageView)findViewById(R.id.notifications);
+        notifications = (RelativeLayout)findViewById(R.id.notifications);
+        navLayout = (RelativeLayout)findViewById(R.id.navLayout);
         notificationCount = (TextView)findViewById(R.id.notificationCount);
+        userFullName = (TextView)findViewById(R.id.appBarFullName);
+        userName = (TextView)findViewById(R.id.appBarUsername);
+        userImage = (CircleImageView)findViewById(R.id.appBarUserImage);
+        rootLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        admin = (LinearLayout)findViewById(R.id.customAdminManage);
+        awards = (LinearLayout)findViewById(R.id.customNavAwards);
+        gamersHub = (LinearLayout)findViewById(R.id.customNavGamersHub);
+        skitCenter = (LinearLayout)findViewById(R.id.customNavSkitCenter);
+        campusAds = (LinearLayout)findViewById(R.id.customNavBusiness);
+        settings = (LinearLayout)findViewById(R.id.customNavSettings);
+        signOut = (LinearLayout)findViewById(R.id.customNavSignOut);
+        adminCount = (TextView) findViewById(R.id.managementCount);
 
 
         /*---   FRAGMENTS   ---*/
         final Feed feedFragment = new Feed();
         final Materials materialsFragment = new Materials();
-        final FeedUpdate updateFragment = new FeedUpdate();
         final CampusRant rantFragment = new CampusRant();
         final Notifications notificationFragment = new Notifications();
         final Account accountFragment = new Account();
@@ -133,10 +145,6 @@ public class Home extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View headerView = navigationView.getHeaderView(0);
-        userFullName = (TextView)headerView.findViewById(R.id.appBarFullName);
-        userName = (TextView)headerView.findViewById(R.id.appBarUsername);
-        userImage = (CircleImageView)headerView.findViewById(R.id.appBarUserImage);
-        rootLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
 
 
         /*---   CURRENT USER   ---*/
@@ -149,6 +157,13 @@ public class Home extends AppCompatActivity
                         + " " + dataSnapshot.child("firstName").getValue().toString();
                 final String theImage = dataSnapshot.child("profilePictureThumb").getValue().toString();
                 String security = dataSnapshot.child("riskLevel").getValue().toString();
+                String userType = dataSnapshot.child("userType").getValue().toString();
+
+                if (userType.equalsIgnoreCase("Admin")){
+                    admin.setVisibility(View.VISIBLE);
+                } else if (userType.equalsIgnoreCase("User")){
+                    admin.setVisibility(View.GONE);
+                }
 
                 if (security.equalsIgnoreCase("Danger")){
 
@@ -237,6 +252,34 @@ public class Home extends AppCompatActivity
             }
         });
 
+
+        /*---   ADMIN MANAGEMENT   ---*/
+        adminRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        int managementCount = (int) dataSnapshot.getChildrenCount();
+
+                        if (managementCount > 0){
+
+                            adminCount.setVisibility(View.VISIBLE);
+                            adminCount.setText(String.valueOf(managementCount));
+
+                        } else {
+
+                            adminCount.setVisibility(View.GONE);
+
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
         /*---   RATING   ---*/
         rateRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -284,13 +327,96 @@ public class Home extends AppCompatActivity
         };
 
 
+        /*---   CUSTOM NAV   ---*/
+        admin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rootLayout.closeDrawer(GravityCompat.START);
+                Intent adminIntent = new Intent(Home.this, AdminManagement.class);
+                startActivity(adminIntent);
+                overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+            }
+        });
+
+        awards.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rootLayout.closeDrawer(GravityCompat.START);
+                Intent awardIntent = new Intent(Home.this, Awards.class);
+                startActivity(awardIntent);
+                overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+            }
+        });
+
+        gamersHub.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rootLayout.closeDrawer(GravityCompat.START);
+                Intent gamersIntent = new Intent(Home.this, GamersHub.class);
+                startActivity(gamersIntent);
+                overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+            }
+        });
+
+        skitCenter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rootLayout.closeDrawer(GravityCompat.START);
+                Intent skitIntent = new Intent(Home.this, SkitCenter.class);
+                startActivity(skitIntent);
+                overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+            }
+        });
+
+        campusAds.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rootLayout.closeDrawer(GravityCompat.START);
+                Intent campusAdsIntent = new Intent(Home.this, CampusAds.class);
+                startActivity(campusAdsIntent);
+                overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+            }
+        });
+
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rootLayout.closeDrawer(GravityCompat.START);
+                Intent settingIntent = new Intent(Home.this, Settings.class);
+                startActivity(settingIntent);
+                overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+            }
+        });
+
+        signOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rootLayout.closeDrawer(GravityCompat.START);
+                Paper.book().destroy();
+
+                FirebaseMessaging.getInstance().unsubscribeFromTopic(currentUid);
+                FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.FEED_NOTIFICATION_TOPIC+currentUid);
+                FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.FEED_NOTIFICATION_TOPIC);
+                FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.SKIT_NOTIFICATION_TOPIC);
+                FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.GAMERS_NOTIFICATION_TOPIC);
+
+                mAuth.signOut();
+                Intent signoutIntent = new Intent(Home.this, Login.class);
+                signoutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(signoutIntent);
+                finish();
+            }
+        });
+
+
+
+
         /*---   BOTTOM NAVIGATION   ---*/
         feed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 feed.setBackgroundResource(R.color.bottom_nav_clicked);
                 materials.setBackgroundResource(R.drawable.white_grey_border_top);
-                feedUpdate.setBackgroundResource(R.drawable.white_grey_border_top);
                 campusRant.setBackgroundResource(R.drawable.white_grey_border_top);
                 notifications.setBackgroundResource(R.drawable.white_grey_border_top);
                 account.setBackgroundResource(R.drawable.white_grey_border_top);
@@ -306,7 +432,6 @@ public class Home extends AppCompatActivity
             public void onClick(View v) {
                 feed.setBackgroundResource(R.drawable.white_grey_border_top);
                 materials.setBackgroundResource(R.color.bottom_nav_clicked);
-                feedUpdate.setBackgroundResource(R.drawable.white_grey_border_top);
                 campusRant.setBackgroundResource(R.drawable.white_grey_border_top);
                 notifications.setBackgroundResource(R.drawable.white_grey_border_top);
                 account.setBackgroundResource(R.drawable.white_grey_border_top);
@@ -317,28 +442,11 @@ public class Home extends AppCompatActivity
             }
         });
 
-        feedUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                feed.setBackgroundResource(R.drawable.white_grey_border_top);
-                materials.setBackgroundResource(R.drawable.white_grey_border_top);
-                feedUpdate.setBackgroundResource(R.color.bottom_nav_clicked);
-                campusRant.setBackgroundResource(R.drawable.white_grey_border_top);
-                notifications.setBackgroundResource(R.drawable.white_grey_border_top);
-                account.setBackgroundResource(R.drawable.white_grey_border_top);
-
-                toolbar.setTitle("Update");
-
-                setFragment(updateFragment);
-            }
-        });
-
         campusRant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 feed.setBackgroundResource(R.drawable.white_grey_border_top);
                 materials.setBackgroundResource(R.drawable.white_grey_border_top);
-                feedUpdate.setBackgroundResource(R.drawable.white_grey_border_top);
                 campusRant.setBackgroundResource(R.color.bottom_nav_clicked);
                 notifications.setBackgroundResource(R.drawable.white_grey_border_top);
                 account.setBackgroundResource(R.drawable.white_grey_border_top);
@@ -354,7 +462,6 @@ public class Home extends AppCompatActivity
             public void onClick(View v) {
                 feed.setBackgroundResource(R.drawable.white_grey_border_top);
                 materials.setBackgroundResource(R.drawable.white_grey_border_top);
-                feedUpdate.setBackgroundResource(R.drawable.white_grey_border_top);
                 campusRant.setBackgroundResource(R.drawable.white_grey_border_top);
                 notifications.setBackgroundResource(R.color.bottom_nav_clicked);
                 account.setBackgroundResource(R.drawable.white_grey_border_top);
@@ -370,7 +477,6 @@ public class Home extends AppCompatActivity
             public void onClick(View v) {
                 feed.setBackgroundResource(R.drawable.white_grey_border_top);
                 materials.setBackgroundResource(R.drawable.white_grey_border_top);
-                feedUpdate.setBackgroundResource(R.drawable.white_grey_border_top);
                 campusRant.setBackgroundResource(R.drawable.white_grey_border_top);
                 notifications.setBackgroundResource(R.drawable.white_grey_border_top);
                 account.setBackgroundResource(R.color.bottom_nav_clicked);
@@ -408,7 +514,6 @@ public class Home extends AppCompatActivity
 
         feed.setBackgroundResource(R.drawable.white_grey_border_top);
         materials.setBackgroundResource(R.drawable.white_grey_border_top);
-        feedUpdate.setBackgroundResource(R.drawable.white_grey_border_top);
         campusRant.setBackgroundResource(R.drawable.white_grey_border_top);
         notifications.setBackgroundResource(R.color.bottom_nav_clicked);
         account.setBackgroundResource(R.drawable.white_grey_border_top);
@@ -451,7 +556,6 @@ public class Home extends AppCompatActivity
 
         feed.setBackgroundResource(R.color.bottom_nav_clicked);
         materials.setBackgroundResource(R.drawable.white_grey_border_top);
-        feedUpdate.setBackgroundResource(R.drawable.white_grey_border_top);
         campusRant.setBackgroundResource(R.drawable.white_grey_border_top);
         notifications.setBackgroundResource(R.drawable.white_grey_border_top);
         account.setBackgroundResource(R.drawable.white_grey_border_top);
@@ -511,60 +615,6 @@ public class Home extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-        if (id == R.id.nav_award) {
-
-            Intent awardIntent = new Intent(Home.this, Awards.class);
-            startActivity(awardIntent);
-            overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
-
-        } /*else if (id == R.id.nav_scholarships) {
-
-            Intent scholarshipIntent = new Intent(Home.this, Scholarships.class);
-            startActivity(scholarshipIntent);
-            overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
-
-        } else if (id == R.id.nav_vacancies) {
-
-            Intent vacanciesIntent = new Intent(Home.this, Vacancies.class);
-            startActivity(vacanciesIntent);
-            overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
-
-        }*/ else if (id == R.id.nav_gamers) {
-
-            Intent gamersIntent = new Intent(Home.this, GamersHub.class);
-            startActivity(gamersIntent);
-            overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
-
-        } else if (id == R.id.nav_skit_center) {
-
-            Intent skitIntent = new Intent(Home.this, SkitCenter.class);
-            startActivity(skitIntent);
-            overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
-
-        } else if (id == R.id.nav_settings) {
-
-            Intent settingIntent = new Intent(Home.this, Settings.class);
-            startActivity(settingIntent);
-            overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
-
-        } else if (id == R.id.nav_sign_out) {
-
-            Paper.book().destroy();
-
-            FirebaseMessaging.getInstance().unsubscribeFromTopic(currentUid);
-            FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.FEED_NOTIFICATION_TOPIC+currentUid);
-            FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.FEED_NOTIFICATION_TOPIC);
-            FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.SKIT_NOTIFICATION_TOPIC);
-            FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.GAMERS_NOTIFICATION_TOPIC);
-
-            mAuth.signOut();
-            Intent signoutIntent = new Intent(Home.this, Login.class);
-            signoutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(signoutIntent);
-            finish();
-
-        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

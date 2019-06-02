@@ -39,7 +39,7 @@ public class GamersHub extends AppCompatActivity {
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
     private DatabaseReference trendingRef, gameFeedRef, userRef;
     private RecyclerView trendingRecycler, gameFeedRecycler;
-    private LinearLayoutManager layoutManager;
+    private LinearLayoutManager layoutManager, layoutManager2;
     private FirebaseRecyclerAdapter<TrendingGamesModel, TrendingGamesViewHolder> adapter;
     private FirebaseRecyclerAdapter<GameFeedModel, GameFeedViewHolder> gameFeedAdapter;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -144,10 +144,10 @@ public class GamersHub extends AppCompatActivity {
     private void loadGameFeed() {
 
         gameFeedRecycler.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
-        layoutManager.setStackFromEnd(true);
-        layoutManager.setReverseLayout(true);
-        gameFeedRecycler.setLayoutManager(layoutManager);
+        layoutManager2 = new LinearLayoutManager(this);
+        layoutManager2.setStackFromEnd(true);
+        layoutManager2.setReverseLayout(true);
+        gameFeedRecycler.setLayoutManager(layoutManager2);
 
         gameFeedAdapter = new FirebaseRecyclerAdapter<GameFeedModel, GameFeedViewHolder>(
                 GameFeedModel.class,

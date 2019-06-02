@@ -11,6 +11,7 @@ import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 
+import com.blackviking.campusrush.AdminManagement;
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.FeedDetails;
 import com.blackviking.campusrush.Home;
@@ -98,7 +99,7 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
             messageBroadcastIntent.putExtra("Message", message);
             LocalBroadcastManager.getInstance(this).sendBroadcast(messageBroadcastIntent);
 
-        } else if (title.equalsIgnoreCase("New Feed")) {
+        } else if (title.equalsIgnoreCase("Admin")) {
 
             Intent messageBroadcastIntent = new Intent("NOTIFICATION_BROADCAST");
             messageBroadcastIntent.putExtra("Message", message);
@@ -144,7 +145,7 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
             messageBroadcastIntent.putExtra("Message", message);
             LocalBroadcastManager.getInstance(this).sendBroadcast(messageBroadcastIntent);
 
-        } else if (title.equalsIgnoreCase("New Feed")) {
+        } else if (title.equalsIgnoreCase("Admin")) {
 
             Intent messageBroadcastIntent = new Intent("NOTIFICATION_BROADCAST");
             messageBroadcastIntent.putExtra("Message", message);
@@ -178,7 +179,28 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
 
 
         /*---   MAIN NOTIFICATION LOGIC   ---*/
-        if (title.equalsIgnoreCase("Campus Feed")) {
+        if (title.equalsIgnoreCase("Admin")) {
+
+            Intent notificationsIntent = new Intent(this, AdminManagement.class);
+            PendingIntent contentIntent = PendingIntent.getActivity(this,
+                    0, notificationsIntent, 0);
+
+
+            Notification notification = new NotificationCompat.Builder(this, CHANNEL_2_ID)
+                    .setSmallIcon(R.drawable.ic_stat_campus_rush_notification)
+                    .setContentTitle(title)
+                    .setContentText(message)
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setColor(getResources().getColor(R.color.colorPrimaryDark))
+                    .setContentIntent(contentIntent)
+                    .setAutoCancel(true)
+                    .addAction(R.drawable.campus_rush_red_logo, "Manage", contentIntent)
+                    .build();
+
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(7, notification);
+
+        } else if (title.equalsIgnoreCase("Campus Feed")) {
 
             Intent notificationsIntent = new Intent(this, Home.class);
             notificationsIntent.putExtra("IntentInstruction", "Notification");
@@ -284,7 +306,28 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
 
 
         /*---   MAIN NOTIFICATION LOGIC   ---*/
-        if (title.equalsIgnoreCase("Campus Feed")) {
+        if (title.equalsIgnoreCase("Admin")) {
+
+            Intent notificationsIntent = new Intent(this, AdminManagement.class);
+            PendingIntent contentIntent = PendingIntent.getActivity(this,
+                    0, notificationsIntent, 0);
+
+            Notification notification = new NotificationCompat.Builder(this, CHANNEL_2_ID)
+                    .setSmallIcon(R.drawable.ic_stat_campus_rush_notification)
+                    .setContentTitle(title)
+                    .setContentText(message)
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setColor(getResources().getColor(R.color.colorPrimaryDark))
+                    .setContentIntent(contentIntent)
+                    .setAutoCancel(true)
+                    .addAction(R.drawable.campus_rush_red_logo, "Manage", contentIntent)
+                    .setSound(Uri.parse("android.resource://" + this.getPackageName() + "/" + R.raw.notification_sound))
+                    .build();
+
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(7, notification);
+
+        } else if (title.equalsIgnoreCase("Campus Feed")) {
 
             Intent notificationsIntent = new Intent(this, Home.class);
             notificationsIntent.putExtra("IntentInstruction", "Notification");

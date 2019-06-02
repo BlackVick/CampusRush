@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/offWhite">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="FEATURED"
+            android:textSize="17sp"
+            android:textColor="@color/grey"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.4dp"
+            android:background="@color/black"
+            android:layout_marginTop="7dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:orientation="horizontal"
+            android:id="@+id/customAdminManage"
+            android:weightSum="10"
+            android:visibility="gone"
+            android:background="@drawable/off_white_backround_ripple">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_admin_management"
+                android:adjustViewBounds="true"
+                android:padding="5dp"
+                android:tint="@color/colorPrimaryDark"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="start"
+                android:text="Admin"
+                android:textColor="@color/offBlack"
+                android:textSize="17sp"
+                android:layout_marginStart="20dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:background="@color/red"
+                android:text="0"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:padding="5dp"
+                android:layout_marginStart="30dp"
+                android:id="@+id/managementCount"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:orientation="horizontal"
+            android:id="@+id/customNavAwards"
+            android:background="@drawable/off_white_backround_ripple">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_app_bar_award"
+                android:adjustViewBounds="true"
+                android:padding="5dp"
+                android:tint="@color/colorPrimaryDark"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="start"
+                android:text="Awards"
+                android:textColor="@color/offBlack"
+                android:textSize="17sp"
+                android:layout_marginStart="20dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:orientation="horizontal"
+            android:id="@+id/customNavGamersHub"
+            android:background="@drawable/off_white_backround_ripple">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/red_gamers_hub"
+                android:adjustViewBounds="true"
+                android:padding="5dp"
+                android:tint="@color/colorPrimaryDark"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="start"
+                android:text="Gamers Hub"
+                android:textColor="@color/offBlack"
+                android:textSize="17sp"
+                android:layout_marginStart="20dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:orientation="horizontal"
+            android:id="@+id/customNavSkitCenter"
+            android:background="@drawable/off_white_backround_ripple">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_skit_center"
+                android:adjustViewBounds="true"
+                android:padding="5dp"
+                android:tint="@color/colorPrimaryDark"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="start"
+                android:text="Skit Center"
+                android:textColor="@color/offBlack"
+                android:textSize="17sp"
+                android:layout_marginStart="20dp"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="17sp"
+            android:textColor="@color/grey"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="10dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.4dp"
+            android:background="@color/black"
+            android:layout_marginTop="7dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:orientation="horizontal"
+            android:id="@+id/customNavBusiness"
+            android:background="@drawable/off_white_backround_ripple">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_campus_business"
+                android:adjustViewBounds="true"
+                android:padding="5dp"
+                android:tint="@color/colorPrimaryDark"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="start"
+                android:text="Campus Ads"
+                android:textColor="@color/offBlack"
+                android:textSize="17sp"
+                android:layout_marginStart="20dp"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.4dp"
+            android:background="@color/black"
+            android:layout_marginTop="7dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:orientation="horizontal"
+            android:id="@+id/customNavSettings"
+            android:background="@drawable/off_white_backround_ripple">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_app_bar_settings"
+                android:adjustViewBounds="true"
+                android:padding="5dp"
+                android:tint="@color/colorPrimaryDark"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="start"
+                android:text="Settings"
+                android:textColor="@color/offBlack"
+                android:textSize="17sp"
+                android:layout_marginStart="20dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:orientation="horizontal"
+            android:id="@+id/customNavSignOut"
+            android:background="@drawable/off_white_backround_ripple">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_app_bar_sign_out"
+                android:adjustViewBounds="true"
+                android:padding="5dp"
+                android:tint="@color/colorPrimaryDark"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="start"
+                android:text="Sign Out"
+                android:textColor="@color/offBlack"
+                android:textSize="17sp"
+                android:layout_marginStart="20dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

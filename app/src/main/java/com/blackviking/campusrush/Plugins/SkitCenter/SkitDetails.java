@@ -83,8 +83,6 @@ public class SkitDetails extends AppCompatActivity {
     private ImageView likeBtn, downloadSkit;
     private static final int VERIFY_PERMISSIONS_REQUEST = 757;
     private SimpleExoPlayer exoPlayer;
-    private LinearLayout adminLayout;
-    private Button approveBtn, denyBtn;
     private String userType, skitState, theTitle, theDescription, theLink;
     private DownloadManager downloadManager;
     private APIService mService;
@@ -136,9 +134,6 @@ public class SkitDetails extends AppCompatActivity {
         progressBar = (ProgressBar)findViewById(R.id.loadingProgress);
         likeBtn = (ImageView)findViewById(R.id.currentLikeBtn);
         downloadSkit = (ImageView)findViewById(R.id.downloadSkit);
-        adminLayout = (LinearLayout)findViewById(R.id.adminLayout);
-        approveBtn = (Button) findViewById(R.id.approveBtn);
-        denyBtn = (Button) findViewById(R.id.denyBtn);
 
 
         /*---   ACTIVITY BAR FUNCTIONS   ---*/
@@ -174,59 +169,6 @@ public class SkitDetails extends AppCompatActivity {
                     skitOwnerUid = child.getKey();
 
                 }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-
-        /*---   CURRENT USER   ---*/
-        userRef.child(currentUid).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                userType = dataSnapshot.child("userType").getValue().toString();
-
-                skitRef.child(currentSkitId).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-                        skitState = dataSnapshot.child("status").getValue().toString();
-
-                        if (userType.equalsIgnoreCase("Admin") && skitState.equalsIgnoreCase("Pending")){
-
-                            adminLayout.setVisibility(View.VISIBLE);
-                            approveBtn.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    showApprovalDialog();
-                                }
-                            });
-
-                            denyBtn.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    showDenialDialog();
-                                }
-                            });
-
-                        } else {
-
-                            adminLayout.setVisibility(View.GONE);
-
-                        }
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
 
             }
 
