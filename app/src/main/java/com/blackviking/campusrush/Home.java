@@ -28,6 +28,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.blackviking.campusrush.CampusBusiness.CampusAds;
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.Fragments.Account;
 import com.blackviking.campusrush.Fragments.CampusRant;
@@ -208,6 +209,7 @@ public class Home extends AppCompatActivity
                 userImage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        rootLayout.closeDrawer(GravityCompat.START);
                         Intent myProfileIntent = new Intent(Home.this, MyProfile.class);
                         startActivity(myProfileIntent);
                         overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
@@ -269,7 +271,6 @@ public class Home extends AppCompatActivity
                             adminCount.setVisibility(View.GONE);
 
                         }
-
 
                     }
 

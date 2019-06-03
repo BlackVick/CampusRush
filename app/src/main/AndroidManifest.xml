@@ -21,7 +21,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".CampusAds"></activity>
+        <activity android:name=".CampusBusiness.CreateAd"></activity>
+        <activity android:name=".CampusBusiness.SetBusinessAccount" />
+        <activity android:name=".CampusBusiness.CampusAds" />
 
         <meta-data
             android:name="io.fabric.ApiKey"
