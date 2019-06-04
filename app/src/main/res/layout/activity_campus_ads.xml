@@ -117,6 +117,56 @@
                 android:layout_height="match_parent"
                 android:id="@+id/adRecycler"/>
 
+            <RelativeLayout
+                android:id="@+id/expiredBusinessAccount"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/warning_image"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="18dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Your Account Subscription Has Expired"
+                        android:textSize="20sp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:layout_margin="30dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"/>
+
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:background="@drawable/white_backround_ripple"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_renew_subscription"
+                        android:padding="15dp"
+                        android:layout_margin="10dp"
+                        android:id="@+id/renewSubscription"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Renew"
+                        android:textSize="20sp"
+                        android:textColor="@color/black"
+                        android:layout_gravity="center"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
         </LinearLayout>
 
     </ScrollView>

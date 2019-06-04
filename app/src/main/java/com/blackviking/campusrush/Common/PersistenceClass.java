@@ -8,6 +8,8 @@ import android.media.AudioAttributes;
 import android.net.Uri;
 import android.os.Build;
 import com.crashlytics.android.Crashlytics;
+
+import co.paystack.android.PaystackSdk;
 import io.fabric.sdk.android.Fabric;
 
 import com.blackviking.campusrush.R;
@@ -31,8 +33,13 @@ public class PersistenceClass extends Application {
     public void onCreate() {
         super.onCreate();
 
+        /*---   PAYSTACK   ---*/
+        PaystackSdk.initialize(getApplicationContext());
+
+        /*---   CRASHLYTICS   ---*/
         Fabric.with(this, new Crashlytics());
 
+        /*---   FIREBASE OFFLINE   ---*/
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
         /*-------PICASSO--------*/

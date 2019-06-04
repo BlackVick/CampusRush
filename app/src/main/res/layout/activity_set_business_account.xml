@@ -50,8 +50,7 @@
                 app:met_primaryColor="@color/black"
                 app:met_singleLineEllipsis="true"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:digits="abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ"/>
+                android:layout_height="wrap_content"/>
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/businessAddressEdt"
@@ -104,7 +103,7 @@
                 android:text=""
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                android:inputType="text"
+                android:inputType="textCapSentences"
                 android:layout_margin="3dp"
                 android:padding="5dp"
                 app:met_clearButton="true"
@@ -286,7 +285,7 @@
         <Button
             android:id="@+id/businessAccountPaymentBtn"
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
             android:background="@drawable/paystack_backround_ripple"
@@ -302,7 +301,7 @@
         <Button
             android:id="@+id/createBusinessAccountBtn"
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
             android:background="@drawable/create_bus_back_ripple"
