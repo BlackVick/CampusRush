@@ -137,6 +137,21 @@
                         android:layout_height="0.3dp"
                         android:background="@color/offBlack"/>
 
+                    <TextView
+                        android:id="@+id/userAccountType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:padding="12dp"
+                        android:text=". . ."
+                        android:textSize="15sp"
+                        android:textColor="@color/offBlack"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.3dp"
+                        android:background="@color/offBlack"/>
+
                     <!-- MORE DETAILS  -->
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -180,7 +195,7 @@
                             android:layout_weight="3"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
-                            android:text="Online "
+                            android:text="Department "
                             android:textColor="@color/black"
                             android:textSize="15sp"/>
 
@@ -218,6 +233,223 @@
 
             </android.support.v7.widget.CardView>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/paystackColor"
+                android:id="@+id/userProfileBusinessLayout"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="BUSINESS PROFILE"
+                        android:textColor="@color/offWhite"
+                        android:textSize="25sp"
+                        android:layout_margin="5dp"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Name"
+                        android:textSize="18sp"
+                        android:textColor="@color/grey"
+                        android:layout_marginStart="6dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/userBusinessNameTxt"
+                        android:text=""
+                        android:textSize="22sp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="15dp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.4dp"
+                        android:background="@color/white"
+                        android:layout_marginTop="8dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Address"
+                        android:textSize="18sp"
+                        android:textColor="@color/grey"
+                        android:layout_marginStart="6dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/userBusinessAddressTxt"
+                        android:text=""
+                        android:textSize="16sp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="15dp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.4dp"
+                        android:background="@color/white"
+                        android:layout_marginTop="8dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Category"
+                        android:textSize="18sp"
+                        android:textColor="@color/grey"
+                        android:layout_marginStart="6dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/userBusinessCategoryTxt"
+                        android:text=""
+                        android:textSize="16sp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="15dp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.4dp"
+                        android:background="@color/white"
+                        android:layout_marginTop="8dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Description"
+                        android:textSize="18sp"
+                        android:textColor="@color/grey"
+                        android:layout_marginStart="6dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/userBusinessDescriptionTxt"
+                        android:text=""
+                        android:textSize="16sp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="15dp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.4dp"
+                        android:background="@color/white"
+                        android:layout_marginTop="8dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Phone"
+                        android:textSize="18sp"
+                        android:textColor="@color/grey"
+                        android:layout_marginStart="6dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/userBusinessPhoneTxt"
+                        android:text=""
+                        android:textSize="16sp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="15dp"
+                        android:autoLink="phone"
+                        android:clickable="true"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.4dp"
+                        android:background="@color/white"
+                        android:layout_marginTop="8dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Facebook"
+                        android:textSize="18sp"
+                        android:textColor="@color/grey"
+                        android:layout_marginStart="6dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/userBusinessFacebookTxt"
+                        android:text=""
+                        android:textSize="16sp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="15dp"
+                        android:autoLink="all"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.4dp"
+                        android:background="@color/white"
+                        android:layout_marginTop="8dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Instagram"
+                        android:textSize="18sp"
+                        android:textColor="@color/grey"
+                        android:layout_marginStart="6dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/userBusinessInstagramTxt"
+                        android:text=""
+                        android:textSize="16sp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="15dp"
+                        android:autoLink="all"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.4dp"
+                        android:background="@color/white"
+                        android:layout_marginTop="8dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Twitter"
+                        android:textSize="18sp"
+                        android:textColor="@color/grey"
+                        android:layout_marginStart="6dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/userBusinessTwitterTxt"
+                        android:text=""
+                        android:textSize="16sp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="15dp"
+                        android:autoLink="all"
+                        android:layout_marginBottom="10dp"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
             <android.support.v7.widget.RecyclerView
                 android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
@@ -227,5 +459,18 @@
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/messageUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_message_user"
+        android:visibility="visible"
+        app:backgroundTint="@color/white"
+        app:layout_anchorGravity="bottom|right|end"
+        app:elevation="6dp"
+        app:layout_anchor="@id/app_bar_layout"
+        app:pressedTranslationZ="12dp"
+        app:useCompatPadding="true" />
 
 </android.support.design.widget.CoordinatorLayout>

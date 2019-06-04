@@ -295,7 +295,7 @@ public class FeedDetails extends AppCompatActivity {
                 commentRef.child(currentFeedId)
         ) {
             @Override
-            protected void populateViewHolder(final CommentViewHolder viewHolder, CommentModel model, int position) {
+            protected void populateViewHolder(final CommentViewHolder viewHolder, final CommentModel model, int position) {
 
                 /*---   GET TIME AGO ALGORITHM   ---*/
                 GetTimeAgo getTimeAgo = new GetTimeAgo();
@@ -314,7 +314,29 @@ public class FeedDetails extends AppCompatActivity {
                     userRef.child(model.getCommenter()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            viewHolder.username.setText(dataSnapshot.child("username").getValue().toString());
+                            viewHolder.username.setText("@"+dataSnapshot.child("username").getValue().toString());
+
+                            viewHolder.username.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    if (model.getCommenter().equals(currentUid)) {
+
+                                        Intent posterProfile = new Intent(FeedDetails.this, MyProfile.class);
+                                        startActivity(posterProfile);
+                                        overridePendingTransition(R.anim.slide_left, R.anim.slide_out);
+
+                                    } else {
+
+                                        Intent posterProfile = new Intent(FeedDetails.this, OtherUserProfile.class);
+                                        posterProfile.putExtra("UserId", model.getCommenter());
+                                        startActivity(posterProfile);
+                                        overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+
+                                    }
+
+                                }
+                            });
                         }
 
                         @Override

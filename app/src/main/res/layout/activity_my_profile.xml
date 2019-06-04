@@ -146,6 +146,21 @@
                         android:layout_height="0.3dp"
                         android:background="@color/offBlack"/>
 
+                    <TextView
+                        android:id="@+id/myAccountType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:padding="12dp"
+                        android:text=". . ."
+                        android:textSize="15sp"
+                        android:textColor="@color/offBlack"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.3dp"
+                        android:background="@color/offBlack"/>
+
                     <!-- MORE DETAILS  -->
                     <LinearLayout
                         android:id="@+id/sexLayout"
@@ -227,6 +242,223 @@
                     android:id="@+id/myBio"/>
 
             </android.support.v7.widget.CardView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/paystackColor"
+                android:id="@+id/myProfileBusinessLayout"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="BUSINESS PROFILE"
+                        android:textColor="@color/offWhite"
+                        android:textSize="25sp"
+                        android:layout_margin="5dp"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Name"
+                        android:textSize="18sp"
+                        android:textColor="@color/grey"
+                        android:layout_marginStart="6dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/myBusinessNameTxt"
+                        android:text=""
+                        android:textSize="22sp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="15dp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.4dp"
+                        android:background="@color/white"
+                        android:layout_marginTop="8dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Address"
+                        android:textSize="18sp"
+                        android:textColor="@color/grey"
+                        android:layout_marginStart="6dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/myBusinessAddressTxt"
+                        android:text=""
+                        android:textSize="16sp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="15dp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.4dp"
+                        android:background="@color/white"
+                        android:layout_marginTop="8dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Category"
+                        android:textSize="18sp"
+                        android:textColor="@color/grey"
+                        android:layout_marginStart="6dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/myBusinessCategoryTxt"
+                        android:text=""
+                        android:textSize="16sp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="15dp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.4dp"
+                        android:background="@color/white"
+                        android:layout_marginTop="8dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Description"
+                        android:textSize="18sp"
+                        android:textColor="@color/grey"
+                        android:layout_marginStart="6dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/myBusinessDescriptionTxt"
+                        android:text=""
+                        android:textSize="16sp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="15dp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.4dp"
+                        android:background="@color/white"
+                        android:layout_marginTop="8dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Phone"
+                        android:textSize="18sp"
+                        android:textColor="@color/grey"
+                        android:layout_marginStart="6dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/myBusinessPhoneTxt"
+                        android:text=""
+                        android:textSize="16sp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="15dp"
+                        android:autoLink="phone"
+                        android:clickable="true"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.4dp"
+                        android:background="@color/white"
+                        android:layout_marginTop="8dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Facebook"
+                        android:textSize="18sp"
+                        android:textColor="@color/grey"
+                        android:layout_marginStart="6dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/myBusinessFacebookTxt"
+                        android:text=""
+                        android:textSize="16sp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="15dp"
+                        android:autoLink="all"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.4dp"
+                        android:background="@color/white"
+                        android:layout_marginTop="8dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Instagram"
+                        android:textSize="18sp"
+                        android:textColor="@color/grey"
+                        android:layout_marginStart="6dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/myBusinessInstagramTxt"
+                        android:text=""
+                        android:textSize="16sp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="15dp"
+                        android:autoLink="all"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.4dp"
+                        android:background="@color/white"
+                        android:layout_marginTop="8dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Twitter"
+                        android:textSize="18sp"
+                        android:textColor="@color/grey"
+                        android:layout_marginStart="6dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/myBusinessTwitterTxt"
+                        android:text=""
+                        android:textSize="16sp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="15dp"
+                        android:autoLink="all"
+                        android:layout_marginBottom="10dp"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
 
         </LinearLayout>
 

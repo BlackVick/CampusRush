@@ -28,6 +28,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -78,7 +79,7 @@ public class OtherUserProfile extends AppCompatActivity {
     private TextView username, fullName, status, department, gender, bio;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
-    private DatabaseReference userRef, timelineRef, likeRef, commentRef;
+    private DatabaseReference userRef, timelineRef, likeRef, commentRef, businessProfileRef;
     private CoordinatorLayout rootLayout;
     private int BLUR_PRECENTAGE = 50;
     private RecyclerView timelineRecycler;
@@ -87,7 +88,14 @@ public class OtherUserProfile extends AppCompatActivity {
     private Target target;
     private String offenceString = "";
     private APIService mService;
-    private String serverUsername, serverFullName, serverGender, serverStatus, serverDepartment, serverBio, serverProfilePictureThumb, serverProfilePicture;
+    private String serverUsername, serverFullName, serverGender, serverStatus,
+            serverDepartment, serverBio, serverProfilePictureThumb,
+            serverProfilePicture, serverUserType;
+
+    private RelativeLayout businessLayout;
+    private TextView busName, busAddress, busCategory, busDescription, busPhone, busFacebook, busInstagram, busTwitter,
+            accountType;
+    private FloatingActionButton sendUserMessage;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -131,6 +139,7 @@ public class OtherUserProfile extends AppCompatActivity {
         timelineRef = db.getReference("Feed");
         likeRef = db.getReference("Likes");
         commentRef = db.getReference("FeedComments");
+        businessProfileRef = db.getReference("BusinessProfile");
 
 
         /*---   WIDGETS   ---*/
@@ -146,9 +155,35 @@ public class OtherUserProfile extends AppCompatActivity {
         timelineRecycler = (RecyclerView)findViewById(R.id.otherUserTimelineRecycler);
 
 
+        sendUserMessage = (FloatingActionButton)findViewById(R.id.messageUser);
+        businessLayout = (RelativeLayout)findViewById(R.id.userProfileBusinessLayout);
+        busName = (TextView)findViewById(R.id.userBusinessNameTxt);
+        busAddress = (TextView)findViewById(R.id.userBusinessAddressTxt);
+        busCategory = (TextView)findViewById(R.id.userBusinessCategoryTxt);
+        busDescription = (TextView)findViewById(R.id.userBusinessDescriptionTxt);
+        busPhone = (TextView)findViewById(R.id.userBusinessPhoneTxt);
+        busFacebook = (TextView)findViewById(R.id.userBusinessFacebookTxt);
+        busInstagram = (TextView)findViewById(R.id.userBusinessInstagramTxt);
+        busTwitter = (TextView)findViewById(R.id.userBusinessTwitterTxt);
+        accountType = (TextView)findViewById(R.id.userAccountType);
+
+
         /*---   TOOLBAR   ---*/
         collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppbar);
         collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppbar);
+
+        /*---   FAB   ---*/
+        sendUserMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!userId.equalsIgnoreCase("")){
+                    /*Intent messageIntent = new Intent(OtherUserProfile.this, Messaging.class);
+                    messageIntent.putExtra("UserId", userId);
+                    startActivity(messageIntent);
+                    overridePendingTransition(R.anim.slide_left, R.anim.slide_left);*/
+                }
+            }
+        });
 
 
         /*---   LOAD PROFILE   ---*/
@@ -160,6 +195,152 @@ public class OtherUserProfile extends AppCompatActivity {
         } else {
             Common.showErrorDialog(OtherUserProfile.this, "Could Not Load User Profile Because There Is No Internet Access !");
         }
+    }
+
+    private void loadUserProfile(final String userId) {
+
+        /*---   BLUR COVER   ---*/
+        target = new Target() {
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                coverPhoto.setImageBitmap(BlurImage.fastblur(bitmap, 1f,
+                        BLUR_PRECENTAGE));
+            }
+            @Override
+            public void onBitmapFailed(Drawable errorDrawable) {
+                coverPhoto.setImageResource(R.drawable.profile);
+            }
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+            }
+        };
+
+        userRef.child(userId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                serverUsername = dataSnapshot.child("username").getValue().toString();
+                serverFullName = dataSnapshot.child("lastName").getValue().toString() + " " + dataSnapshot.child("firstName").getValue().toString();
+                serverStatus = dataSnapshot.child("status").getValue().toString();
+                serverGender = dataSnapshot.child("gender").getValue().toString();
+                serverDepartment = dataSnapshot.child("department").getValue().toString();
+                serverBio = dataSnapshot.child("bio").getValue().toString();
+                serverProfilePictureThumb = dataSnapshot.child("profilePictureThumb").getValue().toString();
+                serverProfilePicture = dataSnapshot.child("profilePicture").getValue().toString();
+                serverUserType = dataSnapshot.child("userType").getValue().toString();
+
+                /*---   DETAILS   ---*/
+                collapsingToolbarLayout.setTitle("@"+serverUsername);
+                username.setText("@"+serverUsername);
+                fullName.setText(serverFullName);
+                status.setText(serverStatus);
+                department.setText(serverDepartment);
+                gender.setText(serverGender);
+                bio.setText(serverBio);
+
+                if (serverUserType.equalsIgnoreCase("Business") || serverUserType.equalsIgnoreCase("Admin")){
+                    accountType.setText("Business Account");
+                } else {
+                    accountType.setText("Regular Account");
+                }
+
+
+                /*---   ACCOUNT TYPE   ---*/
+                businessProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        if (dataSnapshot.child(userId).exists()) {
+
+                            businessLayout.setVisibility(View.VISIBLE);
+
+                            String theBusName = dataSnapshot.child(userId).child("businessName").getValue().toString();
+                            String theBusAddress = dataSnapshot.child(userId).child("businessAddress").getValue().toString();
+                            String theBusCategory = dataSnapshot.child(userId).child("businessCategory").getValue().toString();
+                            String theBusDescription = dataSnapshot.child(userId).child("businessDescription").getValue().toString();
+                            String theBusPhone = dataSnapshot.child(userId).child("businessPhone").getValue().toString();
+                            String theBusFacebook = dataSnapshot.child(userId).child("businessFacebook").getValue().toString();
+                            String theBusInstagram = dataSnapshot.child(userId).child("businessInstagram").getValue().toString();
+                            String theBusTwitter = dataSnapshot.child(userId).child("businessTwitter").getValue().toString();
+
+
+                            busName.setText(theBusName);
+                            busAddress.setText(theBusAddress);
+                            busCategory.setText(theBusCategory);
+                            busDescription.setText(theBusDescription);
+                            busPhone.setText(theBusPhone);
+                            busFacebook.setText(theBusFacebook);
+                            busInstagram.setText(theBusInstagram);
+                            busTwitter.setText(theBusTwitter);
+
+                        } else {
+
+                            businessLayout.setVisibility(View.GONE);
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
+                /*---   IMAGE   ---*/
+                if (!serverProfilePictureThumb.equals("")){
+
+                    /*---   PROFILE IMAGE   ---*/
+                    Picasso.with(getBaseContext())
+                            .load(serverProfilePictureThumb)
+                            .networkPolicy(NetworkPolicy.OFFLINE)
+                            .placeholder(R.drawable.ic_loading_animation)
+                            .into(userProfileImage, new Callback() {
+                                @Override
+                                public void onSuccess() {
+
+                                }
+
+                                @Override
+                                public void onError() {
+                                    Picasso.with(getBaseContext())
+                                            .load(serverProfilePictureThumb)
+                                            .placeholder(R.drawable.ic_loading_animation)
+                                            .into(userProfileImage);
+                                }
+                            });
+
+
+                    /*---   COVER PHOTO   ---*/
+                    Picasso.with(getBaseContext())
+                            .load(serverProfilePictureThumb)
+                            .networkPolicy(NetworkPolicy.OFFLINE)
+                            .placeholder(R.drawable.ic_loading_animation)
+                            .into(target);
+
+
+                    userProfileImage.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent profileImgIntent = new Intent(OtherUserProfile.this, ImageViewer.class);
+                            profileImgIntent.putExtra("ImageLink", serverProfilePicture);
+                            profileImgIntent.putExtra("ImageThumbLink", serverProfilePictureThumb);
+                            startActivity(profileImgIntent);
+                            overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+                        }
+                    });
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     private void loadUserTimeline(final String userId) {
@@ -221,18 +402,7 @@ public class OtherUserProfile extends AppCompatActivity {
 
 
                 /*---   POSTER DETAILS   ---*/
-                if (!serverProfilePictureThumb.equals("")){
-
-                    Picasso.with(getBaseContext())
-                            .load(serverProfilePictureThumb)
-                            .placeholder(R.drawable.ic_loading_animation)
-                            .into(viewHolder.posterImage);
-
-                } else {
-
-                    viewHolder.posterImage.setImageResource(R.drawable.profile);
-
-                }
+                viewHolder.posterImage.setVisibility(View.GONE);
 
 
                 /*---   POST IMAGE   ---*/
@@ -550,102 +720,6 @@ public class OtherUserProfile extends AppCompatActivity {
         });
 
         alertDialog.show();
-
-    }
-
-    private void loadUserProfile(final String userId) {
-
-        /*---   BLUR COVER   ---*/
-        target = new Target() {
-            @Override
-            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                coverPhoto.setImageBitmap(BlurImage.fastblur(bitmap, 1f,
-                        BLUR_PRECENTAGE));
-            }
-            @Override
-            public void onBitmapFailed(Drawable errorDrawable) {
-                coverPhoto.setImageResource(R.drawable.profile);
-            }
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-            }
-        };
-
-        userRef.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                serverUsername = dataSnapshot.child("username").getValue().toString();
-                serverFullName = dataSnapshot.child("lastName").getValue().toString() + " " + dataSnapshot.child("firstName").getValue().toString();
-                serverStatus = dataSnapshot.child("status").getValue().toString();
-                serverGender = dataSnapshot.child("gender").getValue().toString();
-                serverDepartment = dataSnapshot.child("department").getValue().toString();
-                serverBio = dataSnapshot.child("bio").getValue().toString();
-                serverProfilePictureThumb = dataSnapshot.child("profilePictureThumb").getValue().toString();
-                serverProfilePicture = dataSnapshot.child("profilePicture").getValue().toString();
-
-                /*---   DETAILS   ---*/
-                collapsingToolbarLayout.setTitle("@"+serverUsername);
-                username.setText("@"+serverUsername);
-                fullName.setText(serverFullName);
-                status.setText(serverStatus);
-                department.setText(serverDepartment);
-                gender.setText(serverGender);
-                bio.setText(serverBio);
-
-
-                /*---   IMAGE   ---*/
-                if (!serverProfilePictureThumb.equals("")){
-
-                    /*---   PROFILE IMAGE   ---*/
-                    Picasso.with(getBaseContext())
-                            .load(serverProfilePictureThumb)
-                            .networkPolicy(NetworkPolicy.OFFLINE)
-                            .placeholder(R.drawable.ic_loading_animation)
-                            .into(userProfileImage, new Callback() {
-                                @Override
-                                public void onSuccess() {
-
-                                }
-
-                                @Override
-                                public void onError() {
-                                    Picasso.with(getBaseContext())
-                                            .load(serverProfilePictureThumb)
-                                            .placeholder(R.drawable.ic_loading_animation)
-                                            .into(userProfileImage);
-                                }
-                            });
-
-
-                    /*---   COVER PHOTO   ---*/
-                    Picasso.with(getBaseContext())
-                            .load(serverProfilePictureThumb)
-                            .networkPolicy(NetworkPolicy.OFFLINE)
-                            .placeholder(R.drawable.ic_loading_animation)
-                            .into(target);
-
-
-                    userProfileImage.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent profileImgIntent = new Intent(OtherUserProfile.this, ImageViewer.class);
-                            profileImgIntent.putExtra("ImageLink", serverProfilePicture);
-                            profileImgIntent.putExtra("ImageThumbLink", serverProfilePictureThumb);
-                            startActivity(profileImgIntent);
-                            overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
-                        }
-                    });
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
     }
 

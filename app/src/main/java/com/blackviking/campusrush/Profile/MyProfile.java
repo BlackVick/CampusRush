@@ -27,6 +27,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.blackviking.campusrush.BuildConfig;
@@ -76,7 +77,7 @@ public class MyProfile extends AppCompatActivity {
     private TextView username, fullName, status, gender, department, bio;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
-    private DatabaseReference userRef;
+    private DatabaseReference userRef, businessProfileRef;
     private CoordinatorLayout rootLayout;
     private int BLUR_PRECENTAGE = 50;
     private Target target;
@@ -88,7 +89,13 @@ public class MyProfile extends AppCompatActivity {
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference imageRef;
     private String originalImageUrl, thumbDownloadUrl;
-    private String serverUsername, serverFullName, serverGender, serverStatus, serverDepartment, serverBio, serverProfilePictureThumb, serverProfilePicture;
+    private String serverUsername, serverFullName, serverGender, serverStatus,
+            serverDepartment, serverBio, serverProfilePictureThumb, serverProfilePicture,
+            serverUserType;
+
+    private RelativeLayout businessLayout;
+    private TextView busName, busAddress, busCategory, busDescription, busPhone, busFacebook, busInstagram, busTwitter,
+            accountType;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -121,6 +128,7 @@ public class MyProfile extends AppCompatActivity {
         if (mAuth.getCurrentUser() != null)
             currentUid = mAuth.getCurrentUser().getUid();
         userRef = db.getReference("Users").child(currentUid);
+        businessProfileRef = db.getReference("BusinessProfile");
         imageRef = storage.getReference("ProfileImages").child(currentUid);
 
 
@@ -137,6 +145,17 @@ public class MyProfile extends AppCompatActivity {
         fullName = (TextView)findViewById(R.id.myFullName);
         department = (TextView)findViewById(R.id.myDepartment);
         bio = (TextView)findViewById(R.id.myBio);
+
+        businessLayout = (RelativeLayout)findViewById(R.id.myProfileBusinessLayout);
+        busName = (TextView)findViewById(R.id.myBusinessNameTxt);
+        busAddress = (TextView)findViewById(R.id.myBusinessAddressTxt);
+        busCategory = (TextView)findViewById(R.id.myBusinessCategoryTxt);
+        busDescription = (TextView)findViewById(R.id.myBusinessDescriptionTxt);
+        busPhone = (TextView)findViewById(R.id.myBusinessPhoneTxt);
+        busFacebook = (TextView)findViewById(R.id.myBusinessFacebookTxt);
+        busInstagram = (TextView)findViewById(R.id.myBusinessInstagramTxt);
+        busTwitter = (TextView)findViewById(R.id.myBusinessTwitterTxt);
+        accountType = (TextView)findViewById(R.id.myAccountType);
 
 
         /*---   TOOLBAR   ---*/
@@ -326,6 +345,7 @@ public class MyProfile extends AppCompatActivity {
                 serverBio = dataSnapshot.child("bio").getValue().toString();
                 serverProfilePictureThumb = dataSnapshot.child("profilePictureThumb").getValue().toString();
                 serverProfilePicture = dataSnapshot.child("profilePicture").getValue().toString();
+                serverUserType = dataSnapshot.child("userType").getValue().toString();
 
                 /*---   DETAILS   ---*/
                 collapsingToolbarLayout.setTitle("@"+serverUsername);
@@ -335,6 +355,57 @@ public class MyProfile extends AppCompatActivity {
                 department.setText(serverDepartment);
                 gender.setText(serverGender);
                 bio.setText(serverBio);
+
+                if (serverUserType.equalsIgnoreCase("Admin")){
+                    accountType.setText("Admin");
+                } else if (serverUserType.equalsIgnoreCase("Business")){
+                    accountType.setText("Business Account");
+                } else {
+                    accountType.setText("Regular");
+                }
+
+
+                /*---   ACCOUNT TYPE   ---*/
+                businessProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        if (dataSnapshot.child(currentUid).exists()) {
+
+                            businessLayout.setVisibility(View.VISIBLE);
+
+                            String theBusName = dataSnapshot.child(currentUid).child("businessName").getValue().toString();
+                            String theBusAddress = dataSnapshot.child(currentUid).child("businessAddress").getValue().toString();
+                            String theBusCategory = dataSnapshot.child(currentUid).child("businessCategory").getValue().toString();
+                            String theBusDescription = dataSnapshot.child(currentUid).child("businessDescription").getValue().toString();
+                            String theBusPhone = dataSnapshot.child(currentUid).child("businessPhone").getValue().toString();
+                            String theBusFacebook = dataSnapshot.child(currentUid).child("businessFacebook").getValue().toString();
+                            String theBusInstagram = dataSnapshot.child(currentUid).child("businessInstagram").getValue().toString();
+                            String theBusTwitter = dataSnapshot.child(currentUid).child("businessTwitter").getValue().toString();
+
+
+                            busName.setText(theBusName);
+                            busAddress.setText(theBusAddress);
+                            busCategory.setText(theBusCategory);
+                            busDescription.setText(theBusDescription);
+                            busPhone.setText(theBusPhone);
+                            busFacebook.setText(theBusFacebook);
+                            busInstagram.setText(theBusInstagram);
+                            busTwitter.setText(theBusTwitter);
+
+                        } else {
+
+                            businessLayout.setVisibility(View.GONE);
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
 
 
                 /*---   IMAGE   ---*/
