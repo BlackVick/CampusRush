@@ -27,7 +27,7 @@ public class PrivacySetting extends AppCompatActivity {
 
     private TextView activityName;
     private ImageView exitActivity, helpActivity;
-    private CheckBox privacyToggle;
+    private CheckBox privacyToggle, messagingToggle;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
     private DatabaseReference userRef;
@@ -66,6 +66,7 @@ public class PrivacySetting extends AppCompatActivity {
         exitActivity = (ImageView)findViewById(R.id.exitActivity);
         helpActivity = (ImageView)findViewById(R.id.helpIcon);
         privacyToggle = (CheckBox)findViewById(R.id.privacyToggle);
+        messagingToggle = (CheckBox)findViewById(R.id.messagingPrivacyToggle);
 
 
         /*---   CURRENT USER   ---*/
@@ -74,6 +75,7 @@ public class PrivacySetting extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 String privacyState = dataSnapshot.child("privacy").getValue().toString();
+                String messagingState = dataSnapshot.child("messaging").getValue().toString();
 
                 if (privacyState.equalsIgnoreCase("public")){
 
@@ -82,6 +84,16 @@ public class PrivacySetting extends AppCompatActivity {
                 } else if (privacyState.equalsIgnoreCase("private")) {
 
                     privacyToggle.setChecked(true);
+
+                }
+
+                if (messagingState.equalsIgnoreCase("public")){
+
+                    messagingToggle.setChecked(false);
+
+                } else if (messagingState.equalsIgnoreCase("private")) {
+
+                    messagingToggle.setChecked(true);
 
                 }
 
@@ -118,6 +130,24 @@ public class PrivacySetting extends AppCompatActivity {
                 } else {
 
                     userRef.child("privacy").setValue("public");
+
+                }
+
+            }
+        });
+
+
+        messagingToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if (isChecked){
+
+                    userRef.child("messaging").setValue("private");
+
+                } else {
+
+                    userRef.child("messaging").setValue("public");
 
                 }
 

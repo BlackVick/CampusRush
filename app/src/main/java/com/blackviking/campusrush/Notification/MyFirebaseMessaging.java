@@ -15,6 +15,7 @@ import com.blackviking.campusrush.AdminManagement;
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.FeedDetails;
 import com.blackviking.campusrush.Home;
+import com.blackviking.campusrush.Messaging.Messaging;
 import com.blackviking.campusrush.Plugins.GamersHub.GameFeedDetail;
 import com.blackviking.campusrush.Plugins.SkitCenter.SkitDetails;
 import com.blackviking.campusrush.R;
@@ -83,6 +84,7 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
         String skitOwner = data.get("skit_owner");
         String feedId = data.get("feed_id");
         String gameFeedId = data.get("game_feed_id");
+        String userId = data.get("user_id");
 
 
 
@@ -94,6 +96,12 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
             LocalBroadcastManager.getInstance(this).sendBroadcast(feedBroadcastIntent);
 
         } else if (title.equalsIgnoreCase("Gamers Hub")) {
+
+            Intent messageBroadcastIntent = new Intent("NOTIFICATION_BROADCAST");
+            messageBroadcastIntent.putExtra("Message", message);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(messageBroadcastIntent);
+
+        } else if (title.equalsIgnoreCase("Messaging")) {
 
             Intent messageBroadcastIntent = new Intent("NOTIFICATION_BROADCAST");
             messageBroadcastIntent.putExtra("Message", message);
@@ -130,6 +138,7 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
         String skitOwner = data.get("skit_owner");
         String feedId = data.get("feed_id");
         String gameFeedId = data.get("game_feed_id");
+        String userId = data.get("user_id");
 
 
         /*---   MAIN NOTIFICATION LOGIC   ---*/
@@ -140,6 +149,12 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
             LocalBroadcastManager.getInstance(this).sendBroadcast(feedBroadcastIntent);
 
         } else if (title.equalsIgnoreCase("Gamers Hub")) {
+
+            Intent messageBroadcastIntent = new Intent("NOTIFICATION_BROADCAST");
+            messageBroadcastIntent.putExtra("Message", message);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(messageBroadcastIntent);
+
+        } else if (title.equalsIgnoreCase("Messaging")) {
 
             Intent messageBroadcastIntent = new Intent("NOTIFICATION_BROADCAST");
             messageBroadcastIntent.putExtra("Message", message);
@@ -176,6 +191,7 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
         String skitOwner = data.get("skit_owner");
         String feedId = data.get("feed_id");
         String gameFeedId = data.get("game_feed_id");
+        String userId = data.get("user_id");
 
 
         /*---   MAIN NOTIFICATION LOGIC   ---*/
@@ -221,6 +237,28 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
 
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.notify(1, notification);
+
+        } else if (title.equalsIgnoreCase("Messaging")) {
+
+            Intent notificationsIntent = new Intent(this, Messaging.class);
+            notificationsIntent.putExtra("UserId", userId);
+            PendingIntent contentIntent = PendingIntent.getActivity(this,
+                    0, notificationsIntent, 0);
+
+
+            Notification notification = new NotificationCompat.Builder(this, CHANNEL_1_ID)
+                    .setSmallIcon(R.drawable.ic_stat_campus_rush_notification)
+                    .setContentTitle(title)
+                    .setContentText(message)
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setColor(getResources().getColor(R.color.colorPrimaryDark))
+                    .setContentIntent(contentIntent)
+                    .setAutoCancel(true)
+                    .addAction(R.drawable.ic_message_user, "Open Message", contentIntent)
+                    .build();
+
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(9, notification);
 
         } else if (title.equalsIgnoreCase("Skit Approval")) {
 
@@ -303,6 +341,7 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
         String skitOwner = data.get("skit_owner");
         String feedId = data.get("feed_id");
         String gameFeedId = data.get("game_feed_id");
+        String userId = data.get("user_id");
 
 
         /*---   MAIN NOTIFICATION LOGIC   ---*/
@@ -348,6 +387,28 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
 
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.notify(1, notification);
+
+        } else if (title.equalsIgnoreCase("Messaging")) {
+
+            Intent notificationsIntent = new Intent(this, Messaging.class);
+            notificationsIntent.putExtra("UserId", userId);
+            PendingIntent contentIntent = PendingIntent.getActivity(this,
+                    0, notificationsIntent, 0);
+
+            Notification notification = new NotificationCompat.Builder(this, CHANNEL_1_ID)
+                    .setSmallIcon(R.drawable.ic_stat_campus_rush_notification)
+                    .setContentTitle(title)
+                    .setContentText(message)
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setColor(getResources().getColor(R.color.colorPrimaryDark))
+                    .setContentIntent(contentIntent)
+                    .setAutoCancel(true)
+                    .addAction(R.drawable.ic_message_user, "Open Message", contentIntent)
+                    .setSound(Uri.parse("android.resource://" + this.getPackageName() + "/" + R.raw.notification_sound))
+                    .build();
+
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(9, notification);
 
         } else if (title.equalsIgnoreCase("Skit Approval")) {
 

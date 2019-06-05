@@ -197,7 +197,7 @@
                             android:gravity="center_vertical"
                             android:text="Department "
                             android:textColor="@color/black"
-                            android:textSize="15sp"/>
+                            android:textSize="14sp"/>
 
                         <TextView
                             android:id="@+id/userDepartment"
@@ -465,7 +465,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_message_user"
-        android:visibility="visible"
+        android:visibility="gone"
         app:backgroundTint="@color/white"
         app:layout_anchorGravity="bottom|right|end"
         app:elevation="6dp"

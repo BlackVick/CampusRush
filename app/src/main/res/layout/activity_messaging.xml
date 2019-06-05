@@ -5,10 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:animateLayoutChanges="true"
-    tools:context=".CampusRant.RantRoom">
+    tools:context=".Messaging.Messaging">
 
-    <include layout="@layout/snippet_for_general"/>
+    <include layout="@layout/snippet_for_chat"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,18 +17,17 @@
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/rantRecycler"
-            android:layout_margin="5dp"
-            android:layout_above="@id/chatInputController"></android.support.v7.widget.RecyclerView>
+            android:id="@+id/messageRecycler"
+            android:layout_margin="7dp"
+            android:layout_above="@id/messageInputLayout"/>
 
         <include
-            layout="@layout/rant_input_box"
-            android:id="@+id/chatInputController"
+            layout="@layout/message_input_box"
+            android:id="@+id/messageInputLayout"
             android:layout_alignParentBottom="true"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:layout_margin="4dp"/>
-
+            android:layout_margin="3dp"/>
 
     </RelativeLayout>
 

@@ -21,7 +21,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".CampusRant.CampusRant"></activity>
+        <activity android:name=".Messaging.Messaging"></activity>
+        <activity android:name=".CampusRant.CampusRant" />
         <activity android:name=".CampusBusiness.RenewSubscription" />
         <activity android:name=".CampusBusiness.CreateAd" />
         <activity android:name=".CampusBusiness.SetBusinessAccount" />

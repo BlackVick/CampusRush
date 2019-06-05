@@ -64,6 +64,59 @@
 
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.4dp"
+            android:background="@color/black"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/white"
+            android:weightSum="10"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="8.5"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Messaging Privacy"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="22sp"
+                    android:gravity="start"
+                    android:padding="4dp"
+                    android:layout_gravity="center_vertical"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="If unchecked, any user on the Campus Rush app would be able to chat you up."
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
+                    android:gravity="start"
+                    android:padding="4dp"
+                    android:layout_gravity="center_vertical"/>
+
+            </LinearLayout>
+
+            <com.rey.material.widget.CheckBox
+                android:id="@+id/messagingPrivacyToggle"
+                android:layout_width="0dp"
+                android:layout_weight="1.5"
+                android:layout_height="match_parent"
+                style="@style/Material.Drawable.CheckBox"
+                android:gravity="center"
+                app:cbd_strokeColor="@color/colorPrimaryDark"
+                app:cbd_tickColor="@color/white"/>
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </RelativeLayout>

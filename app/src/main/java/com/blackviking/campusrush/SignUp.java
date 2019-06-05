@@ -344,6 +344,7 @@ public class SignUp extends AppCompatActivity {
                         newUserMap.put("userType", "User");
                         newUserMap.put("bio", "");
                         newUserMap.put("riskLevel", "Normal");
+                        newUserMap.put("messaging", "public");
 
 
                         /*---   REGISTER USER   ---*/

@@ -10,6 +10,6 @@
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/blackviking/campusrush/Notification/RetrofitClient.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/blackviking/campusrush/ViewHolder/RantViewHolder.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/profile.png" charset="ISO-8859-1" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/single_message_item.xml" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/single_rant_item.xml" charset="ISO-8859-1" />
   </component>
 </project>

@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.Interface.ItemClickListener;
 import com.blackviking.campusrush.R;
 import com.blackviking.campusrush.Settings.Help;
@@ -167,55 +169,71 @@ public class CampusRant extends AppCompatActivity {
 
                 final String theTopic = topicName.getText().toString().trim();
 
-                createProgress.setVisibility(View.VISIBLE);
-                createTopicButton.setEnabled(false);
-                topicName.setEnabled(false);
+                if (!TextUtils.isEmpty(theTopic)) {
 
-                topicRef.orderByChild("name").equalTo(theTopic).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (Common.isConnectedToInternet(getBaseContext())) {
 
-                        if (dataSnapshot.exists()){
+                        createProgress.setVisibility(View.VISIBLE);
+                        createTopicButton.setEnabled(false);
+                        topicName.setEnabled(false);
 
-                            createProgress.setVisibility(View.GONE);
-                            createTopicButton.setEnabled(true);
-                            topicName.setEnabled(true);
+                        topicRef.orderByChild("name").equalTo(theTopic).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
 
-                            errorMessage.setVisibility(View.VISIBLE);
-                            errorMessage.setText("This Topic Already Exists !");
+                                if (dataSnapshot.exists()) {
 
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    errorMessage.setVisibility(View.GONE);
+                                    createProgress.setVisibility(View.GONE);
+                                    createTopicButton.setEnabled(true);
+                                    topicName.setEnabled(true);
+
+                                    errorMessage.setVisibility(View.VISIBLE);
+                                    errorMessage.setText("This Topic Already Exists !");
+
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            errorMessage.setVisibility(View.GONE);
+                                        }
+                                    }, 4000);
+
+                                } else {
+
+                                    createProgress.setVisibility(View.GONE);
+                                    createTopicButton.setEnabled(false);
+                                    topicName.setEnabled(false);
+
+                                    final Map<String, Object> newTopicMap = new HashMap<>();
+                                    newTopicMap.put("name", theTopic);
+
+                                    topicRef.push().setValue(newTopicMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            alertDialog.dismiss();
+                                        }
+                                    });
+
                                 }
-                            }, 4000);
 
-                        } else {
+                            }
 
-                            createProgress.setVisibility(View.GONE);
-                            createTopicButton.setEnabled(false);
-                            topicName.setEnabled(false);
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
 
-                            final Map<String, Object> newTopicMap = new HashMap<>();
-                            newTopicMap.put("name", theTopic);
+                            }
+                        });
 
-                            topicRef.push().setValue(newTopicMap).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    alertDialog.dismiss();
-                                }
-                            });
+                    } else {
 
-                        }
+                        Common.showErrorDialog(CampusRant.this, "No Internet Access !");
 
                     }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                } else {
 
-                    }
-                });
+                    Common.showErrorDialog(CampusRant.this, "Empty Topic Names Are Not Allowed !");
+
+                }
 
             }
         });

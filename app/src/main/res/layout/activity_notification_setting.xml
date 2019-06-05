@@ -48,7 +48,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Get personal notifications from admin when your attention is needed"
+                        android:text="Get personal notifications from messages and admin if your attention is needed"
                         android:textColor="@color/black"
                         android:textSize="17sp"
                         android:gravity="start"

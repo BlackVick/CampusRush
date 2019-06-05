@@ -15,11 +15,12 @@ public class UserModel {
     private String userType;
     private String bio;
     private String riskLevel;
+    private String messaging;
 
     public UserModel() {
     }
 
-    public UserModel(String username, String firstName, String lastName, String email, String gender, String status, String profilePicture, String profilePictureThumb, String department, String privacy, String userType, String bio, String riskLevel) {
+    public UserModel(String username, String firstName, String lastName, String email, String gender, String status, String profilePicture, String profilePictureThumb, String department, String privacy, String userType, String bio, String riskLevel, String messaging) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -33,6 +34,7 @@ public class UserModel {
         this.userType = userType;
         this.bio = bio;
         this.riskLevel = riskLevel;
+        this.messaging = messaging;
     }
 
     public String getUsername() {
@@ -137,5 +139,13 @@ public class UserModel {
 
     public void setRiskLevel(String riskLevel) {
         this.riskLevel = riskLevel;
+    }
+
+    public String getMessaging() {
+        return messaging;
+    }
+
+    public void setMessaging(String messaging) {
+        this.messaging = messaging;
     }
 }

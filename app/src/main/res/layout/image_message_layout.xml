@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="0dp"
+    android:background="@color/black">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:id="@+id/rantImagePreview"
+        android:layout_centerInParent="true"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:weightSum="10">
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_weight="8.5"
+            android:layout_height="wrap_content"
+            android:id="@+id/rantPreviewText"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:hint="Message . . ."
+            android:padding="8dp"
+            android:drawableStart="@drawable/ic_edit_profile"
+            android:drawableTint="@color/grey"
+            android:drawablePadding="8dp"
+            android:textColorHint="@color/grey"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="1.5"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_send_black_24dp"
+            android:tint="@color/white"
+            android:padding="15dp"
+            android:layout_gravity="start"
+            android:id="@+id/sendRantPreview"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

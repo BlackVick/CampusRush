@@ -10,7 +10,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -37,6 +36,7 @@ import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.FeedDetails;
 import com.blackviking.campusrush.ImageController.BlurImage;
 import com.blackviking.campusrush.ImageController.ImageViewer;
+import com.blackviking.campusrush.Messaging.Messaging;
 import com.blackviking.campusrush.Model.FeedModel;
 import com.blackviking.campusrush.Notification.APIService;
 import com.blackviking.campusrush.Notification.DataMessage;
@@ -90,7 +90,7 @@ public class OtherUserProfile extends AppCompatActivity {
     private APIService mService;
     private String serverUsername, serverFullName, serverGender, serverStatus,
             serverDepartment, serverBio, serverProfilePictureThumb,
-            serverProfilePicture, serverUserType;
+            serverProfilePicture, serverUserType, serverMessagingState;
 
     private RelativeLayout businessLayout;
     private TextView busName, busAddress, busCategory, busDescription, busPhone, busFacebook, busInstagram, busTwitter,
@@ -172,19 +172,6 @@ public class OtherUserProfile extends AppCompatActivity {
         collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppbar);
         collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppbar);
 
-        /*---   FAB   ---*/
-        sendUserMessage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!userId.equalsIgnoreCase("")){
-                    /*Intent messageIntent = new Intent(OtherUserProfile.this, Messaging.class);
-                    messageIntent.putExtra("UserId", userId);
-                    startActivity(messageIntent);
-                    overridePendingTransition(R.anim.slide_left, R.anim.slide_left);*/
-                }
-            }
-        });
-
 
         /*---   LOAD PROFILE   ---*/
         if (Common.isConnectedToInternet(getBaseContext())){
@@ -229,6 +216,7 @@ public class OtherUserProfile extends AppCompatActivity {
                 serverProfilePictureThumb = dataSnapshot.child("profilePictureThumb").getValue().toString();
                 serverProfilePicture = dataSnapshot.child("profilePicture").getValue().toString();
                 serverUserType = dataSnapshot.child("userType").getValue().toString();
+                serverMessagingState = dataSnapshot.child("messaging").getValue().toString();
 
                 /*---   DETAILS   ---*/
                 collapsingToolbarLayout.setTitle("@"+serverUsername);
@@ -243,6 +231,29 @@ public class OtherUserProfile extends AppCompatActivity {
                     accountType.setText("Business Account");
                 } else {
                     accountType.setText("Regular Account");
+                }
+
+
+                /*---   MESSAGING   ---*/
+                if (serverMessagingState.equalsIgnoreCase("private")){
+
+                    sendUserMessage.hide();
+
+                } else {
+
+                    sendUserMessage.show();
+                    sendUserMessage.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (!userId.equalsIgnoreCase("")){
+                                Intent messageIntent = new Intent(OtherUserProfile.this, Messaging.class);
+                                messageIntent.putExtra("UserId", userId);
+                                startActivity(messageIntent);
+                                overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+                            }
+                        }
+                    });
+
                 }
 
 

@@ -217,7 +217,7 @@ public class RantRoom extends AppCompatActivity {
 
         adapter = new FirebaseRecyclerAdapter<RantModel, RantViewHolder>(
                 RantModel.class,
-                R.layout.single_message_item,
+                R.layout.single_rant_item,
                 RantViewHolder.class,
                 rantRef.orderByChild("rantTopic").equalTo(rantTopic).limitToLast(70)
         ) {
