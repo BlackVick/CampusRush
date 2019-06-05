@@ -11,7 +11,7 @@
     <color name="overlayActionBar">#4f0e0d0e</color>
     <color name="white">#ffffff</color>
     <color name="offWhite">#dad7d7</color>
-    <color name="transparentWhite">#A8FFFFFF</color>
+    <color name="transparentWhite">#B4FFFFFF</color>
     <color name="transparent">#00000000</color>
     <color name="red">#FF0000</color>
     <color name="bottomNavSelected">#1D0202</color>

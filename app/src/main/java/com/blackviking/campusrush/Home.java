@@ -31,7 +31,7 @@ import android.widget.TextView;
 import com.blackviking.campusrush.CampusBusiness.CampusAds;
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.Fragments.Account;
-import com.blackviking.campusrush.Fragments.CampusRant;
+import com.blackviking.campusrush.Fragments.Messages;
 import com.blackviking.campusrush.Fragments.Feed;
 import com.blackviking.campusrush.Fragments.Materials;
 import com.blackviking.campusrush.Fragments.Notifications;
@@ -64,12 +64,12 @@ public class Home extends AppCompatActivity
     private DatabaseReference userRef, rateRef, notificationRef, adminRef;
     private CircleImageView userImage;
     private TextView userFullName, userName, notificationCount;
-    private ImageView feed, materials, campusRant, account;
+    private ImageView feed, materials, messagesNav, account;
     public RelativeLayout notifications, navLayout;
     private DrawerLayout rootLayout;
     private BroadcastReceiver mMessageReceiver = null;
     private String currentUid, intentInstruction;
-    private LinearLayout admin, awards, gamersHub, skitCenter, campusAds, settings, signOut;
+    private LinearLayout admin, awards, campusRantLay, gamersHub, skitCenter, campusAds, settings, signOut;
     private TextView adminCount;
 
     @Override
@@ -115,7 +115,7 @@ public class Home extends AppCompatActivity
         /*---   WIDGETS   ---*/
         feed = (ImageView)findViewById(R.id.feed);
         materials = (ImageView)findViewById(R.id.materials);
-        campusRant = (ImageView)findViewById(R.id.schoolRant);
+        messagesNav = (ImageView)findViewById(R.id.messagesNav);
         account = (ImageView)findViewById(R.id.account);
         notifications = (RelativeLayout)findViewById(R.id.notifications);
         navLayout = (RelativeLayout)findViewById(R.id.navLayout);
@@ -126,6 +126,7 @@ public class Home extends AppCompatActivity
         rootLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         admin = (LinearLayout)findViewById(R.id.customAdminManage);
         awards = (LinearLayout)findViewById(R.id.customNavAwards);
+        campusRantLay = (LinearLayout)findViewById(R.id.customNavCampusRant);
         gamersHub = (LinearLayout)findViewById(R.id.customNavGamersHub);
         skitCenter = (LinearLayout)findViewById(R.id.customNavSkitCenter);
         campusAds = (LinearLayout)findViewById(R.id.customNavBusiness);
@@ -137,7 +138,7 @@ public class Home extends AppCompatActivity
         /*---   FRAGMENTS   ---*/
         final Feed feedFragment = new Feed();
         final Materials materialsFragment = new Materials();
-        final CampusRant rantFragment = new CampusRant();
+        final Messages messages = new Messages();
         final Notifications notificationFragment = new Notifications();
         final Account accountFragment = new Account();
 
@@ -349,6 +350,16 @@ public class Home extends AppCompatActivity
             }
         });
 
+        campusRantLay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rootLayout.closeDrawer(GravityCompat.START);
+                Intent rantIntent = new Intent(Home.this, com.blackviking.campusrush.CampusRant.CampusRant.class);
+                startActivity(rantIntent);
+                overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+            }
+        });
+
         gamersHub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -418,7 +429,7 @@ public class Home extends AppCompatActivity
             public void onClick(View v) {
                 feed.setBackgroundResource(R.color.bottom_nav_clicked);
                 materials.setBackgroundResource(R.drawable.white_grey_border_top);
-                campusRant.setBackgroundResource(R.drawable.white_grey_border_top);
+                messagesNav.setBackgroundResource(R.drawable.white_grey_border_top);
                 notifications.setBackgroundResource(R.drawable.white_grey_border_top);
                 account.setBackgroundResource(R.drawable.white_grey_border_top);
 
@@ -433,7 +444,7 @@ public class Home extends AppCompatActivity
             public void onClick(View v) {
                 feed.setBackgroundResource(R.drawable.white_grey_border_top);
                 materials.setBackgroundResource(R.color.bottom_nav_clicked);
-                campusRant.setBackgroundResource(R.drawable.white_grey_border_top);
+                messagesNav.setBackgroundResource(R.drawable.white_grey_border_top);
                 notifications.setBackgroundResource(R.drawable.white_grey_border_top);
                 account.setBackgroundResource(R.drawable.white_grey_border_top);
 
@@ -443,18 +454,18 @@ public class Home extends AppCompatActivity
             }
         });
 
-        campusRant.setOnClickListener(new View.OnClickListener() {
+        messagesNav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 feed.setBackgroundResource(R.drawable.white_grey_border_top);
                 materials.setBackgroundResource(R.drawable.white_grey_border_top);
-                campusRant.setBackgroundResource(R.color.bottom_nav_clicked);
+                messagesNav.setBackgroundResource(R.color.bottom_nav_clicked);
                 notifications.setBackgroundResource(R.drawable.white_grey_border_top);
                 account.setBackgroundResource(R.drawable.white_grey_border_top);
 
-                toolbar.setTitle("Campus Rant");
+                toolbar.setTitle("Messages");
 
-                setFragment(rantFragment);
+                setFragment(messages);
             }
         });
 
@@ -463,7 +474,7 @@ public class Home extends AppCompatActivity
             public void onClick(View v) {
                 feed.setBackgroundResource(R.drawable.white_grey_border_top);
                 materials.setBackgroundResource(R.drawable.white_grey_border_top);
-                campusRant.setBackgroundResource(R.drawable.white_grey_border_top);
+                messagesNav.setBackgroundResource(R.drawable.white_grey_border_top);
                 notifications.setBackgroundResource(R.color.bottom_nav_clicked);
                 account.setBackgroundResource(R.drawable.white_grey_border_top);
 
@@ -478,7 +489,7 @@ public class Home extends AppCompatActivity
             public void onClick(View v) {
                 feed.setBackgroundResource(R.drawable.white_grey_border_top);
                 materials.setBackgroundResource(R.drawable.white_grey_border_top);
-                campusRant.setBackgroundResource(R.drawable.white_grey_border_top);
+                messagesNav.setBackgroundResource(R.drawable.white_grey_border_top);
                 notifications.setBackgroundResource(R.drawable.white_grey_border_top);
                 account.setBackgroundResource(R.color.bottom_nav_clicked);
 
@@ -515,7 +526,7 @@ public class Home extends AppCompatActivity
 
         feed.setBackgroundResource(R.drawable.white_grey_border_top);
         materials.setBackgroundResource(R.drawable.white_grey_border_top);
-        campusRant.setBackgroundResource(R.drawable.white_grey_border_top);
+        messagesNav.setBackgroundResource(R.drawable.white_grey_border_top);
         notifications.setBackgroundResource(R.color.bottom_nav_clicked);
         account.setBackgroundResource(R.drawable.white_grey_border_top);
 
@@ -557,7 +568,7 @@ public class Home extends AppCompatActivity
 
         feed.setBackgroundResource(R.color.bottom_nav_clicked);
         materials.setBackgroundResource(R.drawable.white_grey_border_top);
-        campusRant.setBackgroundResource(R.drawable.white_grey_border_top);
+        messagesNav.setBackgroundResource(R.drawable.white_grey_border_top);
         notifications.setBackgroundResource(R.drawable.white_grey_border_top);
         account.setBackgroundResource(R.drawable.white_grey_border_top);
 

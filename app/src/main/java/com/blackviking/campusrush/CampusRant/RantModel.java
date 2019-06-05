@@ -1,4 +1,4 @@
-package com.blackviking.campusrush.Model;
+package com.blackviking.campusrush.CampusRant;
 
 public class RantModel {
 
@@ -9,11 +9,12 @@ public class RantModel {
     private long timestamp;
     private String rantImage;
     private String rantImageThumb;
+    private String rantTopic;
 
     public RantModel() {
     }
 
-    public RantModel(String rantUsername, String rantUserId, String rantPrivacyState, String rant, long timestamp, String rantImage, String rantImageThumb) {
+    public RantModel(String rantUsername, String rantUserId, String rantPrivacyState, String rant, long timestamp, String rantImage, String rantImageThumb, String rantTopic) {
         this.rantUsername = rantUsername;
         this.rantUserId = rantUserId;
         this.rantPrivacyState = rantPrivacyState;
@@ -21,6 +22,7 @@ public class RantModel {
         this.timestamp = timestamp;
         this.rantImage = rantImage;
         this.rantImageThumb = rantImageThumb;
+        this.rantTopic = rantTopic;
     }
 
     public String getRantUsername() {
@@ -55,12 +57,12 @@ public class RantModel {
         this.rant = rant;
     }
 
-    public long getTimeStamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimeStamp(long timeStamp) {
-        this.timestamp = timeStamp;
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 
     public String getRantImage() {
@@ -77,5 +79,13 @@ public class RantModel {
 
     public void setRantImageThumb(String rantImageThumb) {
         this.rantImageThumb = rantImageThumb;
+    }
+
+    public String getRantTopic() {
+        return rantTopic;
+    }
+
+    public void setRantTopic(String rantTopic) {
+        this.rantTopic = rantTopic;
     }
 }

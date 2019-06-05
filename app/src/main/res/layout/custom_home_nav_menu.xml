@@ -7,7 +7,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
         android:orientation="vertical">
 
         <TextView
@@ -92,6 +93,35 @@
                 android:layout_gravity="center"
                 android:gravity="start"
                 android:text="Awards"
+                android:textColor="@color/offBlack"
+                android:textSize="17sp"
+                android:layout_marginStart="20dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:orientation="horizontal"
+            android:id="@+id/customNavCampusRant"
+            android:background="@drawable/off_white_backround_ripple">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/campus_rant_emoji"
+                android:adjustViewBounds="true"
+                android:padding="5dp"
+                android:tint="@color/colorPrimaryDark"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="start"
+                android:text="Campus Rant"
                 android:textColor="@color/offBlack"
                 android:textSize="17sp"
                 android:layout_marginStart="20dp"/>

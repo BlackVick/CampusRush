@@ -5,31 +5,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:animateLayoutChanges="true"
-    tools:context=".CampusRant.RantRoom">
+    tools:context=".CampusRant.CampusRant">
 
     <include layout="@layout/snippet_for_general"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize">
+        android:layout_marginTop="?attr/actionBarSize"
+        android:background="@drawable/campus_rant_background">
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/rantRecycler"
-            android:layout_margin="5dp"
-            android:layout_above="@id/chatInputController"></android.support.v7.widget.RecyclerView>
+            android:id="@+id/rantTopicRecycler"/>
 
-        <include
-            layout="@layout/chat_input_box"
-            android:id="@+id/chatInputController"
-            android:layout_alignParentBottom="true"
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/addRantTopic"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:layout_margin="4dp"/>
-
+            android:src="@drawable/add_rant_topic_icon"
+            android:visibility="visible"
+            app:backgroundTint="@color/white"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="8dp"/>
 
     </RelativeLayout>
 

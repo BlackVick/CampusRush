@@ -1,8 +1,7 @@
-package com.blackviking.campusrush;
+package com.blackviking.campusrush.CampusRant;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -13,7 +12,6 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
@@ -31,11 +29,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blackviking.campusrush.BuildConfig;
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.Common.GetTimeAgo;
 import com.blackviking.campusrush.ImageController.ImageViewer;
-import com.blackviking.campusrush.Model.RantModel;
-import com.blackviking.campusrush.Profile.MyProfile;
+import com.blackviking.campusrush.R;
 import com.blackviking.campusrush.Settings.Help;
 import com.blackviking.campusrush.ViewHolder.RantViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -97,6 +95,7 @@ public class RantRoom extends AppCompatActivity {
     private String currentUid, myUsername;
     private String originalImageUrl, thumbDownloadUrl;
     private String privacyState;
+    private String rantTopic;
     private android.app.AlertDialog mDialog;
 
     @Override
@@ -119,6 +118,7 @@ public class RantRoom extends AppCompatActivity {
 
         /*---   LOCAL   ---*/
         Paper.init(this);
+        rantTopic = getIntent().getStringExtra("RantTopic");
 
 
         /*---   FIREBASE   ---*/
@@ -147,7 +147,7 @@ public class RantRoom extends AppCompatActivity {
             }
         });
 
-        activityName.setText("Rant");
+        activityName.setText("#"+rantTopic);
         helpActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -219,14 +219,14 @@ public class RantRoom extends AppCompatActivity {
                 RantModel.class,
                 R.layout.single_message_item,
                 RantViewHolder.class,
-                rantRef.limitToLast(150)
+                rantRef.orderByChild("rantTopic").equalTo(rantTopic).limitToLast(70)
         ) {
             @Override
             protected void populateViewHolder(final RantViewHolder viewHolder, final RantModel model, int position) {
 
                 /*---   GET TIME AGO ALGORITHM   ---*/
                 GetTimeAgo getTimeAgo = new GetTimeAgo();
-                long lastTime = model.getTimeStamp();
+                long lastTime = model.getTimestamp();
                 final String lastSeenTime = getTimeAgo.getTimeAgo(lastTime, getApplicationContext());
                 viewHolder.rantTimestamp.setVisibility(View.VISIBLE);
                 viewHolder.rantTimestamp.setText(lastSeenTime);
@@ -343,6 +343,7 @@ public class RantRoom extends AppCompatActivity {
             rantMap.put("timestamp", ServerValue.TIMESTAMP);
             rantMap.put("rantImage", "");
             rantMap.put("rantImageThumb", "");
+            rantMap.put("rantTopic", rantTopic);
 
 
 
@@ -566,6 +567,7 @@ public class RantRoom extends AppCompatActivity {
                                             rantMap.put("timestamp", ServerValue.TIMESTAMP);
                                             rantMap.put("rantImage", originalImageUrl);
                                             rantMap.put("rantImageThumb", thumbDownloadUrl);
+                                            rantMap.put("rantTopic", rantTopic);
 
 
                                             rantRef.child(pushId).setValue(rantMap).addOnSuccessListener(new OnSuccessListener<Void>() {

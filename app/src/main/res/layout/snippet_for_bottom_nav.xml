@@ -40,7 +40,7 @@
             android:src="@drawable/ic_campus_rant"
             android:adjustViewBounds="true"
             android:padding="14dp"
-            android:id="@+id/schoolRant"/>
+            android:id="@+id/messagesNav"/>
 
         <RelativeLayout
             android:layout_width="0dp"

@@ -21,7 +21,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".CampusBusiness.RenewSubscription"></activity>
+        <activity android:name=".CampusRant.CampusRant"></activity>
+        <activity android:name=".CampusBusiness.RenewSubscription" />
         <activity android:name=".CampusBusiness.CreateAd" />
         <activity android:name=".CampusBusiness.SetBusinessAccount" />
         <activity android:name=".CampusBusiness.CampusAds" />
@@ -139,7 +140,7 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".RantRoom"
+            android:name=".CampusRant.RantRoom"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity

@@ -482,8 +482,29 @@ public class SignUp extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent goBack = new Intent(SignUp.this, Login.class);
-        startActivity(goBack);
-        finish();
+
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user != null) {
+
+            authed.child(user.getUid()).removeValue();
+            user.delete()
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Intent goBack = new Intent(SignUp.this, Login.class);
+                            startActivity(goBack);
+                            finish();
+                        }
+                    });
+        } else {
+
+            Intent goBack = new Intent(SignUp.this, Login.class);
+            startActivity(goBack);
+            finish();
+
+        }
+
+
     }
 }

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="15dp"
+    android:id="@+id/customPaystackForm"
+    android:background="@color/white"
+    app:corner_radius="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/cardInfoLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginStart="7dp"
+            android:layout_marginEnd="7dp"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            android:weightSum="10">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="#"
+                android:textColor="@color/grey"
+                android:textSize="24sp"
+                android:layout_gravity="center"
+                android:gravity="center"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:layout_width="0dp"
+                android:layout_weight="9"
+                android:layout_height="wrap_content"
+                android:id="@+id/createTopicEdt"
+                android:hint="Create Topic"
+                android:textColorHint="@color/black"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:inputType="text"
+                android:maxLength="20"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                app:met_maxCharacters="20"
+                app:met_clearButton="true"
+                app:met_baseColor="@color/black"
+                app:met_floatingLabelAnimating="true"
+                app:met_floatingLabel="highlight"
+                app:met_primaryColor="@color/black"
+                app:met_singleLineEllipsis="true"
+                android:digits="abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/red"
+            android:textSize="15sp"
+            android:gravity="center"
+            android:layout_margin="6dp"
+            android:id="@+id/errorMessage"
+            android:visibility="gone"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/create_bus_back_ripple"
+            android:id="@+id/createTopicBtn"
+            android:layout_marginTop="17dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="7dp"
+            android:layout_gravity="end"
+            android:text="Create"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_centerInParent="true"
+        android:id="@+id/checkingTopicProgress"
+        android:visibility="gone"/>
+
+</com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>
