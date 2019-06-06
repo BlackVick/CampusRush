@@ -199,11 +199,11 @@ public class OtherUserProfile extends AppCompatActivity {
             }
             @Override
             public void onPrepareLoad(Drawable placeHolderDrawable) {
-
+                coverPhoto.setImageResource(R.drawable.image_placeholders);
             }
         };
 
-        userRef.child(userId).addValueEventListener(new ValueEventListener() {
+        userRef.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -307,7 +307,7 @@ public class OtherUserProfile extends AppCompatActivity {
                     Picasso.with(getBaseContext())
                             .load(serverProfilePictureThumb)
                             .networkPolicy(NetworkPolicy.OFFLINE)
-                            .placeholder(R.drawable.ic_loading_animation)
+                            .placeholder(R.drawable.profile)
                             .into(userProfileImage, new Callback() {
                                 @Override
                                 public void onSuccess() {
@@ -318,7 +318,7 @@ public class OtherUserProfile extends AppCompatActivity {
                                 public void onError() {
                                     Picasso.with(getBaseContext())
                                             .load(serverProfilePictureThumb)
-                                            .placeholder(R.drawable.ic_loading_animation)
+                                            .placeholder(R.drawable.profile)
                                             .into(userProfileImage);
                                 }
                             });
@@ -328,7 +328,7 @@ public class OtherUserProfile extends AppCompatActivity {
                     Picasso.with(getBaseContext())
                             .load(serverProfilePictureThumb)
                             .networkPolicy(NetworkPolicy.OFFLINE)
-                            .placeholder(R.drawable.ic_loading_animation)
+                            .placeholder(R.drawable.image_placeholders)
                             .into(target);
 
 
@@ -423,7 +423,7 @@ public class OtherUserProfile extends AppCompatActivity {
 
                     Picasso.with(getBaseContext())
                             .load(model.getImageThumbUrl())
-                            .placeholder(R.drawable.ic_loading_animation)
+                            .placeholder(R.drawable.campus_rush_feed_placeholder)
                             .into(viewHolder.postImage);
 
                 } else {

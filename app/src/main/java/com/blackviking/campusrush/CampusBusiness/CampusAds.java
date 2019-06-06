@@ -1,8 +1,10 @@
 package com.blackviking.campusrush.CampusBusiness;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,12 +18,15 @@ import android.widget.Toast;
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.R;
 import com.blackviking.campusrush.Settings.Help;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -32,14 +37,16 @@ public class CampusAds extends AppCompatActivity {
     private ImageView exitActivity, helpActivity;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
-    private DatabaseReference userRef, promoterRef, subscriptionRef, businessProfileRef;
+    private DatabaseReference userRef, promoterRef, subscriptionRef, businessProfileRef, feedRef;
     private String currentUid, userType, subscriptionStatus = "";
     private RecyclerView adRecycler;
     private LinearLayoutManager layoutManager;
+    private FirebaseRecyclerAdapter<AdModel, AdViewHolder> adapter;
     private RelativeLayout notBusinessAccount, expiredBusinessAccount;
     private ImageView createBusinessProfile, renewSubscription;
     private FloatingActionButton promoteAd;
     private boolean isProfileCreated = false;
+    private AdModel currentAd;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -62,6 +69,7 @@ public class CampusAds extends AppCompatActivity {
         /*---   FIREBASE   ---*/
         userRef = db.getReference("Users");
         promoterRef = db.getReference("PromotedAds");
+        feedRef = db.getReference("Feed");
         businessProfileRef = db.getReference("BusinessProfile");
         subscriptionRef = db.getReference("BusinessAccountSubscriptions");
         if (mAuth.getCurrentUser() != null)
@@ -245,6 +253,54 @@ public class CampusAds extends AppCompatActivity {
         adRecycler.setLayoutManager(layoutManager);
 
 
+        adapter = new FirebaseRecyclerAdapter<AdModel, AdViewHolder>(
+                AdModel.class,
+                R.layout.ad_item,
+                AdViewHolder.class,
+                promoterRef.child(currentUid)
+        ) {
+            @Override
+            protected void populateViewHolder(AdViewHolder viewHolder, AdModel model, final int position) {
+
+                if (!model.getImageThumbUrl().equalsIgnoreCase("")){
+
+                    viewHolder.adImage.setVisibility(View.VISIBLE);
+
+                    Picasso.with(getBaseContext())
+                            .load(model.getImageThumbUrl())
+                            .placeholder(R.drawable.image_placeholders)
+                            .into(viewHolder.adImage);
+
+                } else {
+
+                    viewHolder.adImage.setVisibility(View.GONE);
+                    viewHolder.adText.setMaxLines(6);
+                }
+
+                if (!model.getUpdate().equalsIgnoreCase("")){
+
+                    viewHolder.adText.setVisibility(View.VISIBLE);
+                    viewHolder.adText.setText(model.getUpdate());
+
+                } else {
+
+                    viewHolder.adText.setVisibility(View.GONE);
+
+                }
+
+                viewHolder.adPromote.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        openDialog(adapter.getRef(position).getKey());
+                    }
+                });
+
+            }
+        };
+        adRecycler.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
+
         promoteAd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -253,6 +309,70 @@ public class CampusAds extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
             }
         });
+
+    }
+
+    private void openDialog(final String adId) {
+
+        final AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setTitle("Attention !")
+                .setIcon(R.drawable.ic_attention_red)
+                .setMessage("You Want To Promote This Ad Again?")
+                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog, int which) {
+
+                        feedRef.child(adId).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                currentAd = dataSnapshot.getValue(AdModel.class);
+
+                                DatabaseReference pushRef = promoterRef.push();
+                                final String pushId = pushRef.getKey();
+
+                                promoterRef.child(currentUid)
+                                        .child(adId)
+                                        .removeValue();
+
+                                feedRef.child(adId).removeValue()
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+
+                                                promoterRef.child(currentUid)
+                                                        .child(pushId)
+                                                        .setValue(currentAd);
+
+                                                feedRef.child(pushId)
+                                                        .setValue(currentAd).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        dialog.dismiss();
+                                                    }
+                                                });
+                                            }
+                                        });
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+                    }
+                })
+                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+
+        alertDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
+
+        alertDialog.show();
 
     }
 

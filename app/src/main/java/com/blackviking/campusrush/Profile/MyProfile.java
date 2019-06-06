@@ -328,7 +328,7 @@ public class MyProfile extends AppCompatActivity {
             }
             @Override
             public void onPrepareLoad(Drawable placeHolderDrawable) {
-
+                coverPhoto.setImageResource(R.drawable.image_placeholders);
             }
         };
 
@@ -415,7 +415,7 @@ public class MyProfile extends AppCompatActivity {
                     Picasso.with(getBaseContext())
                             .load(serverProfilePictureThumb)
                             .networkPolicy(NetworkPolicy.OFFLINE)
-                            .placeholder(R.drawable.ic_loading_animation)
+                            .placeholder(R.drawable.profile)
                             .into(userProfileImage, new Callback() {
                                 @Override
                                 public void onSuccess() {
@@ -426,7 +426,7 @@ public class MyProfile extends AppCompatActivity {
                                 public void onError() {
                                     Picasso.with(getBaseContext())
                                             .load(serverProfilePictureThumb)
-                                            .placeholder(R.drawable.ic_loading_animation)
+                                            .placeholder(R.drawable.profile)
                                             .into(userProfileImage);
                                 }
                             });
@@ -436,7 +436,7 @@ public class MyProfile extends AppCompatActivity {
                     Picasso.with(getBaseContext())
                             .load(serverProfilePictureThumb)
                             .networkPolicy(NetworkPolicy.OFFLINE)
-                            .placeholder(R.drawable.ic_loading_animation)
+                            .placeholder(R.drawable.image_placeholders)
                             .into(target);
 
 

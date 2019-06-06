@@ -14,7 +14,7 @@ import com.blackviking.campusrush.R;
  * Created by Scarecrow on 1/19/2019.
  */
 
-public class MessagingViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener{
+public class MessagingViewHolder extends RecyclerView.ViewHolder {
 
     public LinearLayout yourMsgLayout, otherMsgLayout;
     public ImageView yourMsgImage, otherMsgImage;
@@ -32,13 +32,6 @@ public class MessagingViewHolder extends RecyclerView.ViewHolder implements View
         otherText = (TextView)itemView.findViewById(R.id.otherMessageText);
         otherTextTimeStamp = (TextView)itemView.findViewById(R.id.otherMessageTimeStamp);
 
-
-        itemView.setOnCreateContextMenuListener(this);
     }
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        menu.setHeaderTitle("Options");
-        menu.add(0, 0, getAdapterPosition(), Common.DELETE_SINGLE);
-    }
 }

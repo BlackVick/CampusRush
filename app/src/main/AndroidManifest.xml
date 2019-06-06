@@ -21,12 +21,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Messaging.Messaging"></activity>
-        <activity android:name=".CampusRant.CampusRant" />
-        <activity android:name=".CampusBusiness.RenewSubscription" />
-        <activity android:name=".CampusBusiness.CreateAd" />
-        <activity android:name=".CampusBusiness.SetBusinessAccount" />
-        <activity android:name=".CampusBusiness.CampusAds" />
+        <activity android:name=".CampusBusiness.AdDetails"></activity>
 
         <meta-data
             android:name="co.paystack.android.PublicKey"
@@ -223,6 +218,30 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".AdminManagement"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CampusBusiness.CampusAds"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CampusBusiness.SetBusinessAccount"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CampusBusiness.CreateAd"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CampusBusiness.RenewSubscription"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CampusRant.CampusRant"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Messaging.Messaging"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
     </application>

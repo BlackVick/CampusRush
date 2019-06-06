@@ -190,6 +190,7 @@ public class Messaging extends AppCompatActivity {
 
                     Picasso.with(getBaseContext())
                             .load(userImageLink)
+                            .placeholder(R.drawable.profile)
                             .into(userImage);
 
                 }
@@ -218,15 +219,7 @@ public class Messaging extends AppCompatActivity {
         sendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Common.isConnectedToInternet(getBaseContext())){
-
-                    sendTheMessage();
-
-                } else {
-
-                    Common.showErrorDialog(Messaging.this, "No Internet Access !");
-
-                }
+                sendTheMessage();
             }
         });
 
@@ -292,6 +285,7 @@ public class Messaging extends AppCompatActivity {
             userLastMessageTimeMap.put("lastMessageTimestamp", ServerValue.TIMESTAMP);
 
 
+            messageBox.setText("");
             messagesRef
                     .child(userId)
                     .child(pushId)
@@ -299,7 +293,6 @@ public class Messaging extends AppCompatActivity {
                 @Override
                 public void onSuccess(Void aVoid) {
                     sendLikeNotification(theMessage);
-                    messageBox.setText("");
                     messageListRef.child(userId)
                             .updateChildren(myLastMessageTimeMap);
                 }
@@ -403,7 +396,7 @@ public class Messaging extends AppCompatActivity {
                         Picasso.with(getBaseContext())
                                 .load(model.getImageThumbUrl())
                                 .networkPolicy(NetworkPolicy.OFFLINE)
-                                .placeholder(R.drawable.ic_loading_animation)
+                                .placeholder(R.drawable.image_placeholders)
                                 .into(viewHolder.yourMsgImage, new Callback() {
                                     @Override
                                     public void onSuccess() {
@@ -414,7 +407,7 @@ public class Messaging extends AppCompatActivity {
                                     public void onError() {
                                         Picasso.with(getBaseContext())
                                                 .load(model.getImageThumbUrl())
-                                                .placeholder(R.drawable.ic_loading_animation)
+                                                .placeholder(R.drawable.campus_rush_feed_placeholder)
                                                 .into(viewHolder.yourMsgImage);
                                     }
                                 });
@@ -453,13 +446,6 @@ public class Messaging extends AppCompatActivity {
                     viewHolder.otherMsgLayout.setVisibility(View.VISIBLE);
                     viewHolder.otherTextTimeStamp.setText(lastSeenTime);
 
-                    viewHolder.itemView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
-                        @Override
-                        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-
-                        }
-                    });
-
 
                     /*---   MESSAGE   ---*/
                     if (!model.getMessage().equalsIgnoreCase("")){
@@ -481,7 +467,7 @@ public class Messaging extends AppCompatActivity {
                         Picasso.with(getBaseContext())
                                 .load(model.getImageThumbUrl())
                                 .networkPolicy(NetworkPolicy.OFFLINE)
-                                .placeholder(R.drawable.ic_loading_animation)
+                                .placeholder(R.drawable.image_placeholders)
                                 .into(viewHolder.otherMsgImage, new Callback() {
                                     @Override
                                     public void onSuccess() {
@@ -492,7 +478,7 @@ public class Messaging extends AppCompatActivity {
                                     public void onError() {
                                         Picasso.with(getBaseContext())
                                                 .load(model.getImageThumbUrl())
-                                                .placeholder(R.drawable.ic_loading_animation)
+                                                .placeholder(R.drawable.campus_rush_feed_placeholder)
                                                 .into(viewHolder.otherMsgImage);
                                     }
                                 });

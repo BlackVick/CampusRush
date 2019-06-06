@@ -160,7 +160,7 @@ public class PollCandidates extends AppCompatActivity {
 
                     Picasso.with(getBaseContext())
                             .load(model.getImage())
-                            .placeholder(R.drawable.ic_loading_animation)
+                            .placeholder(R.drawable.campus_rush_feed_placeholder)
                             .into(viewHolder.candidateImage);
 
                 }

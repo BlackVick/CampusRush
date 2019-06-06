@@ -101,6 +101,7 @@ public class Messages extends Fragment {
                             Picasso.with(getContext())
                                     .load(userImagelnk)
                                     .networkPolicy(NetworkPolicy.OFFLINE)
+                                    .placeholder(R.drawable.profile)
                                     .into(viewHolder.userImage, new Callback() {
                                         @Override
                                         public void onSuccess() {
@@ -111,7 +112,7 @@ public class Messages extends Fragment {
                                         public void onError() {
                                             Picasso.with(getContext())
                                                     .load(userImagelnk)
-                                                    .networkPolicy(NetworkPolicy.OFFLINE)
+                                                    .placeholder(R.drawable.profile)
                                                     .into(viewHolder.userImage);
                                         }
                                     });

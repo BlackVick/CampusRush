@@ -79,7 +79,6 @@ public class SkitDetails extends AppCompatActivity {
     private String currentUid, currentSkitId, currentSkitOwner, skitOwnerUid;
     private TextView title, owner, description, likes;
     private SimpleExoPlayerView videoPlayer;
-    private ProgressBar progressBar;
     private ImageView likeBtn, downloadSkit;
     private static final int VERIFY_PERMISSIONS_REQUEST = 757;
     private SimpleExoPlayer exoPlayer;
@@ -131,7 +130,6 @@ public class SkitDetails extends AppCompatActivity {
         description = (TextView)findViewById(R.id.currentSkitDescription);
         likes = (TextView)findViewById(R.id.currentLikeCount);
         videoPlayer = (SimpleExoPlayerView)findViewById(R.id.videoPlayer);
-        progressBar = (ProgressBar)findViewById(R.id.loadingProgress);
         likeBtn = (ImageView)findViewById(R.id.currentLikeBtn);
         downloadSkit = (ImageView)findViewById(R.id.downloadSkit);
 
@@ -381,16 +379,6 @@ public class SkitDetails extends AppCompatActivity {
 
                     videoPlayer.setPlayer(exoPlayer);
                     exoPlayer.prepare(videoSource);
-
-                    if (exoPlayer.isLoading()){
-
-                        progressBar.setVisibility(View.VISIBLE);
-
-                    } else {
-
-                        progressBar.setVisibility(View.GONE);
-
-                    }
 
                     exoPlayer.setPlayWhenReady(true);
 

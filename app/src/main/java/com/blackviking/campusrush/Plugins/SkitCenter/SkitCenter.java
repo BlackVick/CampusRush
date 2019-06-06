@@ -186,7 +186,7 @@ public class SkitCenter extends AppCompatActivity {
                     Picasso.with(getBaseContext())
                             .load(model.getThumbnail())
                             .networkPolicy(NetworkPolicy.OFFLINE)
-                            .placeholder(R.drawable.ic_loading_animation)
+                            .placeholder(R.drawable.campus_rush_feed_placeholder)
                             .into(viewHolder.thumbnail, new Callback() {
                                 @Override
                                 public void onSuccess() {
@@ -197,7 +197,7 @@ public class SkitCenter extends AppCompatActivity {
                                 public void onError() {
                                     Picasso.with(getBaseContext())
                                             .load(model.getThumbnail())
-                                            .placeholder(R.drawable.ic_loading_animation)
+                                            .placeholder(R.drawable.campus_rush_feed_placeholder)
                                             .into(viewHolder.thumbnail);
                                 }
                             });

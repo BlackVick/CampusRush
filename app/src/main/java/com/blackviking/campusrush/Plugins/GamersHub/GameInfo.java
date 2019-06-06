@@ -136,7 +136,7 @@ public class GameInfo extends AppCompatActivity {
                 if (!theImage.equals(""))
                     Picasso.with(getBaseContext())
                             .load(theImage)
-                            .placeholder(R.drawable.ic_loading_animation)
+                            .placeholder(R.drawable.image_placeholders)
                             .into(gameImage);
 
 

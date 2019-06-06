@@ -118,7 +118,7 @@ public class AdminManagement extends AppCompatActivity {
 
                         Picasso.with(getBaseContext())
                                 .load(model.getImageThumbUrl())
-                                .placeholder(R.drawable.ic_loading_animation)
+                                .placeholder(R.drawable.campus_rush_feed_placeholder)
                                 .into(viewHolder.adminItemImage);
 
                     } else {
@@ -145,7 +145,7 @@ public class AdminManagement extends AppCompatActivity {
 
                     Picasso.with(getBaseContext())
                             .load(model.getThumbnail())
-                            .placeholder(R.drawable.ic_loading_animation)
+                            .placeholder(R.drawable.campus_rush_feed_placeholder)
                             .into(viewHolder.adminItemImage);
 
                 }

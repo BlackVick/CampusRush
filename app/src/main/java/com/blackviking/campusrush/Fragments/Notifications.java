@@ -113,6 +113,7 @@ public class Notifications extends Fragment {
 
                             Picasso.with(getContext())
                                     .load(image)
+                                    .placeholder(R.drawable.profile)
                                     .into(viewHolder.userImage);
 
                             viewHolder.userImage.setOnClickListener(new View.OnClickListener() {

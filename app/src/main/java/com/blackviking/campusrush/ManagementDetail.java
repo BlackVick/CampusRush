@@ -388,7 +388,7 @@ public class ManagementDetail extends AppCompatActivity {
                                 Picasso.with(getBaseContext())
                                         .load(imageThumbLink)
                                         .networkPolicy(NetworkPolicy.OFFLINE)
-                                        .placeholder(R.drawable.ic_loading_animation)
+                                        .placeholder(R.drawable.profile)
                                         .into(posterImage, new Callback() {
                                             @Override
                                             public void onSuccess() {
@@ -399,7 +399,7 @@ public class ManagementDetail extends AppCompatActivity {
                                             public void onError() {
                                                 Picasso.with(getBaseContext())
                                                         .load(imageThumbLink)
-                                                        .placeholder(R.drawable.ic_loading_animation)
+                                                        .placeholder(R.drawable.profile)
                                                         .into(posterImage);
                                             }
                                         });

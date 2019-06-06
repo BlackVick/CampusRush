@@ -172,7 +172,7 @@ public class GamersHub extends AppCompatActivity {
                     Picasso.with(getBaseContext())
                             .load(model.getImageLinkThumb())
                             .networkPolicy(NetworkPolicy.OFFLINE)
-                            .placeholder(R.drawable.ic_loading_animation)
+                            .placeholder(R.drawable.image_placeholders)
                             .into(viewHolder.gameFeedImage, new Callback() {
                                 @Override
                                 public void onSuccess() {
@@ -183,7 +183,7 @@ public class GamersHub extends AppCompatActivity {
                                 public void onError() {
                                     Picasso.with(getBaseContext())
                                             .load(model.getImageLinkThumb())
-                                            .placeholder(R.drawable.ic_loading_animation)
+                                            .placeholder(R.drawable.image_placeholders)
                                             .into(viewHolder.gameFeedImage);
                                 }
                             });
@@ -238,7 +238,7 @@ public class GamersHub extends AppCompatActivity {
                     Picasso.with(getBaseContext())
                             .load(model.getImageUrl())
                             .networkPolicy(NetworkPolicy.OFFLINE)
-                            .placeholder(R.drawable.ic_loading_animation)
+                            .placeholder(R.drawable.image_placeholders)
                             .into(viewHolder.gameImage, new Callback() {
                                 @Override
                                 public void onSuccess() {
@@ -249,7 +249,7 @@ public class GamersHub extends AppCompatActivity {
                                 public void onError() {
                                     Picasso.with(getBaseContext())
                                             .load(model.getImageUrl())
-                                            .placeholder(R.drawable.ic_loading_animation)
+                                            .placeholder(R.drawable.image_placeholders)
                                             .into(viewHolder.gameImage);
                                 }
                             });

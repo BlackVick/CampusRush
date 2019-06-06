@@ -61,7 +61,7 @@ public class SetBusinessAccount extends AppCompatActivity {
     private ImageView exitActivity, helpActivity;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
-    private DatabaseReference userRef, promoterRef, priceRef, subscriptionRef, businessProfileRef;
+    private DatabaseReference userRef, promoterRef, priceRef, subscriptionRef, businessProfileRef, transactionRef;
     private String currentUid, userType, userEmail;
     private MaterialEditText name, address, category, description, phone, facebook, instagram, twitter;
     private TextView price;
@@ -95,8 +95,6 @@ public class SetBusinessAccount extends AppCompatActivity {
                 .setFontAttrId(R.attr.fontPath)
                 .build());
 
-        PaystackSdk.initialize(getApplicationContext());
-
         setContentView(R.layout.activity_set_business_account);
 
 
@@ -109,6 +107,7 @@ public class SetBusinessAccount extends AppCompatActivity {
         promoterRef = db.getReference("PromotedAds");
         priceRef = db.getReference("BusinessAccountPrice");
         subscriptionRef = db.getReference("BusinessAccountSubscriptions");
+        transactionRef = db.getReference("TransactionHistory");
         businessProfileRef = db.getReference("BusinessProfile");
         if (mAuth.getCurrentUser() != null)
             currentUid = mAuth.getCurrentUser().getUid();
@@ -410,10 +409,21 @@ public class SetBusinessAccount extends AppCompatActivity {
                 newSubscriptionMap.put("transactionDate", dateString);
 
 
+                final Map<String, Object> newTransactionMap = new HashMap<>();
+                newTransactionMap.put("transactionPrice", "₦ "+theActualPriceForText);
+                newTransactionMap.put("transactionFor", "Business Account Subscription");
+                newTransactionMap.put("transactionRef", transaction.getReference());
+                newTransactionMap.put("transactionDate", dateString);
+                newTransactionMap.put("transactionUser", currentUid);
+
+
                 subscriptionRef.child(currentUid)
                         .setValue(newSubscriptionMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+
+                        /*---   TRANSACTION HISTORY   ---*/
+                        transactionRef.push().setValue(newTransactionMap);
 
                         userRef.child(currentUid)
                                 .child("userType")

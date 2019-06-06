@@ -264,7 +264,7 @@ public class RantRoom extends AppCompatActivity {
                     Picasso.with(getBaseContext())
                             .load(model.getRantImageThumb())
                             .networkPolicy(NetworkPolicy.OFFLINE)
-                            .placeholder(R.drawable.ic_loading_animation)
+                            .placeholder(R.drawable.image_placeholders)
                             .into(viewHolder.rantImage, new Callback() {
                                 @Override
                                 public void onSuccess() {
@@ -275,7 +275,7 @@ public class RantRoom extends AppCompatActivity {
                                 public void onError() {
                                     Picasso.with(getBaseContext())
                                             .load(model.getRantImageThumb())
-                                            .placeholder(R.drawable.ic_loading_animation)
+                                            .placeholder(R.drawable.image_placeholders)
                                             .into(viewHolder.rantImage);
                                 }
                             });
