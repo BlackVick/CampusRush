@@ -143,8 +143,21 @@ public class SubscriptionService extends Service {
 
             repeatAction();
 
+        } else {
+
+            retryNetwork();
+
         }
 
+    }
+
+    private void retryNetwork() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startComputation();
+            }
+        }, 1800000);
     }
 
     private void updateNotification() {
@@ -206,6 +219,7 @@ public class SubscriptionService extends Service {
     //24 hours = 86400000
     //6 hours = 21600000
     //2 hours = 7200000
+    //30 minutes = 1800000
 
     @Override
     public IBinder onBind(Intent intent) {

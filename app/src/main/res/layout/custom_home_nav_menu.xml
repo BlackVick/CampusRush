@@ -29,7 +29,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="12dp"
             android:orientation="horizontal"
             android:id="@+id/customAdminManage"
             android:weightSum="10"
@@ -73,7 +73,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="12dp"
             android:orientation="horizontal"
             android:id="@+id/customNavAwards"
             android:background="@drawable/off_white_backround_ripple">
@@ -102,7 +102,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="12dp"
             android:orientation="horizontal"
             android:id="@+id/customNavCampusRant"
             android:background="@drawable/off_white_backround_ripple">
@@ -131,7 +131,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="12dp"
             android:orientation="horizontal"
             android:id="@+id/customNavGamersHub"
             android:background="@drawable/off_white_backround_ripple">
@@ -160,7 +160,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="12dp"
             android:orientation="horizontal"
             android:id="@+id/customNavSkitCenter"
             android:background="@drawable/off_white_backround_ripple">
@@ -192,7 +192,7 @@
             android:text=""
             android:textSize="17sp"
             android:textColor="@color/grey"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="15dp"
             android:layout_marginStart="10dp"/>
 
         <View
@@ -204,9 +204,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="12dp"
             android:orientation="horizontal"
             android:id="@+id/customNavBusiness"
+            android:visibility="gone"
             android:background="@drawable/off_white_backround_ripple">
 
             <ImageView
@@ -239,7 +240,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="12dp"
             android:orientation="horizontal"
             android:id="@+id/customNavSettings"
             android:background="@drawable/off_white_backround_ripple">
@@ -268,7 +269,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="12dp"
             android:orientation="horizontal"
             android:id="@+id/customNavSignOut"
             android:background="@drawable/off_white_backround_ripple">

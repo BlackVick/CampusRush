@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -41,6 +42,8 @@ import com.blackviking.campusrush.Plugins.SkitCenter.SkitCenter;
 import com.blackviking.campusrush.Profile.MyProfile;
 import com.blackviking.campusrush.Services.SubscriptionService;
 import com.blackviking.campusrush.Settings.Settings;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -62,15 +65,15 @@ public class Home extends AppCompatActivity
 
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
-    private DatabaseReference userRef, rateRef, notificationRef, adminRef;
+    private DatabaseReference userRef, rateRef, notificationRef, adminRef, campusAdRef;
     private CircleImageView userImage;
-    private TextView userFullName, userName, notificationCount;
-    private ImageView feed, materials, messagesNav, account;
+    private TextView userFullName, userName, notificationCount, anticipateText;
+    private ImageView feed, materials, messagesNav, account, anticipateImage;
     public RelativeLayout notifications, navLayout;
     private DrawerLayout rootLayout;
     private BroadcastReceiver mMessageReceiver = null;
     private String currentUid, intentInstruction;
-    private LinearLayout admin, awards, campusRantLay, gamersHub, skitCenter, campusAds, settings, signOut;
+    private LinearLayout admin, awards, campusRantLay, gamersHub, skitCenter, campusAds, settings, signOut, anticipate;
     private TextView adminCount;
 
     @Override
@@ -109,6 +112,7 @@ public class Home extends AppCompatActivity
         rateRef = db.getReference("Rating");
         notificationRef = db.getReference("Notifications");
         adminRef = db.getReference("AdminManagement");
+        campusAdRef = db.getReference("CampusAd");
         if (mAuth.getCurrentUser() != null)
             currentUid = mAuth.getCurrentUser().getUid();
 
@@ -118,6 +122,7 @@ public class Home extends AppCompatActivity
         materials = (ImageView)findViewById(R.id.materials);
         messagesNav = (ImageView)findViewById(R.id.messagesNav);
         account = (ImageView)findViewById(R.id.account);
+        anticipateImage = (ImageView)findViewById(R.id.anticipateImage);
         notifications = (RelativeLayout)findViewById(R.id.notifications);
         navLayout = (RelativeLayout)findViewById(R.id.navLayout);
         notificationCount = (TextView)findViewById(R.id.notificationCount);
@@ -133,7 +138,9 @@ public class Home extends AppCompatActivity
         campusAds = (LinearLayout)findViewById(R.id.customNavBusiness);
         settings = (LinearLayout)findViewById(R.id.customNavSettings);
         signOut = (LinearLayout)findViewById(R.id.customNavSignOut);
+        anticipate = (LinearLayout)findViewById(R.id.anticipateLayout);
         adminCount = (TextView) findViewById(R.id.managementCount);
+        anticipateText = (TextView) findViewById(R.id.anticipateText);
 
 
         /*---   FRAGMENTS   ---*/
@@ -217,6 +224,45 @@ public class Home extends AppCompatActivity
                         overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
                     }
                 });
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        /*---   CAMPUS ADS   ---*/
+        campusAdRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                String status = dataSnapshot.child("status").getValue().toString();
+                String info = dataSnapshot.child("info").getValue().toString();
+
+                if (status.equalsIgnoreCase("Active")){
+
+                    campusAds.setVisibility(View.VISIBLE);
+
+                } else {
+
+                    campusAds.setVisibility(View.GONE);
+                    anticipate.setVisibility(View.VISIBLE);
+                    anticipateText.setText(info);
+                    YoYo.with(Techniques.RubberBand)
+                            .duration(1000)
+                            .repeat(4)
+                            .playOn(anticipateImage);
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            anticipate.setVisibility(View.GONE);
+                        }
+                    }, 6000);
+
+                }
 
             }
 

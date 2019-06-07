@@ -237,7 +237,6 @@ public class CampusAds extends AppCompatActivity {
 
         } else {
 
-            Common.showErrorDialog(this, "No Internet Access");
             finish();
 
         }
@@ -324,33 +323,63 @@ public class CampusAds extends AppCompatActivity {
                         feedRef.child(adId).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
-                                currentAd = dataSnapshot.getValue(AdModel.class);
 
-                                DatabaseReference pushRef = promoterRef.push();
-                                final String pushId = pushRef.getKey();
+                                if (dataSnapshot.exists()) {
 
-                                promoterRef.child(currentUid)
-                                        .child(adId)
-                                        .removeValue();
+                                    currentAd = dataSnapshot.getValue(AdModel.class);
 
-                                feedRef.child(adId).removeValue()
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
+                                    DatabaseReference pushRef = promoterRef.push();
+                                    final String pushId = pushRef.getKey();
 
-                                                promoterRef.child(currentUid)
-                                                        .child(pushId)
-                                                        .setValue(currentAd);
+                                    promoterRef.child(currentUid)
+                                            .child(adId)
+                                            .removeValue();
 
-                                                feedRef.child(pushId)
-                                                        .setValue(currentAd).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void aVoid) {
-                                                        dialog.dismiss();
-                                                    }
-                                                });
-                                            }
-                                        });
+                                    feedRef.child(adId).removeValue()
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+
+                                                    promoterRef.child(currentUid)
+                                                            .child(pushId)
+                                                            .setValue(currentAd);
+
+                                                    feedRef.child(pushId)
+                                                            .setValue(currentAd).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            dialog.dismiss();
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                } else {
+
+                                    DatabaseReference pushRef = promoterRef.push();
+                                    final String pushId = pushRef.getKey();
+
+                                    promoterRef.child(currentUid)
+                                            .child(adId)
+                                            .removeValue()
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+
+                                                    promoterRef.child(currentUid)
+                                                            .child(pushId)
+                                                            .setValue(currentAd);
+
+                                                    feedRef.child(pushId)
+                                                            .setValue(currentAd).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            dialog.dismiss();
+                                                        }
+                                                    });
+                                                }
+                                            });
+
+                                }
                             }
 
                             @Override
