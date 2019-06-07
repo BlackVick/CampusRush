@@ -21,7 +21,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".CampusBusiness.AdDetails"></activity>
+        <service
+            android:name=".Services.CheckSubStatusService"
+            android:enabled="true"
+            android:exported="true"></service>
+        <service
+            android:name=".Services.SubscriptionService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity android:name=".CampusBusiness.AdDetails" />
 
         <meta-data
             android:name="co.paystack.android.PublicKey"

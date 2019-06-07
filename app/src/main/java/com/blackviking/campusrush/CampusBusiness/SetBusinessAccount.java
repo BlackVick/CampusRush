@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.blackviking.campusrush.AddFeed;
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.R;
+import com.blackviking.campusrush.Services.SubscriptionService;
 import com.blackviking.campusrush.Settings.Help;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -397,7 +398,7 @@ public class SetBusinessAccount extends AppCompatActivity {
                 hasPaid = true;
 
                 final long date = System.currentTimeMillis();
-                final SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yy HH:mm");
+                final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                 final String dateString = sdf.format(date);
 
                 SetBusinessAccount.this.transaction = transaction;
@@ -421,6 +422,9 @@ public class SetBusinessAccount extends AppCompatActivity {
                         .setValue(newSubscriptionMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+
+                        Intent intent = new Intent(SetBusinessAccount.this, SubscriptionService.class);
+                        startService(intent);
 
                         /*---   TRANSACTION HISTORY   ---*/
                         transactionRef.push().setValue(newTransactionMap);

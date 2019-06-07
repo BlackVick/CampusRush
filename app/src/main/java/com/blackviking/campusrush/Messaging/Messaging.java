@@ -436,7 +436,7 @@ public class Messaging extends AppCompatActivity {
 
                         messagesRef
                                 .child(userId)
-                                .child(adapter.getRef(position).getKey())
+                                .child(adapter.getRef(viewHolder.getAdapterPosition()).getKey())
                                 .child("messageRead")
                                 .setValue("read");
 
@@ -507,7 +507,153 @@ public class Messaging extends AppCompatActivity {
             }
         };
         messageRecycler.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                int friendlyMessageCount = adapter.getItemCount();
+                int lastVisiblePosition =
+                        layoutManager.findLastCompletelyVisibleItemPosition();
+                /* If the recycler view is initially being loaded or the
+                   user is at the bottom of the list, scroll to the bottom
+                   of the list to show the newly added message.*/
+                if (lastVisiblePosition == -1 ||
+                        (positionStart >= (friendlyMessageCount - 1) &&
+                                lastVisiblePosition == (positionStart - 1))) {
+                    messageRecycler.scrollToPosition(positionStart);
+
+                }
+                layoutManager.smoothScrollToPosition(messageRecycler, null, adapter.getItemCount());
+            }
+        });
+
+    }
+
+    public void serviceLoadMessages() {
+
+        messageRecycler.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        messageRecycler.setLayoutManager(layoutManager);
+
+        adapter = new FirebaseRecyclerAdapter<MessageModel, MessagingViewHolder>(
+                MessageModel.class,
+                R.layout.single_message_item,
+                MessagingViewHolder.class,
+                messagesRef.child(userId)
+        ) {
+            @Override
+            protected void populateViewHolder(final MessagingViewHolder viewHolder, final MessageModel model, int position) {
+
+                /*---   GET TIME AGO ALGORITHM   ---*/
+                GetTimeAgo getTimeAgo = new GetTimeAgo();
+                long lastTime = model.getMessageTimestamp();
+                final String lastSeenTime = getTimeAgo.getTimeAgo(lastTime, getApplicationContext());
+
+
+                if (model.getMessageFrom().equalsIgnoreCase(currentUid)){
+
+                    viewHolder.yourMsgLayout.setVisibility(View.VISIBLE);
+                    viewHolder.otherMsgLayout.setVisibility(View.GONE);
+                    viewHolder.myTextTimeStamp.setText(lastSeenTime);
+
+                    /*---   MESSAGE   ---*/
+                    if (!model.getMessage().equalsIgnoreCase("")){
+
+                        viewHolder.myText.setVisibility(View.VISIBLE);
+                        viewHolder.myText.setText(model.getMessage());
+
+                    } else {
+
+                        viewHolder.myText.setVisibility(View.GONE);
+
+                    }
+
+                    /*---   IMAGE   ---*/
+                    if (!model.getImageThumbUrl().equalsIgnoreCase("")){
+
+                        viewHolder.yourMsgImage.setVisibility(View.VISIBLE);
+
+                        Picasso.with(getBaseContext())
+                                .load(model.getImageThumbUrl())
+                                .networkPolicy(NetworkPolicy.OFFLINE)
+                                .placeholder(R.drawable.image_placeholders)
+                                .into(viewHolder.yourMsgImage, new Callback() {
+                                    @Override
+                                    public void onSuccess() {
+
+                                    }
+
+                                    @Override
+                                    public void onError() {
+                                        Picasso.with(getBaseContext())
+                                                .load(model.getImageThumbUrl())
+                                                .placeholder(R.drawable.campus_rush_feed_placeholder)
+                                                .into(viewHolder.yourMsgImage);
+                                    }
+                                });
+
+                    } else {
+
+                        viewHolder.yourMsgImage.setVisibility(View.GONE);
+
+                    }
+
+                } else {
+
+                    viewHolder.yourMsgLayout.setVisibility(View.GONE);
+                    viewHolder.otherMsgLayout.setVisibility(View.VISIBLE);
+                    viewHolder.otherTextTimeStamp.setText(lastSeenTime);
+
+
+                    /*---   MESSAGE   ---*/
+                    if (!model.getMessage().equalsIgnoreCase("")){
+
+                        viewHolder.otherText.setVisibility(View.VISIBLE);
+                        viewHolder.otherText.setText(model.getMessage());
+
+                    } else {
+
+                        viewHolder.otherText.setVisibility(View.GONE);
+
+                    }
+
+                    /*---   IMAGE   ---*/
+                    if (!model.getImageThumbUrl().equalsIgnoreCase("")){
+
+                        viewHolder.otherMsgImage.setVisibility(View.VISIBLE);
+
+                        Picasso.with(getBaseContext())
+                                .load(model.getImageThumbUrl())
+                                .networkPolicy(NetworkPolicy.OFFLINE)
+                                .placeholder(R.drawable.image_placeholders)
+                                .into(viewHolder.otherMsgImage, new Callback() {
+                                    @Override
+                                    public void onSuccess() {
+
+                                    }
+
+                                    @Override
+                                    public void onError() {
+                                        Picasso.with(getBaseContext())
+                                                .load(model.getImageThumbUrl())
+                                                .placeholder(R.drawable.campus_rush_feed_placeholder)
+                                                .into(viewHolder.otherMsgImage);
+                                    }
+                                });
+
+                    } else {
+
+                        viewHolder.otherMsgImage.setVisibility(View.GONE);
+
+                    }
+
+                }
+
+                /*---   RECYCLER OPTIONS   ---*/
+
+            }
+        };
+        messageRecycler.setAdapter(adapter);
         adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {

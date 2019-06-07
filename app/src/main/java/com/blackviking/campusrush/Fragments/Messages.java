@@ -85,7 +85,7 @@ public class Messages extends Fragment {
             @Override
             protected void populateViewHolder(final MessagesViewHolder viewHolder, MessagesModel model, int position) {
 
-                final String userKey = adapter.getRef(position).getKey();
+                final String userKey = adapter.getRef(viewHolder.getAdapterPosition()).getKey();
 
                 userRef.child(userKey).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -185,7 +185,6 @@ public class Messages extends Fragment {
             }
         };
         messagesRecycler.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
 
     }
 

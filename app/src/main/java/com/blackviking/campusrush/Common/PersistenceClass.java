@@ -17,6 +17,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
 /**
  * Created by Scarecrow on 6/18/2018.
  */
@@ -35,6 +37,9 @@ public class PersistenceClass extends Application {
 
         /*---   PAYSTACK   ---*/
         PaystackSdk.initialize(getApplicationContext());
+
+        /*---   DATE CALC   ---*/
+        JodaTimeAndroid.init(this);
 
         /*---   CRASHLYTICS   ---*/
         Fabric.with(this, new Crashlytics());

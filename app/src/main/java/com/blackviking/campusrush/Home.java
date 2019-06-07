@@ -39,6 +39,7 @@ import com.blackviking.campusrush.Plugins.Awards.Awards;
 import com.blackviking.campusrush.Plugins.GamersHub.GamersHub;
 import com.blackviking.campusrush.Plugins.SkitCenter.SkitCenter;
 import com.blackviking.campusrush.Profile.MyProfile;
+import com.blackviking.campusrush.Services.SubscriptionService;
 import com.blackviking.campusrush.Settings.Settings;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -411,6 +412,11 @@ public class Home extends AppCompatActivity
                 FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.FEED_NOTIFICATION_TOPIC);
                 FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.SKIT_NOTIFICATION_TOPIC);
                 FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.GAMERS_NOTIFICATION_TOPIC);
+
+                if (Common.isSubServiceRunning) {
+                    Intent intent = new Intent(Home.this, SubscriptionService.class);
+                    stopService(intent);
+                }
 
                 mAuth.signOut();
                 Intent signoutIntent = new Intent(Home.this, Login.class);

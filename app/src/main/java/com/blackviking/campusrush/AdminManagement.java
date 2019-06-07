@@ -42,7 +42,6 @@ public class AdminManagement extends AppCompatActivity {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,7 +108,7 @@ public class AdminManagement extends AppCompatActivity {
                 adminRef
         ) {
             @Override
-            protected void populateViewHolder(AdminManageViewHolder viewHolder, final AdminManageModel model, int position) {
+            protected void populateViewHolder(final AdminManageViewHolder viewHolder, final AdminManageModel model, int position) {
 
                 if (model.getAdminType().equalsIgnoreCase("Feed")){
 
@@ -154,7 +153,7 @@ public class AdminManagement extends AppCompatActivity {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
                         Intent managementDetail = new Intent(AdminManagement.this, ManagementDetail.class);
-                        managementDetail.putExtra("ItemId", adapter.getRef(position).getKey());
+                        managementDetail.putExtra("ItemId", adapter.getRef(viewHolder.getAdapterPosition()).getKey());
                         managementDetail.putExtra("ItemType", model.getAdminType());
                         startActivity(managementDetail);
                         overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
@@ -164,7 +163,6 @@ public class AdminManagement extends AppCompatActivity {
             }
         };
         adminRecycler.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
 
     }
 

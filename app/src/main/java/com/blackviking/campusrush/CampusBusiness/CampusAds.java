@@ -260,7 +260,7 @@ public class CampusAds extends AppCompatActivity {
                 promoterRef.child(currentUid)
         ) {
             @Override
-            protected void populateViewHolder(AdViewHolder viewHolder, AdModel model, final int position) {
+            protected void populateViewHolder(final AdViewHolder viewHolder, AdModel model, final int position) {
 
                 if (!model.getImageThumbUrl().equalsIgnoreCase("")){
 
@@ -291,14 +291,13 @@ public class CampusAds extends AppCompatActivity {
                 viewHolder.adPromote.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        openDialog(adapter.getRef(position).getKey());
+                        openDialog(adapter.getRef(viewHolder.getAdapterPosition()).getKey());
                     }
                 });
 
             }
         };
         adRecycler.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
 
 
         promoteAd.setOnClickListener(new View.OnClickListener() {

@@ -5,7 +5,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
@@ -13,7 +12,6 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.blackviking.campusrush.AdminManagement;
 import com.blackviking.campusrush.Common.Common;
-import com.blackviking.campusrush.FeedDetails;
 import com.blackviking.campusrush.Home;
 import com.blackviking.campusrush.Messaging.Messaging;
 import com.blackviking.campusrush.Plugins.GamersHub.GameFeedDetail;
@@ -21,11 +19,8 @@ import com.blackviking.campusrush.Plugins.SkitCenter.SkitDetails;
 import com.blackviking.campusrush.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import io.paperdb.Paper;
 
@@ -238,6 +233,27 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.notify(1, notification);
 
+        } else if (title.equalsIgnoreCase("Account")) {
+
+            Intent notificationsIntent = new Intent(this, Home.class);
+            notificationsIntent.putExtra("IntentInstruction", "Notification");
+            PendingIntent contentIntent = PendingIntent.getActivity(this,
+                    0, notificationsIntent, 0);
+
+
+            Notification notification = new NotificationCompat.Builder(this, CHANNEL_3_ID)
+                    .setSmallIcon(R.drawable.ic_campus_business)
+                    .setContentTitle(title)
+                    .setContentText(message)
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setColor(getResources().getColor(R.color.colorPrimaryDark))
+                    .setContentIntent(contentIntent)
+                    .setAutoCancel(true)
+                    .build();
+
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(10, notification);
+
         } else if (title.equalsIgnoreCase("Messaging")) {
 
             Intent notificationsIntent = new Intent(this, Messaging.class);
@@ -387,6 +403,27 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
 
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.notify(1, notification);
+
+        } else if (title.equalsIgnoreCase("Account")) {
+
+            Intent notificationsIntent = new Intent(this, Home.class);
+            notificationsIntent.putExtra("IntentInstruction", "Notification");
+            PendingIntent contentIntent = PendingIntent.getActivity(this,
+                    0, notificationsIntent, 0);
+
+            Notification notification = new NotificationCompat.Builder(this, CHANNEL_3_ID)
+                    .setSmallIcon(R.drawable.ic_campus_business)
+                    .setContentTitle(title)
+                    .setContentText(message)
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setColor(getResources().getColor(R.color.colorPrimaryDark))
+                    .setContentIntent(contentIntent)
+                    .setAutoCancel(true)
+                    .setSound(Uri.parse("android.resource://" + this.getPackageName() + "/" + R.raw.notification_sound))
+                    .build();
+
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(10, notification);
 
         } else if (title.equalsIgnoreCase("Messaging")) {
 

@@ -32,6 +32,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blackviking.campusrush.CampusBusiness.AdDetails;
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.FeedDetails;
 import com.blackviking.campusrush.ImageController.BlurImage;
@@ -374,225 +375,302 @@ public class OtherUserProfile extends AppCompatActivity {
             @Override
             protected void populateViewHolder(final FeedViewHolder viewHolder, final FeedModel model, final int position) {
 
-                /*---   OPTIONS   ---*/
-                viewHolder.options.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                if (model.getUpdateType().equalsIgnoreCase("Ad")){
 
-                        /*---   POPUP MENU FOR UPDATE   ---*/
-                        PopupMenu popup = new PopupMenu(OtherUserProfile.this, viewHolder.options);
-                        popup.inflate(R.menu.feed_item_menu_other);
-                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    viewHolder.posterName.setVisibility(View.GONE);
+                    viewHolder.posterImage.setVisibility(View.GONE);
+                    viewHolder.options.setVisibility(View.GONE);
+                    viewHolder.commentBtn.setVisibility(View.GONE);
+                    viewHolder.commentCount.setVisibility(View.GONE);
+                    viewHolder.likeBtn.setVisibility(View.GONE);
+                    viewHolder.likeCount.setVisibility(View.GONE);
+                    viewHolder.postTime.setVisibility(View.GONE);
+
+
+                    if (!model.getImageThumbUrl().equalsIgnoreCase("")){
+
+                        viewHolder.postImage.setVisibility(View.VISIBLE);
+
+                        Picasso.with(getBaseContext())
+                                .load(model.getImageThumbUrl())
+                                .networkPolicy(NetworkPolicy.OFFLINE)
+                                .placeholder(R.drawable.campus_rush_feed_placeholder)
+                                .into(viewHolder.postImage, new Callback() {
+                                    @Override
+                                    public void onSuccess() {
+
+                                    }
+
+                                    @Override
+                                    public void onError() {
+                                        Picasso.with(getBaseContext())
+                                                .load(model.getImageThumbUrl())
+                                                .placeholder(R.drawable.campus_rush_feed_placeholder)
+                                                .into(viewHolder.postImage);
+                                    }
+                                });
+
+                        viewHolder.postImage.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public boolean onMenuItemClick(MenuItem item) {
-                                switch (item.getItemId()) {
-                                    case R.id.action_feed_other_report:
-
-                                        openReportDialog(model.getSender());
-
-                                        return true;
-                                    case R.id.action_feed_other_share:
-
-                                        Intent i = new Intent(android.content.Intent.ACTION_SEND);
-                                        i.setType("text/plain");
-                                        i.putExtra(android.content.Intent.EXTRA_SUBJECT,"Campus Rush Share");
-                                        i.putExtra(android.content.Intent.EXTRA_TEXT, "Hey There, \n \nCheck Out My Latest Post On The CAMPUS RUSH App.\n\nYou can download for free on playstore via the link below \nhttps://play.google.com/store/apps/details?id=com.blackviking.campusrush");
-                                        i.putExtra("FeedId", adapter.getRef(position).getKey());
-                                        startActivity(Intent.createChooser(i,"Share via"));
-
-                                        return true;
-                                    default:
-                                        return false;
-                                }
+                            public void onClick(View v) {
+                                Intent adDetail = new Intent(OtherUserProfile.this, AdDetails.class);
+                                adDetail.putExtra("AdId", adapter.getRef(viewHolder.getAdapterPosition()).getKey());
+                                adDetail.putExtra("AdSenderId", model.getSender());
+                                startActivity(adDetail);
+                                overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
                             }
                         });
 
-                        popup.show();
+                    } else {
+
+                        viewHolder.postImage.setVisibility(View.GONE);
+                        viewHolder.postText.setMaxLines(7);
+
                     }
-                });
 
 
-                /*---   POSTER DETAILS   ---*/
-                viewHolder.posterImage.setVisibility(View.GONE);
+                    if (!model.getUpdate().equalsIgnoreCase("")){
 
+                        viewHolder.postText.setVisibility(View.VISIBLE);
+                        viewHolder.postText.setText(model.getUpdate());
+                        viewHolder.postText.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent adDetail = new Intent(OtherUserProfile.this, AdDetails.class);
+                                adDetail.putExtra("AdId", adapter.getRef(viewHolder.getAdapterPosition()).getKey());
+                                adDetail.putExtra("AdSenderId", model.getSender());
+                                startActivity(adDetail);
+                                overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+                            }
+                        });
 
-                /*---   POST IMAGE   ---*/
-                if (!model.getImageThumbUrl().equals("")){
+                    } else {
 
-                    viewHolder.postImage.setVisibility(View.VISIBLE);
+                        viewHolder.postText.setVisibility(View.GONE);
 
-                    Picasso.with(getBaseContext())
-                            .load(model.getImageThumbUrl())
-                            .placeholder(R.drawable.campus_rush_feed_placeholder)
-                            .into(viewHolder.postImage);
-
-                } else {
-
-                    viewHolder.postImage.setVisibility(View.GONE);
-
-                }
-
-
-                /*---   UPDATE   ---*/
-                if (!model.getUpdate().equals("")){
-
-                    viewHolder.postText.setVisibility(View.VISIBLE);
-                    viewHolder.postText.setText(model.getUpdate());
+                    }
 
                 } else {
 
-                    viewHolder.postText.setVisibility(View.GONE);
+                    /*---   OPTIONS   ---*/
+                    viewHolder.options.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
 
-                }
-
-
-                /*---  TIME   ---*/
-                viewHolder.postTime.setText(model.getTimestamp());
-
-
-                /*---   LIKES   ---*/
-                final String feedId = adapter.getRef(position).getKey();
-                likeRef.child(feedId).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-                        /*---   LIKES   ---*/
-                        int countLike = (int) dataSnapshot.getChildrenCount();
-
-                        viewHolder.likeCount.setText(String.valueOf(countLike));
-
-                        if (dataSnapshot.child(currentUid).exists()){
-
-                            viewHolder.likeBtn.setImageResource(R.drawable.liked_icon);
-
-                            viewHolder.likeBtn.setOnClickListener(new View.OnClickListener() {
+                            /*---   POPUP MENU FOR UPDATE   ---*/
+                            PopupMenu popup = new PopupMenu(OtherUserProfile.this, viewHolder.options);
+                            popup.inflate(R.menu.feed_item_menu_other);
+                            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                                 @Override
-                                public void onClick(View v) {
-                                    likeRef.child(feedId).child(currentUid).removeValue();
+                                public boolean onMenuItemClick(MenuItem item) {
+                                    switch (item.getItemId()) {
+                                        case R.id.action_feed_other_report:
+
+                                            openReportDialog(model.getSender());
+
+                                            return true;
+                                        case R.id.action_feed_other_share:
+
+                                            Intent i = new Intent(android.content.Intent.ACTION_SEND);
+                                            i.setType("text/plain");
+                                            i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Campus Rush Share");
+                                            i.putExtra(android.content.Intent.EXTRA_TEXT, "Hey There, \n \nCheck Out My Latest Post On The CAMPUS RUSH App.\n\nYou can download for free on playstore via the link below \nhttps://play.google.com/store/apps/details?id=com.blackviking.campusrush");
+                                            i.putExtra("FeedId", adapter.getRef(viewHolder.getAdapterPosition()).getKey());
+                                            startActivity(Intent.createChooser(i, "Share via"));
+
+                                            return true;
+                                        default:
+                                            return false;
+                                    }
                                 }
                             });
 
-                        } else {
+                            popup.show();
+                        }
+                    });
 
-                            viewHolder.likeBtn.setImageResource(R.drawable.unliked_icon);
 
-                            viewHolder.likeBtn.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    likeRef.child(feedId).child(currentUid).setValue("liked").addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
+                    /*---   POSTER DETAILS   ---*/
+                    viewHolder.posterImage.setVisibility(View.GONE);
 
-                                            if (task.isSuccessful()){
 
-                                                DatabaseReference notificationRef = db.getReference("Notifications")
-                                                        .child(userId);
+                    /*---   POST IMAGE   ---*/
+                    if (!model.getImageThumbUrl().equals("")) {
 
-                                                final Map<String, Object> notificationMap = new HashMap<>();
-                                                notificationMap.put("title", "Campus Feed");
-                                                notificationMap.put("details", "Just liked your post");
-                                                notificationMap.put("comment", "");
-                                                notificationMap.put("type", "Like");
-                                                notificationMap.put("status", "Unread");
-                                                notificationMap.put("intentPrimaryKey", feedId);
-                                                notificationMap.put("intentSecondaryKey", "");
-                                                notificationMap.put("user", currentUid);
-                                                notificationMap.put("timestamp", ServerValue.TIMESTAMP);
+                        viewHolder.postImage.setVisibility(View.VISIBLE);
 
-                                                notificationRef.push().setValue(notificationMap).addOnCompleteListener(
-                                                        new OnCompleteListener<Void>() {
-                                                            @Override
-                                                            public void onComplete(@NonNull Task<Void> task) {
+                        Picasso.with(getBaseContext())
+                                .load(model.getImageThumbUrl())
+                                .placeholder(R.drawable.campus_rush_feed_placeholder)
+                                .into(viewHolder.postImage);
 
-                                                                if (task.isComplete()){
-                                                                    sendLikeNotification(feedId);
+                    } else {
+
+                        viewHolder.postImage.setVisibility(View.GONE);
+
+                    }
+
+
+                    /*---   UPDATE   ---*/
+                    if (!model.getUpdate().equals("")) {
+
+                        viewHolder.postText.setVisibility(View.VISIBLE);
+                        viewHolder.postText.setText(model.getUpdate());
+
+                    } else {
+
+                        viewHolder.postText.setVisibility(View.GONE);
+
+                    }
+
+
+                    /*---  TIME   ---*/
+                    viewHolder.postTime.setText(model.getTimestamp());
+
+
+                    /*---   LIKES   ---*/
+                    final String feedId = adapter.getRef(viewHolder.getAdapterPosition()).getKey();
+                    likeRef.child(feedId).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            /*---   LIKES   ---*/
+                            int countLike = (int) dataSnapshot.getChildrenCount();
+
+                            viewHolder.likeCount.setText(String.valueOf(countLike));
+
+                            if (dataSnapshot.child(currentUid).exists()) {
+
+                                viewHolder.likeBtn.setImageResource(R.drawable.liked_icon);
+
+                                viewHolder.likeBtn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        likeRef.child(feedId).child(currentUid).removeValue();
+                                    }
+                                });
+
+                            } else {
+
+                                viewHolder.likeBtn.setImageResource(R.drawable.unliked_icon);
+
+                                viewHolder.likeBtn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        likeRef.child(feedId).child(currentUid).setValue("liked").addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+
+                                                if (task.isSuccessful()) {
+
+                                                    DatabaseReference notificationRef = db.getReference("Notifications")
+                                                            .child(userId);
+
+                                                    final Map<String, Object> notificationMap = new HashMap<>();
+                                                    notificationMap.put("title", "Campus Feed");
+                                                    notificationMap.put("details", "Just liked your post");
+                                                    notificationMap.put("comment", "");
+                                                    notificationMap.put("type", "Like");
+                                                    notificationMap.put("status", "Unread");
+                                                    notificationMap.put("intentPrimaryKey", feedId);
+                                                    notificationMap.put("intentSecondaryKey", "");
+                                                    notificationMap.put("user", currentUid);
+                                                    notificationMap.put("timestamp", ServerValue.TIMESTAMP);
+
+                                                    notificationRef.push().setValue(notificationMap).addOnCompleteListener(
+                                                            new OnCompleteListener<Void>() {
+                                                                @Override
+                                                                public void onComplete(@NonNull Task<Void> task) {
+
+                                                                    if (task.isComplete()) {
+                                                                        sendLikeNotification(feedId);
+                                                                    }
+
                                                                 }
-
                                                             }
-                                                        }
-                                                );
+                                                    );
 
 
+                                                }
 
                                             }
+                                        });
 
-                                        }
-                                    });
+                                    }
+                                });
 
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
+                    /*---   COMMENTS   ---*/
+                    commentRef.child(feedId).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            int countComment = (int) dataSnapshot.getChildrenCount();
+
+                            viewHolder.commentCount.setText(String.valueOf(countComment));
+
+                            viewHolder.commentBtn.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent feedDetail = new Intent(OtherUserProfile.this, FeedDetails.class);
+                                    feedDetail.putExtra("CurrentFeedId", adapter.getRef(viewHolder.getAdapterPosition()).getKey());
+                                    startActivity(feedDetail);
+                                    overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
                                 }
                             });
 
                         }
 
-                    }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
+                        }
+                    });
 
 
-                /*---   COMMENTS   ---*/
-                commentRef.child(feedId).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+                    /*---   FEED IMAGE CLICK   ---*/
+                    viewHolder.postImage.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
 
-                        int countComment = (int) dataSnapshot.getChildrenCount();
+                            Intent feedDetail = new Intent(OtherUserProfile.this, FeedDetails.class);
+                            feedDetail.putExtra("CurrentFeedId", adapter.getRef(viewHolder.getAdapterPosition()).getKey());
+                            startActivity(feedDetail);
+                            overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
 
-                        viewHolder.commentCount.setText(String.valueOf(countComment));
-
-                        viewHolder.commentBtn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent feedDetail = new Intent(OtherUserProfile.this, FeedDetails.class);
-                                feedDetail.putExtra("CurrentFeedId", adapter.getRef(position).getKey());
-                                startActivity(feedDetail);
-                                overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
-                            }
-                        });
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
+                        }
+                    });
 
 
-                /*---   FEED IMAGE CLICK   ---*/
-                viewHolder.postImage.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                    /*---   FEED TEXT CLICK   ---*/
+                    viewHolder.postText.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
 
-                        Intent feedDetail = new Intent(OtherUserProfile.this, FeedDetails.class);
-                        feedDetail.putExtra("CurrentFeedId", adapter.getRef(position).getKey());
-                        startActivity(feedDetail);
-                        overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+                            Intent feedDetail = new Intent(OtherUserProfile.this, FeedDetails.class);
+                            feedDetail.putExtra("CurrentFeedId", adapter.getRef(viewHolder.getAdapterPosition()).getKey());
+                            startActivity(feedDetail);
+                            overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
 
-                    }
-                });
+                        }
+                    });
 
-
-                /*---   FEED TEXT CLICK   ---*/
-                viewHolder.postText.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        Intent feedDetail = new Intent(OtherUserProfile.this, FeedDetails.class);
-                        feedDetail.putExtra("CurrentFeedId", adapter.getRef(position).getKey());
-                        startActivity(feedDetail);
-                        overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
-
-                    }
-                });
+                }
 
 
             }
         };
         timelineRecycler.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
 
     }
 

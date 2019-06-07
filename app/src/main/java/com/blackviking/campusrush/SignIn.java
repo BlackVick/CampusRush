@@ -16,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blackviking.campusrush.Common.Common;
+import com.blackviking.campusrush.Services.CheckSubStatusService;
+import com.blackviking.campusrush.Services.SubscriptionService;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -168,6 +170,9 @@ public class SignIn extends AppCompatActivity {
 
                 FirebaseMessaging.getInstance().subscribeToTopic(currentUid);
                 Paper.book().write(Common.NOTIFICATION_STATE, "true");
+
+                Intent intent = new Intent(getApplicationContext(), CheckSubStatusService.class);
+                startService(intent);
 
                 FirebaseMessaging.getInstance().subscribeToTopic(Common.FEED_NOTIFICATION_TOPIC+currentUid);
                 Paper.book().write(Common.MY_FEED_NOTIFICATION_STATE, "true");

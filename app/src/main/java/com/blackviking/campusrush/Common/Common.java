@@ -18,6 +18,10 @@ public class Common {
     public static final String GOOD_TO_GO = "GoToGo";
 
 
+    /*---   SUBSCRIPTION TOGGLE   ---*/
+    public static boolean isSubServiceRunning = false;
+
+
     /*---   CONTEXT MENU   ---*/
     public static final String DELETE_BOTH = "Retract Message";
     public static final String DELETE_SINGLE = "Delete Message";

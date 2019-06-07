@@ -213,7 +213,7 @@ public class Feed extends Fragment {
                             @Override
                             public void onClick(View v) {
                                 Intent adDetail = new Intent(getContext(), AdDetails.class);
-                                adDetail.putExtra("AdId", adapter.getRef(position).getKey());
+                                adDetail.putExtra("AdId", adapter.getRef(viewHolder.getAdapterPosition()).getKey());
                                 adDetail.putExtra("AdSenderId", model.getSender());
                                 startActivity(adDetail);
                                 getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
@@ -236,7 +236,7 @@ public class Feed extends Fragment {
                             @Override
                             public void onClick(View v) {
                                 Intent adDetail = new Intent(getContext(), AdDetails.class);
-                                adDetail.putExtra("AdId", adapter.getRef(position).getKey());
+                                adDetail.putExtra("AdId", adapter.getRef(viewHolder.getAdapterPosition()).getKey());
                                 adDetail.putExtra("AdSenderId", model.getSender());
                                 startActivity(adDetail);
                                 getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
@@ -253,7 +253,7 @@ public class Feed extends Fragment {
 
                     /*---   OPTIONS   ---*/
 
-                    final String feedId = adapter.getRef(position).getKey();
+                    final String feedId = adapter.getRef(viewHolder.getAdapterPosition()).getKey();
                     if (model.getRealSender().equals(currentUid)){
 
                         viewHolder.options.setOnClickListener(new View.OnClickListener() {
@@ -625,7 +625,7 @@ public class Feed extends Fragment {
                                 @Override
                                 public void onClick(View v) {
                                     Intent feedDetail = new Intent(getContext(), FeedDetails.class);
-                                    feedDetail.putExtra("CurrentFeedId", adapter.getRef(position).getKey());
+                                    feedDetail.putExtra("CurrentFeedId", adapter.getRef(viewHolder.getAdapterPosition()).getKey());
                                     startActivity(feedDetail);
                                     getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
                                 }
@@ -646,7 +646,7 @@ public class Feed extends Fragment {
                         public void onClick(View v) {
 
                             Intent feedDetail = new Intent(getContext(), FeedDetails.class);
-                            feedDetail.putExtra("CurrentFeedId", adapter.getRef(position).getKey());
+                            feedDetail.putExtra("CurrentFeedId", adapter.getRef(viewHolder.getAdapterPosition()).getKey());
                             startActivity(feedDetail);
                             getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
 
@@ -660,7 +660,7 @@ public class Feed extends Fragment {
                         public void onClick(View v) {
 
                             Intent feedDetail = new Intent(getContext(), FeedDetails.class);
-                            feedDetail.putExtra("CurrentFeedId", adapter.getRef(position).getKey());
+                            feedDetail.putExtra("CurrentFeedId", adapter.getRef(viewHolder.getAdapterPosition()).getKey());
                             startActivity(feedDetail);
                             getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
 
@@ -673,7 +673,6 @@ public class Feed extends Fragment {
             }
         };
         feedRecycler.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
 
     }
 

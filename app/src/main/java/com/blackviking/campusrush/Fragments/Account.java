@@ -24,6 +24,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blackviking.campusrush.CampusBusiness.AdDetails;
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.FeedDetails;
 import com.blackviking.campusrush.Model.FeedModel;
@@ -184,255 +185,331 @@ public class Account extends Fragment {
             @Override
             protected void populateViewHolder(final FeedViewHolder viewHolder, final FeedModel model, final int position) {
 
-                /*---   OPTIONS   ---*/
-                viewHolder.options.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                if (model.getUpdateType().equalsIgnoreCase("Ad")){
 
-                        /*---   POPUP MENU FOR UPDATE   ---*/
-                        PopupMenu popup = new PopupMenu(getContext(), viewHolder.options);
-                        popup.inflate(R.menu.feed_item_menu);
-                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    viewHolder.posterName.setVisibility(View.GONE);
+                    viewHolder.posterImage.setVisibility(View.GONE);
+                    viewHolder.options.setVisibility(View.GONE);
+                    viewHolder.commentBtn.setVisibility(View.GONE);
+                    viewHolder.commentCount.setVisibility(View.GONE);
+                    viewHolder.likeBtn.setVisibility(View.GONE);
+                    viewHolder.likeCount.setVisibility(View.GONE);
+                    viewHolder.postTime.setVisibility(View.GONE);
+
+
+                    if (!model.getImageThumbUrl().equalsIgnoreCase("")){
+
+                        viewHolder.postImage.setVisibility(View.VISIBLE);
+
+                        Picasso.with(getContext())
+                                .load(model.getImageThumbUrl())
+                                .networkPolicy(NetworkPolicy.OFFLINE)
+                                .placeholder(R.drawable.campus_rush_feed_placeholder)
+                                .into(viewHolder.postImage, new Callback() {
+                                    @Override
+                                    public void onSuccess() {
+
+                                    }
+
+                                    @Override
+                                    public void onError() {
+                                        Picasso.with(getContext())
+                                                .load(model.getImageThumbUrl())
+                                                .placeholder(R.drawable.campus_rush_feed_placeholder)
+                                                .into(viewHolder.postImage);
+                                    }
+                                });
+
+                        viewHolder.postImage.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public boolean onMenuItemClick(MenuItem item) {
-                                switch (item.getItemId()) {
-                                    case R.id.action_feed_delete:
-
-                                        AlertDialog alertDialog = new AlertDialog.Builder(getContext())
-                                                .setTitle("Delete Update !")
-                                                .setIcon(R.drawable.ic_delete_feed)
-                                                .setMessage("Are You Sure You Want To Delete This Update From Your Timeline?")
-                                                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(DialogInterface dialog, int which) {
-
-                                                        timelineRef.child(adapter.getRef(position).getKey()).removeValue()
-                                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                                    @Override
-                                                                    public void onSuccess(Void aVoid) {
-                                                                        Toast.makeText(getContext(), "Deleted", Toast.LENGTH_SHORT).show();
-                                                                    }
-                                                                });
-
-                                                    }
-                                                })
-                                                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(DialogInterface dialog, int which) {
-                                                        dialog.dismiss();
-                                                    }
-                                                })
-                                                .create();
-
-                                        alertDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
-
-                                        alertDialog.show();
-
-                                        return true;
-                                    case R.id.action_feed_share:
-
-                                        Intent i = new Intent(android.content.Intent.ACTION_SEND);
-                                        i.setType("text/plain");
-                                        i.putExtra(android.content.Intent.EXTRA_SUBJECT,"Campus Rush Share");
-                                        i.putExtra(android.content.Intent.EXTRA_TEXT, "Hey There, \n \nCheck Out My Latest Post On The CAMPUS RUSH App.\n\nYou can download for free on playstore via the link below \nhttps://play.google.com/store/apps/details?id=com.blackviking.campusrush");
-                                        i.putExtra("FeedId", adapter.getRef(position).getKey());
-                                        startActivity(Intent.createChooser(i,"Share via"));
-
-                                        return true;
-
-                                    default:
-                                        return false;
-                                }
+                            public void onClick(View v) {
+                                Intent adDetail = new Intent(getContext(), AdDetails.class);
+                                adDetail.putExtra("AdId", adapter.getRef(viewHolder.getAdapterPosition()).getKey());
+                                adDetail.putExtra("AdSenderId", model.getSender());
+                                startActivity(adDetail);
+                                getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
                             }
                         });
 
-                        popup.show();
+                    } else {
+
+                        viewHolder.postImage.setVisibility(View.GONE);
+                        viewHolder.postText.setMaxLines(7);
+
                     }
-                });
 
 
-                /*---   POSTER DETAILS   ---*/
-                if (!theImage.equals("")){
+                    if (!model.getUpdate().equalsIgnoreCase("")){
 
-                    Picasso.with(getContext())
-                            .load(theImage)
-                            .networkPolicy(NetworkPolicy.OFFLINE)
-                            .placeholder(R.drawable.profile)
-                            .into(viewHolder.posterImage, new Callback() {
+                        viewHolder.postText.setVisibility(View.VISIBLE);
+                        viewHolder.postText.setText(model.getUpdate());
+                        viewHolder.postText.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent adDetail = new Intent(getContext(), AdDetails.class);
+                                adDetail.putExtra("AdId", adapter.getRef(viewHolder.getAdapterPosition()).getKey());
+                                adDetail.putExtra("AdSenderId", model.getSender());
+                                startActivity(adDetail);
+                                getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+                            }
+                        });
+
+                    } else {
+
+                        viewHolder.postText.setVisibility(View.GONE);
+
+                    }
+
+                } else {
+                    /*---   OPTIONS   ---*/
+                    viewHolder.options.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            /*---   POPUP MENU FOR UPDATE   ---*/
+                            PopupMenu popup = new PopupMenu(getContext(), viewHolder.options);
+                            popup.inflate(R.menu.feed_item_menu);
+                            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                                 @Override
-                                public void onSuccess() {
+                                public boolean onMenuItemClick(MenuItem item) {
+                                    switch (item.getItemId()) {
+                                        case R.id.action_feed_delete:
 
-                                }
+                                            AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+                                                    .setTitle("Delete Update !")
+                                                    .setIcon(R.drawable.ic_delete_feed)
+                                                    .setMessage("Are You Sure You Want To Delete This Update From Your Timeline?")
+                                                    .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
 
-                                @Override
-                                public void onError() {
-                                    Picasso.with(getContext())
-                                            .load(theImage)
-                                            .placeholder(R.drawable.ic_loading_animation)
-                                            .into(viewHolder.posterImage);
+                                                            timelineRef.child(adapter.getRef(viewHolder.getAdapterPosition()).getKey()).removeValue()
+                                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                        @Override
+                                                                        public void onSuccess(Void aVoid) {
+                                                                            Toast.makeText(getContext(), "Deleted", Toast.LENGTH_SHORT).show();
+                                                                        }
+                                                                    });
+
+                                                        }
+                                                    })
+                                                    .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            dialog.dismiss();
+                                                        }
+                                                    })
+                                                    .create();
+
+                                            alertDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
+
+                                            alertDialog.show();
+
+                                            return true;
+                                        case R.id.action_feed_share:
+
+                                            Intent i = new Intent(android.content.Intent.ACTION_SEND);
+                                            i.setType("text/plain");
+                                            i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Campus Rush Share");
+                                            i.putExtra(android.content.Intent.EXTRA_TEXT, "Hey There, \n \nCheck Out My Latest Post On The CAMPUS RUSH App.\n\nYou can download for free on playstore via the link below \nhttps://play.google.com/store/apps/details?id=com.blackviking.campusrush");
+                                            i.putExtra("FeedId", adapter.getRef(viewHolder.getAdapterPosition()).getKey());
+                                            startActivity(Intent.createChooser(i, "Share via"));
+
+                                            return true;
+
+                                        default:
+                                            return false;
+                                    }
                                 }
                             });
 
-                } else {
-
-                    viewHolder.posterImage.setImageResource(R.drawable.profile);
-
-                }
-                viewHolder.posterName.setText("@"+theUsername);
+                            popup.show();
+                        }
+                    });
 
 
-                /*---   POST IMAGE   ---*/
-                if (!model.getImageThumbUrl().equals("")){
+                    /*---   POSTER DETAILS   ---*/
+                    if (!theImage.equals("")) {
 
-                    viewHolder.postImage.setVisibility(View.VISIBLE);
+                        Picasso.with(getContext())
+                                .load(theImage)
+                                .networkPolicy(NetworkPolicy.OFFLINE)
+                                .placeholder(R.drawable.profile)
+                                .into(viewHolder.posterImage, new Callback() {
+                                    @Override
+                                    public void onSuccess() {
 
-                    Picasso.with(getContext())
-                            .load(model.getImageThumbUrl())
-                            .networkPolicy(NetworkPolicy.OFFLINE)
-                            .placeholder(R.drawable.campus_rush_feed_placeholder)
-                            .into(viewHolder.postImage, new Callback() {
-                                @Override
-                                public void onSuccess() {
+                                    }
 
-                                }
+                                    @Override
+                                    public void onError() {
+                                        Picasso.with(getContext())
+                                                .load(theImage)
+                                                .placeholder(R.drawable.ic_loading_animation)
+                                                .into(viewHolder.posterImage);
+                                    }
+                                });
 
-                                @Override
-                                public void onError() {
-                                    Picasso.with(getContext())
-                                            .load(model.getImageThumbUrl())
-                                            .placeholder(R.drawable.campus_rush_feed_placeholder)
-                                            .into(viewHolder.postImage);
-                                }
-                            });
+                    } else {
 
-                } else {
+                        viewHolder.posterImage.setImageResource(R.drawable.profile);
 
-                    viewHolder.postImage.setVisibility(View.GONE);
-
-                }
-
-
-                /*---   UPDATE   ---*/
-                if (!model.getUpdate().equals("")){
-
-                    viewHolder.postText.setVisibility(View.VISIBLE);
-                    viewHolder.postText.setText(model.getUpdate());
-
-                } else {
-
-                    viewHolder.postText.setVisibility(View.GONE);
-
-                }
+                    }
+                    viewHolder.posterName.setText("@" + theUsername);
 
 
-                /*---  TIME   ---*/
-                viewHolder.postTime.setText(model.getTimestamp());
+                    /*---   POST IMAGE   ---*/
+                    if (!model.getImageThumbUrl().equals("")) {
+
+                        viewHolder.postImage.setVisibility(View.VISIBLE);
+
+                        Picasso.with(getContext())
+                                .load(model.getImageThumbUrl())
+                                .networkPolicy(NetworkPolicy.OFFLINE)
+                                .placeholder(R.drawable.campus_rush_feed_placeholder)
+                                .into(viewHolder.postImage, new Callback() {
+                                    @Override
+                                    public void onSuccess() {
+
+                                    }
+
+                                    @Override
+                                    public void onError() {
+                                        Picasso.with(getContext())
+                                                .load(model.getImageThumbUrl())
+                                                .placeholder(R.drawable.campus_rush_feed_placeholder)
+                                                .into(viewHolder.postImage);
+                                    }
+                                });
+
+                    } else {
+
+                        viewHolder.postImage.setVisibility(View.GONE);
+
+                    }
 
 
-                /*---   LIKES   ---*/
-                final String feedId = adapter.getRef(position).getKey();
-                likeRef.child(feedId).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+                    /*---   UPDATE   ---*/
+                    if (!model.getUpdate().equals("")) {
 
-                        /*---   LIKES   ---*/
-                        int countLike = (int) dataSnapshot.getChildrenCount();
+                        viewHolder.postText.setVisibility(View.VISIBLE);
+                        viewHolder.postText.setText(model.getUpdate());
 
-                        viewHolder.likeCount.setText(String.valueOf(countLike));
+                    } else {
 
-                        if (dataSnapshot.child(currentUid).exists()){
+                        viewHolder.postText.setVisibility(View.GONE);
 
-                            viewHolder.likeBtn.setImageResource(R.drawable.liked_icon);
+                    }
 
-                            viewHolder.likeBtn.setOnClickListener(new View.OnClickListener() {
+
+                    /*---  TIME   ---*/
+                    viewHolder.postTime.setText(model.getTimestamp());
+
+
+                    /*---   LIKES   ---*/
+                    final String feedId = adapter.getRef(viewHolder.getAdapterPosition()).getKey();
+                    likeRef.child(feedId).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            /*---   LIKES   ---*/
+                            int countLike = (int) dataSnapshot.getChildrenCount();
+
+                            viewHolder.likeCount.setText(String.valueOf(countLike));
+
+                            if (dataSnapshot.child(currentUid).exists()) {
+
+                                viewHolder.likeBtn.setImageResource(R.drawable.liked_icon);
+
+                                viewHolder.likeBtn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        likeRef.child(feedId).child(currentUid).removeValue();
+                                    }
+                                });
+
+                            } else {
+
+                                viewHolder.likeBtn.setImageResource(R.drawable.unliked_icon);
+
+                                viewHolder.likeBtn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        likeRef.child(feedId).child(currentUid).setValue("liked");
+                                    }
+                                });
+
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
+                    /*---   COMMENTS   ---*/
+                    commentRef.child(feedId).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            int countComment = (int) dataSnapshot.getChildrenCount();
+
+                            viewHolder.commentCount.setText(String.valueOf(countComment));
+
+                            viewHolder.commentBtn.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    likeRef.child(feedId).child(currentUid).removeValue();
-                                }
-                            });
-
-                        } else {
-
-                            viewHolder.likeBtn.setImageResource(R.drawable.unliked_icon);
-
-                            viewHolder.likeBtn.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    likeRef.child(feedId).child(currentUid).setValue("liked");
+                                    Intent feedDetail = new Intent(getContext(), FeedDetails.class);
+                                    feedDetail.putExtra("CurrentFeedId", adapter.getRef(viewHolder.getAdapterPosition()).getKey());
+                                    startActivity(feedDetail);
+                                    getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
                                 }
                             });
 
                         }
 
-                    }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
+                        }
+                    });
 
 
-                /*---   COMMENTS   ---*/
-                commentRef.child(feedId).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+                    /*---   FEED IMAGE CLICK   ---*/
+                    viewHolder.postImage.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
 
-                        int countComment = (int) dataSnapshot.getChildrenCount();
+                            Intent feedDetail = new Intent(getContext(), FeedDetails.class);
+                            feedDetail.putExtra("CurrentFeedId", adapter.getRef(viewHolder.getAdapterPosition()).getKey());
+                            startActivity(feedDetail);
+                            getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
 
-                        viewHolder.commentCount.setText(String.valueOf(countComment));
-
-                        viewHolder.commentBtn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent feedDetail = new Intent(getContext(), FeedDetails.class);
-                                feedDetail.putExtra("CurrentFeedId", adapter.getRef(position).getKey());
-                                startActivity(feedDetail);
-                                getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
-                            }
-                        });
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
+                        }
+                    });
 
 
-                /*---   FEED IMAGE CLICK   ---*/
-                viewHolder.postImage.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                    /*---   FEED TEXT CLICK   ---*/
+                    viewHolder.postText.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
 
-                        Intent feedDetail = new Intent(getContext(), FeedDetails.class);
-                        feedDetail.putExtra("CurrentFeedId", adapter.getRef(position).getKey());
-                        startActivity(feedDetail);
-                        getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+                            Intent feedDetail = new Intent(getContext(), FeedDetails.class);
+                            feedDetail.putExtra("CurrentFeedId", adapter.getRef(viewHolder.getAdapterPosition()).getKey());
+                            startActivity(feedDetail);
+                            getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
 
-                    }
-                });
-
-
-                /*---   FEED TEXT CLICK   ---*/
-                viewHolder.postText.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        Intent feedDetail = new Intent(getContext(), FeedDetails.class);
-                        feedDetail.putExtra("CurrentFeedId", adapter.getRef(position).getKey());
-                        startActivity(feedDetail);
-                        getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
-
-                    }
-                });
+                        }
+                    });
+                }
 
 
             }
         };
         myTimelineRecycler.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
 
     }
 
