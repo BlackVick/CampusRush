@@ -221,7 +221,7 @@ public class Materials extends Fragment {
             @Override
             protected void populateViewHolder(MaterialParentViewHolder viewHolder, MaterialParentModel model, int position) {
 
-                final String serverName = materialParentAdapter.getRef(position).getKey();
+                final String serverName = materialParentAdapter.getRef(viewHolder.getAdapterPosition()).getKey();
 
                 viewHolder.name.setText(serverName);
 
@@ -235,7 +235,6 @@ public class Materials extends Fragment {
             }
         };
         materialRecycler.setAdapter(materialParentAdapter);
-        materialParentAdapter.notifyDataSetChanged();
     }
 
     private void loadDepartments(String currentFacultyString) {
@@ -274,7 +273,7 @@ public class Materials extends Fragment {
             @Override
             protected void populateViewHolder(MaterialParentViewHolder viewHolder, MaterialParentModel model, int position) {
 
-                final String serverName = materialParentAdapter.getRef(position).getKey();
+                final String serverName = materialParentAdapter.getRef(viewHolder.getAdapterPosition()).getKey();
 
                 viewHolder.name.setText(serverName);
 
@@ -288,7 +287,6 @@ public class Materials extends Fragment {
             }
         };
         materialRecycler.setAdapter(materialParentAdapter);
-        materialParentAdapter.notifyDataSetChanged();
 
     }
 
@@ -327,7 +325,7 @@ public class Materials extends Fragment {
             @Override
             protected void populateViewHolder(MaterialParentViewHolder viewHolder, MaterialParentModel model, int position) {
 
-                final String serverName = materialParentAdapter.getRef(position).getKey();
+                final String serverName = materialParentAdapter.getRef(viewHolder.getAdapterPosition()).getKey();
 
                 viewHolder.name.setText(serverName);
 
@@ -341,7 +339,6 @@ public class Materials extends Fragment {
             }
         };
         materialRecycler.setAdapter(materialParentAdapter);
-        materialParentAdapter.notifyDataSetChanged();
 
     }
 
@@ -404,7 +401,6 @@ public class Materials extends Fragment {
             }
         };
         materialRecycler.setAdapter(materialAdapter);
-        materialAdapter.notifyDataSetChanged();
 
     }
 
