@@ -213,7 +213,7 @@ public class SubscriptionService extends Service {
             public void run() {
                 startComputation();
             }
-        }, 7200000);
+        }, 86400000);
     }
 
     //24 hours = 86400000

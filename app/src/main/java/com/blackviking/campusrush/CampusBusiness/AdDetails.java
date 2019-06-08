@@ -191,6 +191,14 @@ public class AdDetails extends AppCompatActivity {
                 });
 
                 adContact.setText(theAdContact);
+                adContact.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_DIAL);
+                        intent.setData(Uri.parse("tel:"+theAdContact));
+                        startActivity(intent);
+                    }
+                });
 
             }
 

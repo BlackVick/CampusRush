@@ -85,6 +85,8 @@ public class Faq extends AppCompatActivity {
         listFaqTitle.add("HOW DO I UPLOAD MY SKITS?");
         listFaqTitle.add("WHY ARE MY SKITS NOT ONLINE?");
         listFaqTitle.add("HOW DO I MAINTAIN MY PRIVACY?");
+        listFaqTitle.add("CAMPUS RUSH BUSINESS PLATFORM");
+        listFaqTitle.add("MESSAGING.");
 
 
 
@@ -153,6 +155,7 @@ public class Faq extends AppCompatActivity {
         List<String> manageRant = new ArrayList<>();
         manageRant.add("* Campus Rant is a platform for every one to voice out their opinion about anything.");
         manageRant.add("* No restrictions, voice out your frustrations or talk about anything");
+        manageRant.add("* Different Rant Topics can be created in form of (#)Hashtags");
         manageRant.add("* Start a revolution to take over the school");
         manageRant.add("* Or whatever rocks your boat");
 
@@ -175,6 +178,19 @@ public class Faq extends AppCompatActivity {
         List<String> privacyFaq = new ArrayList<>();
         privacyFaq.add("* You can access your privacy setting by going to the Privacy Setting in Account.");
         privacyFaq.add("* Users can choose to be visible or anonymous on Campus Rush");
+        privacyFaq.add("* Users can choose to be accessible via messaging or not");
+
+        List<String> businessFaq = new ArrayList<>();
+        businessFaq.add("* Campus Rush Business (Campus Ads) is a way for users to promote their products to the entirety of users on the platform.");
+        businessFaq.add("* Users can access the Campus Ads feature once its available from the side navigation bar.");
+        businessFaq.add("* Users are required to register the name, address, contact phone and description of their business.");
+        businessFaq.add("* There is, of course a monthly charge for the business account.");
+        businessFaq.add("* The monthly charge allows you to promote your ads, an UNLIMITED amount of time.");
+        businessFaq.add("* NOTE: We do not save your CARD DETAILS. So you do not have to worry about your security.");
+
+        List<String> messagingFaq = new ArrayList<>();
+        messagingFaq.add("* Messaging allows for seamless communication between 2 users.");
+        messagingFaq.add("* Messaging can easily be turned on and off in the privacy settings.");
 
 
         listHash.put(listFaqTitle.get(0), signUpAndSignIn);
@@ -187,6 +203,8 @@ public class Faq extends AppCompatActivity {
         listHash.put(listFaqTitle.get(7), uploadSkits);
         listHash.put(listFaqTitle.get(8), missingSkits);
         listHash.put(listFaqTitle.get(9), privacyFaq);
+        listHash.put(listFaqTitle.get(10), businessFaq);
+        listHash.put(listFaqTitle.get(11), messagingFaq);
 
     }
 
