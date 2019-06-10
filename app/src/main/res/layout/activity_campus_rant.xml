@@ -12,12 +12,17 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:background="@drawable/campus_rant_background">
+        android:layout_marginTop="?attr/actionBarSize">
+
+        <include
+            layout="@layout/snippet_for_rant_topic_search"
+            android:id="@+id/rantSearchLayout"/>
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@+id/rantSearchLayout"
+            android:layout_marginTop="7dp"
             android:id="@+id/rantTopicRecycler"/>
 
         <android.support.design.widget.FloatingActionButton

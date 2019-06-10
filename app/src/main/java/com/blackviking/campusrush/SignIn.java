@@ -116,12 +116,14 @@ public class SignIn extends AppCompatActivity {
 
             showErrorDialog("Provide A Valid E-Mail Address");
             progressBar.setVisibility(View.GONE);
+            email.requestFocus();
             signInBtn.setEnabled(true);
 
         } else if (TextUtils.isEmpty(thePassword)){
 
             showErrorDialog("Provide Your Password");
             progressBar.setVisibility(View.GONE);
+            password.requestFocus();
             signInBtn.setEnabled(true);
 
         } else {

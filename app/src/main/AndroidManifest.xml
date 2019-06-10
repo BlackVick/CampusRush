@@ -250,7 +250,8 @@
         <activity
             android:name=".CampusRant.CampusRant"
             android:configChanges="orientation"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/RantBackground"/>
         <activity
             android:name=".Messaging.Messaging"
             android:configChanges="orientation"

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:descendantFocusability="beforeDescendants"
+    android:background="@color/thickTransparentWhite">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:descendantFocusability="beforeDescendants"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="10"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            app:corner_radius="5dp"
+            android:background="@color/offWhite">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="10"
+                android:orientation="horizontal"
+                android:animateLayoutChanges="true">
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="8.5"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:background="@color/offWhite"
+                    android:id="@+id/rantSearchEdt"
+                    android:inputType="text"
+                    android:maxLength="20"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:hint="Search Topic . . ."/>
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="1.5"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_search_rant_topic"
+                    android:adjustViewBounds="true"
+                    android:padding="5dp"
+                    android:id="@+id/rantSearchBtn"
+                    android:background="@drawable/off_white_backround_ripple"/>
+
+            </LinearLayout>
+
+        </com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

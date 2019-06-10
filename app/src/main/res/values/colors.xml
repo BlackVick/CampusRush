@@ -12,6 +12,7 @@
     <color name="white">#ffffff</color>
     <color name="offWhite">#dad7d7</color>
     <color name="transparentWhite">#B4FFFFFF</color>
+    <color name="thickTransparentWhite">#E8FAF9F9</color>
     <color name="transparent">#00000000</color>
     <color name="red">#FF0000</color>
     <color name="bottomNavSelected">#1D0202</color>

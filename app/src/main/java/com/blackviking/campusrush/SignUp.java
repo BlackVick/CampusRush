@@ -259,18 +259,21 @@ public class SignUp extends AppCompatActivity {
 
             showErrorDialog("Error Occurred, \nPlease Pick A Unique Username");
             progressBar.setVisibility(View.GONE);
+            username.requestFocus();
             signUp.setEnabled(true);
 
         } else if (TextUtils.isEmpty(theFirstName) || TextUtils.isEmpty(theLastName)){
 
             showErrorDialog("Error Occurred, \nPlease Provide Your Name !");
             progressBar.setVisibility(View.GONE);
+            firstName.requestFocus();
             signUp.setEnabled(true);
 
         } else if (TextUtils.isEmpty(theEmail) || !isValidEmail(theEmail)){
 
             showErrorDialog("Error Occurred, \nE-Mail Can Not Be Empty Or Invalid !");
             progressBar.setVisibility(View.GONE);
+            eMail.requestFocus();
             signUp.setEnabled(true);
 
         } else if (selectGender.equalsIgnoreCase("")){
@@ -283,12 +286,14 @@ public class SignUp extends AppCompatActivity {
 
             showErrorDialog("Error Occurred, \nProvide A Secure Password !");
             progressBar.setVisibility(View.GONE);
+            password.requestFocus();
             signUp.setEnabled(true);
 
         } else if (!thePassword.equals(thePasswordConfirm)){
 
             showErrorDialog("Error Occurred, \nPasswords Do Not Match, Please Retry !");
             progressBar.setVisibility(View.GONE);
+            password.requestFocus();
             signUp.setEnabled(true);
 
         } else {
@@ -385,6 +390,7 @@ public class SignUp extends AppCompatActivity {
                                             } else {
 
                                                 username.setTextColor(getResources().getColor(R.color.red));
+                                                username.requestFocus();
 
                                                 username.setError("Username Already In Use");
                                                 showErrorDialog("The Username Is Already In Use, Please Pick Another !");
