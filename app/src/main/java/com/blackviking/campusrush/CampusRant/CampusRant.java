@@ -213,7 +213,7 @@ public class CampusRant extends AppCompatActivity {
         topicRef.orderByChild("name")
                 .startAt(searchParam)
                 .endAt(searchParam+"\uf8ff")
-                .addListenerForSingleValueEvent(
+                .addValueEventListener(
                         new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
