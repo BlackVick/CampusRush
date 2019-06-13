@@ -60,7 +60,7 @@
                 app:met_floatingLabel="highlight"
                 app:met_primaryColor="@color/black"
                 app:met_singleLineEllipsis="true"
-                android:digits="abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ"/>
+                android:digits="abcdefghijklmnopqrstuvwxyz1234567890"/>
 
         </LinearLayout>
 

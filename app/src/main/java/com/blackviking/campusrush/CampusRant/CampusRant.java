@@ -11,7 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -39,6 +41,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,7 +59,8 @@ public class CampusRant extends AppCompatActivity {
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
     private DatabaseReference topicRef;
     private EditText searchRantEdt;
-    private ImageView searchRantBtn;
+    private ArrayList<RantTopicModel> arrayList;
+    //private ImageView searchRantBtn;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -87,45 +91,29 @@ public class CampusRant extends AppCompatActivity {
         addRantTopic = (FloatingActionButton)findViewById(R.id.addRantTopic);
         rantTopicRecycler = (RecyclerView)findViewById(R.id.rantTopicRecycler);
         searchRantEdt = (EditText)findViewById(R.id.rantSearchEdt);
-        searchRantBtn = (ImageView)findViewById(R.id.rantSearchBtn);
+        //searchRantBtn = (ImageView)findViewById(R.id.rantSearchBtn);
         
         
         /*---   EDIT TEXT SEARCH   ---*/
-        searchRantEdt.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
-        searchRantEdt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        searchRantEdt.addTextChangedListener(new TextWatcher() {
             @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    
-                    String searchTxt = searchRantEdt.getText().toString().trim();
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                    if (!searchTxt.equalsIgnoreCase("")){
-
-                        searchForTopic(searchTxt);
-                        return true;
-
-                    } else {
-
-                        Toast.makeText(CampusRant.this, "Cant Process Empty Query", Toast.LENGTH_SHORT).show();
-                    }
-
-                }
-                return false;
             }
-        });
-        
-        searchRantBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                String searchTxt = searchRantEdt.getText().toString().trim();
-                
-                if (searchTxt.equalsIgnoreCase("")){
-                    
-                    searchForTopic(searchTxt);
-                    
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!s.toString().isEmpty()){
+
+                    searchForTopic(s.toString());
                 } else {
-                    Toast.makeText(CampusRant.this, "Cant Process Empty Query", Toast.LENGTH_SHORT).show();
+
+                    loadRantTopics();
                 }
             }
         });
@@ -164,38 +152,41 @@ public class CampusRant extends AppCompatActivity {
 
     private void searchForTopic(String searchTxt) {
 
-        Query searchQuery = topicRef.orderByChild("name").startAt(searchTxt).endAt(searchTxt + "\uf8ff");
+        final Query searchQuery = topicRef.orderByChild("name").startAt(searchTxt).endAt(searchTxt + "\uf8ff");
+        arrayList = new ArrayList<>();
 
         rantTopicRecycler.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
-        layoutManager.setReverseLayout(true);
-        layoutManager.setStackFromEnd(true);
         rantTopicRecycler.setLayoutManager(layoutManager);
 
-        adapter = new FirebaseRecyclerAdapter<RantTopicModel, RantTopicViewHolder>(
-                RantTopicModel.class,
-                R.layout.rant_topic_item,
-                RantTopicViewHolder.class,
-                searchQuery
-        ) {
+        searchQuery.addValueEventListener(new ValueEventListener() {
             @Override
-            protected void populateViewHolder(RantTopicViewHolder viewHolder, final RantTopicModel model, int position) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
-                viewHolder.topicName.setText("#"+model.getName());
+                if (dataSnapshot.hasChildren()){
 
-                viewHolder.setItemClickListener(new ItemClickListener() {
-                    @Override
-                    public void onClick(View view, int position, boolean isLongClick) {
-                        Intent rantRoomIntent = new Intent(CampusRant.this, RantRoom.class);
-                        rantRoomIntent.putExtra("RantTopic", model.getName());
-                        startActivity(rantRoomIntent);
-                        overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+                    arrayList.clear();
+
+                    for (DataSnapshot object : dataSnapshot.getChildren()){
+
+                        final RantTopicModel topicModel = object.getValue(RantTopicModel.class);
+                        arrayList.add(topicModel);
+
                     }
-                });
+
+                    CustomSearchAdapter searchAdapter = new CustomSearchAdapter(getApplicationContext(), arrayList, CampusRant.this);
+                    rantTopicRecycler.setAdapter(searchAdapter);
+                    searchAdapter.notifyDataSetChanged();
+
+                }
 
             }
-        };
-        rantTopicRecycler.setAdapter(adapter);
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 

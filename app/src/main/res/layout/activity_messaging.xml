@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Messaging.Messaging">
+    tools:context=".Messaging.Messaging"
+    android:animateLayoutChanges="true">
 
     <include layout="@layout/snippet_for_chat"/>
 
@@ -18,8 +19,65 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/messageRecycler"
-            android:layout_margin="7dp"
-            android:layout_above="@id/messageInputLayout"/>
+            android:layout_margin="4dp"
+            android:layout_above="@id/quoteLayout"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/quoteLayout"
+            android:background="@drawable/chat_quote_you"
+            android:layout_above="@id/messageInputLayout"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="end"
+                android:src="@drawable/ic_clear_quote"
+                android:id="@+id/cancelQuote"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/quoter"
+                android:textSize="13sp"
+                android:textColor="@color/offBlack"
+                android:text=""
+                android:padding="2dp"
+                android:visibility="gone"
+                android:layout_gravity="start"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:maxHeight="70dp"
+                android:maxWidth="70dp"
+                android:adjustViewBounds="true"
+                android:id="@+id/quoteImage"
+                android:scaleType="centerCrop"
+                android:visibility="gone"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/quoteText"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:text=""
+                android:padding="2dp"
+                android:visibility="gone"
+                android:layout_gravity="end"/>
+
+        </LinearLayout>
 
         <include
             layout="@layout/message_input_box"

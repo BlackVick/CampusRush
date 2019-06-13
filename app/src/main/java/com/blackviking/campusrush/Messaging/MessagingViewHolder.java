@@ -20,6 +20,10 @@ public class MessagingViewHolder extends RecyclerView.ViewHolder {
     public ImageView yourMsgImage, otherMsgImage;
     public TextView myText, myTextTimeStamp, otherText, otherTextTimeStamp;
 
+    public LinearLayout myQuoteLayout, otherQuoteLayout;
+    public TextView myQuoter, myQuoteText, otherQuoter, otherQuoteText;
+    public ImageView myQuoteImage, otherQuoteImage;
+
     public MessagingViewHolder(View itemView) {
         super(itemView);
 
@@ -31,6 +35,15 @@ public class MessagingViewHolder extends RecyclerView.ViewHolder {
         myTextTimeStamp = (TextView)itemView.findViewById(R.id.yourMessageTimeStamp);
         otherText = (TextView)itemView.findViewById(R.id.otherMessageText);
         otherTextTimeStamp = (TextView)itemView.findViewById(R.id.otherMessageTimeStamp);
+
+        myQuoteLayout = (LinearLayout)itemView.findViewById(R.id.myQuoteLayout);
+        otherQuoteLayout = (LinearLayout)itemView.findViewById(R.id.otherQuoteLayout);
+        myQuoter = (TextView)itemView.findViewById(R.id.myQuoter);
+        myQuoteText = (TextView)itemView.findViewById(R.id.myQuoteText);
+        otherQuoter = (TextView)itemView.findViewById(R.id.otherQuoter);
+        otherQuoteText = (TextView)itemView.findViewById(R.id.otherQuoteText);
+        myQuoteImage = (ImageView)itemView.findViewById(R.id.myQuoteImage);
+        otherQuoteImage = (ImageView)itemView.findViewById(R.id.otherQuoteImage);
 
     }
 

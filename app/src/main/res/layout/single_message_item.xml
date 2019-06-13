@@ -5,6 +5,7 @@
     android:id="@+id/theAll"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
     android:padding="2dp"
     android:layout_marginTop ="1dp"
     android:layout_marginRight="5dp"
@@ -38,6 +39,50 @@
                 android:orientation="vertical"
                 android:paddingStart="5dp"
                 android:paddingEnd="8dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/myQuoteLayout"
+                    android:background="@drawable/chat_quote_you"
+                    android:visibility="gone"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/myQuoter"
+                        android:textSize="12sp"
+                        android:textColor="@color/grey"
+                        android:text=""
+                        android:padding="2dp"
+                        android:visibility="gone"
+                        android:layout_gravity="start"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:maxWidth="50dp"
+                        android:adjustViewBounds="true"
+                        android:id="@+id/myQuoteImage"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/myQuoteText"
+                        android:textSize="15sp"
+                        android:textColor="@color/black"
+                        android:text=""
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        android:padding="2dp"
+                        android:visibility="gone"
+                        android:layout_gravity="end"/>
+
+                </LinearLayout>
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -101,6 +146,51 @@
                 android:orientation="vertical"
                 android:paddingStart="5dp"
                 android:paddingEnd="8dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/otherQuoteLayout"
+                    android:background="@drawable/chat_quote"
+                    android:visibility="gone"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/otherQuoter"
+                        android:textSize="13sp"
+                        android:textColor="@color/offBlack"
+                        android:text=""
+                        android:padding="2dp"
+                        android:visibility="gone"
+                        android:layout_gravity="start"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:maxHeight="70dp"
+                        android:maxWidth="70dp"
+                        android:adjustViewBounds="true"
+                        android:id="@+id/otherQuoteImage"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/otherQuoteText"
+                        android:textSize="15sp"
+                        android:textColor="@color/black"
+                        android:text=""
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        android:padding="2dp"
+                        android:visibility="gone"
+                        android:layout_gravity="end"/>
+
+                </LinearLayout>
 
                 <ImageView
                     android:layout_width="wrap_content"

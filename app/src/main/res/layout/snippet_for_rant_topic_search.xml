@@ -36,7 +36,7 @@
 
                 <EditText
                     android:layout_width="0dp"
-                    android:layout_weight="8.5"
+                    android:layout_weight="10"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
                     android:background="@color/offWhite"
@@ -45,9 +45,12 @@
                     android:maxLength="20"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:hint="Search Topic . . ."/>
+                    android:hint="Search Topic . . ."
+                    android:drawableStart="@drawable/ic_search_rant_topic"
+                    android:drawableTint="@color/grey"
+                    android:drawablePadding="10dp"/>
 
-                <ImageView
+                <!--<ImageView
                     android:layout_width="0dp"
                     android:layout_weight="1.5"
                     android:layout_height="match_parent"
@@ -55,7 +58,7 @@
                     android:adjustViewBounds="true"
                     android:padding="5dp"
                     android:id="@+id/rantSearchBtn"
-                    android:background="@drawable/off_white_backround_ripple"/>
+                    android:background="@drawable/off_white_backround_ripple"/>-->
 
             </LinearLayout>
 

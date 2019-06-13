@@ -27,6 +27,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -106,6 +107,13 @@ public class Messaging extends AppCompatActivity {
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference imageRef;
     private APIService mService;
+    private String userUsername, userImageLink;
+
+    private LinearLayout myQuoteLayout;
+    private TextView myQuoter, myQuoteText;
+    private ImageView myQuoteImage, cancelQuote;
+    private boolean isQuoting = false;
+    private String currentQuote;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -156,6 +164,12 @@ public class Messaging extends AppCompatActivity {
         messageBox = (EditText)findViewById(R.id.messageEditText);
         messageRecycler = (RecyclerView)findViewById(R.id.messageRecycler);
 
+        myQuoteLayout = (LinearLayout)findViewById(R.id.quoteLayout);
+        myQuoter = (TextView)findViewById(R.id.quoter);
+        myQuoteText = (TextView)findViewById(R.id.quoteText);
+        myQuoteImage = (ImageView) findViewById(R.id.quoteImage);
+        cancelQuote = (ImageView) findViewById(R.id.cancelQuote);
+
 
         /*---   ACTIVITY BAR FUNCTIONS   ---*/
         exitActivity.setOnClickListener(new View.OnClickListener() {
@@ -181,8 +195,8 @@ public class Messaging extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                String userUsername = dataSnapshot.child("username").getValue().toString();
-                String userImageLink = dataSnapshot.child("profilePictureThumb").getValue().toString();
+                userUsername = dataSnapshot.child("username").getValue().toString();
+                userImageLink = dataSnapshot.child("profilePictureThumb").getValue().toString();
 
                 username.setText("@"+userUsername);
 
@@ -265,6 +279,18 @@ public class Messaging extends AppCompatActivity {
             myMessageMap.put("messageFrom", currentUid);
             myMessageMap.put("messageTimestamp", ServerValue.TIMESTAMP);
 
+            if (isQuoting) {
+
+                myMessageMap.put("isQuote", "true");
+                myMessageMap.put("quotedId", currentQuote);
+
+            } else {
+
+                myMessageMap.put("isQuote", "false");
+                myMessageMap.put("quotedId", "");
+
+            }
+
 
             /*---   FRIEND MAP   ---*/
             final Map<String, Object> friendMessageMap = new HashMap<>();
@@ -275,6 +301,18 @@ public class Messaging extends AppCompatActivity {
             friendMessageMap.put("messageFrom", currentUid);
             friendMessageMap.put("messageTimestamp", ServerValue.TIMESTAMP);
 
+            if (isQuoting) {
+
+                friendMessageMap.put("isQuote", "true");
+                friendMessageMap.put("quotedId", currentQuote);
+
+            } else {
+
+                friendMessageMap.put("isQuote", "false");
+                friendMessageMap.put("quotedId", "");
+
+            }
+
 
             /*---   MY LIST MAP   ---*/
             final Map<String, Object> myLastMessageTimeMap = new HashMap<>();
@@ -284,6 +322,10 @@ public class Messaging extends AppCompatActivity {
             final Map<String, Object> userLastMessageTimeMap = new HashMap<>();
             userLastMessageTimeMap.put("lastMessageTimestamp", ServerValue.TIMESTAMP);
 
+
+            isQuoting = false;
+            currentQuote = "";
+            myQuoteLayout.setVisibility(View.GONE);
 
             messageBox.setText("");
             messagesRef
@@ -376,6 +418,70 @@ public class Messaging extends AppCompatActivity {
                     viewHolder.otherMsgLayout.setVisibility(View.GONE);
                     viewHolder.myTextTimeStamp.setText(lastSeenTime);
 
+
+                    /*---   QUOTED MESSAGES   ---*/
+                    if (model.getIsQuote().equalsIgnoreCase("true")){
+
+                        viewHolder.myQuoteLayout.setVisibility(View.VISIBLE);
+                        viewHolder.myQuoter.setVisibility(View.VISIBLE);
+
+                        messagesRef.child(userId)
+                                .child(model.getQuotedId())
+                                .addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                        String theQuote = dataSnapshot.child("message").getValue().toString();
+                                        String theImage = dataSnapshot.child("imageThumbUrl").getValue().toString();
+                                        String theSenderOfQuote = dataSnapshot.child("messageFrom").getValue().toString();
+
+                                        if (theSenderOfQuote.equalsIgnoreCase(userId)){
+
+                                            viewHolder.myQuoter.setText("@"+userUsername);
+
+                                        } else {
+
+                                            viewHolder.myQuoter.setText("You");
+
+                                        }
+
+                                        if (!theImage.equalsIgnoreCase("")){
+
+                                            viewHolder.myQuoteImage.setVisibility(View.VISIBLE);
+                                            Picasso.with(getBaseContext())
+                                                    .load(theImage)
+                                                    .placeholder(R.drawable.image_placeholders)
+                                                    .into(viewHolder.myQuoteImage);
+
+                                        } else {
+
+                                            viewHolder.myQuoteImage.setVisibility(View.GONE);
+                                        }
+
+                                        if (!theQuote.equalsIgnoreCase("")){
+
+                                            viewHolder.myQuoteText.setVisibility(View.VISIBLE);
+                                            viewHolder.myQuoteText.setText(theQuote);
+                                        } else {
+
+                                            viewHolder.myQuoteText.setVisibility(View.GONE);
+                                        }
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+
+                    } else {
+
+                        viewHolder.myQuoteLayout.setVisibility(View.GONE);
+
+                    }
+
+
                     /*---   MESSAGE   ---*/
                     if (!model.getMessage().equalsIgnoreCase("")){
 
@@ -442,9 +548,73 @@ public class Messaging extends AppCompatActivity {
 
                     }
 
+
                     viewHolder.yourMsgLayout.setVisibility(View.GONE);
                     viewHolder.otherMsgLayout.setVisibility(View.VISIBLE);
                     viewHolder.otherTextTimeStamp.setText(lastSeenTime);
+
+
+                    /*---   QUOTED MESSAGES   ---*/
+                    if (model.getIsQuote().equalsIgnoreCase("true")){
+
+                        viewHolder.otherQuoteLayout.setVisibility(View.VISIBLE);
+                        viewHolder.otherQuoter.setVisibility(View.VISIBLE);
+
+                        messagesRef.child(userId)
+                                .child(model.getQuotedId())
+                                .addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                        String theQuote = dataSnapshot.child("message").getValue().toString();
+                                        String theImage = dataSnapshot.child("imageThumbUrl").getValue().toString();
+                                        String theSenderOfQuote = dataSnapshot.child("messageFrom").getValue().toString();
+
+                                        if (theSenderOfQuote.equalsIgnoreCase(userId)){
+
+                                            viewHolder.otherQuoter.setText("@"+userUsername);
+
+                                        } else {
+
+                                            viewHolder.otherQuoter.setText("You");
+
+                                        }
+
+                                        if (!theImage.equalsIgnoreCase("")){
+
+                                            viewHolder.otherQuoteImage.setVisibility(View.VISIBLE);
+                                            Picasso.with(getBaseContext())
+                                                    .load(theImage)
+                                                    .placeholder(R.drawable.image_placeholders)
+                                                    .into(viewHolder.otherQuoteImage);
+
+                                        } else {
+
+                                            viewHolder.otherQuoteImage.setVisibility(View.GONE);
+                                        }
+
+                                        if (!theQuote.equalsIgnoreCase("")){
+
+                                            viewHolder.otherQuoteText.setVisibility(View.VISIBLE);
+                                            viewHolder.otherQuoteText.setText(theQuote);
+                                        } else {
+
+                                            viewHolder.otherQuoteText.setVisibility(View.GONE);
+                                        }
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+
+                    } else {
+
+                        viewHolder.otherQuoteLayout.setVisibility(View.GONE);
+
+                    }
 
 
                     /*---   MESSAGE   ---*/
@@ -502,6 +672,13 @@ public class Messaging extends AppCompatActivity {
 
                 }
 
+                viewHolder.itemView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+                    @Override
+                    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+                        quoteMessage(adapter.getRef(viewHolder.getAdapterPosition()).getKey());
+                    }
+                });
+
                 /*---   RECYCLER OPTIONS   ---*/
 
             }
@@ -526,6 +703,75 @@ public class Messaging extends AppCompatActivity {
                 layoutManager.smoothScrollToPosition(messageRecycler, null, adapter.getItemCount());
             }
         });
+
+    }
+
+    private void quoteMessage(String key) {
+
+        isQuoting = true;
+        currentQuote = key;
+
+        messagesRef.child(userId)
+                .child(key)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        String theQuote = dataSnapshot.child("message").getValue().toString();
+                        String theImage = dataSnapshot.child("imageThumbUrl").getValue().toString();
+                        String theSenderOfQuote = dataSnapshot.child("messageFrom").getValue().toString();
+
+                        myQuoteLayout.setVisibility(View.VISIBLE);
+                        myQuoter.setVisibility(View.VISIBLE);
+
+                        if (theSenderOfQuote.equalsIgnoreCase(userId)){
+
+                            myQuoter.setText("@"+userUsername);
+
+                        } else {
+
+                            myQuoter.setText("You");
+
+                        }
+
+                        if (!theImage.equalsIgnoreCase("")){
+
+                            myQuoteImage.setVisibility(View.VISIBLE);
+                            Picasso.with(getBaseContext())
+                                    .load(theImage)
+                                    .placeholder(R.drawable.image_placeholders)
+                                    .into(myQuoteImage);
+
+                        } else {
+
+                            myQuoteImage.setVisibility(View.GONE);
+                        }
+
+                        if (!theQuote.equalsIgnoreCase("")){
+
+                            myQuoteText.setVisibility(View.VISIBLE);
+                            myQuoteText.setText(theQuote);
+                        } else {
+
+                            myQuoteText.setVisibility(View.GONE);
+                        }
+
+                        cancelQuote.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                isQuoting = false;
+                                currentQuote = "";
+                                myQuoteLayout.setVisibility(View.GONE);
+                            }
+                        });
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
 
     }
 
@@ -886,6 +1132,18 @@ public class Messaging extends AppCompatActivity {
                                             myMessageMap.put("messageFrom", currentUid);
                                             myMessageMap.put("messageTimestamp", ServerValue.TIMESTAMP);
 
+                                            if (isQuoting) {
+
+                                                myMessageMap.put("isQuote", "true");
+                                                myMessageMap.put("quotedId", currentQuote);
+
+                                            } else {
+
+                                                myMessageMap.put("isQuote", "false");
+                                                myMessageMap.put("quotedId", "");
+
+                                            }
+
 
                                             /*---   FRIEND MAP   ---*/
                                             final Map<String, Object> friendMessageMap = new HashMap<>();
@@ -896,6 +1154,18 @@ public class Messaging extends AppCompatActivity {
                                             friendMessageMap.put("messageFrom", currentUid);
                                             friendMessageMap.put("messageTimestamp", ServerValue.TIMESTAMP);
 
+                                            if (isQuoting) {
+
+                                                friendMessageMap.put("isQuote", "true");
+                                                friendMessageMap.put("quotedId", currentQuote);
+
+                                            } else {
+
+                                                friendMessageMap.put("isQuote", "false");
+                                                friendMessageMap.put("quotedId", "");
+
+                                            }
+
                                             /*---   MY LIST MAP   ---*/
                                             final Map<String, Object> myLastMessageTimeMap = new HashMap<>();
                                             myLastMessageTimeMap.put("lastMessageTimestamp", ServerValue.TIMESTAMP);
@@ -903,6 +1173,10 @@ public class Messaging extends AppCompatActivity {
                                             /*---   FRIEND LIST MAP   ---*/
                                             final Map<String, Object> userLastMessageTimeMap = new HashMap<>();
                                             userLastMessageTimeMap.put("lastMessageTimestamp", ServerValue.TIMESTAMP);
+
+                                            isQuoting = false;
+                                            currentQuote = "";
+                                            myQuoteLayout.setVisibility(View.GONE);
 
                                             messagesRef
                                                     .child(userId)
