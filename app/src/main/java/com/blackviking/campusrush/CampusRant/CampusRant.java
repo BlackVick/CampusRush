@@ -62,6 +62,8 @@ public class CampusRant extends AppCompatActivity {
     private ArrayList<RantTopicModel> arrayList;
     //private ImageView searchRantBtn;
 
+    private boolean isAmong = false;
+
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
@@ -104,15 +106,29 @@ public class CampusRant extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
+                if (s.toString().isEmpty()){
+                    rantTopicRecycler.setVisibility(View.GONE);
+                } else {
+                    rantTopicRecycler.setVisibility(View.VISIBLE);
+
+                }
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
                 if (!s.toString().isEmpty()){
 
-                    searchForTopic(s.toString());
+                    if (isAvailable(s.toString())){
+                        searchForTopic(s.toString());
+                    } else {
+                        rantTopicRecycler.setVisibility(View.GONE);
+                    }
+
+
                 } else {
 
+                    rantTopicRecycler.setVisibility(View.VISIBLE);
                     loadRantTopics();
                 }
             }
@@ -187,6 +203,42 @@ public class CampusRant extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    private boolean isAvailable (String searchParam){
+
+
+
+        topicRef.orderByChild("name")
+                .startAt(searchParam)
+                .endAt(searchParam+"\uf8ff")
+                .addListenerForSingleValueEvent(
+                        new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                if (dataSnapshot.exists()){
+
+                                    isAmong = true;
+
+                                } else {
+
+                                    isAmong = false;
+
+                                }
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        }
+                );
+        if (isAmong)
+            return true;
+        return false;
 
     }
 

@@ -53,7 +53,7 @@ public class CustomSearchAdapter extends RecyclerView.Adapter<CustomSearchAdapte
 
         final RantTopicModel rantTopicItem = arrayList.get(i);
 
-        customSearchAdapterViewHolder.topicName.setText(rantTopicItem.getName());
+        customSearchAdapterViewHolder.topicName.setText("#"+rantTopicItem.getName());
 
         customSearchAdapterViewHolder.setItemClickListener(new ItemClickListener() {
             @Override
