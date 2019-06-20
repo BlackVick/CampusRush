@@ -9,6 +9,8 @@
     android:animateLayoutChanges="true"
     android:id="@+id/signUpRootLayout">
 
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,226 +18,270 @@
         android:animateLayoutChanges="true"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:descendantFocusability="beforeDescendants"
-        android:layout_above="@id/policyLayout">
+        android:descendantFocusability="beforeDescendants">
 
-        <TextView
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="SIGN UP WITH EMAIL"
-            android:gravity="center"
-            android:textSize="25sp"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:layout_marginTop="7dp"
-            android:layout_marginBottom="7dp"/>
+            android:background="@drawable/login_back_top"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
+            android:padding="10dp">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:animateLayoutChanges="true"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:descendantFocusability="beforeDescendants"
-                android:layout_margin="7dp">
+                android:text="Let's Get You Registered !"
+                android:textSize="25sp"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="7dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:id="@+id/welcomeText"/>
 
-                <com.rengwuxian.materialedittext.MaterialEditText
-                    android:id="@+id/signUpUserName"
-                    android:hint="Username"
-                    android:textColorHint="@color/white"
-                    android:text=""
-                    android:textColor="@color/white"
-                    android:textSize="17sp"
-                    android:inputType="textPersonName"
-                    android:layout_margin="3dp"
-                    android:padding="5dp"
-                    android:drawableStart="@drawable/ic_username_white"
-                    android:drawablePadding="10dp"
-                    app:met_clearButton="true"
-                    app:met_baseColor="@color/white"
-                    app:met_floatingLabelAnimating="true"
-                    app:met_floatingLabel="highlight"
-                    app:met_primaryColor="@color/white"
-                    app:met_singleLineEllipsis="true"
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.4dp"
+                android:background="@color/colorPrimaryDark"
+                android:layout_below="@id/welcomeText"
+                android:layout_marginStart="45dp"
+                android:layout_marginEnd="45dp"
+                android:layout_marginTop="6dp"/>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/login_back_bottom"
+            android:animateLayoutChanges="true"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginTop="60dp"
+            android:padding="10dp">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/login_back_bottom"
+                android:layout_above="@id/signUserUp">
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:digits="abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ"/>
+                    android:orientation="vertical"
+                    android:animateLayoutChanges="true"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:descendantFocusability="beforeDescendants"
+                    android:layout_margin="7dp">
 
-                <com.rengwuxian.materialedittext.MaterialEditText
-                    android:id="@+id/signUpFirstName"
-                    android:hint="First Name"
-                    android:textColorHint="@color/white"
-                    android:text=""
-                    android:textColor="@color/white"
-                    android:textSize="17sp"
-                    android:inputType="textCapSentences"
-                    android:layout_margin="3dp"
-                    android:padding="5dp"
-                    android:drawableStart="@drawable/ic_name_white"
-                    android:drawablePadding="10dp"
-                    app:met_clearButton="true"
-                    app:met_baseColor="@color/white"
-                    app:met_floatingLabelAnimating="true"
-                    app:met_floatingLabel="highlight"
-                    app:met_primaryColor="@color/white"
-                    app:met_singleLineEllipsis="true"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    <EditText
+                        android:background="@drawable/edittext_ring"
+                        android:id="@+id/signUpUserName"
+                        android:hint="Username"
+                        android:textColorHint="@color/grey"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:inputType="textPersonName"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginBottom="14dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        android:drawableStart="@drawable/ic_register_user"
+                        android:drawablePadding="18dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:digits="abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ"/>
 
-                <com.rengwuxian.materialedittext.MaterialEditText
-                    android:id="@+id/signUpLastName"
-                    android:hint="Last Name"
-                    android:textColorHint="@color/white"
-                    android:text=""
-                    android:textColor="@color/white"
-                    android:textSize="17sp"
-                    android:inputType="textCapSentences"
-                    android:layout_margin="3dp"
-                    android:padding="5dp"
-                    android:drawableStart="@drawable/ic_name_white"
-                    android:drawablePadding="10dp"
-                    app:met_clearButton="true"
-                    app:met_baseColor="@color/white"
-                    app:met_floatingLabelAnimating="true"
-                    app:met_floatingLabel="highlight"
-                    app:met_primaryColor="@color/white"
-                    app:met_singleLineEllipsis="true"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    <EditText
+                        android:background="@drawable/edittext_ring"
+                        android:id="@+id/signUpFirstName"
+                        android:hint="First Name"
+                        android:textColorHint="@color/grey"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:inputType="textCapSentences"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginBottom="14dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        android:drawableStart="@drawable/ic_register_user"
+                        android:drawablePadding="18dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
-                <com.rengwuxian.materialedittext.MaterialEditText
-                    android:id="@+id/signUpEmail"
-                    android:hint="E - Mail"
-                    android:textColorHint="@color/white"
-                    android:text=""
-                    android:textColor="@color/white"
-                    android:textSize="17sp"
-                    android:inputType="textEmailAddress"
-                    android:layout_margin="3dp"
-                    android:padding="5dp"
-                    app:met_clearButton="true"
-                    app:met_baseColor="@color/white"
-                    android:drawableStart="@drawable/ic_email_white"
-                    android:drawablePadding="10dp"
-                    app:met_floatingLabelAnimating="true"
-                    app:met_floatingLabel="highlight"
-                    app:met_primaryColor="@color/white"
-                    app:met_singleLineEllipsis="true"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    <EditText
+                        android:background="@drawable/edittext_ring"
+                        android:id="@+id/signUpLastName"
+                        android:hint="Last Name"
+                        android:textColorHint="@color/grey"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:inputType="textCapSentences"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginBottom="14dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        android:drawableStart="@drawable/ic_register_user"
+                        android:drawablePadding="18dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
-                <Spinner
-                    android:id="@+id/genderSpinner"
-                    android:layout_width="match_parent"
-                    android:layout_margin="7dp"
-                    android:textSize="18sp"
-                    android:layout_height="50dp"
-                    android:background="@drawable/white_backround_ripple_news"/>
+                    <EditText
+                        android:background="@drawable/edittext_ring"
+                        android:id="@+id/signUpEmail"
+                        android:hint="E - Mail"
+                        android:textColorHint="@color/grey"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:inputType="textEmailAddress"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginBottom="14dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        android:drawableStart="@drawable/ic_mail_login"
+                        android:drawablePadding="18dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
-                <com.rengwuxian.materialedittext.MaterialEditText
-                    android:id="@+id/signUpPassword"
-                    android:hint="Password"
-                    android:textColorHint="@color/white"
-                    android:text=""
-                    android:textColor="@color/white"
-                    android:textSize="17sp"
-                    android:inputType="textPassword"
-                    android:layout_margin="3dp"
-                    android:padding="5dp"
-                    android:drawableStart="@drawable/ic_password_white"
-                    android:drawablePadding="10dp"
-                    app:met_clearButton="true"
-                    app:met_baseColor="@color/white"
-                    app:met_floatingLabelAnimating="true"
-                    app:met_floatingLabel="highlight"
-                    app:met_primaryColor="@color/white"
-                    app:met_singleLineEllipsis="true"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    <Spinner
+                        android:id="@+id/genderSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginBottom="14dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:textSize="15sp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/edittext_ring"/>
 
-                <com.rengwuxian.materialedittext.MaterialEditText
-                    android:id="@+id/signUpConfirmPassword"
-                    android:hint="Confirm Password"
-                    android:textColorHint="@color/white"
-                    android:text=""
-                    android:textColor="@color/white"
-                    android:textSize="17sp"
-                    android:inputType="textPassword"
-                    android:layout_margin="3dp"
-                    android:padding="5dp"
-                    android:drawableStart="@drawable/ic_password_white"
-                    android:drawablePadding="10dp"
-                    app:met_clearButton="true"
-                    app:met_baseColor="@color/white"
-                    app:met_floatingLabelAnimating="true"
-                    app:met_floatingLabel="highlight"
-                    app:met_primaryColor="@color/white"
-                    app:met_singleLineEllipsis="true"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    <EditText
+                        android:background="@drawable/edittext_ring"
+                        android:id="@+id/signUpPassword"
+                        android:hint="Password"
+                        android:textColorHint="@color/grey"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:inputType="textPassword"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginBottom="14dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        android:drawableStart="@drawable/ic_register_password"
+                        android:drawablePadding="18dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
-            </LinearLayout>
+                    <EditText
+                        android:background="@drawable/edittext_ring"
+                        android:id="@+id/signUpConfirmPassword"
+                        android:hint="Confirm Password"
+                        android:textColorHint="@color/grey"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:inputType="textPassword"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginBottom="14dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        android:drawableStart="@drawable/ic_register_password"
+                        android:drawablePadding="18dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
-        </ScrollView>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:id="@+id/policyLayout"
+                        android:weightSum="10"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp">
+
+                        <com.rey.material.widget.CheckBox
+                            android:id="@+id/privacyPolicyCheck"
+                            android:layout_width="0dp"
+                            android:layout_weight="1.5"
+                            android:layout_height="wrap_content"
+                            style="@style/Material.Drawable.CheckBox"
+                            android:gravity="center_vertical|center_horizontal"
+                            app:cbd_strokeColor="@color/colorPrimaryDark"
+                            app:cbd_tickColor="@color/white"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="8.5"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/policyTextView"
+                            android:text=""
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:gravity="start"
+                            android:layout_gravity="center_vertical"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </ScrollView>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/new_login_button"
+                android:layout_alignParentBottom="true"
+                android:id="@+id/signUserUp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="5dp"
+                android:text="SIGN UP"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"/>
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/progressBar"
+                android:layout_margin="2dp"
+                android:layout_centerInParent="true"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
 
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/policyLayout"
-        android:weightSum="10"
-        android:layout_margin="4dp"
-        android:layout_above="@id/signUserUp">
-
-        <com.rey.material.widget.CheckBox
-            android:id="@+id/privacyPolicyCheck"
-            android:layout_width="0dp"
-            android:layout_weight="1.5"
-            android:layout_height="wrap_content"
-            style="@style/Material.Drawable.CheckBox"
-            android:gravity="center_vertical|center_horizontal"
-            app:cbd_strokeColor="@color/white"
-            app:cbd_tickColor="@color/colorPrimaryDark"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="8.5"
-            android:layout_height="wrap_content"
-            android:id="@+id/policyTextView"
-            android:text=""
-            android:textColor="@color/white"
-            android:textSize="15sp"
-            android:gravity="start"
-            android:layout_gravity="center_vertical"/>
-
-    </LinearLayout>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/buttons"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/signUserUp"
-        android:layout_marginBottom="4dp"
-        android:layout_marginEnd="7dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginStart="7dp"
-        android:text="SIGN UP"
-        android:textColor="@color/white"
-        android:textSize="19sp"/>
-
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/progressBar"
-        android:layout_margin="2dp"
-        android:layout_centerInParent="true"/>
 
 </RelativeLayout>

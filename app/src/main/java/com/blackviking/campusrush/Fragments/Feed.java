@@ -758,7 +758,7 @@ public class Feed extends Fragment {
                         reportRef.push().setValue(reportUserMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toast.makeText(getContext(), "B***h Snitch", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "Snitch", Toast.LENGTH_SHORT).show();
                             }
                         });
 

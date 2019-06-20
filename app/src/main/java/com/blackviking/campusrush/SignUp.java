@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -27,6 +28,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blackviking.campusrush.Common.Common;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
@@ -59,7 +62,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class SignUp extends AppCompatActivity {
 
     private Login loginActivity;
-    private MaterialEditText username, firstName, lastName, eMail, password, confirmPassword;
+    private EditText username, firstName, lastName, eMail, password, confirmPassword;
     private Button signUp;
     private FirebaseAuth mAuth;
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
@@ -103,12 +106,12 @@ public class SignUp extends AppCompatActivity {
 
 
         /*---   WIDGETS   ---*/
-        username = (MaterialEditText)findViewById(R.id.signUpUserName);
-        firstName = (MaterialEditText)findViewById(R.id.signUpFirstName);
-        lastName = (MaterialEditText)findViewById(R.id.signUpLastName);
-        eMail = (MaterialEditText)findViewById(R.id.signUpEmail);
-        password = (MaterialEditText)findViewById(R.id.signUpPassword);
-        confirmPassword = (MaterialEditText)findViewById(R.id.signUpConfirmPassword);
+        username = (EditText)findViewById(R.id.signUpUserName);
+        firstName = (EditText)findViewById(R.id.signUpFirstName);
+        lastName = (EditText)findViewById(R.id.signUpLastName);
+        eMail = (EditText)findViewById(R.id.signUpEmail);
+        password = (EditText)findViewById(R.id.signUpPassword);
+        confirmPassword = (EditText)findViewById(R.id.signUpConfirmPassword);
         signUp = (Button)findViewById(R.id.signUserUp);
         signUp.setEnabled(false);
         policyText = (TextView)findViewById(R.id.policyTextView);
@@ -116,7 +119,6 @@ public class SignUp extends AppCompatActivity {
         privacy = (CheckBox)findViewById(R.id.privacyPolicyCheck);
         gender = (Spinner)findViewById(R.id.genderSpinner);
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.GONE);
 
 
         isUserCreated = false;
@@ -131,7 +133,7 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onClick(View widget) {
 
-                String termUrl = "https://www.freeprivacypolicy.com/privacy/view/7d8afef4e00e3de0461b9a7c962efddb";
+                String termUrl = "https://campus-rush.web.app/customer-terms-and-privacy-policy.html#terms";
 
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(termUrl));
@@ -144,7 +146,7 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onClick(View widget) {
 
-                String privacyUrl = "https://www.freeprivacypolicy.com/privacy/view/7d8afef4e00e3de0461b9a7c962efddb";
+                String privacyUrl = "https://campus-rush.web.app/customer-terms-and-privacy-policy.html#privacyPolicy";
 
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(privacyUrl));
@@ -230,7 +232,7 @@ public class SignUp extends AppCompatActivity {
                     if (Common.isConnectedToInternet(getBaseContext()))
                         signUserUp();
                     else
-                        Toast.makeText(SignUp.this, "No Internet Access !", Toast.LENGTH_SHORT).show();
+                        Common.showErrorDialog(SignUp.this, "No Internet Access");
 
                 } else {
 
@@ -239,7 +241,7 @@ public class SignUp extends AppCompatActivity {
                         progressBar.setVisibility(View.VISIBLE);
                     }
                     else {
-                        Toast.makeText(SignUp.this, "No Internet Access !", Toast.LENGTH_SHORT).show();
+                        Common.showErrorDialog(SignUp.this, "No Internet Access");
                     }
 
                 }
@@ -257,41 +259,69 @@ public class SignUp extends AppCompatActivity {
 
         if (TextUtils.isEmpty(theUsername)){
 
-            showErrorDialog("Error Occurred, \nPlease Pick A Unique Username");
+            username.setError("Please Pick A Unique Username");
+            YoYo.with(Techniques.Shake)
+                    .duration(500)
+                    .playOn(signUp);
             progressBar.setVisibility(View.GONE);
             username.requestFocus();
             signUp.setEnabled(true);
 
         } else if (TextUtils.isEmpty(theFirstName) || TextUtils.isEmpty(theLastName)){
 
-            showErrorDialog("Error Occurred, \nPlease Provide Your Name !");
+            firstName.setError("Please Provide Your Name !");
+            YoYo.with(Techniques.Shake)
+                    .duration(500)
+                    .playOn(signUp);
             progressBar.setVisibility(View.GONE);
             firstName.requestFocus();
             signUp.setEnabled(true);
 
         } else if (TextUtils.isEmpty(theEmail) || !isValidEmail(theEmail)){
 
-            showErrorDialog("Error Occurred, \nE-Mail Can Not Be Empty Or Invalid !");
+            eMail.setError("E-Mail Can Not Be Empty Or Invalid !");
+            YoYo.with(Techniques.Shake)
+                    .duration(500)
+                    .playOn(signUp);
             progressBar.setVisibility(View.GONE);
             eMail.requestFocus();
             signUp.setEnabled(true);
 
         } else if (selectGender.equalsIgnoreCase("")){
 
-            showErrorDialog("Error Occurred, \nWhat Are You ? Male or Female?");
+            Common.showErrorDialog(SignUp.this, "What Gender Do You Identify As?");
+            YoYo.with(Techniques.Shake)
+                    .duration(500)
+                    .playOn(signUp);
             progressBar.setVisibility(View.GONE);
             signUp.setEnabled(true);
 
         } else if (TextUtils.isEmpty(thePassword) || TextUtils.isEmpty(thePasswordConfirm)){
 
-            showErrorDialog("Error Occurred, \nProvide A Secure Password !");
+            password.setError("Provide A Secure Password !");
+            YoYo.with(Techniques.Shake)
+                    .duration(500)
+                    .playOn(signUp);
+            progressBar.setVisibility(View.GONE);
+            password.requestFocus();
+            signUp.setEnabled(true);
+
+        } else if (thePassword.length() < 6){
+
+            password.setError("Password Too Weak");
+            YoYo.with(Techniques.Shake)
+                    .duration(500)
+                    .playOn(signUp);
             progressBar.setVisibility(View.GONE);
             password.requestFocus();
             signUp.setEnabled(true);
 
         } else if (!thePassword.equals(thePasswordConfirm)){
 
-            showErrorDialog("Error Occurred, \nPasswords Do Not Match, Please Retry !");
+            password.setError("Passwords Do Not Match, Please Retry !");
+            YoYo.with(Techniques.Shake)
+                    .duration(500)
+                    .playOn(signUp);
             progressBar.setVisibility(View.GONE);
             password.requestFocus();
             signUp.setEnabled(true);
@@ -310,7 +340,7 @@ public class SignUp extends AppCompatActivity {
 
                             } else {
 
-                                showErrorDialog("An Unknown Error Occurred While Signing Up With Email, \nProvided Mail Might Already Exist Or Invalid.");
+                                Common.showErrorDialog(SignUp.this, "An Unknown Error Occurred While Signing Up With Email. Provided Mail Might Already Exist Or Be Invalid. Please Try Again Later !");
                                 progressBar.setVisibility(View.GONE);
                                 signUp.setEnabled(true);
 
@@ -389,11 +419,12 @@ public class SignUp extends AppCompatActivity {
 
                                             } else {
 
+                                                YoYo.with(Techniques.Shake)
+                                                        .duration(500)
+                                                        .playOn(signUp);
                                                 username.setTextColor(getResources().getColor(R.color.red));
                                                 username.requestFocus();
-
                                                 username.setError("Username Already In Use");
-                                                showErrorDialog("The Username Is Already In Use, Please Pick Another !");
                                                 progressBar.setVisibility(View.GONE);
                                                 signUp.setEnabled(true);
 
@@ -410,7 +441,7 @@ public class SignUp extends AppCompatActivity {
 
                                 } else {
 
-                                    showErrorDialog("Unknown Error Occurred !");
+                                    Common.showErrorDialog(SignUp.this, "Unknown Error Occurred !");
                                     progressBar.setVisibility(View.GONE);
 
                                 }
@@ -429,7 +460,10 @@ public class SignUp extends AppCompatActivity {
 
             } else {
 
-                showErrorDialog("Please Provide All Info");
+                YoYo.with(Techniques.Shake)
+                        .duration(500)
+                        .playOn(signUp);
+                Common.showErrorDialog(SignUp.this, "Some Info Are Missing !");
                 progressBar.setVisibility(View.GONE);
                 signUp.setEnabled(true);
 
@@ -450,26 +484,6 @@ public class SignUp extends AppCompatActivity {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 
-    public void showErrorDialog(String theWarning){
-
-        AlertDialog alertDialog = new AlertDialog.Builder(this)
-                .setTitle("Attention !")
-                .setIcon(R.drawable.ic_attention_red)
-                .setMessage(theWarning)
-                .setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
-                .create();
-
-        alertDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
-
-        alertDialog.show();
-
-    }
-
     private void updateUI() {
 
         if (mAuth.getCurrentUser() !=  null){
@@ -478,8 +492,16 @@ public class SignUp extends AppCompatActivity {
 
             progressBar.setVisibility(View.GONE);
 
-            Intent checkForVerification = new Intent(SignUp.this, UserVerification.class);
-            startActivity(checkForVerification);
+            Paper.book().write(Common.USER_ID, currentUid);
+
+            FirebaseMessaging.getInstance().subscribeToTopic(currentUid);
+            Paper.book().write(Common.NOTIFICATION_STATE, "true");
+
+            FirebaseMessaging.getInstance().subscribeToTopic(Common.FEED_NOTIFICATION_TOPIC+currentUid);
+            Paper.book().write(Common.MY_FEED_NOTIFICATION_STATE, "true");
+
+            Intent homeIntent = new Intent(SignUp.this, Home.class);
+            startActivity(homeIntent);
             finish();
             overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
 
@@ -499,15 +521,12 @@ public class SignUp extends AppCompatActivity {
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            Intent goBack = new Intent(SignUp.this, Login.class);
-                            startActivity(goBack);
+
                             finish();
                         }
                     });
         } else {
 
-            Intent goBack = new Intent(SignUp.this, Login.class);
-            startActivity(goBack);
             finish();
 
         }

@@ -185,6 +185,11 @@ public class Home extends AppCompatActivity
                     FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.SKIT_NOTIFICATION_TOPIC);
                     FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.GAMERS_NOTIFICATION_TOPIC);
 
+                    if (Common.isSubServiceRunning) {
+                        Intent intent = new Intent(Home.this, SubscriptionService.class);
+                        stopService(intent);
+                    }
+
                     mAuth.signOut();
                     Intent signoutIntent = new Intent(Home.this, Login.class);
                     signoutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
