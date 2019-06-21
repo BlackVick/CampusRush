@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blackviking.campusrush.Common.Common;
+import com.blackviking.campusrush.Settings.AccountSettings;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -84,7 +85,7 @@ public class UserVerification extends AppCompatActivity {
                     mAuth.getCurrentUser().sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            showErrorDialog("Verification Mail Has Been Sent To Your Mail");
+                            Common.showErrorDialog(UserVerification.this, "Verification Mail Has Been Sent To Your Mail");
                         }
                     });
 
@@ -122,44 +123,14 @@ public class UserVerification extends AppCompatActivity {
                 public void onSuccess(Void aVoid) {
                     if (mAuth.getCurrentUser().isEmailVerified()) {
 
-                        Paper.book().write(Common.USER_ID, currentUid);
-
-                        FirebaseMessaging.getInstance().subscribeToTopic(currentUid);
-                        Paper.book().write(Common.NOTIFICATION_STATE, "true");
-
-                        FirebaseMessaging.getInstance().subscribeToTopic(Common.FEED_NOTIFICATION_TOPIC+currentUid);
-                        Paper.book().write(Common.MY_FEED_NOTIFICATION_STATE, "true");
-
-                        Intent homeIntent = new Intent(UserVerification.this, Home.class);
-                        startActivity(homeIntent);
+                        Toast.makeText(UserVerification.this, "Successful !", Toast.LENGTH_SHORT).show();
                         finish();
-                        overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
 
                     }
                 }
             });
 
         }
-
-    }
-
-    public void showErrorDialog(String theWarning){
-
-        AlertDialog alertDialog = new AlertDialog.Builder(this)
-                .setTitle("Attention !")
-                .setIcon(R.drawable.ic_attention_red)
-                .setMessage(theWarning)
-                .setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
-                .create();
-
-        alertDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
-
-        alertDialog.show();
 
     }
 

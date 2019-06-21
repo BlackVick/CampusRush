@@ -91,7 +91,8 @@ public class SubscriptionService extends Service {
 
         if (Common.isConnectedToInternet(getApplicationContext())){
 
-            Common.isSubServiceRunning = true;
+            Paper.book().write(Common.isSubServiceRunning, true);
+
 
             subScriptionRef.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -203,6 +204,8 @@ public class SubscriptionService extends Service {
                         Toast.makeText(SubscriptionService.this, "Error Sending Notification", Toast.LENGTH_SHORT).show();
                     }
                 });
+
+        Paper.book().write(Common.isSubServiceRunning, false);
         stopSelf();
 
     }

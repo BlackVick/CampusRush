@@ -103,39 +103,14 @@ public class GamersHub extends AppCompatActivity {
             }
         });
 
-        /*---   CURRENT USER   ---*/
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        addGameFeed.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                currentUserType = dataSnapshot.child("userType").getValue().toString();
-
-                /*---   CURRENT USER   ---*/
-                if (currentUserType.equalsIgnoreCase("Admin")) {
-                    addGameFeed.show();
-                    addGameFeed.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent gameFeedDetailIntent = new Intent(GamersHub.this, AddGameFeed.class);
-                            startActivity(gameFeedDetailIntent);
-                            overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
-                        }
-                    });
-                } else {
-
-                    addGameFeed.hide();
-
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
+            public void onClick(View v) {
+                Intent gameFeedDetailIntent = new Intent(GamersHub.this, AddGameFeed.class);
+                startActivity(gameFeedDetailIntent);
+                overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
             }
         });
-
-
 
         loadTrendingTitles();
         loadGameFeed();

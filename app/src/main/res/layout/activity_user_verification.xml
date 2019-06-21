@@ -17,22 +17,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_centerInParent="true"
-            android:layout_margin="10dp">
-
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
-                android:src="@drawable/warning_image"
-                android:adjustViewBounds="true"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="ACCESS DENIED !"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:textSize="20sp"/>
+            android:background="@drawable/login_back_middle"
+            android:layout_margin="40dp">
 
             <ImageView
                 android:layout_marginTop="40dp"
@@ -45,10 +31,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Sorry User, You have not verified your E-Mail"
+                android:text="Your Email is currently Un-verified"
                 android:gravity="center"
-                android:textColor="@color/white"
-                android:textSize="18sp"/>
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                android:layout_margin="20dp"/>
 
         </LinearLayout>
 

@@ -390,7 +390,10 @@ public class SignUp extends AppCompatActivity {
                                 if (dataSnapshot.child(currentUid).exists()){
 
 
-                                    userRef.orderByChild("username").equalTo(theUsername).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    userRef
+                                            .orderByChild("username")
+                                            .equalTo(theUsername)
+                                            .addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -497,10 +500,15 @@ public class SignUp extends AppCompatActivity {
             FirebaseMessaging.getInstance().subscribeToTopic(currentUid);
             Paper.book().write(Common.NOTIFICATION_STATE, "true");
 
+            FirebaseMessaging.getInstance().subscribeToTopic(Common.ADMIN_MESSAGE);
+
             FirebaseMessaging.getInstance().subscribeToTopic(Common.FEED_NOTIFICATION_TOPIC+currentUid);
             Paper.book().write(Common.MY_FEED_NOTIFICATION_STATE, "true");
 
+            Paper.book().write(Common.isSubServiceRunning, false);
+
             Intent homeIntent = new Intent(SignUp.this, Home.class);
+            homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(homeIntent);
             finish();
             overridePendingTransition(R.anim.slide_left, R.anim.slide_left);

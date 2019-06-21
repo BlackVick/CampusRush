@@ -68,8 +68,8 @@
                     android:layout_marginBottom="7dp">
 
                     <ImageView
-                        android:layout_width="34dp"
-                        android:layout_height="34dp"
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
                         android:src="@drawable/unliked_icon"
                         android:layout_marginStart="18dp"
                         android:id="@+id/currentLikeBtn"/>
@@ -84,13 +84,14 @@
                         android:layout_marginStart="5dp"/>
 
                     <ImageView
-                        android:layout_width="34dp"
-                        android:layout_height="34dp"
-                        android:src="@drawable/ic_file_download"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_skit_download"
                         android:adjustViewBounds="true"
                         android:layout_marginStart="24dp"
                         android:layout_gravity="end|center"
-                        android:id="@+id/downloadSkit"/>
+                        android:id="@+id/downloadSkit"
+                        />
 
                 </LinearLayout>
 

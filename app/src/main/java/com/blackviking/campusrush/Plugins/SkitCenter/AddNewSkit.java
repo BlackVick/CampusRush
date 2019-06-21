@@ -82,7 +82,7 @@ public class AddNewSkit extends AppCompatActivity {
     private Uri videoUri;
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference skitVideoRef;
-    private String skitDownloadUrl, currentUid, skitThumbUrl, currentUserName;
+    private String skitDownloadUrl = "", currentUid, skitThumbUrl = "", currentUserName;
     private ProgressDialog progressDialog;
     private APIService mService;
     private android.app.AlertDialog mDialog;
@@ -198,9 +198,9 @@ public class AddNewSkit extends AppCompatActivity {
         final String theDescription = skitDescription.getText().toString().trim();
         final String theTitle = skitTitle.getText().toString().trim();
 
-        if (videoUri != null || skitDownloadUrl != null || skitThumbUrl != null || !TextUtils.isEmpty(theTitle)){
+        if (Common.isConnectedToInternet(getBaseContext())){
 
-            if (Common.isConnectedToInternet(AddNewSkit.this)){
+            if (!skitDownloadUrl.equalsIgnoreCase("") && !skitThumbUrl.equalsIgnoreCase("") && !TextUtils.isEmpty(theTitle)){
 
                 final Map<String, Object> newSkitMap = new HashMap<>();
                 newSkitMap.put("title", theTitle);
@@ -232,13 +232,13 @@ public class AddNewSkit extends AppCompatActivity {
 
             } else {
 
-                Common.showErrorDialog(AddNewSkit.this, "No Internet Access !");
+                Common.showErrorDialog(AddNewSkit.this, "Skit Has To Contain A Valid File . . .");
 
             }
 
         } else {
 
-            Common.showErrorDialog(AddNewSkit.this, "Update Has To Contain Valid Stuff . . .");
+            Common.showErrorDialog(AddNewSkit.this, "No Internet Access !");
 
         }
 

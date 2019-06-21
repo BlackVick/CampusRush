@@ -43,6 +43,8 @@ import com.blackviking.campusrush.Notification.APIService;
 import com.blackviking.campusrush.Notification.DataMessage;
 import com.blackviking.campusrush.Notification.MyResponse;
 import com.blackviking.campusrush.R;
+import com.blackviking.campusrush.Settings.AccountSettings;
+import com.blackviking.campusrush.UserVerification;
 import com.blackviking.campusrush.ViewHolder.FeedViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -247,10 +249,17 @@ public class OtherUserProfile extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             if (!userId.equalsIgnoreCase("")){
-                                Intent messageIntent = new Intent(OtherUserProfile.this, Messaging.class);
-                                messageIntent.putExtra("UserId", userId);
-                                startActivity(messageIntent);
-                                overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+
+                                if (mAuth.getCurrentUser().isEmailVerified()) {
+
+                                    Intent messageIntent = new Intent(OtherUserProfile.this, Messaging.class);
+                                    messageIntent.putExtra("UserId", userId);
+                                    startActivity(messageIntent);
+                                    overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+                                } else {
+                                    Intent verifyIntent = new Intent(OtherUserProfile.this, UserVerification.class);
+                                    startActivity(verifyIntent);
+                                }
                             }
                         }
                     });
@@ -793,7 +802,7 @@ public class OtherUserProfile extends AppCompatActivity {
                         reportRef.push().setValue(reportUserMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toast.makeText(OtherUserProfile.this, "B***h Snitch", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(OtherUserProfile.this, "Snitch", Toast.LENGTH_SHORT).show();
                             }
                         });
 

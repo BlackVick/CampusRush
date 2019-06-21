@@ -173,6 +173,8 @@ public class SignIn extends AppCompatActivity {
                 FirebaseMessaging.getInstance().subscribeToTopic(currentUid);
                 Paper.book().write(Common.NOTIFICATION_STATE, "true");
 
+                FirebaseMessaging.getInstance().subscribeToTopic(Common.ADMIN_MESSAGE);
+
                 Intent intent = new Intent(getApplicationContext(), CheckSubStatusService.class);
                 startService(intent);
 

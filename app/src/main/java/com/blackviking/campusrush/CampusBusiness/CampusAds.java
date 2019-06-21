@@ -17,7 +17,9 @@ import android.widget.Toast;
 
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.R;
+import com.blackviking.campusrush.Settings.AccountSettings;
 import com.blackviking.campusrush.Settings.Help;
+import com.blackviking.campusrush.UserVerification;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -115,7 +117,7 @@ public class CampusAds extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
-                    if (dataSnapshot.child(currentUid).exists()){
+                    if (dataSnapshot.child(currentUid).exists()) {
 
                         subscriptionStatus = dataSnapshot.child(currentUid).child("subscriptionStatus").getValue().toString();
 
@@ -133,7 +135,7 @@ public class CampusAds extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
-                    if (dataSnapshot.child(currentUid).exists()){
+                    if (dataSnapshot.child(currentUid).exists()) {
 
                         isProfileCreated = true;
 

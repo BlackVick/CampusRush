@@ -92,8 +92,8 @@
             android:layout_marginTop="4dp">
 
             <ImageView
-                android:layout_width="34dp"
-                android:layout_height="34dp"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
                 android:src="@drawable/unliked_icon"
                 android:layout_marginStart="18dp"
                 android:id="@+id/likeBtn"/>
@@ -108,10 +108,10 @@
                 android:layout_marginStart="5dp"/>
 
             <ImageView
-                android:layout_width="34dp"
-                android:layout_height="34dp"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
                 android:src="@drawable/comment_icon"
-                android:layout_marginStart="38dp"
+                android:layout_marginStart="52dp"
                 android:id="@+id/commentBtn"/>
 
             <TextView

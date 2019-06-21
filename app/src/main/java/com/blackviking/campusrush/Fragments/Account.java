@@ -97,7 +97,7 @@ public class Account extends Fragment {
 
 
         /*---   CURRENT USER   ---*/
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 

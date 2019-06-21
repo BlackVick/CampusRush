@@ -19,7 +19,7 @@ public class Common {
 
 
     /*---   SUBSCRIPTION TOGGLE   ---*/
-    public static boolean isSubServiceRunning = false;
+    public static String isSubServiceRunning = "false";
 
 
     /*---   CONTEXT MENU   ---*/
@@ -39,6 +39,7 @@ public class Common {
     public static String SKIT_NOTIFICATION_STATE = "Skit";
 
 
+    public static String ADMIN_MESSAGE = "ADMIN_MESSAGE_TOPIC";
     public static final String ACCOUNT_NOTIFICATION = "Account";
     public static String FEED_NOTIFICATION_TOPIC = "Feed";
     public static String GAMERS_NOTIFICATION_TOPIC = "Gamers";

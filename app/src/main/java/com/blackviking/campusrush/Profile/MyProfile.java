@@ -36,6 +36,8 @@ import com.blackviking.campusrush.Common.Permissions;
 import com.blackviking.campusrush.ImageController.BlurImage;
 import com.blackviking.campusrush.ImageController.ImageViewer;
 import com.blackviking.campusrush.R;
+import com.blackviking.campusrush.Settings.AccountSettings;
+import com.blackviking.campusrush.UserVerification;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -177,7 +179,13 @@ public class MyProfile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (Common.isConnectedToInternet(getBaseContext()))
-                    openEditProfileDialog();
+
+                    if (mAuth.getCurrentUser().isEmailVerified()) {
+                        openEditProfileDialog();
+                    } else {
+                        Intent verifyIntent = new Intent(MyProfile.this, UserVerification.class);
+                        startActivity(verifyIntent);
+                    }
                 else
                     Common.showErrorDialog(MyProfile.this, "No Internet Access !");
             }

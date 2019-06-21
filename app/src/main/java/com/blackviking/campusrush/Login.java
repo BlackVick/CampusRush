@@ -117,7 +117,6 @@ public class Login extends AppCompatActivity {
                 Intent signUpIntent = new Intent(Login.this, SignUp.class);
                 startActivity(signUpIntent);
                 overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
-                finish();
             }
         });
 
@@ -226,6 +225,7 @@ public class Login extends AppCompatActivity {
             FirebaseMessaging.getInstance().subscribeToTopic(currentUid);
             Paper.book().write(Common.NOTIFICATION_STATE, "true");
 
+            Paper.book().write(Common.isSubServiceRunning, false);
             Intent intent = new Intent(getApplicationContext(), CheckSubStatusService.class);
             startService(intent);
 

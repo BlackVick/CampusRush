@@ -26,16 +26,16 @@
                 android:adjustViewBounds="true"
                 android:src="@drawable/bv_software_logo"
                 android:layout_gravity="center"
-                android:layout_marginTop="40dp"/>
+                android:layout_marginTop="25dp"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="B.V. SOFTWARE"
+                android:text="BLACK VIKING SOFTWARE"
                 android:textSize="25sp"
                 android:textColor="@color/black"
                 android:gravity="center"
-                android:layout_marginTop="18dp"/>
+                android:layout_marginTop="10dp"/>
 
             <View
                 android:layout_width="match_parent"
@@ -48,7 +48,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="B.V. SOFTWARE, IS A SUBSIDIARY OF B.V. INCORPORATED &#169;, AN INTERNATIONAL INFORMATION TECHNOLOGY FIRM THAT SPECIALIZES IN HUMAN-MACHINE INTERACTIONS."
+                android:text="BLACK VIKING SOFTWARE &#169; IS AN INTERNATIONAL INFORMATION TECHNOLOGY FIRM THAT SPECIALIZES IN HUMAN-MACHINE INTERACTIONS."
                 android:textSize="18sp"
                 android:textColor="@color/black"
                 android:gravity="center"
@@ -58,12 +58,41 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="WE ARE A SPECIALIZED COMMUNITY OF PASSIONATE AND INNOVATION DRIVEN INDIVIDUALS WITH THE PURPOSE OF REVOLUTIONIZING SOFTWARE DESIGN, DEVELOPMENT AND DELIVERY TO SEAMLESSLY SOLVE DAILY HUMAN PROBLEMS. \n\n\nContact us at blackvikinc@gmail.com"
+                android:text="WE ARE A SPECIALIZED COMMUNITY OF PASSIONATE AND INNOVATIVE INDIVIDUALS WITH A GOAL OF REVOLUTIONIZING PRODUCT DESIGN, DEVELOPMENT AND DELIVERY TO SEAMLESSLY SOLVE DAILY HUMAN PROBLEMS. \n\n\nContact us at blackvikinc@gmail.com\nOr\nvisit our website at campus-rush.web.app"
                 android:textSize="16sp"
                 android:textColor="@color/black"
                 android:gravity="center"
                 android:layout_margin="18dp"
                 android:autoLink="all"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/facebookIcon"
+                    android:src="@drawable/facebook_icon"
+                    android:layout_margin="7dp"/>
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/twitterIcon"
+                    android:src="@drawable/twitter_icon"
+                    android:layout_margin="7dp"/>
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/youtubeIcon"
+                    android:src="@drawable/youtube_icon"
+                    android:layout_margin="7dp"/>
+
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"

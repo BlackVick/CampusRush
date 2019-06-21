@@ -151,17 +151,19 @@ public class Notifications extends Fragment {
                                         .placeholder(R.drawable.profile)
                                         .into(viewHolder.userImage);
 
-                                viewHolder.userImage.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Intent posterProfile = new Intent(getContext(), OtherUserProfile.class);
-                                        posterProfile.putExtra("UserId", model.getUser());
-                                        startActivity(posterProfile);
-                                        getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
-                                    }
-                                });
+
 
                             }
+
+                            viewHolder.userImage.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent posterProfile = new Intent(getContext(), OtherUserProfile.class);
+                                    posterProfile.putExtra("UserId", model.getUser());
+                                    startActivity(posterProfile);
+                                    getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+                                }
+                            });
 
                         }
 

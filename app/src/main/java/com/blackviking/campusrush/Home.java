@@ -40,6 +40,7 @@ import com.blackviking.campusrush.Plugins.Awards.Awards;
 import com.blackviking.campusrush.Plugins.GamersHub.GamersHub;
 import com.blackviking.campusrush.Plugins.SkitCenter.SkitCenter;
 import com.blackviking.campusrush.Profile.MyProfile;
+import com.blackviking.campusrush.Services.CheckSubStatusService;
 import com.blackviking.campusrush.Services.SubscriptionService;
 import com.blackviking.campusrush.Settings.Settings;
 import com.daimajia.androidanimations.library.Techniques;
@@ -65,7 +66,7 @@ public class Home extends AppCompatActivity
 
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
-    private DatabaseReference userRef, rateRef, notificationRef, adminRef, campusAdRef;
+    private DatabaseReference userRef, rateRef, notificationRef, adminRef, campusAdRef, businessProfileRef;
     private CircleImageView userImage;
     private TextView userFullName, userName, notificationCount, anticipateText;
     private ImageView feed, materials, messagesNav, account, anticipateImage;
@@ -75,6 +76,7 @@ public class Home extends AppCompatActivity
     private String currentUid, intentInstruction;
     private LinearLayout admin, awards, campusRantLay, gamersHub, skitCenter, campusAds, settings, signOut, anticipate;
     private TextView adminCount;
+    private boolean isSubServiceOn;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -100,6 +102,7 @@ public class Home extends AppCompatActivity
         /*---   LOCAL   ---*/
         Paper.init(this);
         Paper.book().write(Common.APP_STATE, "Foreground");
+            isSubServiceOn = Paper.book().read(Common.isSubServiceRunning);
 
 
         /*---   INTENT CLAUSE   ---*/
@@ -113,6 +116,7 @@ public class Home extends AppCompatActivity
         notificationRef = db.getReference("Notifications");
         adminRef = db.getReference("AdminManagement");
         campusAdRef = db.getReference("CampusAd");
+        businessProfileRef = db.getReference("BusinessProfile");
         if (mAuth.getCurrentUser() != null)
             currentUid = mAuth.getCurrentUser().getUid();
 
@@ -157,6 +161,23 @@ public class Home extends AppCompatActivity
         View headerView = navigationView.getHeaderView(0);
 
 
+        /*---   BUSINESS   ---*/
+        businessProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child(currentUid).exists()){
+                    Intent intent = new Intent(getApplicationContext(), CheckSubStatusService.class);
+                    startService(intent);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
         /*---   CURRENT USER   ---*/
         userRef.child(currentUid).addValueEventListener(new ValueEventListener() {
             @Override
@@ -180,12 +201,13 @@ public class Home extends AppCompatActivity
                     Paper.book().destroy();
 
                     FirebaseMessaging.getInstance().unsubscribeFromTopic(currentUid);
+                    FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.ADMIN_MESSAGE);
                     FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.FEED_NOTIFICATION_TOPIC+currentUid);
                     FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.FEED_NOTIFICATION_TOPIC);
                     FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.SKIT_NOTIFICATION_TOPIC);
                     FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.GAMERS_NOTIFICATION_TOPIC);
 
-                    if (Common.isSubServiceRunning) {
+                    if (isSubServiceOn) {
                         Intent intent = new Intent(Home.this, SubscriptionService.class);
                         stopService(intent);
                     }
@@ -395,10 +417,21 @@ public class Home extends AppCompatActivity
         awards.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 rootLayout.closeDrawer(GravityCompat.START);
-                Intent awardIntent = new Intent(Home.this, Awards.class);
-                startActivity(awardIntent);
-                overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+                if (mAuth.getCurrentUser().isEmailVerified()) {
+
+                    Intent awardIntent = new Intent(Home.this, Awards.class);
+                    startActivity(awardIntent);
+                    overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+
+                } else {
+
+                    Intent verifyIntent = new Intent(Home.this, UserVerification.class);
+                    startActivity(verifyIntent);
+
+                }
+
             }
         });
 
@@ -436,9 +469,20 @@ public class Home extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 rootLayout.closeDrawer(GravityCompat.START);
-                Intent campusAdsIntent = new Intent(Home.this, CampusAds.class);
-                startActivity(campusAdsIntent);
-                overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+
+                if (mAuth.getCurrentUser().isEmailVerified()) {
+
+                    Intent campusAdsIntent = new Intent(Home.this, CampusAds.class);
+                    startActivity(campusAdsIntent);
+                    overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+
+                } else {
+
+                    Intent verifyIntent = new Intent(Home.this, UserVerification.class);
+                    startActivity(verifyIntent);
+
+                }
+
             }
         });
 
@@ -459,12 +503,13 @@ public class Home extends AppCompatActivity
                 Paper.book().destroy();
 
                 FirebaseMessaging.getInstance().unsubscribeFromTopic(currentUid);
+                FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.ADMIN_MESSAGE);
                 FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.FEED_NOTIFICATION_TOPIC+currentUid);
                 FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.FEED_NOTIFICATION_TOPIC);
                 FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.SKIT_NOTIFICATION_TOPIC);
                 FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.GAMERS_NOTIFICATION_TOPIC);
 
-                if (Common.isSubServiceRunning) {
+                if (isSubServiceOn) {
                     Intent intent = new Intent(Home.this, SubscriptionService.class);
                     stopService(intent);
                 }

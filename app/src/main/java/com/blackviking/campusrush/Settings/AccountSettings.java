@@ -15,6 +15,7 @@ import com.blackviking.campusrush.Home;
 import com.blackviking.campusrush.Login;
 import com.blackviking.campusrush.R;
 import com.blackviking.campusrush.Services.SubscriptionService;
+import com.blackviking.campusrush.UserVerification;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,12 +35,14 @@ public class AccountSettings extends AppCompatActivity {
 
     private TextView activityName;
     private ImageView exitActivity, helpActivity;
-    private TextView privacy, logout, accountMail, accountUsername;
+    private TextView privacy, logout, accountMail, accountUsername, emailStatus;
+    private ImageView verifyImage;
     private LinearLayout username, mail;
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private DatabaseReference userRef;
     private String currentUid;
+    private boolean isSubServiceOn;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -61,12 +64,25 @@ public class AccountSettings extends AppCompatActivity {
 
         /*---   LOCAL   ---*/
         Paper.init(this);
+        isSubServiceOn = Paper.book().read(Common.isSubServiceRunning);
 
 
         /*---   FIREBASE   ---*/
         if (mAuth.getCurrentUser() != null)
             currentUid = mAuth.getCurrentUser().getUid();
         userRef = db.getReference("Users").child(currentUid);
+
+        /*---   WIDGETS   ---*/
+        activityName = (TextView)findViewById(R.id.activityName);
+        exitActivity = (ImageView)findViewById(R.id.exitActivity);
+        helpActivity = (ImageView)findViewById(R.id.helpIcon);
+        verifyImage = (ImageView)findViewById(R.id.verifyImage);
+        privacy = (TextView)findViewById(R.id.privacy);
+        logout = (TextView)findViewById(R.id.logout);
+        accountMail = (TextView)findViewById(R.id.accountMail);
+        accountUsername = (TextView)findViewById(R.id.accountUsername);
+        emailStatus = (TextView)findViewById(R.id.emailStatus);
+        mail = (LinearLayout)findViewById(R.id.emailLayout);
 
 
         /*---   CURRENT USER   ---*/
@@ -88,15 +104,24 @@ public class AccountSettings extends AppCompatActivity {
             }
         });
 
+        /*---   VERIFICATION   ---*/
+        if (mAuth.getCurrentUser().isEmailVerified()){
+            emailStatus.setText("Verified");
+            verifyImage.setImageResource(R.drawable.ic_email_verified);
+        } else {
 
-        /*---   WIDGETS   ---*/
-        activityName = (TextView)findViewById(R.id.activityName);
-        exitActivity = (ImageView)findViewById(R.id.exitActivity);
-        helpActivity = (ImageView)findViewById(R.id.helpIcon);
-        privacy = (TextView)findViewById(R.id.privacy);
-        logout = (TextView)findViewById(R.id.logout);
-        accountMail = (TextView)findViewById(R.id.accountMail);
-        accountUsername = (TextView)findViewById(R.id.accountUsername);
+            emailStatus.setText("Unverified");
+            verifyImage.setImageResource(R.drawable.ic_email_unverified);
+
+            mail.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent verifyIntent = new Intent(AccountSettings.this, UserVerification.class);
+                    startActivity(verifyIntent);
+                }
+            });
+
+        }
 
 
         /*---   ACTIVITY BAR FUNCTIONS   ---*/
@@ -145,12 +170,13 @@ public class AccountSettings extends AppCompatActivity {
                         Paper.book().destroy();
 
                         FirebaseMessaging.getInstance().unsubscribeFromTopic(currentUid);
+                        FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.ADMIN_MESSAGE);
                         FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.FEED_NOTIFICATION_TOPIC+currentUid);
                         FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.FEED_NOTIFICATION_TOPIC);
                         FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.SKIT_NOTIFICATION_TOPIC);
                         FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.GAMERS_NOTIFICATION_TOPIC);
 
-                        if (Common.isSubServiceRunning) {
+                        if (isSubServiceOn) {
                             Intent intent = new Intent(AccountSettings.this, SubscriptionService.class);
                             stopService(intent);
                         }
