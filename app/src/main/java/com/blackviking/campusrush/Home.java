@@ -1,20 +1,26 @@
 package com.blackviking.campusrush;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -24,10 +30,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.blackviking.campusrush.CampusBusiness.CampusAds;
 import com.blackviking.campusrush.Common.Common;
@@ -36,6 +46,7 @@ import com.blackviking.campusrush.Fragments.Messages;
 import com.blackviking.campusrush.Fragments.Feed;
 import com.blackviking.campusrush.Fragments.Materials;
 import com.blackviking.campusrush.Fragments.Notifications;
+import com.blackviking.campusrush.Model.MaterialModel;
 import com.blackviking.campusrush.Plugins.Awards.Awards;
 import com.blackviking.campusrush.Plugins.GamersHub.GamersHub;
 import com.blackviking.campusrush.Plugins.SkitCenter.SkitCenter;
@@ -45,6 +56,10 @@ import com.blackviking.campusrush.Services.SubscriptionService;
 import com.blackviking.campusrush.Settings.Settings;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -52,6 +67,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.rengwuxian.materialedittext.MaterialEditText;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -278,8 +297,8 @@ public class Home extends AppCompatActivity
                     anticipate.setVisibility(View.VISIBLE);
                     anticipateText.setText(info);
                     YoYo.with(Techniques.RubberBand)
-                            .duration(1000)
-                            .repeat(4)
+                            .duration(500)
+                            .repeat(3)
                             .playOn(anticipateImage);
 
                     new Handler().postDelayed(new Runnable() {
@@ -287,7 +306,13 @@ public class Home extends AppCompatActivity
                         public void run() {
                             anticipate.setVisibility(View.GONE);
                         }
-                    }, 6000);
+                    }, 3000);
+                    anticipateImage.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            openCampusAdDialog();
+                        }
+                    });
 
                 }
 
@@ -620,6 +645,29 @@ public class Home extends AppCompatActivity
         }
 
 
+    }
+
+    private void openCampusAdDialog() {
+        final android.app.AlertDialog alertDialog = new android.app.AlertDialog.Builder(this).create();
+        LayoutInflater inflater = this.getLayoutInflater();
+        View viewOptions = inflater.inflate(R.layout.campus_ad_intro_layout,null);
+
+
+        final Button dismissInfo = (Button) viewOptions.findViewById(R.id.dismissInfo);
+
+        alertDialog.setView(viewOptions);
+
+        alertDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        dismissInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+
+        alertDialog.show();
     }
 
     private void setNotificationFragment(Notifications notificationFragment, Toolbar toolbar) {

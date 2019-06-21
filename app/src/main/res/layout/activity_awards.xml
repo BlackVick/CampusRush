@@ -31,15 +31,16 @@
             android:gravity="center">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/warning_image"/>
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/warning_image"
+                android:layout_marginBottom="40dp"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="No Award Polls Online \nCurrently !"
-                android:textSize="34sp"
+                android:text="No Award Polls Currently !"
+                android:textSize="18sp"
                 android:textColor="@color/colorPrimaryDark"
                 android:gravity="center"/>
 

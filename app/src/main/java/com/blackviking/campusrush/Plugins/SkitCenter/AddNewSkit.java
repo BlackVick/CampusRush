@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.blackviking.campusrush.AddFeed;
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.Common.Permissions;
+import com.blackviking.campusrush.Login;
 import com.blackviking.campusrush.Model.MaterialModel;
 import com.blackviking.campusrush.Notification.APIService;
 import com.blackviking.campusrush.Notification.DataMessage;
@@ -87,6 +88,9 @@ public class AddNewSkit extends AppCompatActivity {
     private APIService mService;
     private android.app.AlertDialog mDialog;
 
+    private Intent intent;
+    private String action, type;
+
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
@@ -104,91 +108,165 @@ public class AddNewSkit extends AppCompatActivity {
 
         setContentView(R.layout.activity_add_new_skit);
 
-
-        /*---   FCM   ---*/
-        mService = Common.getFCMService();
-
-
-        /*---   FIREBASE   ---*/
-        if (mAuth.getCurrentUser() != null)
-            currentUid = mAuth.getCurrentUser().getUid();
-        userRef = db.getReference("Users").child(currentUid);
-        theAdminRef = db.getReference("Users");
-        skitRef = db.getReference("Skits");
-        skitVideoRef = storage.getReference("Skits");
-        adminRef = db.getReference("AdminManagement");
-
-
-        /*---   WIDGETS   ---*/
-        activityName = (TextView)findViewById(R.id.activityName);
-        exitActivity = (ImageView)findViewById(R.id.exitActivity);
-        helpActivity = (ImageView)findViewById(R.id.helpIcon);
-        uploadSkit = (ImageView)findViewById(R.id.uploadSkit);
-        skitDescription = (EditText)findViewById(R.id.updateDetails);
-        skitTitle = (EditText)findViewById(R.id.updateTitle);
-        updateShare = (Button)findViewById(R.id.updateShare);
-
-
-        /*---   ACTIVITY BAR FUNCTIONS   ---*/
-        exitActivity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-        activityName.setText("Add Skit");
-        helpActivity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent helpIntent = new Intent(AddNewSkit.this, Help.class);
-                startActivity(helpIntent);
-                overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
-            }
-        });
-
-
-        /*---   PERMISSIONS HANDLER   ---*/
-        if (checkPermissionsArray(Permissions.PERMISSIONS)){
-
-
+        if (mAuth.getCurrentUser() == null){
+            Intent goLogin = new Intent(this, Login.class);
+            startActivity(goLogin);
+            Toast.makeText(this, "Please Login", Toast.LENGTH_SHORT).show();
+            finish();
         } else {
 
-            verifyPermissions(Permissions.PERMISSIONS);
+            /*---   FCM   ---*/
+            mService = Common.getFCMService();
+
+
+            /*---   FIREBASE   ---*/
+            if (mAuth.getCurrentUser() != null)
+                currentUid = mAuth.getCurrentUser().getUid();
+            userRef = db.getReference("Users").child(currentUid);
+            theAdminRef = db.getReference("Users");
+            skitRef = db.getReference("Skits");
+            skitVideoRef = storage.getReference("Skits");
+            adminRef = db.getReference("AdminManagement");
+
+
+            /*---   WIDGETS   ---*/
+            activityName = (TextView)findViewById(R.id.activityName);
+            exitActivity = (ImageView)findViewById(R.id.exitActivity);
+            helpActivity = (ImageView)findViewById(R.id.helpIcon);
+            uploadSkit = (ImageView)findViewById(R.id.uploadSkit);
+            skitDescription = (EditText)findViewById(R.id.updateDetails);
+            skitTitle = (EditText)findViewById(R.id.updateTitle);
+            updateShare = (Button)findViewById(R.id.updateShare);
+
+
+            /*---   LOCAL SHARE   ---*/
+            intent = getIntent();
+            action = intent.getAction();
+            type = intent.getType();
+            if (Intent.ACTION_SEND.equals(action) && type != null){
+                if (Common.isConnectedToInternet(getBaseContext())) {
+
+                    uploadLocalVideo();
+
+                } else {
+
+                    Common.showErrorDialog(this, "No Internet Access !");
+
+                }
+
+            }
+
+
+            /*---   ACTIVITY BAR FUNCTIONS   ---*/
+            exitActivity.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+
+            activityName.setText("Add Skit");
+            helpActivity.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent helpIntent = new Intent(AddNewSkit.this, Help.class);
+                    startActivity(helpIntent);
+                    overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+                }
+            });
+
+
+            /*---   PERMISSIONS HANDLER   ---*/
+            if (checkPermissionsArray(Permissions.PERMISSIONS)){
+
+
+            } else {
+
+                verifyPermissions(Permissions.PERMISSIONS);
+
+            }
+
+
+            /*---   CURRENT USER   ---*/
+            userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    currentUserName = dataSnapshot.child("username").getValue().toString();
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+
+            /*---   UPLOAD VIDEO   ---*/
+            uploadSkit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openGallery();
+                }
+            });
+
+
+            /*---   SHARE SKIT   ---*/
+            updateShare.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    shareUpdate();
+                }
+            });
 
         }
 
+    }
 
-        /*---   CURRENT USER   ---*/
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+    private void uploadLocalVideo() {
+        videoUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
+
+        /*---   FILE NAME   ---*/
+        String theFileName = videoUri.getLastPathSegment();
+
+
+        progressDialog = new ProgressDialog(AddNewSkit.this);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setTitle("Upload In Progress. . .");
+        progressDialog.setProgress(0);
+        progressDialog.show();
+
+
+        final StorageReference fileRefUp = skitVideoRef.child("Videos/"+theFileName);
+        final StorageReference fileThumbRef = skitVideoRef.child("Thumbnail/"+theFileName);
+
+        fileRefUp.putFile(videoUri)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                        skitDownloadUrl = taskSnapshot.getDownloadUrl().toString();
+
+                        progressDialog.dismiss();
+
+                        getThumbNail(fileThumbRef);
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onFailure(@NonNull Exception e) {
 
-                currentUserName = dataSnapshot.child("username").getValue().toString();
+                Common.showErrorDialog(AddNewSkit.this, "File Upload Failed !");
 
             }
-
+        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
 
-            }
-        });
+                int currentProgress = (int) (100*taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                progressDialog.setProgress(currentProgress);
 
-
-        /*---   UPLOAD VIDEO   ---*/
-        uploadSkit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openGallery();
-            }
-        });
-
-
-        /*---   SHARE SKIT   ---*/
-        updateShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                shareUpdate();
             }
         });
     }

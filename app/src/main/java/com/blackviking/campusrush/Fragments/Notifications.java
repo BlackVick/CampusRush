@@ -1,9 +1,12 @@
 package com.blackviking.campusrush.Fragments;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,6 +25,7 @@ import com.blackviking.campusrush.R;
 import com.blackviking.campusrush.ViewHolder.FeedViewHolder;
 import com.blackviking.campusrush.ViewHolder.NotificationViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,6 +48,7 @@ public class Notifications extends Fragment {
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private DatabaseReference notificationRef, userRef;
+    private FloatingActionButton deleteAllNotification;
 
     public Notifications() {
         // Required empty public constructor
@@ -69,11 +74,54 @@ public class Notifications extends Fragment {
 
         /*---   WIDGETS   ---*/
         notificationRecycler = (RecyclerView)v.findViewById(R.id.notificationRecycler);
+        deleteAllNotification = (FloatingActionButton)v.findViewById(R.id.deleteAllNotification);
 
+        deleteAllNotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Common.isConnectedToInternet(getContext()))
+                    showConfirmDialog();
+            }
+        });
 
         loadNotifications();
 
         return v;
+    }
+
+    private void showConfirmDialog() {
+
+        AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+                .setTitle("Attention !")
+                .setIcon(R.drawable.ic_delete_feed)
+                .setMessage("Are you sure you want to clear all notifications?")
+                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog, int which) {
+
+                        notificationRef.child(currentUid)
+                                .removeValue().addOnSuccessListener(
+                                new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        dialog.dismiss();
+                                    }
+                                }
+                        );
+
+                    }
+                })
+                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+
+        alertDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
+
+        alertDialog.show();
     }
 
     private void loadNotifications() {

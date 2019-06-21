@@ -88,6 +88,9 @@ public class AddFeed extends AppCompatActivity {
     private String privacyState, userType;
     private APIService mService;
 
+    private Intent intent;
+    private String action, type;
+
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
@@ -109,95 +112,122 @@ public class AddFeed extends AppCompatActivity {
         /*---   PAPER DB   ---*/
         Paper.init(this);
 
-
-        /*---   FCM   ---*/
-        mService = Common.getFCMService();
-
-
-        /*---   FIREBASE   ---*/
-        if (mAuth.getCurrentUser() != null)
-            currentUid = mAuth.getCurrentUser().getUid();
-        updateRef = db.getReference("Feed");
-        imageRef = storage.getReference("FeedImages");
-        userRef = db.getReference("Users").child(currentUid);
-        adminRef = db.getReference("AdminManagement");
-        justUserRef = db.getReference("Users");
-
-
-        /*---   WIDGETS   ---*/
-        activityName = (TextView)findViewById(R.id.activityName);
-        exitActivity = (ImageView)findViewById(R.id.exitActivity);
-        helpActivity = (ImageView)findViewById(R.id.helpIcon);
-        updateImage = (ImageView)findViewById(R.id.updateImage);
-        updateText = (EditText)findViewById(R.id.updateDetails);
-        updateShare = (Button)findViewById(R.id.updateShare);
-
-
-        /*---   ACTIVITY BAR FUNCTIONS   ---*/
-        exitActivity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-        activityName.setText("Add Feed");
-        helpActivity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent helpIntent = new Intent(AddFeed.this, Help.class);
-                startActivity(helpIntent);
-                overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
-            }
-        });
-
-
-        /*---   PERMISSIONS HANDLER   ---*/
-        if (checkPermissionsArray(Permissions.PERMISSIONS)){
-
-
+        if (mAuth.getCurrentUser() == null){
+            Intent goLogin = new Intent(this, Login.class);
+            startActivity(goLogin);
+            Toast.makeText(this, "Please Login", Toast.LENGTH_SHORT).show();
+            finish();
         } else {
 
-            verifyPermissions(Permissions.PERMISSIONS);
+            /*---   LOCAL SHARE   ---*/
+            intent = getIntent();
+            action = intent.getAction();
+            type = intent.getType();
+            if (Intent.ACTION_SEND.equals(action) && type != null){
+                if (Common.isConnectedToInternet(getBaseContext())) {
+                    imageUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
+                    CropImage.activity(imageUri)
+                            .setAspectRatio(1, 1)
+                            .start(AddFeed.this);
+                } else {
+                    Common.showErrorDialog(this, "No Internet Access !");
+                }
+
+            }
+
+
+            /*---   FCM   ---*/
+            mService = Common.getFCMService();
+
+
+            /*---   FIREBASE   ---*/
+            currentUid = mAuth.getCurrentUser().getUid();
+            updateRef = db.getReference("Feed");
+            imageRef = storage.getReference("FeedImages");
+            userRef = db.getReference("Users").child(currentUid);
+            adminRef = db.getReference("AdminManagement");
+            justUserRef = db.getReference("Users");
+
+
+            /*---   WIDGETS   ---*/
+            activityName = (TextView)findViewById(R.id.activityName);
+            exitActivity = (ImageView)findViewById(R.id.exitActivity);
+            helpActivity = (ImageView)findViewById(R.id.helpIcon);
+            updateImage = (ImageView)findViewById(R.id.updateImage);
+            updateText = (EditText)findViewById(R.id.updateDetails);
+            updateShare = (Button)findViewById(R.id.updateShare);
+
+
+            /*---   ACTIVITY BAR FUNCTIONS   ---*/
+            exitActivity.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+
+            activityName.setText("Add Feed");
+            helpActivity.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent helpIntent = new Intent(AddFeed.this, Help.class);
+                    startActivity(helpIntent);
+                    overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+                }
+            });
+
+
+            /*---   PERMISSIONS HANDLER   ---*/
+            if (checkPermissionsArray(Permissions.PERMISSIONS)){
+
+
+            } else {
+
+                verifyPermissions(Permissions.PERMISSIONS);
+
+            }
+
+
+            /*---   CURRENT USER   ---*/
+            userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    privacyState = dataSnapshot.child("privacy").getValue().toString();
+                    userType = dataSnapshot.child("userType").getValue().toString();
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+
+            /*---   UPDATE IMAGE   ---*/
+            updateImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    openChoiceDialog();
+
+                }
+            });
+
+
+            /*---   SHARE UPDATE   ---*/
+            updateShare.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    shareUpdate();
+                }
+            });
 
         }
 
 
-        /*---   CURRENT USER   ---*/
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
 
-                privacyState = dataSnapshot.child("privacy").getValue().toString();
-                userType = dataSnapshot.child("userType").getValue().toString();
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-
-        /*---   UPDATE IMAGE   ---*/
-        updateImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                openChoiceDialog();
-
-            }
-        });
-
-
-        /*---   SHARE UPDATE   ---*/
-        updateShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                shareUpdate();
-            }
-        });
 
     }
 
@@ -514,10 +544,10 @@ public class AddFeed extends AppCompatActivity {
 
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK){
 
-            Uri theUri = imageUri;
             CropImage.activity(imageUri)
                     .setAspectRatio(1,1)
                     .start(AddFeed.this);
+
 
         }
 
@@ -532,6 +562,8 @@ public class AddFeed extends AppCompatActivity {
             }
 
         }
+
+
 
 
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {

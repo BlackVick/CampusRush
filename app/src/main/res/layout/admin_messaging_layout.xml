@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="18dp"
+    android:layout_margin="15dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:padding="8dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="ANNOUNCEMENT"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="27sp"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/colorPrimaryDark"
+            android:layout_marginStart="35dp"
+            android:layout_marginEnd="35dp"/>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/announcementStyle"
+            android:weightSum="2"
+            android:layout_margin="15dp">
+
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Single"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:id="@+id/single"/>
+
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="All"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:id="@+id/all"/>
+
+        </RadioGroup>
+
+        <EditText
+            android:background="@drawable/edittext_ring"
+            android:id="@+id/announcementUser"
+            android:hint="Username"
+            android:textColorHint="@color/grey"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:inputType="text"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="14dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:drawableStart="@drawable/ic_register_user"
+            android:drawablePadding="18dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
+        <EditText
+            android:background="@drawable/edittext_ring"
+            android:id="@+id/announcementMessage"
+            android:hint="Message"
+            android:textColorHint="@color/grey"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:inputType="textMultiLine"
+            android:maxLines="4"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="14dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:drawableStart="@drawable/ic_admin_messaging"
+            android:drawablePadding="18dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/sendAnnouncement"
+            android:text="SEND"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:layout_margin="15dp"
+            android:background="@drawable/new_login_button"/>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

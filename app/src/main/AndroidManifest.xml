@@ -206,7 +206,15 @@
         <activity
             android:name=".Plugins.SkitCenter.AddNewSkit"
             android:configChanges="orientation"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="video/*" />
+            </intent-filter>
+
+        </activity>
         <activity
             android:name=".ManagementDetail"
             android:configChanges="orientation"
@@ -226,7 +234,15 @@
         <activity
             android:name=".AddFeed"
             android:configChanges="orientation"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="images/*" />
+            </intent-filter>
+
+        </activity>
         <activity
             android:name=".AdminManagement"
             android:configChanges="orientation"

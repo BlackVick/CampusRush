@@ -11,6 +11,7 @@
     <string name="faction">Unilag Faction</string>
     <string name="companyName">2019 | Black Viking Software &#169;</string>
     <string name="location">Lagos, Nigeria</string>
+    <string name="campusAdsIntro">Campus Ads is a platform that gives young entrepreneurs the opportunity to advertise and grow their business audience at the same time. \n\n It allows users with business accounts to promote their ads multiple times with the simple goal of reaching everybody and thereby increasing their customer base.</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

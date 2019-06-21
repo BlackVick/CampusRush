@@ -30,17 +30,21 @@
             android:gravity="center">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/warning_image"/>
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/warning_image"
+                android:layout_marginBottom="40dp"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="No Data Received !"
-                android:textSize="34sp"
+                android:text="The Material Bucket Is Currently Empty. You Could Help Others By Uploading Helpful Materials !"
+                android:textSize="18sp"
                 android:textColor="@color/colorPrimaryDark"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                />
 
         </LinearLayout>
 

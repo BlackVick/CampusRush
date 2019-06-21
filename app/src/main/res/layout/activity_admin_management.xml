@@ -15,4 +15,14 @@
         android:id="@+id/adminRecycler"
         android:layout_marginTop="?attr/actionBarSize"/>
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/adminMessaging"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_admin_messaging"
+        app:backgroundTint="@color/white"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="16dp"/>
+
 </RelativeLayout>

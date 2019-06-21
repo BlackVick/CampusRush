@@ -170,7 +170,7 @@ public class PollCandidates extends AppCompatActivity {
                     public void onClick(View view, int position, boolean isLongClick) {
 
                         if (Common.isConnectedToInternet(getBaseContext()))
-                            showConfirmationDialog("Are You Sure "+model.getName()+" Is Who You Want To Pick? \nPlease Note That Your Votes Are Final. No Re-Do. I Repeat, No F**king Re-Do", model.getName());
+                            showConfirmationDialog("Are You Sure "+model.getName()+" Is Who You Want To Pick? \nPlease Note That Your Votes Are Final. No Re-Do.", model.getName());
                         else
                             Common.showErrorDialog(PollCandidates.this, "No Internet Access !");
                     }
