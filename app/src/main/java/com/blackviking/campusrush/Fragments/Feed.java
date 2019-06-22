@@ -24,6 +24,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.RadioButton;
@@ -145,6 +146,7 @@ public class Feed extends Fragment {
 
         final Home theHome = new Home();
         final RelativeLayout theNavLayout = (RelativeLayout)getActivity().findViewById(R.id.navLayout);
+        final FrameLayout frame = (FrameLayout)getActivity().findViewById(R.id.frame);
 
 
         feedRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -152,10 +154,15 @@ public class Feed extends Fragment {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
 
-                if (dy < 0 && theNavLayout.getVisibility() == View.GONE)
+                if (dy < 0 && theNavLayout.getVisibility() == View.GONE) {
+
                     theNavLayout.setVisibility(View.VISIBLE);
-                else if(dy > 0 && theNavLayout.getVisibility() == View.VISIBLE)
+                    addFeedButton.show();
+                }
+                else if(dy > 0 && theNavLayout.getVisibility() == View.VISIBLE) {
                     theNavLayout.setVisibility(View.GONE);
+                    addFeedButton.hide();
+                }
             }
 
             @Override

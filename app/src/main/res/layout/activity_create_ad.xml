@@ -42,6 +42,7 @@
                 </com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>
 
                 <EditText
+                    android:background="@drawable/edittext_ring"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -50,12 +51,13 @@
                     android:textColorHint="@color/grey"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:drawableStart="@drawable/ic_campus_business"
-                    android:drawableTint="@color/grey"
-                    android:drawablePadding="7dp"
                     android:maxLength="150"
                     android:maxLines="4"
-                    android:minLines="2"/>
+                    android:minLines="2"
+                    android:paddingTop="15dp"
+                    android:paddingEnd="4dp"
+                    android:paddingStart="4dp"
+                    android:paddingBottom="15dp"/>
 
             </LinearLayout>
 

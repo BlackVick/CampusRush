@@ -59,7 +59,8 @@
         android:src="@drawable/ic_add_material"
         app:backgroundTint="@color/white"
         app:elevation="6dp"
-        android:layout_margin="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="63dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"/>
 

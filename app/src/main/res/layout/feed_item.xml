@@ -3,29 +3,33 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@drawable/feed_background"
+    android:animateLayoutChanges="true"
     android:layout_marginBottom="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:animateLayoutChanges="true"
             android:weightSum="10"
             android:layout_margin="3dp">
 
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_weight="2"
+                android:animateLayoutChanges="true"
                 android:layout_height="wrap_content">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:id="@+id/posterImage"
                     android:layout_centerInParent="true"
                     android:src="@drawable/profile"/>
@@ -35,6 +39,7 @@
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_weight="7"
+                android:animateLayoutChanges="true"
                 android:layout_height="match_parent">
 
                 <TextView
@@ -92,8 +97,8 @@
             android:layout_marginTop="4dp">
 
             <ImageView
-                android:layout_width="26dp"
-                android:layout_height="26dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:src="@drawable/unliked_icon"
                 android:layout_marginStart="18dp"
                 android:id="@+id/likeBtn"/>
@@ -103,13 +108,14 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:id="@+id/likeCount"
-                android:layout_marginStart="5dp"/>
+                android:layout_marginStart="5dp"
+                android:layout_gravity="center_vertical"/>
 
             <ImageView
-                android:layout_width="26dp"
-                android:layout_height="26dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:src="@drawable/comment_icon"
                 android:layout_marginStart="52dp"
                 android:id="@+id/commentBtn"/>
@@ -119,9 +125,10 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:id="@+id/commentCount"
-                android:layout_marginStart="5dp"/>
+                android:layout_marginStart="5dp"
+                android:layout_gravity="center_vertical"/>
 
         </LinearLayout>
 

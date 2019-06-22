@@ -149,7 +149,8 @@
         <activity
             android:name=".CampusRant.RantRoom"
             android:configChanges="orientation"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/ChatBackground"/>
         <activity
             android:name=".Plugins.Awards.Awards"
             android:configChanges="orientation"
@@ -271,7 +272,8 @@
         <activity
             android:name=".Messaging.Messaging"
             android:configChanges="orientation"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/ChatBackground"/>
         <activity
             android:name=".CampusBusiness.AdDetails"
             android:configChanges="orientation"

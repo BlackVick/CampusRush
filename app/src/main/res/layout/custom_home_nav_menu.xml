@@ -42,7 +42,6 @@
                 android:src="@drawable/ic_admin_management"
                 android:adjustViewBounds="true"
                 android:padding="5dp"
-                android:tint="@color/colorPrimaryDark"
                 android:layout_gravity="center"/>
 
             <TextView
@@ -81,10 +80,9 @@
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_app_bar_award"
+                android:src="@drawable/new_award_icon"
                 android:adjustViewBounds="true"
                 android:padding="5dp"
-                android:tint="@color/colorPrimaryDark"
                 android:layout_gravity="center"/>
 
             <TextView
@@ -110,10 +108,9 @@
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/campus_rant_emoji"
+                android:src="@drawable/new_rant_icon"
                 android:adjustViewBounds="true"
                 android:padding="5dp"
-                android:tint="@color/colorPrimaryDark"
                 android:layout_gravity="center"/>
 
             <TextView
@@ -142,7 +139,6 @@
                 android:src="@drawable/red_gamers_hub"
                 android:adjustViewBounds="true"
                 android:padding="5dp"
-                android:tint="@color/colorPrimaryDark"
                 android:layout_gravity="center"/>
 
             <TextView
@@ -168,10 +164,9 @@
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_skit_center"
+                android:src="@drawable/new_skit_icon"
                 android:adjustViewBounds="true"
                 android:padding="5dp"
-                android:tint="@color/colorPrimaryDark"
                 android:layout_gravity="center"/>
 
             <TextView
@@ -213,10 +208,9 @@
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_campus_business"
+                android:src="@drawable/new_business_icon"
                 android:adjustViewBounds="true"
                 android:padding="5dp"
-                android:tint="@color/colorPrimaryDark"
                 android:layout_gravity="center"/>
 
             <TextView
@@ -248,10 +242,9 @@
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_app_bar_settings"
+                android:src="@drawable/new_settings_icon"
                 android:adjustViewBounds="true"
                 android:padding="5dp"
-                android:tint="@color/colorPrimaryDark"
                 android:layout_gravity="center"/>
 
             <TextView
@@ -277,10 +270,9 @@
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_app_bar_sign_out"
+                android:src="@drawable/new_signout_icon"
                 android:adjustViewBounds="true"
                 android:padding="5dp"
-                android:tint="@color/colorPrimaryDark"
                 android:layout_gravity="center"/>
 
             <TextView

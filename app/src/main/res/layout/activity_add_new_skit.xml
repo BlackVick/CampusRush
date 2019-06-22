@@ -45,6 +45,7 @@
                 </com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>
 
                 <EditText
+                    android:background="@drawable/edittext_ring"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -53,13 +54,15 @@
                     android:textColorHint="@color/grey"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:drawableStart="@drawable/ic_skit_center"
-                    android:drawableTint="@color/grey"
-                    android:drawablePadding="7dp"
-                    android:maxLength="170"
-                    android:maxLines="2"/>
+                    android:maxLength="80"
+                    android:maxLines="2"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp"/>
 
                 <EditText
+                    android:background="@drawable/edittext_ring"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -68,9 +71,10 @@
                     android:textColorHint="@color/grey"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:drawableStart="@drawable/ic_skit_center"
-                    android:drawableTint="@color/grey"
-                    android:drawablePadding="7dp"/>
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp"/>
 
             </LinearLayout>
 
@@ -86,9 +90,8 @@
         android:layout_alignParentEnd="true"
         android:layout_margin="5dp"
         android:text="SHARE"
-        android:drawableStart="@drawable/ic_skit_center"
+        android:drawableStart="@drawable/new_skit_icon"
         android:drawablePadding="10dp"
-        android:drawableTint="@color/colorPrimaryDark"
         android:padding="7dp"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="16sp"

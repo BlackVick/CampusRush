@@ -47,7 +47,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Campus Rush Ads was created for the sole purpose of helping growing businesses and service providing individuals of any trade to promote and grow their business audience."
+                        android:text="Campus Ads was created to help growing businesses and service providing individuals of any trade to promote and grow their business audience."
                         android:gravity="center"
                         android:textSize="14sp"
                         android:textColor="@color/white"
@@ -73,8 +73,8 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:src="@drawable/warning_image"
                         android:layout_gravity="center"
                         android:layout_marginTop="18dp"/>
@@ -90,8 +90,8 @@
                         android:layout_gravity="center"/>
 
                     <ImageView
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         android:background="@drawable/white_backround_ripple"
                         android:layout_gravity="center"
                         android:src="@drawable/promote_campus_ad"
@@ -129,8 +129,8 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:src="@drawable/warning_image"
                         android:layout_gravity="center"
                         android:layout_marginTop="18dp"/>
@@ -175,10 +175,9 @@
         android:id="@+id/promoteAd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_campus_business"
-        android:tint="@color/offWhite"
+        android:src="@drawable/new_business_icon"
         android:visibility="gone"
-        app:backgroundTint="@color/colorPrimaryDark"
+        app:backgroundTint="@color/white"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_margin="8dp"/>

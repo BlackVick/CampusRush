@@ -42,8 +42,8 @@
                         android:layout_height="wrap_content">
 
                         <de.hdodenhof.circleimageview.CircleImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:id="@+id/feedDetailPosterImage"
                             android:layout_centerInParent="true"
                             android:src="@drawable/profile"/>
@@ -108,8 +108,8 @@
                     android:layout_marginTop="3dp">
 
                     <ImageView
-                        android:layout_width="34dp"
-                        android:layout_height="34dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:src="@drawable/unliked_icon"
                         android:layout_marginStart="18dp"
                         android:id="@+id/feedDetailLikeBtn"/>
@@ -121,11 +121,12 @@
                         android:textColor="@color/black"
                         android:textSize="18sp"
                         android:id="@+id/feedDetailLikesCount"
-                        android:layout_marginStart="5dp"/>
+                        android:layout_marginStart="5dp"
+                        android:layout_gravity="center_vertical"/>
 
                     <ImageView
-                        android:layout_width="34dp"
-                        android:layout_height="34dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:src="@drawable/comment_icon"
                         android:layout_marginStart="38dp"
                         android:id="@+id/commentBtn"/>
@@ -137,7 +138,8 @@
                         android:textColor="@color/black"
                         android:textSize="18sp"
                         android:id="@+id/feedDetailCommentCount"
-                        android:layout_marginStart="5dp"/>
+                        android:layout_marginStart="5dp"
+                        android:layout_gravity="center_vertical"/>
 
                 </LinearLayout>
 

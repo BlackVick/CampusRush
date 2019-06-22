@@ -190,15 +190,7 @@ public class FeedDetails extends AppCompatActivity {
         });
 
 
-        if (Common.isConnectedToInternet(getBaseContext())) {
-
-            loadCurrentUpdate(currentFeedId);
-
-        } else {
-
-            Common.showErrorDialog(this, "No Internet Access !");
-
-        }
+        loadCurrentUpdate(currentFeedId);
 
     }
 

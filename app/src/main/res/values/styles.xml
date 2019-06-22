@@ -23,7 +23,7 @@
     </style>
 
     <style name="ChatBackground" parent="AppTheme">
-        <item name="android:windowBackground">@color/offWhite</item>
+        <item name="android:windowBackground">@drawable/campus_rush_chat_background</item>
     </style>
 
     <style name="AppBackground" parent="AppTheme">

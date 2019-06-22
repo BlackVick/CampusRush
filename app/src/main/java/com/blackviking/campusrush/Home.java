@@ -88,8 +88,8 @@ public class Home extends AppCompatActivity
     private DatabaseReference userRef, rateRef, notificationRef, adminRef, campusAdRef, businessProfileRef;
     private CircleImageView userImage;
     private TextView userFullName, userName, notificationCount, anticipateText;
-    private ImageView feed, materials, messagesNav, account, anticipateImage;
-    public RelativeLayout notifications, navLayout;
+    private ImageView feed, materials, messagesNav, account, anticipateImage, notifications;
+    public RelativeLayout navLayout;
     private DrawerLayout rootLayout;
     private BroadcastReceiver mMessageReceiver = null;
     private String currentUid, intentInstruction;
@@ -146,7 +146,7 @@ public class Home extends AppCompatActivity
         messagesNav = (ImageView)findViewById(R.id.messagesNav);
         account = (ImageView)findViewById(R.id.account);
         anticipateImage = (ImageView)findViewById(R.id.anticipateImage);
-        notifications = (RelativeLayout)findViewById(R.id.notifications);
+        notifications = (ImageView) findViewById(R.id.notifications);
         navLayout = (RelativeLayout)findViewById(R.id.navLayout);
         notificationCount = (TextView)findViewById(R.id.notificationCount);
         userFullName = (TextView)findViewById(R.id.appBarFullName);
@@ -554,11 +554,11 @@ public class Home extends AppCompatActivity
         feed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                feed.setBackgroundResource(R.color.bottom_nav_clicked);
-                materials.setBackgroundResource(R.drawable.white_grey_border_top);
-                messagesNav.setBackgroundResource(R.drawable.white_grey_border_top);
-                notifications.setBackgroundResource(R.drawable.white_grey_border_top);
-                account.setBackgroundResource(R.drawable.white_grey_border_top);
+                feed.setImageResource(R.drawable.new_color_feed_icon);
+                materials.setImageResource(R.drawable.new_offwhite_material_icon);
+                messagesNav.setImageResource(R.drawable.new_offwhite_messaging_icon);
+                notifications.setImageResource(R.drawable.new_offwhite_notification_icon);
+                account.setImageResource(R.drawable.new_offwhite_account_icon);
 
                 toolbar.setTitle("Feed");
 
@@ -569,11 +569,11 @@ public class Home extends AppCompatActivity
         materials.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                feed.setBackgroundResource(R.drawable.white_grey_border_top);
-                materials.setBackgroundResource(R.color.bottom_nav_clicked);
-                messagesNav.setBackgroundResource(R.drawable.white_grey_border_top);
-                notifications.setBackgroundResource(R.drawable.white_grey_border_top);
-                account.setBackgroundResource(R.drawable.white_grey_border_top);
+                feed.setImageResource(R.drawable.new_offwhite_feed_icon);
+                materials.setImageResource(R.drawable.new_color_material_icon);
+                messagesNav.setImageResource(R.drawable.new_offwhite_messaging_icon);
+                notifications.setImageResource(R.drawable.new_offwhite_notification_icon);
+                account.setImageResource(R.drawable.new_offwhite_account_icon);
 
                 toolbar.setTitle("Materials");
 
@@ -584,11 +584,11 @@ public class Home extends AppCompatActivity
         messagesNav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                feed.setBackgroundResource(R.drawable.white_grey_border_top);
-                materials.setBackgroundResource(R.drawable.white_grey_border_top);
-                messagesNav.setBackgroundResource(R.color.bottom_nav_clicked);
-                notifications.setBackgroundResource(R.drawable.white_grey_border_top);
-                account.setBackgroundResource(R.drawable.white_grey_border_top);
+                feed.setImageResource(R.drawable.new_offwhite_feed_icon);
+                materials.setImageResource(R.drawable.new_offwhite_material_icon);
+                messagesNav.setImageResource(R.drawable.new_color_messaging_icon);
+                notifications.setImageResource(R.drawable.new_offwhite_notification_icon);
+                account.setImageResource(R.drawable.new_offwhite_account_icon);
 
                 toolbar.setTitle("Messages");
 
@@ -599,11 +599,11 @@ public class Home extends AppCompatActivity
         notifications.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                feed.setBackgroundResource(R.drawable.white_grey_border_top);
-                materials.setBackgroundResource(R.drawable.white_grey_border_top);
-                messagesNav.setBackgroundResource(R.drawable.white_grey_border_top);
-                notifications.setBackgroundResource(R.color.bottom_nav_clicked);
-                account.setBackgroundResource(R.drawable.white_grey_border_top);
+                feed.setImageResource(R.drawable.new_offwhite_feed_icon);
+                materials.setImageResource(R.drawable.new_offwhite_material_icon);
+                messagesNav.setImageResource(R.drawable.new_offwhite_messaging_icon);
+                notifications.setImageResource(R.drawable.new_color_notification_icon);
+                account.setImageResource(R.drawable.new_offwhite_account_icon);
 
                 toolbar.setTitle("Notifications");
 
@@ -614,11 +614,11 @@ public class Home extends AppCompatActivity
         account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                feed.setBackgroundResource(R.drawable.white_grey_border_top);
-                materials.setBackgroundResource(R.drawable.white_grey_border_top);
-                messagesNav.setBackgroundResource(R.drawable.white_grey_border_top);
-                notifications.setBackgroundResource(R.drawable.white_grey_border_top);
-                account.setBackgroundResource(R.color.bottom_nav_clicked);
+                feed.setImageResource(R.drawable.new_offwhite_feed_icon);
+                materials.setImageResource(R.drawable.new_offwhite_material_icon);
+                messagesNav.setImageResource(R.drawable.new_offwhite_messaging_icon);
+                notifications.setImageResource(R.drawable.new_offwhite_notification_icon);
+                account.setImageResource(R.drawable.new_color_account_icon);
 
                 toolbar.setTitle("Account");
 
@@ -674,11 +674,11 @@ public class Home extends AppCompatActivity
 
         setFragment(notificationFragment);
 
-        feed.setBackgroundResource(R.drawable.white_grey_border_top);
-        materials.setBackgroundResource(R.drawable.white_grey_border_top);
-        messagesNav.setBackgroundResource(R.drawable.white_grey_border_top);
-        notifications.setBackgroundResource(R.color.bottom_nav_clicked);
-        account.setBackgroundResource(R.drawable.white_grey_border_top);
+        feed.setImageResource(R.drawable.new_offwhite_feed_icon);
+        materials.setImageResource(R.drawable.new_offwhite_material_icon);
+        messagesNav.setImageResource(R.drawable.new_offwhite_messaging_icon);
+        notifications.setImageResource(R.drawable.new_color_notification_icon);
+        account.setImageResource(R.drawable.new_offwhite_account_icon);
 
     }
 
@@ -716,11 +716,11 @@ public class Home extends AppCompatActivity
 
         setFragment(feedFragment);
 
-        feed.setBackgroundResource(R.color.bottom_nav_clicked);
-        materials.setBackgroundResource(R.drawable.white_grey_border_top);
-        messagesNav.setBackgroundResource(R.drawable.white_grey_border_top);
-        notifications.setBackgroundResource(R.drawable.white_grey_border_top);
-        account.setBackgroundResource(R.drawable.white_grey_border_top);
+        feed.setImageResource(R.drawable.new_color_feed_icon);
+        materials.setImageResource(R.drawable.new_offwhite_material_icon);
+        messagesNav.setImageResource(R.drawable.new_offwhite_messaging_icon);
+        notifications.setImageResource(R.drawable.new_offwhite_notification_icon);
+        account.setImageResource(R.drawable.new_offwhite_account_icon);
 
     }
 

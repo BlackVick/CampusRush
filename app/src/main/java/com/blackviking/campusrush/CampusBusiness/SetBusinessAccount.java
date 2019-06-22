@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -64,7 +65,7 @@ public class SetBusinessAccount extends AppCompatActivity {
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
     private DatabaseReference userRef, promoterRef, priceRef, subscriptionRef, businessProfileRef, transactionRef;
     private String currentUid, userType, userEmail;
-    private MaterialEditText name, address, category, description, phone, facebook, instagram, twitter;
+    private EditText name, address, category, description, phone, facebook, instagram, twitter;
     private TextView price;
     private Button paystackBtn, createBtn;
     private CheckBox businessTerms;
@@ -118,14 +119,14 @@ public class SetBusinessAccount extends AppCompatActivity {
         activityName = (TextView)findViewById(R.id.activityName);
         exitActivity = (ImageView)findViewById(R.id.exitActivity);
         helpActivity = (ImageView)findViewById(R.id.helpIcon);
-        name = (MaterialEditText)findViewById(R.id.businessNameEdt);
-        address = (MaterialEditText)findViewById(R.id.businessAddressEdt);
-        category = (MaterialEditText)findViewById(R.id.businessCategoryEdt);
-        description = (MaterialEditText)findViewById(R.id.businessDescriptionEdt);
-        phone = (MaterialEditText)findViewById(R.id.businessPhoneEdt);
-        facebook = (MaterialEditText)findViewById(R.id.businessFacebookEdt);
-        instagram = (MaterialEditText)findViewById(R.id.businessInstagramEdt);
-        twitter = (MaterialEditText)findViewById(R.id.businessTwitterEdt);
+        name = (EditText)findViewById(R.id.businessNameEdt);
+        address = (EditText)findViewById(R.id.businessAddressEdt);
+        category = (EditText)findViewById(R.id.businessCategoryEdt);
+        description = (EditText)findViewById(R.id.businessDescriptionEdt);
+        phone = (EditText)findViewById(R.id.businessPhoneEdt);
+        facebook = (EditText)findViewById(R.id.businessFacebookEdt);
+        instagram = (EditText)findViewById(R.id.businessInstagramEdt);
+        twitter = (EditText)findViewById(R.id.businessTwitterEdt);
         price = (TextView)findViewById(R.id.businessAccountPrice);
         paystackBtn = (Button)findViewById(R.id.businessAccountPaymentBtn);
         createBtn = (Button)findViewById(R.id.createBusinessAccountBtn);
@@ -140,7 +141,7 @@ public class SetBusinessAccount extends AppCompatActivity {
             }
         });
 
-        activityName.setText("SetUp Business Account");
+        activityName.setText("Business Account");
         helpActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -13,307 +13,326 @@
 
     <include layout="@layout/snippet_for_general"/>
 
-    <ScrollView
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginEnd="14dp"
+        android:text="Let's Get Your Business Profile Set Up!"
+        android:textColor="@color/black"
+        android:textSize="25sp"/>
+
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:layout_above="@+id/buttonsLayout"
-        android:layout_marginBottom="20dp">
+        android:layout_marginTop="180dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginEnd="14dp"
+        android:background="@drawable/login_back_bottom"
+        android:padding="10dp">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:animateLayoutChanges="true"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:descendantFocusability="beforeDescendants"
-            android:layout_margin="2dp">
-
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/businessNameEdt"
-                android:hint="Business Name"
-                android:textColorHint="@color/black"
-                android:text=""
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:inputType="textCapWords"
-                android:layout_margin="3dp"
-                android:padding="5dp"
-                android:drawableStart="@drawable/ic_campus_business"
-                android:drawablePadding="10dp"
-                android:drawableTint="@color/black"
-                app:met_clearButton="true"
-                app:met_baseColor="@color/black"
-                app:met_floatingLabelAnimating="true"
-                app:met_floatingLabel="highlight"
-                app:met_primaryColor="@color/black"
-                app:met_singleLineEllipsis="true"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/businessAddressEdt"
-                android:hint="Business Address"
-                android:textColorHint="@color/black"
-                android:text=""
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:inputType="textCapWords"
-                android:layout_margin="3dp"
-                android:padding="5dp"
-                android:drawableStart="@drawable/ic_business_location"
-                android:drawableTint="@color/black"
-                android:drawablePadding="10dp"
-                app:met_clearButton="true"
-                app:met_baseColor="@color/black"
-                app:met_floatingLabelAnimating="true"
-                app:met_floatingLabel="highlight"
-                app:met_primaryColor="@color/black"
-                app:met_singleLineEllipsis="true"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/businessCategoryEdt"
-                android:hint="Business Category"
-                android:textColorHint="@color/black"
-                android:text=""
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:inputType="textCapSentences"
-                android:layout_margin="3dp"
-                android:padding="5dp"
-                android:drawableStart="@drawable/ic_business_category"
-                android:drawableTint="@color/black"
-                android:drawablePadding="10dp"
-                app:met_clearButton="true"
-                app:met_baseColor="@color/black"
-                app:met_floatingLabelAnimating="true"
-                app:met_floatingLabel="highlight"
-                app:met_primaryColor="@color/black"
-                app:met_singleLineEllipsis="true"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/businessDescriptionEdt"
-                android:hint="Business Description"
-                android:textColorHint="@color/black"
-                android:text=""
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:inputType="textCapSentences"
-                android:layout_margin="3dp"
-                android:padding="5dp"
-                app:met_clearButton="true"
-                app:met_baseColor="@color/black"
-                android:drawableStart="@drawable/ic_business_description"
-                android:drawableTint="@color/black"
-                android:drawablePadding="10dp"
-                app:met_floatingLabelAnimating="true"
-                app:met_floatingLabel="highlight"
-                app:met_primaryColor="@color/black"
-                app:met_singleLineEllipsis="true"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/businessPhoneEdt"
-                android:hint="Business Phone Number"
-                android:textColorHint="@color/black"
-                android:text=""
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:inputType="number"
-                android:layout_margin="3dp"
-                android:padding="5dp"
-                app:met_clearButton="true"
-                app:met_baseColor="@color/black"
-                android:drawableStart="@drawable/ic_business_phone"
-                android:drawableTint="@color/black"
-                android:drawablePadding="10dp"
-                app:met_floatingLabelAnimating="true"
-                app:met_floatingLabel="highlight"
-                app:met_primaryColor="@color/black"
-                app:met_singleLineEllipsis="true"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/businessFacebookEdt"
-                android:hint="Business Facebook Account"
-                android:textColorHint="@color/black"
-                android:text=""
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:inputType="text"
-                android:layout_margin="3dp"
-                android:padding="5dp"
-                app:met_clearButton="true"
-                app:met_baseColor="@color/black"
-                android:drawableStart="@drawable/campus_promoter_facebook"
-                android:drawableTint="@color/black"
-                android:drawablePadding="10dp"
-                app:met_floatingLabelAnimating="true"
-                app:met_floatingLabel="highlight"
-                app:met_primaryColor="@color/black"
-                app:met_singleLineEllipsis="true"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/businessInstagramEdt"
-                android:hint="Business Instagram Account"
-                android:textColorHint="@color/black"
-                android:text=""
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:inputType="text"
-                android:layout_margin="3dp"
-                android:padding="5dp"
-                app:met_clearButton="true"
-                app:met_baseColor="@color/black"
-                android:drawableStart="@drawable/campus_promoter_intagram"
-                android:drawableTint="@color/black"
-                android:drawablePadding="10dp"
-                app:met_floatingLabelAnimating="true"
-                app:met_floatingLabel="highlight"
-                app:met_primaryColor="@color/black"
-                app:met_singleLineEllipsis="true"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/businessTwitterEdt"
-                android:hint="Business Twitter Account"
-                android:textColorHint="@color/black"
-                android:text=""
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:inputType="text"
-                android:layout_margin="3dp"
-                android:padding="5dp"
-                app:met_clearButton="true"
-                app:met_baseColor="@color/black"
-                android:drawableStart="@drawable/campus_promoter_twitter"
-                android:drawableTint="@color/black"
-                android:drawablePadding="10dp"
-                app:met_floatingLabelAnimating="true"
-                app:met_floatingLabel="highlight"
-                app:met_primaryColor="@color/black"
-                app:met_singleLineEllipsis="true"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="120dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_centerInParent="true">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Plan"
-                        android:textSize="20sp"
-                        android:textColor="@color/black"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginBottom="8dp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/businessAccountPrice"
-                        android:text=""
-                        android:textSize="17sp"
-                        android:textColor="@color/black"
-                        android:layout_marginStart="25dp"/>
-
-                </LinearLayout>
-
-            </RelativeLayout>
+            android:layout_height="match_parent"
+            android:layout_above="@+id/buttonsLayout"
+            android:layout_marginBottom="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="10"
-                android:layout_margin="4dp">
+                android:orientation="vertical"
+                android:animateLayoutChanges="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:descendantFocusability="beforeDescendants"
+                android:layout_margin="2dp">
 
-                <com.rey.material.widget.CheckBox
-                    android:id="@+id/acceptBusinessTermsCheckbox"
-                    android:layout_width="0dp"
-                    android:layout_weight="1.5"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    style="@style/Material.Drawable.CheckBox"
-                    android:gravity="center_vertical|center_horizontal"
-                    app:cbd_strokeColor="@color/black"
-                    app:cbd_tickColor="@color/colorPrimaryDark"/>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="8.5"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/policyTextView"
-                    android:text="Accept all terms of use and conditions for business account."
+                <EditText
+                    android:background="@drawable/edittext_ring"
+                    android:id="@+id/businessNameEdt"
+                    android:hint="Business Name"
+                    android:textColorHint="@color/grey"
                     android:textColor="@color/black"
                     android:textSize="15sp"
-                    android:gravity="start"
-                    android:layout_gravity="center_vertical"/>
+                    android:inputType="textCapWords"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginBottom="14dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:drawableStart="@drawable/ic_campus_business"
+                    android:drawablePadding="18dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <EditText
+                    android:background="@drawable/edittext_ring"
+                    android:id="@+id/businessAddressEdt"
+                    android:hint="Business Address"
+                    android:textColorHint="@color/grey"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:inputType="textCapWords"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginBottom="14dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:drawableStart="@drawable/ic_business_location"
+                    android:drawablePadding="18dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:background="@drawable/edittext_ring"
+                    android:id="@+id/businessCategoryEdt"
+                    android:hint="Business Category"
+                    android:textColorHint="@color/grey"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:inputType="textCapSentences"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginBottom="14dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:drawableStart="@drawable/ic_business_category"
+                    android:drawablePadding="18dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:background="@drawable/edittext_ring"
+                    android:id="@+id/businessDescriptionEdt"
+                    android:hint="Business Description"
+                    android:textColorHint="@color/grey"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:inputType="textCapSentences"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginBottom="14dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:drawableStart="@drawable/ic_business_description"
+                    android:drawablePadding="18dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:background="@drawable/edittext_ring"
+                    android:id="@+id/businessPhoneEdt"
+                    android:hint="Business Phone"
+                    android:textColorHint="@color/grey"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:inputType="phone"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginBottom="14dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:drawableStart="@drawable/ic_business_phone"
+                    android:drawablePadding="18dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:background="@drawable/edittext_ring"
+                    android:id="@+id/businessFacebookEdt"
+                    android:hint="Business Facebook"
+                    android:textColorHint="@color/grey"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:inputType="text"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginBottom="14dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:drawableStart="@drawable/campus_promoter_facebook"
+                    android:drawablePadding="18dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:background="@drawable/edittext_ring"
+                    android:id="@+id/businessInstagramEdt"
+                    android:hint="Business Instagram"
+                    android:textColorHint="@color/grey"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:inputType="text"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginBottom="14dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:drawableStart="@drawable/campus_promoter_intagram"
+                    android:drawablePadding="18dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:background="@drawable/edittext_ring"
+                    android:id="@+id/businessTwitterEdt"
+                    android:hint="Business Twitter"
+                    android:textColorHint="@color/grey"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:inputType="text"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginBottom="14dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:drawableStart="@drawable/campus_promoter_twitter"
+                    android:drawablePadding="18dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_centerInParent="true">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Plan"
+                            android:textSize="20sp"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginBottom="8dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/businessAccountPrice"
+                            android:text=""
+                            android:textSize="15sp"
+                            android:textColor="@color/black"
+                            android:layout_marginStart="25dp"/>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="10"
+                    android:layout_margin="8dp">
+
+                    <com.rey.material.widget.CheckBox
+                        android:id="@+id/acceptBusinessTermsCheckbox"
+                        android:layout_width="0dp"
+                        android:layout_weight="1.5"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        style="@style/Material.Drawable.CheckBox"
+                        android:gravity="center_vertical|center_horizontal"
+                        app:cbd_strokeColor="@color/colorPrimaryDark"
+                        app:cbd_tickColor="@color/white"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="8.5"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/policyTextView"
+                        android:text="Accept all terms of use and conditions for business account."
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="15sp"
+                        android:gravity="start"
+                        android:layout_gravity="center_vertical"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/buttonsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:animateLayoutChanges="true"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/businessAccountPaymentBtn"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:background="@drawable/new_paystack_button"
+                android:text="Pay"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:layout_marginStart="7dp"
+                android:layout_marginEnd="7dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/createBusinessAccountBtn"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:background="@drawable/new_login_button"
+                android:text="Create"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:layout_marginStart="7dp"
+                android:layout_marginEnd="7dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:visibility="gone"/>
+
         </LinearLayout>
 
-    </ScrollView>
-
-    <LinearLayout
-        android:id="@+id/buttonsLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:animateLayoutChanges="true"
-        android:weightSum="2">
-
-        <Button
-            android:id="@+id/businessAccountPaymentBtn"
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:background="@drawable/paystack_backround_ripple"
-            android:text="Pay"
-            android:textSize="18sp"
-            android:textColor="@color/black"
-            android:layout_marginStart="7dp"
-            android:layout_marginEnd="7dp"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp"
-            android:visibility="gone"/>
-
-        <Button
-            android:id="@+id/createBusinessAccountBtn"
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:background="@drawable/create_bus_back_ripple"
-            android:text="Create"
-            android:textSize="18sp"
-            android:textColor="@color/black"
-            android:layout_marginStart="7dp"
-            android:layout_marginEnd="7dp"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp"
-            android:visibility="gone"/>
-
-    </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

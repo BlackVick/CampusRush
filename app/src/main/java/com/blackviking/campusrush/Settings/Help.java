@@ -94,7 +94,7 @@ public class Help extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String policyUrl = "https://www.freeprivacypolicy.com/privacy/view/7d8afef4e00e3de0461b9a7c962efddb";
+                String policyUrl = "https://campus-rush.web.app/customer-terms-and-privacy-policy.html#privacyPolicy";
 
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(policyUrl));
@@ -109,7 +109,7 @@ public class Help extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String termsUrl = "https://www.freeprivacypolicy.com/privacy/view/7d8afef4e00e3de0461b9a7c962efddb";
+                String termsUrl = "https://campus-rush.web.app/customer-terms-and-privacy-policy.html#terms";
 
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(termsUrl));

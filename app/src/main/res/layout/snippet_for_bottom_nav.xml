@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="55dp"
     android:layout_alignParentBottom="true"
-    android:background="@drawable/white_grey_border_top">
+    android:animateLayoutChanges="true"
+    android:background="@drawable/bottom_nav_back">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +20,7 @@
             android:layout_width="0dp"
             android:layout_weight="2"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_feed"
+            android:src="@drawable/new_offwhite_feed_icon"
             android:adjustViewBounds="true"
             android:padding="14dp"
             android:id="@+id/feed"/>
@@ -28,7 +29,7 @@
             android:layout_width="0dp"
             android:layout_weight="2"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_materials"
+            android:src="@drawable/new_offwhite_material_icon"
             android:adjustViewBounds="true"
             android:padding="14dp"
             android:id="@+id/materials"/>
@@ -37,7 +38,7 @@
             android:layout_width="0dp"
             android:layout_weight="2"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_campus_rant"
+            android:src="@drawable/new_offwhite_messaging_icon"
             android:adjustViewBounds="true"
             android:padding="14dp"
             android:id="@+id/messagesNav"/>
@@ -46,13 +47,13 @@
             android:layout_width="0dp"
             android:layout_weight="2"
             android:layout_height="match_parent"
-            android:id="@+id/notifications">
+            android:animateLayoutChanges="true">
 
             <ImageView
+                android:id="@+id/notifications"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_notification_setting"
-                android:tint="@color/colorPrimaryDark"
+                android:src="@drawable/new_offwhite_notification_icon"
                 android:adjustViewBounds="true"
                 android:padding="14dp"/>
 
@@ -76,7 +77,7 @@
             android:layout_width="0dp"
             android:layout_weight="2"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_account"
+            android:src="@drawable/new_offwhite_account_icon"
             android:adjustViewBounds="true"
             android:padding="14dp"
             android:id="@+id/account"/>
