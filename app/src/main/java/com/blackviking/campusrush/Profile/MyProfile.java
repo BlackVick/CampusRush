@@ -72,7 +72,6 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MyProfile extends AppCompatActivity {
 
-    private CollapsingToolbarLayout collapsingToolbarLayout;
     private FloatingActionButton editProfileFab;
     private String currentUid;
     private ImageView userProfileImage, coverPhoto, changeProfilePic;
@@ -80,7 +79,7 @@ public class MyProfile extends AppCompatActivity {
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
     private DatabaseReference userRef, businessProfileRef;
-    private CoordinatorLayout rootLayout;
+    private RelativeLayout rootLayout;
     private int BLUR_PRECENTAGE = 50;
     private Target target;
     private android.app.AlertDialog mDialog;
@@ -117,11 +116,6 @@ public class MyProfile extends AppCompatActivity {
         setContentView(R.layout.activity_my_profile);
 
 
-        /*---   TOOLBAR   ---*/
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-
         /*---   LOCAL   ---*/
         Paper.init(this);
 
@@ -135,12 +129,11 @@ public class MyProfile extends AppCompatActivity {
 
 
         /*---   WIDGETS   ---*/
-        collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.myCollapsing);
         editProfileFab = (FloatingActionButton)findViewById(R.id.editMyProfile);
         coverPhoto = (ImageView)findViewById(R.id.myProfilePictureBlur);
         userProfileImage = (ImageView)findViewById(R.id.myProfilePicture);
         changeProfilePic = (ImageView)findViewById(R.id.changeMyProfilePicture);
-        rootLayout = (CoordinatorLayout)findViewById(R.id.myProfileRootLayout);
+        rootLayout = (RelativeLayout)findViewById(R.id.myProfileRootLayout);
         username = (TextView)findViewById(R.id.myUsername);
         status = (TextView)findViewById(R.id.myStatus);
         gender = (TextView)findViewById(R.id.myGender);
@@ -158,11 +151,6 @@ public class MyProfile extends AppCompatActivity {
         busInstagram = (TextView)findViewById(R.id.myBusinessInstagramTxt);
         busTwitter = (TextView)findViewById(R.id.myBusinessTwitterTxt);
         accountType = (TextView)findViewById(R.id.myAccountType);
-
-
-        /*---   TOOLBAR   ---*/
-        collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppbar);
-        collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppbar);
 
 
         /*---   PERMISSIONS HANDLER   ---*/
@@ -356,7 +344,6 @@ public class MyProfile extends AppCompatActivity {
                 serverUserType = dataSnapshot.child("userType").getValue().toString();
 
                 /*---   DETAILS   ---*/
-                collapsingToolbarLayout.setTitle("@"+serverUsername);
                 username.setText("@"+serverUsername);
                 fullName.setText(serverFullName);
                 status.setText(serverStatus);

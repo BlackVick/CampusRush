@@ -76,14 +76,13 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class OtherUserProfile extends AppCompatActivity {
 
-    private CollapsingToolbarLayout collapsingToolbarLayout;
     private String userId, currentUid;
     private ImageView userProfileImage, coverPhoto;
     private TextView username, fullName, status, department, gender, bio;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
     private DatabaseReference userRef, timelineRef, likeRef, commentRef, businessProfileRef;
-    private CoordinatorLayout rootLayout;
+    private RelativeLayout rootLayout;
     private int BLUR_PRECENTAGE = 50;
     private RecyclerView timelineRecycler;
     private LinearLayoutManager layoutManager;
@@ -146,7 +145,6 @@ public class OtherUserProfile extends AppCompatActivity {
 
 
         /*---   WIDGETS   ---*/
-        collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.collapsing);
         coverPhoto = (ImageView)findViewById(R.id.userProfilePictureBlur);
         userProfileImage = (ImageView)findViewById(R.id.userProfilePicture);
         username = (TextView)findViewById(R.id.userUsername);
@@ -169,11 +167,6 @@ public class OtherUserProfile extends AppCompatActivity {
         busInstagram = (TextView)findViewById(R.id.userBusinessInstagramTxt);
         busTwitter = (TextView)findViewById(R.id.userBusinessTwitterTxt);
         accountType = (TextView)findViewById(R.id.userAccountType);
-
-
-        /*---   TOOLBAR   ---*/
-        collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppbar);
-        collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppbar);
 
 
         /*---   LOAD PROFILE   ---*/
@@ -222,7 +215,6 @@ public class OtherUserProfile extends AppCompatActivity {
                 serverMessagingState = dataSnapshot.child("messaging").getValue().toString();
 
                 /*---   DETAILS   ---*/
-                collapsingToolbarLayout.setTitle("@"+serverUsername);
                 username.setText("@"+serverUsername);
                 fullName.setText(serverFullName);
                 status.setText(serverStatus);
