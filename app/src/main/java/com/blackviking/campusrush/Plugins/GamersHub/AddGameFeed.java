@@ -33,9 +33,11 @@ import com.blackviking.campusrush.Common.Permissions;
 import com.blackviking.campusrush.Notification.APIService;
 import com.blackviking.campusrush.Notification.DataMessage;
 import com.blackviking.campusrush.Notification.MyResponse;
+import com.blackviking.campusrush.Profile.MyProfile;
 import com.blackviking.campusrush.R;
 import com.blackviking.campusrush.Settings.Help;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
@@ -435,8 +437,8 @@ public class AddGameFeed extends AppCompatActivity {
 
                 try {
                     Bitmap thumb_bitmap = new Compressor(AddGameFeed.this)
-                            .setMaxWidth(400)
-                            .setMaxHeight(400)
+                            .setMaxWidth(500)
+                            .setMaxHeight(500)
                             .setQuality(75)
                             .compressToBitmap(thumb_filepath);
 
@@ -489,20 +491,29 @@ public class AddGameFeed extends AppCompatActivity {
                                             imageUri = null;
                                         }
                                     }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(AddGameFeed.this, "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
+                                        mDialog.dismiss();
+                                        imageUri = null;
+                                    }
                                 });
 
                             } else {
 
+                                Toast.makeText(AddGameFeed.this, "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
                                 mDialog.dismiss();
                                 imageUri = null;
 
                             }
                         }
-                    });
-                    imageRef1.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                    }).addOnFailureListener(new OnFailureListener() {
                         @Override
-                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(AddGameFeed.this, "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
+                            mDialog.dismiss();
+                            imageUri = null;
                         }
                     });
 

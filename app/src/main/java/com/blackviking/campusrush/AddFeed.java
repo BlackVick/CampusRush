@@ -16,6 +16,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,7 @@ import com.blackviking.campusrush.Notification.MyResponse;
 import com.blackviking.campusrush.Plugins.SkitCenter.AddNewSkit;
 import com.blackviking.campusrush.Settings.Help;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -243,7 +245,7 @@ public class AddFeed extends AppCompatActivity {
 
             if (Common.isConnectedToInternet(getBaseContext())){
 
-                if (imageUri != null || originalImageUrl != null || thumbDownloadUrl != null){
+                if (imageUri != null && !TextUtils.isEmpty(originalImageUrl) && !TextUtils.isEmpty(thumbDownloadUrl)){
 
                     final Map<String, Object> newFeedMap = new HashMap<>();
 
@@ -587,8 +589,8 @@ public class AddFeed extends AppCompatActivity {
 
                 try {
                     Bitmap thumb_bitmap = new Compressor(this)
-                            .setMaxWidth(400)
-                            .setMaxHeight(400)
+                            .setMaxWidth(550)
+                            .setMaxHeight(550)
                             .setQuality(75)
                             .compressToBitmap(thumb_filepath);
 
@@ -637,24 +639,34 @@ public class AddFeed extends AppCompatActivity {
                                             mDialog.dismiss();
 
                                         } else {
+                                            Toast.makeText(AddFeed.this, "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
                                             mDialog.dismiss();
                                             imageUri = null;
                                         }
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(AddFeed.this, "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
+                                        mDialog.dismiss();
+                                        imageUri = null;
                                     }
                                 });
 
                             } else {
 
+                                Toast.makeText(AddFeed.this, "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
                                 mDialog.dismiss();
                                 imageUri = null;
 
                             }
                         }
-                    });
-                    imageRef1.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                    }).addOnFailureListener(new OnFailureListener() {
                         @Override
-                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(AddFeed.this, "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
+                            mDialog.dismiss();
+                            imageUri = null;
                         }
                     });
 

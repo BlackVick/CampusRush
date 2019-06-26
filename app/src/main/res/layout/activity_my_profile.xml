@@ -18,10 +18,10 @@
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_marginTop="330dp"
+            android:layout_marginTop="310dp"
             android:layout_width="match_parent"
-            android:layout_marginStart="18dp"
-            android:layout_marginEnd="18dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginBottom="20dp"
             android:layout_height="wrap_content">
 
@@ -43,10 +43,10 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="3dp"
                         android:padding="5dp"
-                        android:orientation="vertical">
+                        android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:text="Gender"
@@ -97,9 +97,9 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:lineSpacingMultiplier="1.5"
-                            android:padding="6dp"
+                            android:padding="3dp"
                             android:text="Bio"
+                            android:layout_marginTop="5dp"
                             android:textColor="@color/grey"
                             android:textSize="14sp"
                             android:layout_width="wrap_content"
@@ -107,7 +107,6 @@
 
                         <TextView
                             android:layout_marginTop="3dp"
-                            android:lineSpacingMultiplier="1.5"
                             android:padding="6dp"
                             android:textColor="@color/offBlack"
                             android:textSize="14sp"
@@ -351,7 +350,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="200dp"
         android:background="@color/white">
 
         <ImageView
@@ -366,7 +365,7 @@
             android:layout_height="100dp"
             app:corner_radius="20dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="40dp">
+            android:layout_marginTop="30dp">
 
             <ImageView
                 android:id="@+id/myProfilePicture"
@@ -398,7 +397,7 @@
         android:padding="8dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginTop="170dp"
+        android:layout_marginTop="150dp"
         app:cardElevation="7dp">
 
         <LinearLayout

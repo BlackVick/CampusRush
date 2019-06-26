@@ -886,7 +886,7 @@ public class FeedDetails extends AppCompatActivity {
                         reportRef.push().setValue(reportUserMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toast.makeText(FeedDetails.this, "Report Logged, But Remember, Don't Be A B***h Snitch", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(FeedDetails.this, "Report Logged, But Remember, Don't Be A Snitch", Toast.LENGTH_SHORT).show();
                             }
                         });
 

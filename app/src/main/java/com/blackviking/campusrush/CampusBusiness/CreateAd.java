@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import com.blackviking.campusrush.AddFeed;
 import com.blackviking.campusrush.BuildConfig;
+import com.blackviking.campusrush.CampusRant.RantRoom;
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.Common.Permissions;
 import com.blackviking.campusrush.Notification.DataMessage;
@@ -38,6 +39,7 @@ import com.blackviking.campusrush.Notification.MyResponse;
 import com.blackviking.campusrush.R;
 import com.blackviking.campusrush.Settings.Help;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -515,24 +517,35 @@ public class CreateAd extends AppCompatActivity {
                                             mDialog.dismiss();
 
                                         } else {
+
+                                            Toast.makeText(CreateAd.this, "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
                                             mDialog.dismiss();
                                             imageUri = null;
                                         }
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(CreateAd.this, "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
+                                        mDialog.dismiss();
+                                        imageUri = null;
                                     }
                                 });
 
                             } else {
 
+                                Toast.makeText(CreateAd.this, "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
                                 mDialog.dismiss();
                                 imageUri = null;
 
                             }
                         }
-                    });
-                    imageRef1.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                    }).addOnFailureListener(new OnFailureListener() {
                         @Override
-                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(CreateAd.this, "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
+                            mDialog.dismiss();
+                            imageUri = null;
                         }
                     });
 

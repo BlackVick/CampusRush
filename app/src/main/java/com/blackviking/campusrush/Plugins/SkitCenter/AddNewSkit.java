@@ -31,6 +31,7 @@ import com.blackviking.campusrush.Notification.APIService;
 import com.blackviking.campusrush.Notification.DataMessage;
 import com.blackviking.campusrush.Notification.MyResponse;
 import com.blackviking.campusrush.Plugins.GamersHub.AddGameFeed;
+import com.blackviking.campusrush.Profile.MyProfile;
 import com.blackviking.campusrush.R;
 import com.blackviking.campusrush.Settings.Help;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -257,7 +258,8 @@ public class AddNewSkit extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
 
-                Common.showErrorDialog(AddNewSkit.this, "File Upload Failed !");
+                Toast.makeText(AddNewSkit.this, "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
+                videoUri = null;
 
             }
         }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -442,7 +444,8 @@ public class AddNewSkit extends AppCompatActivity {
                 @Override
                 public void onFailure(@NonNull Exception e) {
 
-                    Common.showErrorDialog(AddNewSkit.this, "File Upload Failed !");
+                    Toast.makeText(AddNewSkit.this, "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
+                    videoUri = null;
 
                 }
             }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -481,7 +484,13 @@ public class AddNewSkit extends AppCompatActivity {
 
 
                     }
-                });
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(AddNewSkit.this, "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
+                mDialog.dismiss();
+            }
+        });
 
     }
 

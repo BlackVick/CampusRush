@@ -6,6 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:descendantFocusability="beforeDescendants"
     tools:context=".FeedDetails">
 
     <include layout="@layout/snippet_for_general"/>
@@ -22,11 +25,15 @@
             android:orientation="vertical"
             android:animateLayoutChanges="true"
             android:focusable="true"
-            android:focusableInTouchMode="true">
+            android:focusableInTouchMode="true"
+            android:descendantFocusability="beforeDescendants">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:descendantFocusability="beforeDescendants"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -34,6 +41,9 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:weightSum="10"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:descendantFocusability="beforeDescendants"
                     android:layout_margin="3dp">
 
                     <RelativeLayout

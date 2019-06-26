@@ -34,7 +34,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class Login extends AppCompatActivity {
 
-    private ImageView helpButton, emptySpace, emptySpace2;
+    private ImageView helpButton;
     private TextView signUpLink, resetPassword;
     private EditText email, password;
     private RelativeLayout loginLayout;
@@ -67,8 +67,6 @@ public class Login extends AppCompatActivity {
 
         /*---   WIDGETS   ---*/
         helpButton = (ImageView)findViewById(R.id.helpButton);
-        emptySpace = (ImageView)findViewById(R.id.emptySpace);
-        emptySpace2 = (ImageView)findViewById(R.id.emptySpace2);
         loginLayout = (RelativeLayout)findViewById(R.id.loginLayout);
         email = (EditText)findViewById(R.id.signInEmail);
         password = (EditText)findViewById(R.id.signInPassword);
@@ -82,17 +80,9 @@ public class Login extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                emptySpace.setVisibility(View.GONE);
-                emptySpace2.setVisibility(View.GONE);
-            }
-        }, 1700);
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
                 loginLayout.setVisibility(View.VISIBLE);
             }
-        }, 2300);
+        }, 1300);
 
 
 

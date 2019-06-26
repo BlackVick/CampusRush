@@ -33,11 +33,13 @@ import com.blackviking.campusrush.BuildConfig;
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.Common.GetTimeAgo;
 import com.blackviking.campusrush.ImageController.ImageViewer;
+import com.blackviking.campusrush.Messaging.Messaging;
 import com.blackviking.campusrush.R;
 import com.blackviking.campusrush.Settings.Help;
 import com.blackviking.campusrush.ViewHolder.RantViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -581,8 +583,15 @@ public class RantRoom extends AppCompatActivity {
 
                                         } else {
                                             mDialog.dismiss();
-                                            Common.showErrorDialog(RantRoom.this, "Error Occurred While Uploading");
+                                            Toast.makeText(RantRoom.this, "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
                                         }
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(RantRoom.this, "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
+                                        mDialog.dismiss();
+                                        imageUri = null;
                                     }
                                 });
 
@@ -591,9 +600,16 @@ public class RantRoom extends AppCompatActivity {
                             } else {
 
                                 mDialog.dismiss();
-                                Common.showErrorDialog(RantRoom.this, "Error Occurred While Uploading");
+                                Toast.makeText(RantRoom.this, "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
 
                             }
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(RantRoom.this, "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
+                            mDialog.dismiss();
+                            imageUri = null;
                         }
                     });
 

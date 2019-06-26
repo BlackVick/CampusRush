@@ -177,7 +177,7 @@ public class Feed extends Fragment {
                 FeedModel.class,
                 R.layout.feed_item,
                 FeedViewHolder.class,
-                feedRef.limitToLast(75)
+                feedRef.limitToLast(70)
         ) {
             @Override
             protected void populateViewHolder(final FeedViewHolder viewHolder, final FeedModel model, final int position) {
@@ -372,12 +372,7 @@ public class Feed extends Fragment {
 
 
                     /*---   POSTER DETAILS   ---*/
-                    if (model.getSender().equalsIgnoreCase("")) {
-
-                        viewHolder.posterName.setText("PROTECTED");
-                        viewHolder.posterImage.setImageResource(R.drawable.profile);
-
-                    } else {
+                    if (!model.getSender().equalsIgnoreCase("")) {
 
                         userRef.child(model.getSender()).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -482,6 +477,11 @@ public class Feed extends Fragment {
                             });
 
                         }
+
+                    } else {
+
+                        viewHolder.posterName.setText("PROTECTED");
+                        viewHolder.posterImage.setImageResource(R.drawable.profile);
 
                     }
 

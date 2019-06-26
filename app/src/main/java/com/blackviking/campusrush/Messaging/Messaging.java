@@ -41,12 +41,14 @@ import com.blackviking.campusrush.ImageController.ImageViewer;
 import com.blackviking.campusrush.Notification.APIService;
 import com.blackviking.campusrush.Notification.DataMessage;
 import com.blackviking.campusrush.Notification.MyResponse;
+import com.blackviking.campusrush.Plugins.GamersHub.AddGameFeed;
 import com.blackviking.campusrush.Profile.OtherUserProfile;
 import com.blackviking.campusrush.R;
 import com.blackviking.campusrush.Settings.Help;
 import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -1080,8 +1082,15 @@ public class Messaging extends AppCompatActivity {
 
                                         } else {
                                             mDialog.dismiss();
-                                            Common.showErrorDialog(Messaging.this, "Error Occurred While Uploading");
+                                            Toast.makeText(Messaging.this, "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
                                         }
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(Messaging.this, "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
+                                        mDialog.dismiss();
+                                        imageUri = null;
                                     }
                                 });
 
@@ -1090,9 +1099,16 @@ public class Messaging extends AppCompatActivity {
                             } else {
 
                                 mDialog.dismiss();
-                                Common.showErrorDialog(Messaging.this, "Error Occurred While Uploading");
+                                Toast.makeText(Messaging.this, "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
 
                             }
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(Messaging.this, "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
+                            mDialog.dismiss();
+                            imageUri = null;
                         }
                     });
 

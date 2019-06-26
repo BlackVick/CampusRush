@@ -29,7 +29,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.blackviking.campusrush.AddFeed;
 import com.blackviking.campusrush.BuildConfig;
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.Common.Permissions;
@@ -39,6 +41,7 @@ import com.blackviking.campusrush.R;
 import com.blackviking.campusrush.Settings.AccountSettings;
 import com.blackviking.campusrush.UserVerification;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -632,9 +635,18 @@ public class MyProfile extends AppCompatActivity {
                                             });
 
                                         } else {
+
+                                            Toast.makeText(MyProfile.this, "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
                                             mDialog.dismiss();
                                             imageUri = null;
                                         }
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(MyProfile.this, "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
+                                        mDialog.dismiss();
+                                        imageUri = null;
                                     }
                                 });
 
@@ -644,6 +656,13 @@ public class MyProfile extends AppCompatActivity {
                                 imageUri = null;
 
                             }
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(MyProfile.this, "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
+                            mDialog.dismiss();
+                            imageUri = null;
                         }
                     });
 

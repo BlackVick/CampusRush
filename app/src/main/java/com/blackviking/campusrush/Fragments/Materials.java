@@ -42,6 +42,7 @@ import com.blackviking.campusrush.Common.Permissions;
 import com.blackviking.campusrush.Interface.ItemClickListener;
 import com.blackviking.campusrush.Model.MaterialModel;
 import com.blackviking.campusrush.Model.MaterialParentModel;
+import com.blackviking.campusrush.Profile.MyProfile;
 import com.blackviking.campusrush.R;
 import com.blackviking.campusrush.ViewHolder.MaterialParentViewHolder;
 import com.blackviking.campusrush.ViewHolder.MaterialViewHolder;
@@ -646,7 +647,7 @@ public class Materials extends Fragment {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
 
-                                    Common.showErrorDialog(getContext(), "File Upload Failed !");
+                                    Toast.makeText(getContext(), "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
 
                                 }
                             }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -789,7 +790,7 @@ public class Materials extends Fragment {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
 
-                                    Common.showErrorDialog(getContext(), "File Upload Failed !");
+                                    Toast.makeText(getContext(), "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
 
                                 }
                             }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -928,7 +929,7 @@ public class Materials extends Fragment {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
 
-                                    Common.showErrorDialog(getContext(), "File Upload Failed !");
+                                    Toast.makeText(getContext(), "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
 
                                 }
                             }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -1077,7 +1078,7 @@ public class Materials extends Fragment {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
 
-                                    Common.showErrorDialog(getContext(), "File Upload Failed !");
+                                    Toast.makeText(getContext(), "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
 
                                 }
                             }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
