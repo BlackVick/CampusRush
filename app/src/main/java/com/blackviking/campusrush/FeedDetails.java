@@ -504,6 +504,8 @@ public class FeedDetails extends AppCompatActivity {
                                                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                         @Override
                                                                         public void onSuccess(Void aVoid) {
+                                                                            likeRef.child(currentFeedId).removeValue();
+                                                                            commentRef.child(currentFeedId).removeValue();
                                                                             finish();
                                                                         }
                                                                     });

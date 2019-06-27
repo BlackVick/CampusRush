@@ -8,9 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -37,11 +40,14 @@ public class Login extends AppCompatActivity {
     private ImageView helpButton;
     private TextView signUpLink, resetPassword;
     private EditText email, password;
-    private RelativeLayout loginLayout;
+    private RelativeLayout loginLayout, bottomPort;
+    private LinearLayout topPort;
     private Button signInBtn;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private ProgressBar progressBar;
     private String currentUid;
+
+    private Animation fromBottom, fromTop;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -74,6 +80,14 @@ public class Login extends AppCompatActivity {
         resetPassword = (TextView)findViewById(R.id.resetPassword);
         signUpLink = (TextView)findViewById(R.id.signUpLink);
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
+        bottomPort = (RelativeLayout)findViewById(R.id.lowerPort);
+        topPort = (LinearLayout)findViewById(R.id.topPort);
+
+        fromBottom = AnimationUtils.loadAnimation(this, R.anim.from_bottom);
+        fromTop = AnimationUtils.loadAnimation(this, R.anim.from_top);
+
+        bottomPort.setAnimation(fromBottom);
+        topPort.setAnimation(fromTop);
 
 
         /*---   SLOW BUTTONS REVEAL   ---*/
@@ -82,7 +96,7 @@ public class Login extends AppCompatActivity {
             public void run() {
                 loginLayout.setVisibility(View.VISIBLE);
             }
-        }, 1300);
+        }, 1500);
 
 
 
@@ -285,24 +299,6 @@ public class Login extends AppCompatActivity {
             return false;
 
         return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        final String localUser = Paper.book().read(Common.USER_ID);
-        if (localUser != null && mAuth.getCurrentUser() != null){
-
-            if (!localUser.isEmpty()){
-
-                Intent goToHome = new Intent(Login.this, Home.class);
-                startActivity(goToHome);
-                finish();
-
-            }
-
-        }
     }
 
     @Override

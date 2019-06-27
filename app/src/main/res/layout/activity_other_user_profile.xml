@@ -23,7 +23,7 @@
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_marginTop="310dp"
+            android:layout_marginTop="300dp"
             android:layout_width="match_parent"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
@@ -45,68 +45,48 @@
                     android:orientation="vertical">
 
                     <!-- MORE DETAILS  -->
-                    <LinearLayout
-                        android:id="@+id/sexLayout"
+                    <TextView
+                        android:id="@+id/userGender"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="3dp"
+                        android:drawableStart="@drawable/ic_gender_profile"
+                        android:drawablePadding="10dp"
+                        android:text="male"
+                        android:textSize="16sp"
+                        android:textColor="@color/offBlack"
                         android:padding="5dp"
-                        android:orientation="horizontal">
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="7dp"
+                        android:layout_marginEnd="10dp"/>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:text="Gender"
-                            android:textColor="@color/black"
-                            android:textSize="13sp"/>
-
-                        <TextView
-                            android:id="@+id/userGender"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="15sp"
-                            android:textColor="@color/offBlack"
-                            android:padding="3dp"
-                            android:layout_marginStart="20dp"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/userDepartment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="3dp"
+                        android:text="CBG"
+                        android:drawableStart="@drawable/ic_department_profile"
+                        android:drawablePadding="10dp"
+                        android:textSize="16sp"
+                        android:textColor="@color/offBlack"
                         android:padding="5dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:text="Department"
-                            android:textColor="@color/black"
-                            android:textSize="13sp"/>
-
-                        <TextView
-                            android:id="@+id/userDepartment"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="15sp"
-                            android:textColor="@color/offBlack"
-                            android:padding="4dp"
-                            android:layout_marginStart="20dp"/>
-
-                    </LinearLayout>
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="7dp"
+                        android:layout_marginEnd="10dp"/>
 
                     <LinearLayout
-                        android:layout_marginTop="3dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="7dp"
+                        android:layout_marginEnd="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
                         <TextView
                             android:lineSpacingMultiplier="1.5"
-                            android:padding="3dp"
+                            android:padding="2dp"
                             android:text="Bio"
                             android:layout_marginStart="5dp"
                             android:textColor="@color/grey"
@@ -115,8 +95,7 @@
                             android:layout_height="wrap_content"/>
 
                         <TextView
-                            android:layout_marginTop="3dp"
-                            android:lineSpacingMultiplier="1.5"
+                            android:layout_marginTop="2dp"
                             android:padding="6dp"
                             android:textColor="@color/offBlack"
                             android:textSize="14sp"
@@ -398,10 +377,10 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="20dp"
-        android:padding="8dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
+        app:cardCornerRadius="12dp"
+        android:padding="5dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginTop="150dp"
         app:cardElevation="7dp">
 

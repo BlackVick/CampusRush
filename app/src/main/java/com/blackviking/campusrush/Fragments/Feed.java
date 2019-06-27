@@ -288,6 +288,8 @@ public class Feed extends Fragment {
                                                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                             @Override
                                                                             public void onSuccess(Void aVoid) {
+                                                                                likeRef.child(adapter.getRef(viewHolder.getAdapterPosition()).getKey()).removeValue();
+                                                                                commentRef.child(adapter.getRef(viewHolder.getAdapterPosition()).getKey()).removeValue();
                                                                                 Toast.makeText(getContext(), "Deleted", Toast.LENGTH_SHORT).show();
                                                                             }
                                                                         });

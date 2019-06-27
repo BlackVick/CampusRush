@@ -11,6 +11,7 @@ import com.crashlytics.android.Crashlytics;
 
 import co.paystack.android.PaystackSdk;
 import io.fabric.sdk.android.Fabric;
+import io.paperdb.Paper;
 
 import com.blackviking.campusrush.R;
 import com.google.firebase.database.FirebaseDatabase;
@@ -34,6 +35,9 @@ public class PersistenceClass extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        /*---   PAPER   ---*/
+        Paper.init(getApplicationContext());
 
         /*---   PAYSTACK   ---*/
         PaystackSdk.initialize(getApplicationContext());

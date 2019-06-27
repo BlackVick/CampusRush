@@ -21,18 +21,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".SearchFunction.SearchActivity"></activity>
 
         <service
             android:name=".Services.SubscriptionService"
             android:enabled="true"
             android:exported="true" />
-
         <service
             android:name=".Services.CheckSubStatusService"
             android:enabled="true"
-            android:exported="true"></service>
-
-
+            android:exported="true" />
 
         <meta-data
             android:name="co.paystack.android.PublicKey"
@@ -150,7 +148,7 @@
             android:name=".CampusRant.RantRoom"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/ChatBackground"/>
+            android:theme="@style/ChatBackground" />
         <activity
             android:name=".Plugins.Awards.Awards"
             android:configChanges="orientation"
@@ -207,14 +205,14 @@
         <activity
             android:name=".Plugins.SkitCenter.AddNewSkit"
             android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:mimeType="video/*" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".ManagementDetail"
@@ -235,14 +233,14 @@
         <activity
             android:name=".AddFeed"
             android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:mimeType="image/*" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".AdminManagement"
@@ -268,16 +266,16 @@
             android:name=".CampusRant.CampusRant"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/RantBackground"/>
+            android:theme="@style/RantBackground" />
         <activity
             android:name=".Messaging.Messaging"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/ChatBackground"/>
+            android:theme="@style/ChatBackground" />
         <activity
             android:name=".CampusBusiness.AdDetails"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

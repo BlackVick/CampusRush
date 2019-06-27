@@ -51,6 +51,7 @@ import com.blackviking.campusrush.Plugins.Awards.Awards;
 import com.blackviking.campusrush.Plugins.GamersHub.GamersHub;
 import com.blackviking.campusrush.Plugins.SkitCenter.SkitCenter;
 import com.blackviking.campusrush.Profile.MyProfile;
+import com.blackviking.campusrush.SearchFunction.SearchActivity;
 import com.blackviking.campusrush.Services.CheckSubStatusService;
 import com.blackviking.campusrush.Services.SubscriptionService;
 import com.blackviking.campusrush.Settings.Settings;
@@ -767,6 +768,14 @@ public class Home extends AppCompatActivity
             startActivity(aboutIntent);
             overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
             return true;
+
+        } else if (id == R.id.action_search){
+
+            Intent searchIntent = new Intent(Home.this, SearchActivity.class);
+            startActivity(searchIntent);
+            overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+            return true;
+
         }
 
         return super.onOptionsItemSelected(item);

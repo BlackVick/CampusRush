@@ -47,7 +47,7 @@ public class Notifications extends Fragment {
     private String currentUid;
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    private DatabaseReference notificationRef, userRef;
+    private DatabaseReference notificationRef, userRef, feedRef;
     private FloatingActionButton deleteAllNotification;
 
     public Notifications() {
@@ -70,6 +70,7 @@ public class Notifications extends Fragment {
 
         userRef = db.getReference("Users");
         notificationRef = db.getReference("Notifications");
+        feedRef = db.getReference("Feed");
 
 
         /*---   WIDGETS   ---*/
@@ -254,16 +255,40 @@ public class Notifications extends Fragment {
                         @Override
                         public void onClick(View view, int position, boolean isLongClick) {
 
-                            notificationRef
-                                    .child(currentUid)
-                                    .child(adapter.getRef(viewHolder.getAdapterPosition()).getKey())
-                                    .child("status")
-                                    .setValue("Read");
+                            feedRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
 
-                            Intent feedDetail = new Intent(getContext(), FeedDetails.class);
-                            feedDetail.putExtra("CurrentFeedId", model.getIntentPrimaryKey());
-                            startActivity(feedDetail);
-                            getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+                                    if (dataSnapshot.child(model.getIntentPrimaryKey()).exists()){
+
+                                        notificationRef
+                                                .child(currentUid)
+                                                .child(adapter.getRef(viewHolder.getAdapterPosition()).getKey())
+                                                .child("status")
+                                                .setValue("Read");
+
+                                        Intent feedDetail = new Intent(getContext(), FeedDetails.class);
+                                        feedDetail.putExtra("CurrentFeedId", model.getIntentPrimaryKey());
+                                        startActivity(feedDetail);
+                                        getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+
+                                    } else {
+
+                                        notificationRef
+                                                .child(currentUid)
+                                                .child(adapter.getRef(viewHolder.getAdapterPosition()).getKey())
+                                                .child("status")
+                                                .setValue("Read");
+
+                                    }
+
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
 
                         }
                     });
