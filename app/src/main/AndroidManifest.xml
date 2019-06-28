@@ -21,7 +21,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".SearchFunction.SearchActivity"></activity>
 
         <service
             android:name=".Services.SubscriptionService"
@@ -276,6 +275,10 @@
             android:name=".CampusBusiness.AdDetails"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".SearchFunction.SearchActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

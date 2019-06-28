@@ -1,0 +1,65 @@
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:descendantFocusability="beforeDescendants">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:descendantFocusability="beforeDescendants"
+            android:weightSum="10">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:id="@+id/exitActivity"
+                android:src="@drawable/campus_rush_back_button_white"
+                android:adjustViewBounds="true"
+                android:padding="3dp"/>
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="8"
+                android:layout_height="match_parent"
+                android:background="@drawable/search_edt_back"
+                android:id="@+id/searchText"
+                android:gravity="center_vertical"
+                android:paddingStart="18dp"
+                android:paddingEnd="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:textSize="16sp"
+                android:singleLine="true"
+                android:ellipsize="start"
+                android:textColor="@color/black"
+                android:hint="Search Campus Rush . . ."
+                android:textColorHint="@color/grey"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:id="@+id/searchButton"
+                android:src="@drawable/ic_search_campus_rush"
+                android:adjustViewBounds="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:padding="3dp"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</merge>

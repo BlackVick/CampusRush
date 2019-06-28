@@ -3,6 +3,7 @@ package com.blackviking.campusrush.Messaging;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.blackviking.campusrush.Interface.ItemClickListener;
@@ -15,6 +16,7 @@ public class MessagesViewHolder extends RecyclerView.ViewHolder implements View.
     private ItemClickListener itemClickListener;
     public CircleImageView userImage;
     public TextView username, unreadCount;
+    public RelativeLayout theUserLayout;
 
     public MessagesViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -22,6 +24,7 @@ public class MessagesViewHolder extends RecyclerView.ViewHolder implements View.
         userImage = (CircleImageView)itemView.findViewById(R.id.msgListImage);
         username = (TextView)itemView.findViewById(R.id.msgListUsername);
         unreadCount = (TextView)itemView.findViewById(R.id.msgUnreadCount);
+        theUserLayout = (RelativeLayout) itemView.findViewById(R.id.theUserLayout);
 
         itemView.setOnClickListener(this);
     }

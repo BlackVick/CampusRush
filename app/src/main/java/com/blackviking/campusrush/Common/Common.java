@@ -31,6 +31,10 @@ public class Common {
     public static final String APP_STATE = "State";
 
 
+    /*---   SEARCH   ---*/
+    public static final String SEARCH_STRING = "SearchText";
+
+
     /*---   NOTIFICATION   ---*/
     public static final String NOTIFICATION_STATE = "Notification";
     public static String FEED_NOTIFICATION_STATE = "Feed";
