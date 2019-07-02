@@ -204,7 +204,7 @@ public class Account extends Fragment {
                         Picasso.with(getContext())
                                 .load(model.getImageThumbUrl())
                                 .networkPolicy(NetworkPolicy.OFFLINE)
-                                .placeholder(R.drawable.campus_rush_feed_placeholder)
+                                .placeholder(R.drawable.ic_new_placeholder_icon)
                                 .into(viewHolder.postImage, new Callback() {
                                     @Override
                                     public void onSuccess() {
@@ -215,7 +215,7 @@ public class Account extends Fragment {
                                     public void onError() {
                                         Picasso.with(getContext())
                                                 .load(model.getImageThumbUrl())
-                                                .placeholder(R.drawable.campus_rush_feed_placeholder)
+                                                .placeholder(R.drawable.ic_new_placeholder_icon)
                                                 .into(viewHolder.postImage);
                                     }
                                 });
@@ -347,7 +347,7 @@ public class Account extends Fragment {
                                     public void onError() {
                                         Picasso.with(getContext())
                                                 .load(theImage)
-                                                .placeholder(R.drawable.ic_loading_animation)
+                                                .placeholder(R.drawable.profile)
                                                 .into(viewHolder.posterImage);
                                     }
                                 });
@@ -368,7 +368,7 @@ public class Account extends Fragment {
                         Picasso.with(getContext())
                                 .load(model.getImageThumbUrl())
                                 .networkPolicy(NetworkPolicy.OFFLINE)
-                                .placeholder(R.drawable.campus_rush_feed_placeholder)
+                                .placeholder(R.drawable.ic_new_placeholder_icon)
                                 .into(viewHolder.postImage, new Callback() {
                                     @Override
                                     public void onSuccess() {
@@ -379,7 +379,7 @@ public class Account extends Fragment {
                                     public void onError() {
                                         Picasso.with(getContext())
                                                 .load(model.getImageThumbUrl())
-                                                .placeholder(R.drawable.campus_rush_feed_placeholder)
+                                                .placeholder(R.drawable.ic_new_placeholder_icon)
                                                 .into(viewHolder.postImage);
                                     }
                                 });

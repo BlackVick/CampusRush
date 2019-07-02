@@ -589,13 +589,13 @@ public class AddFeed extends AppCompatActivity {
 
                 try {
                     Bitmap thumb_bitmap = new Compressor(this)
-                            .setMaxWidth(550)
-                            .setMaxHeight(550)
-                            .setQuality(75)
+                            .setMaxWidth(450)
+                            .setMaxHeight(450)
+                            .setQuality(70)
                             .compressToBitmap(thumb_filepath);
 
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    thumb_bitmap.compress(Bitmap.CompressFormat.JPEG, 75, baos);
+                    thumb_bitmap.compress(Bitmap.CompressFormat.JPEG, 70, baos);
                     final byte[] thumb_byte = baos.toByteArray();
 
                     final StorageReference imageRef1 = imageRef.child("FullImages").child(dateShitFmt + ".jpg");

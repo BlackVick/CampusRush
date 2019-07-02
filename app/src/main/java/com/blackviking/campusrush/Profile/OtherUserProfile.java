@@ -395,7 +395,7 @@ public class OtherUserProfile extends AppCompatActivity {
                         Picasso.with(getBaseContext())
                                 .load(model.getImageThumbUrl())
                                 .networkPolicy(NetworkPolicy.OFFLINE)
-                                .placeholder(R.drawable.campus_rush_feed_placeholder)
+                                .placeholder(R.drawable.ic_new_placeholder_icon)
                                 .into(viewHolder.postImage, new Callback() {
                                     @Override
                                     public void onSuccess() {
@@ -406,7 +406,7 @@ public class OtherUserProfile extends AppCompatActivity {
                                     public void onError() {
                                         Picasso.with(getBaseContext())
                                                 .load(model.getImageThumbUrl())
-                                                .placeholder(R.drawable.campus_rush_feed_placeholder)
+                                                .placeholder(R.drawable.ic_new_placeholder_icon)
                                                 .into(viewHolder.postImage);
                                     }
                                 });
@@ -503,6 +503,7 @@ public class OtherUserProfile extends AppCompatActivity {
                         Picasso.with(getBaseContext())
                                 .load(model.getImageThumbUrl())
                                 .placeholder(R.drawable.campus_rush_feed_placeholder)
+                                .placeholder(R.drawable.ic_new_placeholder_icon)
                                 .into(viewHolder.postImage);
 
                     } else {

@@ -627,13 +627,21 @@ public class RantRoom extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
-        if (requestCode == VERIFY_PERMISSIONS_REQUEST && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        if (grantResults.length > 0) {
 
-            openChoiceDialog();
+            if (requestCode == VERIFY_PERMISSIONS_REQUEST && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                openChoiceDialog();
+
+            } else {
+
+                Toast.makeText(RantRoom.this, "Permissions Denied", Toast.LENGTH_SHORT).show();
+
+            }
 
         } else {
 
-            Toast.makeText(RantRoom.this, "Permissions Denied", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Permission Error", Toast.LENGTH_SHORT).show();
 
         }
 

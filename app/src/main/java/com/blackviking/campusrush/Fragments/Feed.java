@@ -200,7 +200,7 @@ public class Feed extends Fragment {
                         Picasso.with(getContext())
                                 .load(model.getImageThumbUrl())
                                 .networkPolicy(NetworkPolicy.OFFLINE)
-                                .placeholder(R.drawable.campus_rush_feed_placeholder)
+                                .placeholder(R.drawable.ic_new_placeholder_icon)
                                 .into(viewHolder.postImage, new Callback() {
                                     @Override
                                     public void onSuccess() {
@@ -211,7 +211,7 @@ public class Feed extends Fragment {
                                     public void onError() {
                                         Picasso.with(getContext())
                                                 .load(model.getImageThumbUrl())
-                                                .placeholder(R.drawable.campus_rush_feed_placeholder)
+                                                .placeholder(R.drawable.ic_new_placeholder_icon)
                                                 .into(viewHolder.postImage);
                                     }
                                 });
@@ -496,7 +496,7 @@ public class Feed extends Fragment {
                         Picasso.with(getContext())
                                 .load(model.getImageThumbUrl())
                                 .networkPolicy(NetworkPolicy.OFFLINE)
-                                .placeholder(R.drawable.campus_rush_feed_placeholder)
+                                .placeholder(R.drawable.ic_new_placeholder_icon)
                                 .into(viewHolder.postImage, new Callback() {
                                     @Override
                                     public void onSuccess() {
@@ -507,7 +507,7 @@ public class Feed extends Fragment {
                                     public void onError() {
                                         Picasso.with(getContext())
                                                 .load(model.getImageThumbUrl())
-                                                .placeholder(R.drawable.campus_rush_feed_placeholder)
+                                                .placeholder(R.drawable.ic_new_placeholder_icon)
                                                 .into(viewHolder.postImage);
                                     }
                                 });

@@ -771,10 +771,15 @@ public class Home extends AppCompatActivity
 
         } else if (id == R.id.action_search){
 
-            Intent searchIntent = new Intent(Home.this, SearchActivity.class);
-            startActivity(searchIntent);
-            overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
-            return true;
+            if (mAuth.getCurrentUser().isEmailVerified()) {
+                Intent searchIntent = new Intent(Home.this, SearchActivity.class);
+                startActivity(searchIntent);
+                overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+                return true;
+            } else {
+                Intent verifyIntent = new Intent(Home.this, UserVerification.class);
+                startActivity(verifyIntent);
+            }
 
         }
 

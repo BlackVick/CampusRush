@@ -515,24 +515,32 @@ public class Materials extends Fragment {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
-        if (requestCode == VERIFY_PERMISSIONS_REQUEST && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        if (grantResults.length > 0) {
 
-            if (onFaculty)
-                openAddMaterialForFacultyDialog();
-            else if (onDepartment)
-                openAddMaterialForDepartmentDialog();
-            else if (onLevels)
-                openAddMaterialForLevelDialog();
-            else if (onMaterial)
-                openAddMaterialDialog();
+            if (requestCode == VERIFY_PERMISSIONS_REQUEST && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-        } else if (requestCode == STORAGE_PERMISSION_CODE && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (onFaculty)
+                    openAddMaterialForFacultyDialog();
+                else if (onDepartment)
+                    openAddMaterialForDepartmentDialog();
+                else if (onLevels)
+                    openAddMaterialForLevelDialog();
+                else if (onMaterial)
+                    openAddMaterialDialog();
 
-            Toast.makeText(getContext(), "You Can Now Download Files", Toast.LENGTH_SHORT).show();
+            } else if (requestCode == STORAGE_PERMISSION_CODE && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                Toast.makeText(getContext(), "You Can Now Download Files", Toast.LENGTH_SHORT).show();
+
+            } else {
+
+                Toast.makeText(getContext(), "Permissions Denied", Toast.LENGTH_SHORT).show();
+
+            }
 
         } else {
 
-            Toast.makeText(getContext(), "Permissions Denied", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Permissions Error", Toast.LENGTH_SHORT).show();
 
         }
 

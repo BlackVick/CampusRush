@@ -72,6 +72,7 @@
             android:adjustViewBounds="true"
             android:id="@+id/postImage"
             android:visibility="gone"
+            android:layout_gravity="center"
             android:layout_marginBottom="7dp"/>
 
         <TextView
