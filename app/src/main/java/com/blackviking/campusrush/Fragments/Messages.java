@@ -39,7 +39,6 @@ public class Messages extends Fragment {
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private DatabaseReference userRef, messagesRef, messageListRef;
-    private TextView messageNotiCount;
     private String currentUid;
 
     public Messages() {
@@ -63,7 +62,6 @@ public class Messages extends Fragment {
 
         /*---   WIDGET   ---*/
         messagesRecycler = (RecyclerView)v.findViewById(R.id.messagesRecycler);
-        messageNotiCount = (TextView)v.findViewById(R.id.messageNotiCount);
 
 
         loadMessages();
@@ -145,12 +143,10 @@ public class Messages extends Fragment {
 
                                     viewHolder.unreadCount.setVisibility(View.VISIBLE);
                                     viewHolder.unreadCount.setText(String.valueOf(unreadMessageCount));
-                                    messageNotiCount.setVisibility(View.VISIBLE);
 
                                 } else {
 
                                     viewHolder.unreadCount.setVisibility(View.GONE);
-                                    messageNotiCount.setVisibility(View.GONE);
 
                                 }
 
