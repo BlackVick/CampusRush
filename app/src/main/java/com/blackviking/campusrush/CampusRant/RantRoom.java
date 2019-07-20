@@ -589,9 +589,6 @@ public class RantRoom extends AppCompatActivity {
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(RantRoom.this, "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
-                                        mDialog.dismiss();
-                                        imageUri = null;
                                     }
                                 });
 
@@ -607,9 +604,6 @@ public class RantRoom extends AppCompatActivity {
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(RantRoom.this, "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
-                            mDialog.dismiss();
-                            imageUri = null;
                         }
                     });
 

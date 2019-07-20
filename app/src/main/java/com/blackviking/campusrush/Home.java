@@ -86,9 +86,9 @@ public class Home extends AppCompatActivity
 
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
-    private DatabaseReference userRef, rateRef, notificationRef, adminRef, campusAdRef, businessProfileRef;
+    private DatabaseReference userRef, rateRef, notificationRef, adminRef, campusAdRef, businessProfileRef, messagingRef;
     private CircleImageView userImage;
-    private TextView userFullName, userName, notificationCount, anticipateText;
+    private TextView userFullName, userName, notificationCount, messageNotiCount, anticipateText;
     private ImageView feed, materials, messagesNav, account, anticipateImage, notifications;
     public RelativeLayout navLayout;
     private DrawerLayout rootLayout;
@@ -137,6 +137,7 @@ public class Home extends AppCompatActivity
         adminRef = db.getReference("AdminManagement");
         campusAdRef = db.getReference("CampusAd");
         businessProfileRef = db.getReference("BusinessProfile");
+        messagingRef = db.getReference("Messages");
         if (mAuth.getCurrentUser() != null)
             currentUid = mAuth.getCurrentUser().getUid();
 
@@ -150,6 +151,7 @@ public class Home extends AppCompatActivity
         notifications = (ImageView) findViewById(R.id.notifications);
         navLayout = (RelativeLayout)findViewById(R.id.navLayout);
         notificationCount = (TextView)findViewById(R.id.notificationCount);
+        messageNotiCount = (TextView)findViewById(R.id.messageNotiCount);
         userFullName = (TextView)findViewById(R.id.appBarFullName);
         userName = (TextView)findViewById(R.id.appBarUsername);
         userImage = (CircleImageView)findViewById(R.id.appBarUserImage);

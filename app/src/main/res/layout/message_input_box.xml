@@ -48,7 +48,6 @@
                     android:background="@color/white"
                     android:id="@+id/messageEditText"
                     android:inputType="textMultiLine"
-                    android:maxLength="160"
                     android:textColor="@color/black"
                     android:hint="Type A Message . . ."
                     android:maxLines="6"/>

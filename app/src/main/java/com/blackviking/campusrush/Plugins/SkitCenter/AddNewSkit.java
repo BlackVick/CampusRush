@@ -258,8 +258,6 @@ public class AddNewSkit extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
 
-                Toast.makeText(AddNewSkit.this, "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
-                videoUri = null;
 
             }
         }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -307,6 +305,11 @@ public class AddNewSkit extends AppCompatActivity {
 
                         sendNotificationToAdmin();
                         finish();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
                     }
                 });
 
@@ -444,9 +447,6 @@ public class AddNewSkit extends AppCompatActivity {
                 @Override
                 public void onFailure(@NonNull Exception e) {
 
-                    Toast.makeText(AddNewSkit.this, "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
-                    videoUri = null;
-
                 }
             }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -487,8 +487,6 @@ public class AddNewSkit extends AppCompatActivity {
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(AddNewSkit.this, "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
-                mDialog.dismiss();
             }
         });
 

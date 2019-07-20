@@ -526,9 +526,6 @@ public class CreateAd extends AppCompatActivity {
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(CreateAd.this, "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
-                                        mDialog.dismiss();
-                                        imageUri = null;
                                     }
                                 });
 
@@ -543,9 +540,6 @@ public class CreateAd extends AppCompatActivity {
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(CreateAd.this, "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
-                            mDialog.dismiss();
-                            imageUri = null;
                         }
                     });
 

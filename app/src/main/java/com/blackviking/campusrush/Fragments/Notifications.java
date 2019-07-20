@@ -85,9 +85,39 @@ public class Notifications extends Fragment {
             }
         });
 
+        clearNotifications();
+
         loadNotifications();
 
         return v;
+    }
+
+    private void clearNotifications() {
+
+        notificationRef.child(currentUid)
+                .orderByChild("status")
+                .equalTo("Unread")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        for (DataSnapshot snap : dataSnapshot.getChildren()){
+
+                            notificationRef.child(currentUid)
+                                    .child(snap.getKey())
+                                    .child("status")
+                                    .setValue("Read");
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
     }
 
     private void showConfirmDialog() {

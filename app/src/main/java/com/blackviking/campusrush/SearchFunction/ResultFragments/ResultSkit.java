@@ -173,7 +173,7 @@ public class ResultSkit extends Fragment {
 
                     Picasso.with(getContext())
                             .load(model.getThumbnail())
-                            .placeholder(R.drawable.campus_rush_feed_placeholder)
+                            .placeholder(R.drawable.ic_new_placeholder_icon)
                             .into(viewHolder.thumbnail);
 
                 }

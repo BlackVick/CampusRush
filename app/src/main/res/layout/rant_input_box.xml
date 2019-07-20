@@ -50,7 +50,7 @@
                     android:inputType="textMultiLine"
                     android:maxLength="160"
                     android:textColor="@color/black"
-                    android:hint="Rant Away . . ."
+                    android:hint="Your Thoughts . . ."
                     android:layout_toStartOf="@+id/attachmentIcon"
                     android:maxLines="6"/>
 
