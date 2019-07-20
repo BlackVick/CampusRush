@@ -40,7 +40,13 @@ public class CheckSubStatusService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        /*---   LOAD   ---*/
+        startCheck();
+
+        return START_STICKY;
+    }
+
+    private void startCheck() {
+
         if (Common.isConnectedToInternet(getApplicationContext())){
 
             /*---   SUBSCRIPTION LOT   ---*/
@@ -65,6 +71,10 @@ public class CheckSubStatusService extends Service {
 
                         }
 
+                    } else {
+
+                        stopSelf();
+
                     }
 
                 }
@@ -75,9 +85,23 @@ public class CheckSubStatusService extends Service {
                 }
             });
 
+        } else {
+
+            retryNetwork();
+
         }
 
-        return START_STICKY;
+    }
+
+    private void retryNetwork() {
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startCheck();
+            }
+        }, 1800000);
+
     }
 
     @Override
