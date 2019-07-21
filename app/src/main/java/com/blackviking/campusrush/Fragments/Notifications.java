@@ -178,150 +178,152 @@ public class Notifications extends Fragment {
                 long lastTime = model.getTimestamp();
                 final String lastSeenTime = getTimeAgo.getTimeAgo(lastTime, getActivity());
 
+                if (model.getTitle() != null) {
 
-                if (model.getTitle().equalsIgnoreCase("Account")){
+                    if (model.getTitle().equalsIgnoreCase("Account")) {
 
-                    viewHolder.userImage.setImageResource(R.drawable.campus_rush_colored_logo);
-                    viewHolder.title.setText(model.getTitle());
-                    viewHolder.comment.setVisibility(View.VISIBLE);
-                    viewHolder.comment.setText(model.getDetails());
-                    viewHolder.username.setVisibility(View.GONE);
-                    viewHolder.details.setVisibility(View.GONE);
-                    viewHolder.time.setText(lastSeenTime);
-                    viewHolder.type.setImageResource(R.drawable.ic_campus_business);
+                        viewHolder.userImage.setImageResource(R.drawable.campus_rush_colored_logo);
+                        viewHolder.title.setText(model.getTitle());
+                        viewHolder.comment.setVisibility(View.VISIBLE);
+                        viewHolder.comment.setText(model.getDetails());
+                        viewHolder.username.setVisibility(View.GONE);
+                        viewHolder.details.setVisibility(View.GONE);
+                        viewHolder.time.setText(lastSeenTime);
+                        viewHolder.type.setImageResource(R.drawable.ic_campus_business);
 
 
-                    if (model.getStatus().equalsIgnoreCase("Unread")){
-                        viewHolder.status.setImageResource(R.drawable.ic_notification_unread);
-                    } else {
-                        viewHolder.status.setImageResource(R.drawable.ic_notification_read);
-                    }
-
-                    viewHolder.setItemClickListener(new ItemClickListener() {
-                        @Override
-                        public void onClick(View view, int position, boolean isLongClick) {
-
-                            notificationRef
-                                    .child(currentUid)
-                                    .child(adapter.getRef(viewHolder.getAdapterPosition()).getKey())
-                                    .child("status")
-                                    .setValue("Read");
-
+                        if (model.getStatus().equalsIgnoreCase("Unread")) {
+                            viewHolder.status.setImageResource(R.drawable.ic_notification_unread);
+                        } else {
+                            viewHolder.status.setImageResource(R.drawable.ic_notification_read);
                         }
-                    });
+
+                        viewHolder.setItemClickListener(new ItemClickListener() {
+                            @Override
+                            public void onClick(View view, int position, boolean isLongClick) {
+
+                                notificationRef
+                                        .child(currentUid)
+                                        .child(adapter.getRef(viewHolder.getAdapterPosition()).getKey())
+                                        .child("status")
+                                        .setValue("Read");
+
+                            }
+                        });
 
 
-                } else {
+                    } else {
 
-                    /*---   USER   ---*/
-                    userRef.child(model.getUser()).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
+                        /*---   USER   ---*/
+                        userRef.child(model.getUser()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
 
-                            String username = dataSnapshot.child("username").getValue().toString();
-                            String image = dataSnapshot.child("profilePictureThumb").getValue().toString();
+                                String username = dataSnapshot.child("username").getValue().toString();
+                                String image = dataSnapshot.child("profilePictureThumb").getValue().toString();
 
-                            viewHolder.username.setText("@"+username);
+                                viewHolder.username.setText("@" + username);
 
-                            if (!image.equalsIgnoreCase("")){
+                                if (!image.equalsIgnoreCase("")) {
 
-                                Picasso.with(getContext())
-                                        .load(image)
-                                        .placeholder(R.drawable.profile)
-                                        .into(viewHolder.userImage);
+                                    Picasso.with(getContext())
+                                            .load(image)
+                                            .placeholder(R.drawable.profile)
+                                            .into(viewHolder.userImage);
 
 
+                                }
+
+                                viewHolder.userImage.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent posterProfile = new Intent(getContext(), OtherUserProfile.class);
+                                        posterProfile.putExtra("UserId", model.getUser());
+                                        startActivity(posterProfile);
+                                        getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+                                    }
+                                });
 
                             }
 
-                            viewHolder.userImage.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    Intent posterProfile = new Intent(getContext(), OtherUserProfile.class);
-                                    posterProfile.putExtra("UserId", model.getUser());
-                                    startActivity(posterProfile);
-                                    getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
-                                }
-                            });
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
 
+                            }
+                        });
+
+
+                        /*---   NOTIFICATION STATE   ---*/
+                        if (model.getStatus().equalsIgnoreCase("Unread")) {
+                            viewHolder.status.setImageResource(R.drawable.ic_notification_unread);
+                        } else {
+                            viewHolder.status.setImageResource(R.drawable.ic_notification_read);
                         }
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
+                        if (model.getType().equalsIgnoreCase("Comment")) {
+                            viewHolder.type.setImageResource(R.drawable.ic_comment_notification);
+                        } else if (model.getType().equalsIgnoreCase("Like")) {
+                            viewHolder.type.setImageResource(R.drawable.ic_like_notification);
                         }
-                    });
 
 
-                    /*---   NOTIFICATION STATE   ---*/
-                    if (model.getStatus().equalsIgnoreCase("Unread")){
-                        viewHolder.status.setImageResource(R.drawable.ic_notification_unread);
-                    } else {
-                        viewHolder.status.setImageResource(R.drawable.ic_notification_read);
-                    }
+                        /*---   NOTIFICATION DETAILS   ---*/
+                        viewHolder.time.setText(lastSeenTime);
+                        viewHolder.title.setText(model.getTitle());
+                        viewHolder.details.setText(model.getDetails());
 
-                    if (model.getType().equalsIgnoreCase("Comment")){
-                        viewHolder.type.setImageResource(R.drawable.ic_comment_notification);
-                    } else if (model.getType().equalsIgnoreCase("Like")){
-                        viewHolder.type.setImageResource(R.drawable.ic_like_notification);
-                    }
-
-
-                    /*---   NOTIFICATION DETAILS   ---*/
-                    viewHolder.time.setText(lastSeenTime);
-                    viewHolder.title.setText(model.getTitle());
-                    viewHolder.details.setText(model.getDetails());
-
-                    if (!model.getComment().equalsIgnoreCase("")){
-                        viewHolder.comment.setVisibility(View.VISIBLE);
-                        viewHolder.comment.setText(model.getComment());
-                    } else {
-                        viewHolder.comment.setVisibility(View.GONE);
-                    }
+                        if (!model.getComment().equalsIgnoreCase("")) {
+                            viewHolder.comment.setVisibility(View.VISIBLE);
+                            viewHolder.comment.setText(model.getComment());
+                        } else {
+                            viewHolder.comment.setVisibility(View.GONE);
+                        }
 
 
-                    /*---   CLICK LISTENER   ---*/
-                    viewHolder.setItemClickListener(new ItemClickListener() {
-                        @Override
-                        public void onClick(View view, int position, boolean isLongClick) {
+                        /*---   CLICK LISTENER   ---*/
+                        viewHolder.setItemClickListener(new ItemClickListener() {
+                            @Override
+                            public void onClick(View view, int position, boolean isLongClick) {
 
-                            feedRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                feedRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                    if (dataSnapshot.child(model.getIntentPrimaryKey()).exists()){
+                                        if (dataSnapshot.child(model.getIntentPrimaryKey()).exists()) {
 
-                                        notificationRef
-                                                .child(currentUid)
-                                                .child(adapter.getRef(viewHolder.getAdapterPosition()).getKey())
-                                                .child("status")
-                                                .setValue("Read");
+                                            notificationRef
+                                                    .child(currentUid)
+                                                    .child(adapter.getRef(viewHolder.getAdapterPosition()).getKey())
+                                                    .child("status")
+                                                    .setValue("Read");
 
-                                        Intent feedDetail = new Intent(getContext(), FeedDetails.class);
-                                        feedDetail.putExtra("CurrentFeedId", model.getIntentPrimaryKey());
-                                        startActivity(feedDetail);
-                                        getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+                                            Intent feedDetail = new Intent(getContext(), FeedDetails.class);
+                                            feedDetail.putExtra("CurrentFeedId", model.getIntentPrimaryKey());
+                                            startActivity(feedDetail);
+                                            getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
 
-                                    } else {
+                                        } else {
 
-                                        notificationRef
-                                                .child(currentUid)
-                                                .child(adapter.getRef(viewHolder.getAdapterPosition()).getKey())
-                                                .child("status")
-                                                .setValue("Read");
+                                            notificationRef
+                                                    .child(currentUid)
+                                                    .child(adapter.getRef(viewHolder.getAdapterPosition()).getKey())
+                                                    .child("status")
+                                                    .setValue("Read");
+
+                                        }
 
                                     }
 
-                                }
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
 
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
+                                    }
+                                });
 
-                                }
-                            });
+                            }
+                        });
 
-                        }
-                    });
+                    }
 
                 }
 
