@@ -306,7 +306,10 @@ public class FeedDetails extends AppCompatActivity {
                     userRef.child(model.getCommenter()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            viewHolder.username.setText("@"+dataSnapshot.child("username").getValue().toString());
+
+                            String userName = dataSnapshot.child("username").getValue().toString();
+
+                            viewHolder.username.setText("@" + userName);
 
                             viewHolder.username.setOnClickListener(new View.OnClickListener() {
                                 @Override

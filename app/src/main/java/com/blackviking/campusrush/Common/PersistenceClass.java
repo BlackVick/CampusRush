@@ -49,7 +49,7 @@ public class PersistenceClass extends Application {
         Fabric.with(this, new Crashlytics());
 
         /*---   FIREBASE OFFLINE   ---*/
-        FirebaseDatabase.getInstance().setPersistenceEnabled(false);
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
         /*-------PICASSO--------*/
         Picasso.Builder builder = new Picasso.Builder(this);
