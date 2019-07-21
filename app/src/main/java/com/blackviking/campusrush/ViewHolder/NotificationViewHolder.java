@@ -11,9 +11,8 @@ import com.blackviking.campusrush.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class NotificationViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class NotificationViewHolder extends RecyclerView.ViewHolder{
 
-    private ItemClickListener itemClickListener;
     public CircleImageView userImage;
     public TextView title, details, comment, time, username;
     public ImageView type, status;
@@ -30,15 +29,6 @@ public class NotificationViewHolder extends RecyclerView.ViewHolder implements V
         type = (ImageView) itemView.findViewById(R.id.notificationType);
         status = (ImageView) itemView.findViewById(R.id.notificationStatus);
 
-        itemView.setOnClickListener(this);
     }
 
-    public void setItemClickListener(ItemClickListener itemClickListener) {
-        this.itemClickListener = itemClickListener;
-    }
-
-    @Override
-    public void onClick(View v) {
-        itemClickListener.onClick(v, getAdapterPosition(), false);
-    }
 }

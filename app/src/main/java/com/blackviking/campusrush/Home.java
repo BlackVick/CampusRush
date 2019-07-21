@@ -93,7 +93,7 @@ public class Home extends AppCompatActivity
     public RelativeLayout navLayout;
     private DrawerLayout rootLayout;
     private BroadcastReceiver mMessageReceiver = null;
-    private String currentUid, intentInstruction;
+    private String currentUid, intentInstruction = "";
     private LinearLayout admin, awards, campusRantLay, gamersHub, skitCenter, campusAds, settings, signOut, anticipate;
     private TextView adminCount;
     private boolean isSubServiceOn;
@@ -630,22 +630,20 @@ public class Home extends AppCompatActivity
 
 
         /*---   SET BASE FRAGMENT   ---*/
-        if (intentInstruction != null) {
+        toolbar.setTitle("Feed");
+        setBaseFragment(feedFragment, toolbar);
 
-            if (intentInstruction.equalsIgnoreCase("Notification")) {
+    }
 
-                toolbar.setTitle("Notifications");
-                setNotificationFragment(notificationFragment, toolbar);
+    private void setMessagesFragement(Messages messages, Toolbar toolbar) {
 
-            }
+        setFragment(messages);
 
-        } else {
-
-            toolbar.setTitle("Feed");
-            setBaseFragment(feedFragment, toolbar);
-
-        }
-
+        feed.setImageResource(R.drawable.new_offwhite_feed_icon);
+        materials.setImageResource(R.drawable.new_offwhite_material_icon);
+        messagesNav.setImageResource(R.drawable.new_color_messaging_icon);
+        notifications.setImageResource(R.drawable.new_offwhite_notification_icon);
+        account.setImageResource(R.drawable.new_offwhite_account_icon);
 
     }
 

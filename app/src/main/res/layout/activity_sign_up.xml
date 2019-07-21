@@ -101,7 +101,7 @@
                         android:drawablePadding="18dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:digits="abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ"/>
+                        android:digits="abcdefghijklmnopqrstuvwxyz1234567890"/>
 
                     <EditText
                         android:background="@drawable/edittext_ring"

@@ -296,7 +296,7 @@ public class CampusRant extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                final String theTopic = topicName.getText().toString().trim();
+                final String theTopic = topicName.getText().toString().trim().toLowerCase();
 
                 if (!TextUtils.isEmpty(theTopic)) {
 

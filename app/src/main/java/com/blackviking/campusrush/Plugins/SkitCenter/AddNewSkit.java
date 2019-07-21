@@ -274,7 +274,7 @@ public class AddNewSkit extends AppCompatActivity {
     private void shareUpdate() {
 
         final String theDescription = skitDescription.getText().toString().trim();
-        final String theTitle = skitTitle.getText().toString().trim();
+        final String theTitle = skitTitle.getText().toString().trim().toLowerCase();
 
         if (Common.isConnectedToInternet(getBaseContext())){
 

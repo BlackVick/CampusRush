@@ -205,7 +205,6 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
                     .setColor(getResources().getColor(R.color.colorPrimaryDark))
                     .setContentIntent(contentIntent)
                     .setAutoCancel(true)
-                    .addAction(R.drawable.campus_rush_red_logo, "Manage", contentIntent)
                     .build();
 
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -227,7 +226,6 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
                     .setColor(getResources().getColor(R.color.colorPrimaryDark))
                     .setContentIntent(contentIntent)
                     .setAutoCancel(true)
-                    .addAction(R.drawable.campus_rush_red_logo, "Open Feed", contentIntent)
                     .build();
 
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -256,8 +254,8 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
 
         } else if (title.equalsIgnoreCase("Messaging")) {
 
-            Intent notificationsIntent = new Intent(this, Messaging.class);
-            notificationsIntent.putExtra("UserId", userId);
+            Intent notificationsIntent = new Intent(this, Home.class);
+            notificationsIntent.putExtra("IntentInstruction", "Messaging");
             PendingIntent contentIntent = PendingIntent.getActivity(this,
                     0, notificationsIntent, 0);
 
@@ -270,7 +268,6 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
                     .setColor(getResources().getColor(R.color.colorPrimaryDark))
                     .setContentIntent(contentIntent)
                     .setAutoCancel(true)
-                    .addAction(R.drawable.ic_message_user, "Open Message", contentIntent)
                     .build();
 
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -293,7 +290,6 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
                     .setColor(getResources().getColor(R.color.colorPrimaryDark))
                     .setContentIntent(contentIntent)
                     .setAutoCancel(true)
-                    .addAction(R.drawable.ic_skit_center, "View Your Skit", contentIntent)
                     .build();
 
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -316,7 +312,6 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
                     .setColor(getResources().getColor(R.color.colorPrimaryDark))
                     .setContentIntent(contentIntent)
                     .setAutoCancel(true)
-                    .addAction(R.drawable.ic_skit_center, "View Skit", contentIntent)
                     .build();
 
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -338,7 +333,6 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
                     .setColor(getResources().getColor(R.color.colorPrimaryDark))
                     .setContentIntent(contentIntent)
                     .setAutoCancel(true)
-                    .addAction(R.drawable.red_gamers_hub, "Open Game News", contentIntent)
                     .build();
 
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -375,7 +369,6 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
                     .setColor(getResources().getColor(R.color.colorPrimaryDark))
                     .setContentIntent(contentIntent)
                     .setAutoCancel(true)
-                    .addAction(R.drawable.campus_rush_red_logo, "Manage", contentIntent)
                     .setSound(Uri.parse("android.resource://" + this.getPackageName() + "/" + R.raw.notification_sound))
                     .build();
 
@@ -397,7 +390,6 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
                     .setColor(getResources().getColor(R.color.colorPrimaryDark))
                     .setContentIntent(contentIntent)
                     .setAutoCancel(true)
-                    .addAction(R.drawable.campus_rush_red_logo, "Check Feed", contentIntent)
                     .setSound(Uri.parse("android.resource://" + this.getPackageName() + "/" + R.raw.notification_sound))
                     .build();
 
@@ -427,8 +419,8 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
 
         } else if (title.equalsIgnoreCase("Messaging")) {
 
-            Intent notificationsIntent = new Intent(this, Messaging.class);
-            notificationsIntent.putExtra("UserId", userId);
+            Intent notificationsIntent = new Intent(this, Home.class);
+            notificationsIntent.putExtra("IntentInstruction", "Messaging");
             PendingIntent contentIntent = PendingIntent.getActivity(this,
                     0, notificationsIntent, 0);
 
@@ -440,7 +432,6 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
                     .setColor(getResources().getColor(R.color.colorPrimaryDark))
                     .setContentIntent(contentIntent)
                     .setAutoCancel(true)
-                    .addAction(R.drawable.ic_message_user, "Open Message", contentIntent)
                     .setSound(Uri.parse("android.resource://" + this.getPackageName() + "/" + R.raw.notification_sound))
                     .build();
 
@@ -463,7 +454,6 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
                     .setColor(getResources().getColor(R.color.colorPrimaryDark))
                     .setContentIntent(contentIntent)
                     .setAutoCancel(true)
-                    .addAction(R.drawable.ic_skit_center, "View Your Skit", contentIntent)
                     .setSound(Uri.parse("android.resource://" + this.getPackageName() + "/" + R.raw.notification_sound))
                     .build();
 
@@ -486,7 +476,6 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
                     .setColor(getResources().getColor(R.color.colorPrimaryDark))
                     .setContentIntent(contentIntent)
                     .setAutoCancel(true)
-                    .addAction(R.drawable.ic_skit_center, "View Skit", contentIntent)
                     .setSound(Uri.parse("android.resource://" + this.getPackageName() + "/" + R.raw.notification_sound))
                     .build();
 
@@ -509,7 +498,6 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
                     .setColor(getResources().getColor(R.color.colorPrimaryDark))
                     .setContentIntent(contentIntent)
                     .setAutoCancel(true)
-                    .addAction(R.drawable.red_gamers_hub, "Open Game News", contentIntent)
                     .setSound(Uri.parse("android.resource://" + this.getPackageName() + "/" + R.raw.notification_sound))
                     .build();
 

@@ -220,7 +220,7 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                theUsername = username.getText().toString().trim();
+                theUsername = username.getText().toString().trim().toLowerCase();
                 theFirstName = firstName.getText().toString().trim();
                 theLastName = lastName.getText().toString().trim();
                 theEmail = eMail.getText().toString().trim();

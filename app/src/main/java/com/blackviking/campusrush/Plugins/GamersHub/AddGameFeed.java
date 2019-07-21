@@ -176,7 +176,7 @@ public class AddGameFeed extends AppCompatActivity {
     private void shareUpdate() {
 
         final String theUpdate = updateText.getText().toString().trim();
-        final String theTitle = title.getText().toString().trim();
+        final String theTitle = title.getText().toString().trim().toLowerCase();
 
         final long date = System.currentTimeMillis();
         final SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yy HH:mm");

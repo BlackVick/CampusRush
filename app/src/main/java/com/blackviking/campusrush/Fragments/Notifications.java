@@ -198,19 +198,6 @@ public class Notifications extends Fragment {
                             viewHolder.status.setImageResource(R.drawable.ic_notification_read);
                         }
 
-                        viewHolder.setItemClickListener(new ItemClickListener() {
-                            @Override
-                            public void onClick(View view, int position, boolean isLongClick) {
-
-                                notificationRef
-                                        .child(currentUid)
-                                        .child(adapter.getRef(viewHolder.getAdapterPosition()).getKey())
-                                        .child("status")
-                                        .setValue("Read");
-
-                            }
-                        });
-
 
                     } else {
 
@@ -279,49 +266,6 @@ public class Notifications extends Fragment {
                             viewHolder.comment.setVisibility(View.GONE);
                         }
 
-
-                        /*---   CLICK LISTENER   ---*/
-                        viewHolder.setItemClickListener(new ItemClickListener() {
-                            @Override
-                            public void onClick(View view, int position, boolean isLongClick) {
-
-                                feedRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-                                        if (dataSnapshot.child(model.getIntentPrimaryKey()).exists()) {
-
-                                            notificationRef
-                                                    .child(currentUid)
-                                                    .child(adapter.getRef(viewHolder.getAdapterPosition()).getKey())
-                                                    .child("status")
-                                                    .setValue("Read");
-
-                                            Intent feedDetail = new Intent(getContext(), FeedDetails.class);
-                                            feedDetail.putExtra("CurrentFeedId", model.getIntentPrimaryKey());
-                                            startActivity(feedDetail);
-                                            getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
-
-                                        } else {
-
-                                            notificationRef
-                                                    .child(currentUid)
-                                                    .child(adapter.getRef(viewHolder.getAdapterPosition()).getKey())
-                                                    .child("status")
-                                                    .setValue("Read");
-
-                                        }
-
-                                    }
-
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
-
-                                    }
-                                });
-
-                            }
-                        });
 
                     }
 
