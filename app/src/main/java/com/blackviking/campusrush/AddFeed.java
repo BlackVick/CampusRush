@@ -86,7 +86,7 @@ public class AddFeed extends AppCompatActivity {
     private DatabaseReference updateRef, justUserRef, pushRef, userRef, adminRef;
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference imageRef;
-    private String originalImageUrl, thumbDownloadUrl;
+    private String originalImageUrl = "", thumbDownloadUrl = "";
     private String privacyState, userType;
     private APIService mService;
 
@@ -241,11 +241,11 @@ public class AddFeed extends AppCompatActivity {
         final SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yy HH:mm");
         final String dateString = sdf.format(date);
 
-        if (imageUri != null || originalImageUrl != null || thumbDownloadUrl != null || !theUpdate.isEmpty()){
+        if (!originalImageUrl.equalsIgnoreCase("") || !TextUtils.isEmpty(theUpdate)){
 
             if (Common.isConnectedToInternet(getBaseContext())){
 
-                if (imageUri != null && !TextUtils.isEmpty(originalImageUrl) && !TextUtils.isEmpty(thumbDownloadUrl)){
+                if (TextUtils.isEmpty(originalImageUrl) || TextUtils.isEmpty(thumbDownloadUrl)){
 
                     final Map<String, Object> newFeedMap = new HashMap<>();
 

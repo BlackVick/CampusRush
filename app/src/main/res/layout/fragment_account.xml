@@ -109,7 +109,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/profileCard"
-        android:id="@+id/timelineRecycler">
+        android:id="@+id/timelineRecycler"
+        android:layout_marginBottom="55dp">
 
     </android.support.v7.widget.RecyclerView>
 

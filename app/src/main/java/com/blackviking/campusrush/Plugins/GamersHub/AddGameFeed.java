@@ -83,7 +83,7 @@ public class AddGameFeed extends AppCompatActivity {
     private Uri imageUri;
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference imageRef;
-    private String originalImageUrl, thumbDownloadUrl;
+    private String originalImageUrl = "", thumbDownloadUrl = "";
     private APIService mService;
 
     @Override
@@ -182,14 +182,14 @@ public class AddGameFeed extends AppCompatActivity {
         final SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yy HH:mm");
         final String dateString = sdf.format(date);
 
-        if (imageUri != null || originalImageUrl != null || thumbDownloadUrl != null || !theUpdate.isEmpty()){
+        if (!originalImageUrl.equalsIgnoreCase("") || !theUpdate.isEmpty()){
 
             if (Common.isConnectedToInternet(AddGameFeed.this)){
 
                 pushRef = gameFeedRef.push();
                 final String pushId = pushRef.getKey();
 
-                if (imageUri != null || originalImageUrl != null || thumbDownloadUrl != null){
+                if (!originalImageUrl.equalsIgnoreCase("")){
 
                     if (!TextUtils.isEmpty(theTitle)) {
 
