@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.blackviking.campusrush.Interface.ItemClickListener;
@@ -76,6 +77,31 @@ public class Messages extends Fragment {
         layoutManager.setStackFromEnd(true);
         layoutManager.setReverseLayout(true);
         messagesRecycler.setLayoutManager(layoutManager);
+
+        final RelativeLayout theNavLayout = (RelativeLayout)getActivity().findViewById(R.id.navLayout);
+
+
+        messagesRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+                if (dy < 0 && theNavLayout.getVisibility() == View.GONE) {
+
+                    theNavLayout.setVisibility(View.VISIBLE);
+                }
+                else if(dy > 0 && theNavLayout.getVisibility() == View.VISIBLE) {
+                    theNavLayout.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                /*if (newState == RecyclerView.SCROLL_STATE_IDLE)
+                    theNavLayout.setVisibility(View.VISIBLE);*/
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
 
         adapter = new FirebaseRecyclerAdapter<MessagesModel, MessagesViewHolder>(
                 MessagesModel.class,

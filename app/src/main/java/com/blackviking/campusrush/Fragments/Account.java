@@ -18,9 +18,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.PopupMenu;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -173,6 +175,31 @@ public class Account extends Fragment {
         layoutManager.setStackFromEnd(true);
         layoutManager.setReverseLayout(true);
         myTimelineRecycler.setLayoutManager(layoutManager);
+
+        final RelativeLayout theNavLayout = (RelativeLayout)getActivity().findViewById(R.id.navLayout);
+
+
+        myTimelineRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+                if (dy < 0 && theNavLayout.getVisibility() == View.GONE) {
+
+                    theNavLayout.setVisibility(View.VISIBLE);
+                }
+                else if(dy > 0 && theNavLayout.getVisibility() == View.VISIBLE) {
+                    theNavLayout.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                /*if (newState == RecyclerView.SCROLL_STATE_IDLE)
+                    theNavLayout.setVisibility(View.VISIBLE);*/
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
 
         Query myTimeline = timelineRef.orderByChild("sender").equalTo(currentUid);
 

@@ -245,7 +245,7 @@ public class AddFeed extends AppCompatActivity {
 
             if (Common.isConnectedToInternet(getBaseContext())){
 
-                if (TextUtils.isEmpty(originalImageUrl) || TextUtils.isEmpty(thumbDownloadUrl)){
+                if (!TextUtils.isEmpty(originalImageUrl) || !TextUtils.isEmpty(thumbDownloadUrl)){
 
                     final Map<String, Object> newFeedMap = new HashMap<>();
 

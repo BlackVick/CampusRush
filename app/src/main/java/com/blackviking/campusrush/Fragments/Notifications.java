@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.Common.GetTimeAgo;
@@ -162,6 +163,33 @@ public class Notifications extends Fragment {
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
         notificationRecycler.setLayoutManager(layoutManager);
+
+        final RelativeLayout theNavLayout = (RelativeLayout)getActivity().findViewById(R.id.navLayout);
+
+
+        notificationRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+                if (dy < 0 && theNavLayout.getVisibility() == View.GONE) {
+
+                    theNavLayout.setVisibility(View.VISIBLE);
+                    deleteAllNotification.show();
+                }
+                else if(dy > 0 && theNavLayout.getVisibility() == View.VISIBLE) {
+                    theNavLayout.setVisibility(View.GONE);
+                    deleteAllNotification.hide();
+                }
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                /*if (newState == RecyclerView.SCROLL_STATE_IDLE)
+                    theNavLayout.setVisibility(View.VISIBLE);*/
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
 
         adapter = new FirebaseRecyclerAdapter<NotificationModel, NotificationViewHolder>(
                 NotificationModel.class,

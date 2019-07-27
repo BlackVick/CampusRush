@@ -212,6 +212,33 @@ public class Materials extends Fragment {
         previousListBtn.setVisibility(View.GONE);
         currentListName.setText("FACULTIES");
 
+        final RelativeLayout theNavLayout = (RelativeLayout)getActivity().findViewById(R.id.navLayout);
+
+
+        materialRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+                if (dy < 0 && theNavLayout.getVisibility() == View.GONE) {
+
+                    theNavLayout.setVisibility(View.VISIBLE);
+                    addMaterial.show();
+                }
+                else if(dy > 0 && theNavLayout.getVisibility() == View.VISIBLE) {
+                    theNavLayout.setVisibility(View.GONE);
+                    addMaterial.hide();
+                }
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                /*if (newState == RecyclerView.SCROLL_STATE_IDLE)
+                    theNavLayout.setVisibility(View.VISIBLE);*/
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
+
 
         materialParentAdapter = new FirebaseRecyclerAdapter<MaterialParentModel, MaterialParentViewHolder>(
                 MaterialParentModel.class,
@@ -265,6 +292,34 @@ public class Materials extends Fragment {
         currentListName.setText("DEPARTMENTS");
 
 
+        final RelativeLayout theNavLayout = (RelativeLayout)getActivity().findViewById(R.id.navLayout);
+
+
+        materialRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+                if (dy < 0 && theNavLayout.getVisibility() == View.GONE) {
+
+                    theNavLayout.setVisibility(View.VISIBLE);
+                    addMaterial.show();
+                }
+                else if(dy > 0 && theNavLayout.getVisibility() == View.VISIBLE) {
+                    theNavLayout.setVisibility(View.GONE);
+                    addMaterial.hide();
+                }
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                /*if (newState == RecyclerView.SCROLL_STATE_IDLE)
+                    theNavLayout.setVisibility(View.VISIBLE);*/
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
+
+
         materialParentAdapter = new FirebaseRecyclerAdapter<MaterialParentModel, MaterialParentViewHolder>(
                 MaterialParentModel.class,
                 R.layout.material_parent_item,
@@ -315,6 +370,33 @@ public class Materials extends Fragment {
             }
         });
         currentListName.setText("LEVELS");
+
+        final RelativeLayout theNavLayout = (RelativeLayout)getActivity().findViewById(R.id.navLayout);
+
+
+        materialRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+                if (dy < 0 && theNavLayout.getVisibility() == View.GONE) {
+
+                    theNavLayout.setVisibility(View.VISIBLE);
+                    addMaterial.show();
+                }
+                else if(dy > 0 && theNavLayout.getVisibility() == View.VISIBLE) {
+                    theNavLayout.setVisibility(View.GONE);
+                    addMaterial.hide();
+                }
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                /*if (newState == RecyclerView.SCROLL_STATE_IDLE)
+                    theNavLayout.setVisibility(View.VISIBLE);*/
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
 
 
         materialParentAdapter = new FirebaseRecyclerAdapter<MaterialParentModel, MaterialParentViewHolder>(
@@ -367,6 +449,33 @@ public class Materials extends Fragment {
             }
         });
         currentListName.setText(currentLevel+" LEVEL");
+
+        final RelativeLayout theNavLayout = (RelativeLayout)getActivity().findViewById(R.id.navLayout);
+
+
+        materialRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+                if (dy < 0 && theNavLayout.getVisibility() == View.GONE) {
+
+                    theNavLayout.setVisibility(View.VISIBLE);
+                    addMaterial.show();
+                }
+                else if(dy > 0 && theNavLayout.getVisibility() == View.VISIBLE) {
+                    theNavLayout.setVisibility(View.GONE);
+                    addMaterial.hide();
+                }
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                /*if (newState == RecyclerView.SCROLL_STATE_IDLE)
+                    theNavLayout.setVisibility(View.VISIBLE);*/
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
 
 
         materialAdapter = new FirebaseRecyclerAdapter<MaterialModel, MaterialViewHolder>(
