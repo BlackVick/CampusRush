@@ -764,8 +764,6 @@ public class Materials extends Fragment {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
 
-                                    Toast.makeText(getContext(), "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
-
                                 }
                             }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                                 @Override
@@ -906,9 +904,6 @@ public class Materials extends Fragment {
                                     }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-
-                                    Toast.makeText(getContext(), "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
-
                                 }
                             }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                                 @Override
@@ -1045,9 +1040,6 @@ public class Materials extends Fragment {
                                     }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-
-                                    Toast.makeText(getContext(), "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
-
                                 }
                             }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                                 @Override
@@ -1194,9 +1186,6 @@ public class Materials extends Fragment {
                                     }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-
-                                    Toast.makeText(getContext(), "Upload Failed. Please Try Again", Toast.LENGTH_SHORT).show();
-
                                 }
                             }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                                 @Override

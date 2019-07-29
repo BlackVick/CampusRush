@@ -18,6 +18,7 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,7 +91,7 @@ public class CreateAd extends AppCompatActivity {
     private Uri imageUri;
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference imageRef;
-    private String originalImageUrl, thumbDownloadUrl;
+    private String originalImageUrl = "", thumbDownloadUrl;
     private String businessName, businessNumber;
 
     @Override
@@ -222,11 +223,11 @@ public class CreateAd extends AppCompatActivity {
         final SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yy HH:mm");
         final String dateString = sdf.format(date);
 
-        if (imageUri != null || originalImageUrl != null || thumbDownloadUrl != null || !theUpdate.isEmpty()){
+        if (!originalImageUrl.equalsIgnoreCase("") || !TextUtils.isEmpty(theUpdate)){
 
             if (Common.isConnectedToInternet(getBaseContext())){
 
-                if (imageUri != null || originalImageUrl != null || thumbDownloadUrl != null){
+                if (!originalImageUrl.equalsIgnoreCase("")){
 
                     final Map<String, Object> newAdMap = new HashMap<>();
                     newAdMap.put("sourceType", "Business");

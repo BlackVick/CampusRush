@@ -380,7 +380,7 @@ public class OtherUserProfile extends AppCompatActivity {
 
                     viewHolder.posterName.setVisibility(View.GONE);
                     viewHolder.posterImage.setVisibility(View.GONE);
-                    viewHolder.options.setVisibility(View.GONE);
+                    //viewHolder.options.setVisibility(View.GONE);
                     viewHolder.commentBtn.setVisibility(View.GONE);
                     viewHolder.commentCount.setVisibility(View.GONE);
                     viewHolder.likeBtn.setVisibility(View.GONE);
@@ -454,11 +454,11 @@ public class OtherUserProfile extends AppCompatActivity {
                 } else {
 
                     /*---   OPTIONS   ---*/
-                    viewHolder.options.setOnClickListener(new View.OnClickListener() {
+                    /*viewHolder.options.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
 
-                            /*---   POPUP MENU FOR UPDATE   ---*/
+                            *//*---   POPUP MENU FOR UPDATE   ---*//*
                             PopupMenu popup = new PopupMenu(OtherUserProfile.this, viewHolder.options);
                             popup.inflate(R.menu.feed_item_menu_other);
                             popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -488,7 +488,7 @@ public class OtherUserProfile extends AppCompatActivity {
 
                             popup.show();
                         }
-                    });
+                    });*/
 
 
                     /*---   POSTER DETAILS   ---*/

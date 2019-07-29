@@ -17,7 +17,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class FeedViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private ItemClickListener itemClickListener;
-    public ImageView postImage, likeBtn, commentBtn, options;
+    public ImageView postImage, likeBtn, commentBtn; //options;
     public CircleImageView posterImage;
     public TextView posterName, postText, likeCount, commentCount, postTime;
 
@@ -28,7 +28,7 @@ public class FeedViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         postImage = (ImageView)itemView.findViewById(R.id.postImage);
         likeBtn = (ImageView)itemView.findViewById(R.id.likeBtn);
         commentBtn = (ImageView)itemView.findViewById(R.id.commentBtn);
-        options = (ImageView)itemView.findViewById(R.id.options);
+        //options = (ImageView)itemView.findViewById(R.id.options);
         posterName = (TextView)itemView.findViewById(R.id.posterName);
         postText = (TextView)itemView.findViewById(R.id.postText);
         likeCount = (TextView)itemView.findViewById(R.id.likeCount);

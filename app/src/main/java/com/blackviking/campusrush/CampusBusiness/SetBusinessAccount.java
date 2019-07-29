@@ -70,7 +70,6 @@ public class SetBusinessAccount extends AppCompatActivity {
     private Button paystackBtn, createBtn;
     private CheckBox businessTerms;
 
-
     private android.app.AlertDialog mDialog;
     private Charge charge;
     private Transaction transaction;

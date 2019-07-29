@@ -70,7 +70,7 @@ public class FeedDetails extends AppCompatActivity {
 
     private TextView activityName;
     private ImageView exitActivity, helpActivity;
-    private ImageView postImage, likeBtn, sendComment, options;
+    private ImageView postImage, likeBtn, sendComment; //options;
     private CircleImageView posterImage;
     private TextView posterName, postText, likeCount, commentCount, postTime;
     private EditText commentBox;
@@ -136,7 +136,7 @@ public class FeedDetails extends AppCompatActivity {
         postImage = (ImageView)findViewById(R.id.feedDetailPostImage);
         likeBtn = (ImageView)findViewById(R.id.feedDetailLikeBtn);
         sendComment = (ImageView)findViewById(R.id.sendCommentBtn);
-        options = (ImageView)findViewById(R.id.feedDetailOptions);
+        //options = (ImageView)findViewById(R.id.feedDetailOptions);
         posterName = (TextView)findViewById(R.id.feedDetailPosterUsername);
         postText = (TextView)findViewById(R.id.feedDetailPostText);
         likeCount = (TextView)findViewById(R.id.feedDetailLikesCount);
@@ -480,13 +480,13 @@ public class FeedDetails extends AppCompatActivity {
 
 
                 /*---   OPTIONS   ---*/
-                if (serverRealPoster.equals(currentUid)) {
+                /*if (serverRealPoster.equals(currentUid)) {
 
                     options.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
 
-                            /*---   POPUP MENU FOR UPDATE   ---*/
+                            *//*---   POPUP MENU FOR UPDATE   ---*//*
                             PopupMenu popup = new PopupMenu(FeedDetails.this, options);
                             popup.inflate(R.menu.feed_item_menu);
                             popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -555,7 +555,7 @@ public class FeedDetails extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
 
-                            /*---   POPUP MENU FOR UPDATE   ---*/
+                            *//*---   POPUP MENU FOR UPDATE   ---*//*
                             PopupMenu popup = new PopupMenu(FeedDetails.this, options);
                             popup.inflate(R.menu.feed_item_menu_other);
                             popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -587,7 +587,7 @@ public class FeedDetails extends AppCompatActivity {
                         }
                     });
 
-                }
+                }*/
 
 
                 /*---   FEED DETAILS   ---*/

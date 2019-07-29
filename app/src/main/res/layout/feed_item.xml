@@ -39,7 +39,7 @@
 
             <RelativeLayout
                 android:layout_width="0dp"
-                android:layout_weight="7"
+                android:layout_weight="8"
                 android:animateLayoutChanges="true"
                 android:layout_height="match_parent">
 
@@ -56,13 +56,13 @@
 
             </RelativeLayout>
 
-            <ImageView
+            <!--<ImageView
                 android:layout_gravity="center_vertical"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="20dp"
                 android:src="@drawable/options_icon"
-                android:id="@+id/options"/>
+                android:id="@+id/options"/>-->
 
         </LinearLayout>
 

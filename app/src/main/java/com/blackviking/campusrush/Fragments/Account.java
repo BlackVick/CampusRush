@@ -216,7 +216,7 @@ public class Account extends Fragment {
 
                     viewHolder.posterName.setVisibility(View.GONE);
                     viewHolder.posterImage.setVisibility(View.GONE);
-                    viewHolder.options.setVisibility(View.GONE);
+                    //viewHolder.options.setVisibility(View.GONE);
                     viewHolder.commentBtn.setVisibility(View.GONE);
                     viewHolder.commentCount.setVisibility(View.GONE);
                     viewHolder.likeBtn.setVisibility(View.GONE);
@@ -289,11 +289,11 @@ public class Account extends Fragment {
 
                 } else {
                     /*---   OPTIONS   ---*/
-                    viewHolder.options.setOnClickListener(new View.OnClickListener() {
+                    /*viewHolder.options.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
 
-                            /*---   POPUP MENU FOR UPDATE   ---*/
+                            *//*---   POPUP MENU FOR UPDATE   ---*//*
                             PopupMenu popup = new PopupMenu(getContext(), viewHolder.options);
                             popup.inflate(R.menu.feed_item_menu);
                             popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -354,7 +354,7 @@ public class Account extends Fragment {
 
                             popup.show();
                         }
-                    });
+                    });*/
 
 
                     /*---   POSTER DETAILS   ---*/
