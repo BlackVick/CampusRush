@@ -456,10 +456,14 @@ public class Feed extends Fragment {
                                 @Override
                                 public void onClick(View v) {
 
-                                    Intent posterProfile = new Intent(getContext(), OtherUserProfile.class);
-                                    posterProfile.putExtra("UserId", model.getSender());
-                                    startActivity(posterProfile);
-                                    getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+                                    if (model.getSender() != null) {
+
+                                        Intent posterProfile = new Intent(getContext(), OtherUserProfile.class);
+                                        posterProfile.putExtra("UserId", model.getSender());
+                                        startActivity(posterProfile);
+                                        getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+
+                                    }
 
                                 }
                             });
@@ -470,10 +474,14 @@ public class Feed extends Fragment {
                                 @Override
                                 public void onClick(View v) {
 
-                                    Intent posterProfile = new Intent(getContext(), OtherUserProfile.class);
-                                    posterProfile.putExtra("UserId", model.getSender());
-                                    startActivity(posterProfile);
-                                    getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+                                    if (model.getSender() != null) {
+
+                                        Intent posterProfile = new Intent(getContext(), OtherUserProfile.class);
+                                        posterProfile.putExtra("UserId", model.getSender());
+                                        startActivity(posterProfile);
+                                        getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+
+                                    }
 
                                 }
                             });

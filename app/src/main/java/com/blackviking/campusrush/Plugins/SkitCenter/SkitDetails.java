@@ -178,33 +178,40 @@ public class SkitDetails extends AppCompatActivity {
 
 
         owner.setText("@"+currentSkitOwner);
+
+
+
         owner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (Common.isConnectedToInternet(getBaseContext())){
 
-                    if (skitOwnerUid.equals(currentUid)){
+                    if (skitOwnerUid != null) {
 
-                        if (exoPlayer != null) {
-                            exoPlayer.release();
-                            exoPlayer.stop();
+                        if (skitOwnerUid.equals(currentUid)) {
+
+                            if (exoPlayer != null) {
+                                exoPlayer.release();
+                                exoPlayer.stop();
+                            }
+                            Intent myProfileIntent = new Intent(SkitDetails.this, MyProfile.class);
+                            startActivity(myProfileIntent);
+                            overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+                            finish();
+
+                        } else {
+
+                            if (exoPlayer != null) {
+                                exoPlayer.release();
+                                exoPlayer.stop();
+                            }
+                            Intent otherUserProfileIntent = new Intent(SkitDetails.this, OtherUserProfile.class);
+                            otherUserProfileIntent.putExtra("UserId", skitOwnerUid);
+                            startActivity(otherUserProfileIntent);
+                            overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+                            finish();
+
                         }
-                        Intent myProfileIntent = new Intent(SkitDetails.this, MyProfile.class);
-                        startActivity(myProfileIntent);
-                        overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
-                        finish();
-
-                    } else {
-
-                        if (exoPlayer != null) {
-                            exoPlayer.release();
-                            exoPlayer.stop();
-                        }
-                        Intent otherUserProfileIntent = new Intent(SkitDetails.this, OtherUserProfile.class);
-                        otherUserProfileIntent.putExtra("UserId", skitOwnerUid);
-                        startActivity(otherUserProfileIntent);
-                        overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
-                        finish();
 
                     }
 

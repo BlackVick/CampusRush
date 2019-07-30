@@ -449,10 +449,14 @@ public class FeedDetails extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
 
-                                Intent posterProfile = new Intent(FeedDetails.this, OtherUserProfile.class);
-                                posterProfile.putExtra("UserId", serverPosterId);
-                                startActivity(posterProfile);
-                                overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+                                if (serverPosterId != null) {
+
+                                    Intent posterProfile = new Intent(FeedDetails.this, OtherUserProfile.class);
+                                    posterProfile.putExtra("UserId", serverPosterId);
+                                    startActivity(posterProfile);
+                                    overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+
+                                }
 
                             }
                         });
@@ -463,10 +467,14 @@ public class FeedDetails extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
 
-                                Intent posterProfile = new Intent(FeedDetails.this, OtherUserProfile.class);
-                                posterProfile.putExtra("UserId", serverPosterId);
-                                startActivity(posterProfile);
-                                overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+                                if (serverPosterId != null) {
+
+                                    Intent posterProfile = new Intent(FeedDetails.this, OtherUserProfile.class);
+                                    posterProfile.putExtra("UserId", serverPosterId);
+                                    startActivity(posterProfile);
+                                    overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+
+                                }
 
                             }
                         });
