@@ -25,6 +25,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -41,6 +42,7 @@ public class Awards extends AppCompatActivity {
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private DatabaseReference awardRef, userRef;
     private String currentUid, currentDept;
+    private RoundKornerRelativeLayout unilagPortal;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -73,6 +75,7 @@ public class Awards extends AppCompatActivity {
         helpActivity = (ImageView)findViewById(R.id.helpIcon);
         awardsRecycler = (RecyclerView)findViewById(R.id.awardsRecycler);
         emptyData = (RelativeLayout)findViewById(R.id.emptyMaterialLayout);
+        unilagPortal = (RoundKornerRelativeLayout) findViewById(R.id.unilagPortal);
 
 
         /*---   ACTIVITY BAR FUNCTIONS   ---*/
@@ -89,6 +92,16 @@ public class Awards extends AppCompatActivity {
             public void onClick(View v) {
                 Intent helpIntent = new Intent(Awards.this, Help.class);
                 startActivity(helpIntent);
+                overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+            }
+        });
+
+
+        unilagPortal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent schoolPortalIntent = new Intent(Awards.this, SchoolPortal.class);
+                startActivity(schoolPortalIntent);
                 overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
             }
         });

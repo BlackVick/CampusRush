@@ -278,6 +278,10 @@
         <activity
             android:name=".SearchFunction.SearchActivity"
             android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Plugins.Awards.SchoolPortal"
+            android:configChanges="orientation"
             android:screenOrientation="portrait"></activity>
     </application>
 

@@ -10,18 +10,71 @@
 
     <include layout="@layout/snippet_for_general"/>
 
+    <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginStart="5.5dp"
+        android:layout_marginEnd="5.5dp"
+        android:id="@+id/unilagPortal"
+        app:corner_radius="16dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/unilag_senate"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/overlayBackground">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/unilag_logo"
+                    android:padding="8dp"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="8"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="3dp"
+                    android:text="Unilag Student Election Portal"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="20sp"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/awardsRecycler"
-        android:layout_marginTop="?attr/actionBarSize"/>
+        android:layout_below="@+id/unilagPortal"
+        android:layout_marginTop="5.5dp"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/emptyMaterialLayout"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:visibility="gone">
+        android:layout_below="@+id/unilagPortal"
+        android:visibility="gone"
+        android:layout_marginTop="5.5dp">
 
         <LinearLayout
             android:layout_width="match_parent"

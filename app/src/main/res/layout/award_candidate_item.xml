@@ -5,8 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="20dp"
-    android:layout_marginStart="30dp"
-    android:layout_marginEnd="30dp"
+    android:layout_marginStart="25dp"
+    android:layout_marginEnd="25dp"
+    android:layout_marginBottom="10dp"
     app:corner_radius="10dp"
     android:background="@color/white">
 
@@ -14,8 +15,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:src="@drawable/campus_rush_colored_logo"
-        android:id="@+id/candidateImage"/>
+        android:src="@drawable/ic_new_placeholder_icon"
+        android:id="@+id/candidateImage"
+        android:maxHeight="280dp"
+        android:scaleType="centerCrop"/>
 
     <TextView
         android:layout_width="match_parent"

@@ -163,7 +163,7 @@ public class Faq extends AppCompatActivity {
         hostAwards.add("* You can host your departmental awards by?");
         hostAwards.add("     (I). Executives should have compiled names and images of the nominees");
         hostAwards.add("     (II). Provide faculty name, department name, different award types and Tag Line of the Award Event");
-        hostAwards.add("     (III). Then contact CAMPUS RUSH on campus_rush@teenqtech.com");
+        hostAwards.add("     (III). Then contact CAMPUS RUSH on blackvikinc@gmail.com");
 
         List<String> uploadSkits = new ArrayList<>();
         uploadSkits.add("* Access the Skit Center by opening the navigation drawer and clicking on Skit Center.");
