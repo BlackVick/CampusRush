@@ -1,6 +1,7 @@
 package com.blackviking.campusrush.Plugins.GamersHub;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -111,7 +112,7 @@ public class GameInfo extends AppCompatActivity {
         if (Common.isConnectedToInternet(getBaseContext()))
             loadCurrentGameInfo();
         else
-            Common.showErrorDialog(this, "No Internet Access !");
+            showErrorDialog("No Internet Access !");
     }
 
     private void loadCurrentGameInfo() {
@@ -161,7 +162,7 @@ public class GameInfo extends AppCompatActivity {
 
                         @Override
                         public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                            Common.showErrorDialog(GameInfo.this, "Error Communicating With Server Server !");
+                            showErrorDialog("Error Communicating With Server Server !");
                         }
                     });
 
@@ -187,5 +188,26 @@ public class GameInfo extends AppCompatActivity {
 
             finish();
         }
+    }
+
+    /*---   WARNING DIALOG   ---*/
+    public void showErrorDialog(String theWarning){
+
+        android.support.v7.app.AlertDialog alertDialog = new android.support.v7.app.AlertDialog.Builder(this)
+                .setTitle("Attention !")
+                .setIcon(R.drawable.ic_attention_red)
+                .setMessage(theWarning)
+                .setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+
+        alertDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
+
+        alertDialog.show();
+
     }
 }

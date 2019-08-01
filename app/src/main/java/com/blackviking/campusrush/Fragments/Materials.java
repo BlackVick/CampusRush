@@ -7,6 +7,7 @@ import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -159,7 +160,7 @@ public class Materials extends Fragment {
 
                 } else {
 
-                    Common.showErrorDialog(getContext(), "No Internet Access !");
+                    showErrorDialog("No Internet Access !");
                 }
             }
         });
@@ -534,7 +535,7 @@ public class Materials extends Fragment {
 
                 } else {
 
-                    Common.showErrorDialog(getContext(), "File Exists... Check Downloads");
+                    showErrorDialog("File Exists... Check Downloads");
 
                 }
 
@@ -546,7 +547,7 @@ public class Materials extends Fragment {
 
         } else {
 
-            Common.showErrorDialog(getContext(), "No Internet Access !");
+            showErrorDialog("No Internet Access !");
 
         }
 
@@ -725,6 +726,8 @@ public class Materials extends Fragment {
                             progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
                             progressDialog.setTitle("Upload In Progress. . .");
                             progressDialog.setProgress(0);
+                            progressDialog.setCanceledOnTouchOutside(false);
+                            progressDialog.setCancelable(false);
                             progressDialog.show();
 
                             /*---   FILE NAME   ---*/
@@ -752,7 +755,7 @@ public class Materials extends Fragment {
 
                                                                 alertDialog.dismiss();
                                                                 progressDialog.dismiss();
-                                                                Common.showErrorDialog(getContext(), "Upload Successful .");
+                                                                Toast.makeText(getContext(), "Upload Successful", Toast.LENGTH_SHORT).show();
 
 
                                                             }
@@ -790,7 +793,7 @@ public class Materials extends Fragment {
                 } else {
 
                     alertDialog.dismiss();
-                    Common.showErrorDialog(getContext(), "No Internet Connection !");
+                    showErrorDialog("No Internet Connection !");
 
                 }
 
@@ -866,6 +869,8 @@ public class Materials extends Fragment {
                             progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
                             progressDialog.setTitle("Upload In Progress. . .");
                             progressDialog.setProgress(0);
+                            progressDialog.setCanceledOnTouchOutside(false);
+                            progressDialog.setCancelable(false);
                             progressDialog.show();
 
                             /*---   FILE NAME   ---*/
@@ -893,7 +898,7 @@ public class Materials extends Fragment {
 
                                                                 alertDialog.dismiss();
                                                                 progressDialog.dismiss();
-                                                                Common.showErrorDialog(getContext(), "Upload Successful .");
+                                                                Toast.makeText(getContext(), "Upload Successful", Toast.LENGTH_SHORT).show();
 
 
                                                             }
@@ -930,7 +935,7 @@ public class Materials extends Fragment {
                 } else {
 
                     alertDialog.dismiss();
-                    Common.showErrorDialog(getContext(), "No Internet Connection !");
+                    showErrorDialog("No Internet Connection !");
 
                 }
 
@@ -1002,6 +1007,8 @@ public class Materials extends Fragment {
                             progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
                             progressDialog.setTitle("Upload In Progress. . .");
                             progressDialog.setProgress(0);
+                            progressDialog.setCanceledOnTouchOutside(false);
+                            progressDialog.setCancelable(false);
                             progressDialog.show();
 
                             /*---   FILE NAME   ---*/
@@ -1029,7 +1036,7 @@ public class Materials extends Fragment {
 
                                                                 alertDialog.dismiss();
                                                                 progressDialog.dismiss();
-                                                                Common.showErrorDialog(getContext(), "Upload Successful .");
+                                                                Toast.makeText(getContext(), "Upload Successful", Toast.LENGTH_SHORT).show();
 
 
                                                             }
@@ -1066,7 +1073,7 @@ public class Materials extends Fragment {
                 } else {
 
                     alertDialog.dismiss();
-                    Common.showErrorDialog(getContext(), "No Internet Connection !");
+                    showErrorDialog("No Internet Connection !");
 
                 }
 
@@ -1148,6 +1155,8 @@ public class Materials extends Fragment {
                             progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
                             progressDialog.setTitle("Upload In Progress. . .");
                             progressDialog.setProgress(0);
+                            progressDialog.setCanceledOnTouchOutside(false);
+                            progressDialog.setCancelable(false);
                             progressDialog.show();
 
                             /*---   FILE NAME   ---*/
@@ -1175,7 +1184,7 @@ public class Materials extends Fragment {
 
                                                                 alertDialog.dismiss();
                                                                 progressDialog.dismiss();
-                                                                Common.showErrorDialog(getContext(), "Upload Successful .");
+                                                                Toast.makeText(getContext(), "Upload Successful", Toast.LENGTH_SHORT).show();
 
 
                                                             }
@@ -1212,7 +1221,7 @@ public class Materials extends Fragment {
                 } else {
 
                     alertDialog.dismiss();
-                    Common.showErrorDialog(getContext(), "No Internet Connection !");
+                    showErrorDialog("No Internet Connection !");
 
                 }
 
@@ -1238,6 +1247,27 @@ public class Materials extends Fragment {
             selectFile.setText("SELECT FILE");
 
         }
+
+    }
+
+    /*---   WARNING DIALOG   ---*/
+    public void showErrorDialog(String theWarning){
+
+        android.support.v7.app.AlertDialog alertDialog = new android.support.v7.app.AlertDialog.Builder(getContext())
+                .setTitle("Attention !")
+                .setIcon(R.drawable.ic_attention_red)
+                .setMessage(theWarning)
+                .setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+
+        alertDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
+
+        alertDialog.show();
 
     }
 

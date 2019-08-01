@@ -3,6 +3,7 @@ package com.blackviking.campusrush.CampusBusiness;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -251,7 +252,7 @@ public class SetBusinessAccount extends AppCompatActivity {
                 if (Common.isConnectedToInternet(getBaseContext()))
                     openPaystackDialog();
                 else
-                    Common.showErrorDialog(SetBusinessAccount.this, "No Internet Access !");
+                    showErrorDialog("No Internet Access !");
             }
         });
 
@@ -279,23 +280,23 @@ public class SetBusinessAccount extends AppCompatActivity {
 
             if (TextUtils.isEmpty(theBusinessName)){
 
-                Common.showErrorDialog(SetBusinessAccount.this, "You need a Business Name");
+                showErrorDialog("You need a Business Name");
 
             } else if (TextUtils.isEmpty(theBusinessAddress)){
 
-                Common.showErrorDialog(SetBusinessAccount.this, "You need a Business Address");
+                showErrorDialog("You need a Business Address");
 
             } else if (TextUtils.isEmpty(theBusinessCategory)){
 
-                Common.showErrorDialog(SetBusinessAccount.this, "What line of business/ trade are you into?");
+                showErrorDialog("What line of business/ trade are you into?");
 
             } else if (TextUtils.isEmpty(theBusinessDescription)){
 
-                Common.showErrorDialog(SetBusinessAccount.this, "Please describe what you do.");
+                showErrorDialog("Please describe what you do.");
 
             } else if (TextUtils.isEmpty(theBusinessPhone)){
 
-                Common.showErrorDialog(SetBusinessAccount.this, "You Need A Business Contact");
+                showErrorDialog("You Need A Business Contact");
 
             } else {
 
@@ -434,7 +435,7 @@ public class SetBusinessAccount extends AppCompatActivity {
                                 .setValue("Business");
                         alertDialog.dismiss();
 
-                        Common.showErrorDialog(SetBusinessAccount.this, "Transaction Successful !");
+                        Toast.makeText(SetBusinessAccount.this, "Transaction Successful", Toast.LENGTH_SHORT).show();
                         paystackBtn.setVisibility(View.GONE);
                         createBtn.setVisibility(View.VISIBLE);
 
@@ -503,7 +504,7 @@ public class SetBusinessAccount extends AppCompatActivity {
         if (card.isValid()){
             return card;
         } else {
-            Common.showErrorDialog(SetBusinessAccount.this, "Invalid Card !");
+            showErrorDialog("Invalid Card !");
             return null;
         }
     }
@@ -511,5 +512,26 @@ public class SetBusinessAccount extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         finish();
+    }
+
+    /*---   WARNING DIALOG   ---*/
+    public void showErrorDialog(String theWarning){
+
+        android.support.v7.app.AlertDialog alertDialog = new android.support.v7.app.AlertDialog.Builder(this)
+                .setTitle("Attention !")
+                .setIcon(R.drawable.ic_attention_red)
+                .setMessage(theWarning)
+                .setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+
+        alertDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
+
+        alertDialog.show();
+
     }
 }

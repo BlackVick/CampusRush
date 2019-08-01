@@ -217,7 +217,7 @@ public class SkitDetails extends AppCompatActivity {
 
                 } else {
 
-                    Common.showErrorDialog(SkitDetails.this, "No Internet Access !");
+                    showErrorDialog("No Internet Access !");
 
                 }
 
@@ -250,7 +250,7 @@ public class SkitDetails extends AppCompatActivity {
 
         } else {
 
-            Common.showErrorDialog(SkitDetails.this, "No Internet Access !");
+            showErrorDialog("No Internet Access !");
 
         }
 
@@ -274,7 +274,7 @@ public class SkitDetails extends AppCompatActivity {
 
             } else {
 
-                Common.showErrorDialog(SkitDetails.this, "File Exists... Check Downloads");
+                showErrorDialog("File Exists... Check Downloads");
 
             }
 
@@ -401,7 +401,7 @@ public class SkitDetails extends AppCompatActivity {
 
                 } catch (Exception e){
 
-                    Common.showErrorDialog(SkitDetails.this, "Error Occurred While Parsing Video !");
+                    Toast.makeText(SkitDetails.this, "Video parse error, try later", Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -602,5 +602,26 @@ public class SkitDetails extends AppCompatActivity {
             exoPlayer.stop();
         }
         finish();
+    }
+
+    /*---   WARNING DIALOG   ---*/
+    public void showErrorDialog(String theWarning){
+
+        android.support.v7.app.AlertDialog alertDialog = new android.support.v7.app.AlertDialog.Builder(this)
+                .setTitle("Attention !")
+                .setIcon(R.drawable.ic_attention_red)
+                .setMessage(theWarning)
+                .setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+
+        alertDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
+
+        alertDialog.show();
+
     }
 }

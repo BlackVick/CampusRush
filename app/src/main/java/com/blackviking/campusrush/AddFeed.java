@@ -132,7 +132,7 @@ public class AddFeed extends AppCompatActivity {
                             .setAspectRatio(1, 1)
                             .start(AddFeed.this);
                 } else {
-                    Common.showErrorDialog(this, "No Internet Access !");
+                    showErrorDialog("No Internet Access !");
                 }
 
             }
@@ -343,13 +343,13 @@ public class AddFeed extends AppCompatActivity {
 
             } else {
 
-                Common.showErrorDialog(this, "No Internet Access !");
+                showErrorDialog("No Internet Access !");
 
             }
 
         } else {
 
-            Common.showErrorDialog(this, "Update Has To Contain Valid Stuff . . .");
+            showErrorDialog("Update Has To Contain Valid Stuff . . .");
 
         }
 
@@ -462,7 +462,7 @@ public class AddFeed extends AppCompatActivity {
 
                 }else {
 
-                    Common.showErrorDialog(AddFeed.this, "No Internet Access !");
+                    showErrorDialog("No Internet Access !");
                 }
                 alertDialog.dismiss();
 
@@ -733,5 +733,26 @@ public class AddFeed extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         finish();
+    }
+
+    /*---   WARNING DIALOG   ---*/
+    public void showErrorDialog(String theWarning){
+
+        android.support.v7.app.AlertDialog alertDialog = new android.support.v7.app.AlertDialog.Builder(this)
+                .setTitle("Attention !")
+                .setIcon(R.drawable.ic_attention_red)
+                .setMessage(theWarning)
+                .setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+
+        alertDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
+
+        alertDialog.show();
+
     }
 }

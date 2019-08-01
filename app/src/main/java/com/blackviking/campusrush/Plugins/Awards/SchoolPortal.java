@@ -1,6 +1,7 @@
 package com.blackviking.campusrush.Plugins.Awards;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -98,13 +99,13 @@ public class SchoolPortal extends AppCompatActivity {
             webView.setWebViewClient(new WebViewClient() {
                 @Override
                 public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                    Common.showErrorDialog(SchoolPortal.this, "Error Communicating With Server !");
+                    showErrorDialog("Error Communicating With Server !");
                 }
             });
 
         } else {
 
-            Common.showErrorDialog(SchoolPortal.this, "No Internet Access !");
+            showErrorDialog("No Internet Access !");
 
         }
     }
@@ -120,5 +121,26 @@ public class SchoolPortal extends AppCompatActivity {
 
             finish();
         }
+    }
+
+    /*---   WARNING DIALOG   ---*/
+    public void showErrorDialog(String theWarning){
+
+        android.support.v7.app.AlertDialog alertDialog = new android.support.v7.app.AlertDialog.Builder(this)
+                .setTitle("Attention !")
+                .setIcon(R.drawable.ic_attention_red)
+                .setMessage(theWarning)
+                .setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+
+        alertDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
+
+        alertDialog.show();
+
     }
 }

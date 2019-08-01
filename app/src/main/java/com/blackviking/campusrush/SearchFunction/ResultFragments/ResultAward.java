@@ -128,7 +128,7 @@ public class ResultAward extends Fragment {
 
         } else {
 
-            Common.showErrorDialog(getContext(), "No Internet Access !");
+            showErrorDialog("No Internet Access !");
 
         }
 
@@ -170,7 +170,7 @@ public class ResultAward extends Fragment {
 
                         } else if (!currentDept.equalsIgnoreCase(model.getAwardDepartment()) && !currentDept.equalsIgnoreCase("")){
 
-                            Common.showErrorDialog(getContext(), "This Is Either Not Your Department Or Someone Has Already Used This Account To Vote In Another Department !");
+                            showErrorDialog("This Is Either Not Your Department Or Someone Has Already Used This Account To Vote In Another Department !");
 
                         } else if (currentDept.equalsIgnoreCase("")){
 
@@ -213,6 +213,27 @@ public class ResultAward extends Fragment {
                     }
                 })
                 .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+
+        alertDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
+
+        alertDialog.show();
+
+    }
+
+    /*---   WARNING DIALOG   ---*/
+    public void showErrorDialog(String theWarning){
+
+        android.support.v7.app.AlertDialog alertDialog = new android.support.v7.app.AlertDialog.Builder(getContext())
+                .setTitle("Attention !")
+                .setIcon(R.drawable.ic_attention_red)
+                .setMessage(theWarning)
+                .setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

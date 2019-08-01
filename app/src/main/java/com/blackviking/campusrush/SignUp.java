@@ -232,7 +232,7 @@ public class SignUp extends AppCompatActivity {
                     if (Common.isConnectedToInternet(getBaseContext()))
                         signUserUp();
                     else
-                        Common.showErrorDialog(SignUp.this, "No Internet Access");
+                        showErrorDialog("No Internet Access");
 
                 } else {
 
@@ -241,7 +241,7 @@ public class SignUp extends AppCompatActivity {
                         progressBar.setVisibility(View.VISIBLE);
                     }
                     else {
-                        Common.showErrorDialog(SignUp.this, "No Internet Access");
+                        showErrorDialog("No Internet Access");
                     }
 
                 }
@@ -289,7 +289,7 @@ public class SignUp extends AppCompatActivity {
 
         } else if (selectGender.equalsIgnoreCase("")){
 
-            Common.showErrorDialog(SignUp.this, "What Gender Do You Identify As?");
+            showErrorDialog("What Gender Do You Identify As?");
             YoYo.with(Techniques.Shake)
                     .duration(500)
                     .playOn(signUp);
@@ -340,7 +340,7 @@ public class SignUp extends AppCompatActivity {
 
                             } else {
 
-                                Common.showErrorDialog(SignUp.this, "An Unknown Error Occurred While Signing Up With Email. Provided Mail Might Already Exist Or Be Invalid. Please Try Again Later !");
+                                Toast.makeText(SignUp.this, "An Unknown Error Occurred While Signing Up With Email. Provided Mail Might Already Exist Or Be Invalid. Please Try Again Later !", Toast.LENGTH_LONG).show();
                                 progressBar.setVisibility(View.GONE);
                                 signUp.setEnabled(true);
 
@@ -444,7 +444,7 @@ public class SignUp extends AppCompatActivity {
 
                                 } else {
 
-                                    Common.showErrorDialog(SignUp.this, "Unknown Error Occurred !");
+                                    Toast.makeText(SignUp.this, "Error occurred, try again later", Toast.LENGTH_SHORT).show();
                                     progressBar.setVisibility(View.GONE);
 
                                 }
@@ -466,7 +466,7 @@ public class SignUp extends AppCompatActivity {
                 YoYo.with(Techniques.Shake)
                         .duration(500)
                         .playOn(signUp);
-                Common.showErrorDialog(SignUp.this, "Some Info Are Missing !");
+                showErrorDialog("Some Info Are Missing !");
                 progressBar.setVisibility(View.GONE);
                 signUp.setEnabled(true);
 
@@ -539,6 +539,26 @@ public class SignUp extends AppCompatActivity {
 
         }
 
+    }
+
+    /*---   WARNING DIALOG   ---*/
+    public void showErrorDialog(String theWarning){
+
+        android.support.v7.app.AlertDialog alertDialog = new android.support.v7.app.AlertDialog.Builder(this)
+                .setTitle("Attention !")
+                .setIcon(R.drawable.ic_attention_red)
+                .setMessage(theWarning)
+                .setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+
+        alertDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
+
+        alertDialog.show();
 
     }
 }

@@ -75,26 +75,4 @@ public class Common {
         return false;
     }
 
-
-    /*---   WARNING DIALOG   ---*/
-    public static void showErrorDialog(Context context, String theWarning){
-
-        AlertDialog alertDialog = new AlertDialog.Builder(context)
-                .setTitle("Attention !")
-                .setIcon(R.drawable.ic_attention_red)
-                .setMessage(theWarning)
-                .setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
-                .create();
-
-        alertDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
-
-        alertDialog.show();
-
-    }
-
 }

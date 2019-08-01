@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.Interface.ItemClickListener;
@@ -172,7 +173,7 @@ public class ManagementDetail extends AppCompatActivity {
             }
 
         } else {
-            Common.showErrorDialog(this, "No Internet Access !");
+            showErrorDialog("No Internet Access !");
         }
     }
 
@@ -225,7 +226,7 @@ public class ManagementDetail extends AppCompatActivity {
 
                                 } else {
 
-                                    Common.showErrorDialog(ManagementDetail.this, "No Internet Access !");
+                                    showErrorDialog("No Internet Access !");
 
                                 }
 
@@ -262,7 +263,7 @@ public class ManagementDetail extends AppCompatActivity {
 
                 } catch (Exception e){
 
-                    Common.showErrorDialog(ManagementDetail.this, "Error Occurred While Parsing Video !");
+                    Toast.makeText(ManagementDetail.this, "Video Parse Error", Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -307,7 +308,7 @@ public class ManagementDetail extends AppCompatActivity {
 
                         } else {
 
-                            Common.showErrorDialog(ManagementDetail.this, "No Internet Access !");
+                            showErrorDialog("No Internet Access !");
 
                         }
 
@@ -578,7 +579,7 @@ public class ManagementDetail extends AppCompatActivity {
 
                         } else {
 
-                            Common.showErrorDialog(ManagementDetail.this, "No Internet Access !");
+                            showErrorDialog("No Internet Access !");
 
                         }
 
@@ -621,5 +622,26 @@ public class ManagementDetail extends AppCompatActivity {
             exoPlayer.stop();
         }
         finish();
+    }
+
+    /*---   WARNING DIALOG   ---*/
+    public void showErrorDialog(String theWarning){
+
+        android.support.v7.app.AlertDialog alertDialog = new android.support.v7.app.AlertDialog.Builder(this)
+                .setTitle("Attention !")
+                .setIcon(R.drawable.ic_attention_red)
+                .setMessage(theWarning)
+                .setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+
+        alertDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
+
+        alertDialog.show();
+
     }
 }
