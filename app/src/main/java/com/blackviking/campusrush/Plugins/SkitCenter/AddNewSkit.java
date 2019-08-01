@@ -425,6 +425,8 @@ public class AddNewSkit extends AppCompatActivity {
             progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             progressDialog.setTitle("Upload In Progress. . .");
             progressDialog.setProgress(0);
+            progressDialog.setCancelable(false);
+            progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.show();
 
 
