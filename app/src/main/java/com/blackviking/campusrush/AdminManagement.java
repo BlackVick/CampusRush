@@ -288,28 +288,28 @@ public class AdminManagement extends AppCompatActivity {
                                                     public void onSuccess(Void aVoid) {
 
                                                         alertDialog.dismiss();
-
-                                                        Map<String, String> dataSend = new HashMap<>();
-                                                        dataSend.put("title", "Account");
-                                                        dataSend.put("message", theAnnouncementMessage);
-                                                        DataMessage dataMessage = new DataMessage(new StringBuilder("/topics/").append(Common.ADMIN_MESSAGE).toString(), dataSend);
-
-                                                        mService.sendNotification(dataMessage)
-                                                                .enqueue(new retrofit2.Callback<MyResponse>() {
-                                                                    @Override
-                                                                    public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
-
-                                                                    }
-
-                                                                    @Override
-                                                                    public void onFailure(Call<MyResponse> call, Throwable t) {
-                                                                        Toast.makeText(AdminManagement.this, "Error Sending Notification", Toast.LENGTH_SHORT).show();
-                                                                    }
-                                                                });
                                                     }
                                                 });
 
                                             }
+
+                                            Map<String, String> dataSend = new HashMap<>();
+                                            dataSend.put("title", "Account");
+                                            dataSend.put("message", theAnnouncementMessage);
+                                            DataMessage dataMessage = new DataMessage(new StringBuilder("/topics/").append(Common.ADMIN_MESSAGE).toString(), dataSend);
+
+                                            mService.sendNotification(dataMessage)
+                                                    .enqueue(new retrofit2.Callback<MyResponse>() {
+                                                        @Override
+                                                        public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+
+                                                        }
+
+                                                        @Override
+                                                        public void onFailure(Call<MyResponse> call, Throwable t) {
+                                                            Toast.makeText(AdminManagement.this, "Error Sending Notification", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    });
                                         }
 
                                         @Override

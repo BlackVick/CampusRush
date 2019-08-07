@@ -228,6 +228,8 @@ public class Login extends AppCompatActivity {
             FirebaseMessaging.getInstance().subscribeToTopic(currentUid);
             Paper.book().write(Common.NOTIFICATION_STATE, "true");
 
+            FirebaseMessaging.getInstance().subscribeToTopic(Common.ADMIN_MESSAGE);
+
             Paper.book().write(Common.isSubServiceRunning, false);
             Intent intent = new Intent(getApplicationContext(), CheckSubStatusService.class);
             startService(intent);

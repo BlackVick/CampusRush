@@ -7,10 +7,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,7 +72,7 @@ public class SetBusinessAccount extends AppCompatActivity {
     private DatabaseReference userRef, promoterRef, priceRef, subscriptionRef, businessProfileRef, transactionRef;
     private String currentUid, userType, userEmail;
     private EditText name, address, category, description, phone, facebook, instagram, twitter;
-    private TextView price;
+    private TextView price, policyTextView;
     private Button paystackBtn, createBtn;
     private CheckBox businessTerms;
 
@@ -128,6 +133,7 @@ public class SetBusinessAccount extends AppCompatActivity {
         instagram = (EditText)findViewById(R.id.businessInstagramEdt);
         twitter = (EditText)findViewById(R.id.businessTwitterEdt);
         price = (TextView)findViewById(R.id.businessAccountPrice);
+        policyTextView = (TextView)findViewById(R.id.policyTextView);
         paystackBtn = (Button)findViewById(R.id.businessAccountPaymentBtn);
         createBtn = (Button)findViewById(R.id.createBusinessAccountBtn);
         businessTerms = (CheckBox)findViewById(R.id.acceptBusinessTermsCheckbox);
@@ -217,6 +223,43 @@ public class SetBusinessAccount extends AppCompatActivity {
 
             }
         });
+
+
+        /*---   PRIVACY AND TERMS LINK   ---*/
+        String text = "I have read and agreed to all the TERMS OF USE and PRIVACY POLICY";
+        SpannableString ss = new SpannableString(text);
+        ClickableSpan termsText = new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+
+                String termUrl = "https://campus-rush.web.app/customer-terms-and-privacy-policy.html#terms";
+
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(termUrl));
+                startActivity(i);
+
+            }
+        };
+
+        ClickableSpan privacyText = new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+
+                String privacyUrl = "https://campus-rush.web.app/customer-terms-and-privacy-policy.html#privacyPolicy";
+
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(privacyUrl));
+                startActivity(i);
+
+            }
+        };
+
+
+        ss.setSpan(termsText, 34, 46, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(privacyText, 51, 65, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        policyTextView.setText(ss);
+        policyTextView.setMovementMethod(LinkMovementMethod.getInstance());
 
 
         /*---   TERMS   ---*/

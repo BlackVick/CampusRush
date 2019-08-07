@@ -234,30 +234,33 @@ public class Notifications extends Fragment {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                String username = dataSnapshot.child("username").getValue().toString();
-                                String image = dataSnapshot.child("profilePictureThumb").getValue().toString();
+                                if (dataSnapshot != null) {
+                                    String username = dataSnapshot.child("username").getValue().toString();
+                                    String image = dataSnapshot.child("profilePictureThumb").getValue().toString();
 
-                                viewHolder.username.setText("@" + username);
+                                    viewHolder.username.setText("@" + username);
 
-                                if (!image.equalsIgnoreCase("")) {
+                                    if (!image.equalsIgnoreCase("")) {
 
-                                    Picasso.with(getContext())
-                                            .load(image)
-                                            .placeholder(R.drawable.profile)
-                                            .into(viewHolder.userImage);
+                                        Picasso.with(getContext())
+                                                .load(image)
+                                                .placeholder(R.drawable.profile)
+                                                .into(viewHolder.userImage);
 
+
+                                    }
+
+                                    viewHolder.userImage.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Intent posterProfile = new Intent(getContext(), OtherUserProfile.class);
+                                            posterProfile.putExtra("UserId", model.getUser());
+                                            startActivity(posterProfile);
+                                            getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+                                        }
+                                    });
 
                                 }
-
-                                viewHolder.userImage.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Intent posterProfile = new Intent(getContext(), OtherUserProfile.class);
-                                        posterProfile.putExtra("UserId", model.getUser());
-                                        startActivity(posterProfile);
-                                        getActivity().overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
-                                    }
-                                });
 
                             }
 

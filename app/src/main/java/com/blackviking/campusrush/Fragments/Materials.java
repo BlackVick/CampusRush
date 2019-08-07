@@ -755,6 +755,7 @@ public class Materials extends Fragment {
 
                                                                 alertDialog.dismiss();
                                                                 progressDialog.dismiss();
+                                                                fileUri = null;
                                                                 Toast.makeText(getContext(), "Upload Successful", Toast.LENGTH_SHORT).show();
 
 
@@ -898,6 +899,7 @@ public class Materials extends Fragment {
 
                                                                 alertDialog.dismiss();
                                                                 progressDialog.dismiss();
+                                                                fileUri = null;
                                                                 Toast.makeText(getContext(), "Upload Successful", Toast.LENGTH_SHORT).show();
 
 
@@ -1036,6 +1038,7 @@ public class Materials extends Fragment {
 
                                                                 alertDialog.dismiss();
                                                                 progressDialog.dismiss();
+                                                                fileUri = null;
                                                                 Toast.makeText(getContext(), "Upload Successful", Toast.LENGTH_SHORT).show();
 
 
@@ -1184,6 +1187,7 @@ public class Materials extends Fragment {
 
                                                                 alertDialog.dismiss();
                                                                 progressDialog.dismiss();
+                                                                fileUri = null;
                                                                 Toast.makeText(getContext(), "Upload Successful", Toast.LENGTH_SHORT).show();
 
 

@@ -88,11 +88,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/LoginBackground" />
         <activity
-            android:name=".SignIn"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/LoginBackground" />
-        <activity
             android:name=".UserVerification"
             android:configChanges="orientation"
             android:screenOrientation="portrait"

@@ -20,24 +20,25 @@
         android:layout_marginStart="14dp"
         android:layout_marginEnd="14dp"
         android:text="Let's Get Your Business Profile Set Up!"
-        android:textColor="@color/black"
-        android:textSize="25sp"/>
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="22sp"/>
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="180dp"
-        android:layout_marginStart="14dp"
-        android:layout_marginEnd="14dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:background="@drawable/login_back_bottom"
-        android:padding="10dp">
+        android:padding="6dp">
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/buttonsLayout"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="4dp"
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -274,7 +275,7 @@
                         android:layout_weight="8.5"
                         android:layout_height="wrap_content"
                         android:id="@+id/policyTextView"
-                        android:text="Accept all terms of use and conditions for business account."
+                        android:text=""
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="15sp"
                         android:gravity="start"
