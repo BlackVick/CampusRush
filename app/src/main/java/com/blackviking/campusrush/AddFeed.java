@@ -29,6 +29,7 @@ import android.widget.Toast;
 
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.Common.Permissions;
+import com.blackviking.campusrush.Model.UserModel;
 import com.blackviking.campusrush.Notification.APIService;
 import com.blackviking.campusrush.Notification.DataMessage;
 import com.blackviking.campusrush.Notification.MyResponse;
@@ -195,8 +196,14 @@ public class AddFeed extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
-                    privacyState = dataSnapshot.child("privacy").getValue().toString();
-                    userType = dataSnapshot.child("userType").getValue().toString();
+                    UserModel currentUser = dataSnapshot.getValue(UserModel.class);
+
+                    if (currentUser != null){
+
+                        privacyState = currentUser.getPrivacy();
+                        userType = currentUser.getUserType();
+
+                    }
 
                 }
 

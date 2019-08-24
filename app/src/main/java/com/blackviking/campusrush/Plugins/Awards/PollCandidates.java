@@ -68,9 +68,9 @@ public class PollCandidates extends AppCompatActivity {
 
 
         /*---   FIREBASE   ---*/
+        awardRef = db.getReference("Awards").child(currentAward).child("Polls").child(currentPoll);
         if (mAuth.getCurrentUser() != null)
             currentUid = mAuth.getCurrentUser().getUid();
-        awardRef = db.getReference("Awards").child(currentAward).child("Polls").child(currentPoll);
 
 
         /*---   WIDGETS   ---*/

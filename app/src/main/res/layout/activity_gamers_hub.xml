@@ -10,72 +10,39 @@
 
     <include layout="@layout/snippet_for_general"/>
 
-    <RelativeLayout
+    <android.support.design.widget.TabLayout
+        android:id="@+id/gamersTabs"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize">
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:minHeight="?attr/actionBarSize"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/colorPrimaryDark"
+        app:tabTextColor="@color/grey"
+        app:tabIndicatorHeight="3.2dp">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Trending"
-                    android:textSize="18sp"
-                    android:textColor="@color/black"
-                    android:layout_margin="7dp"/>
-
-                <android.support.v7.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/trendingGamesRecycler"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="@color/black"
-                    android:layout_marginTop="5dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Game Feed"
-                    android:textSize="18sp"
-                    android:textColor="@color/black"
-                    android:layout_marginTop="19dp"
-                    android:layout_marginStart="7dp"/>
-
-                <android.support.v7.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="500dp"
-                    android:layout_marginTop="7dp"
-                    android:id="@+id/gameFeedRecycler"/>
-
-            </LinearLayout>
-
-        </ScrollView>
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/addGameFeed"
+        <android.support.design.widget.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/campus_rush_gamers_hub"
-            android:tint="@color/colorPrimaryDark"
-            app:backgroundTint="@color/white"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_margin="13dp"
-            app:elevation="6dp"/>
+            android:text="TRENDING" />
 
-    </RelativeLayout>
+        <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GAME FEED" />
+
+    </android.support.design.widget.TabLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.4dp"
+        android:layout_below="@+id/gamersTabs"
+        android:background="@color/grey"/>
+
+    <android.support.v4.view.ViewPager
+        android:layout_below="@+id/gamersTabs"
+        android:id="@+id/gamersViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>

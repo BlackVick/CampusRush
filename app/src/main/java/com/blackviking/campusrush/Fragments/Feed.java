@@ -41,6 +41,7 @@ import com.blackviking.campusrush.FeedDetails;
 import com.blackviking.campusrush.Home;
 import com.blackviking.campusrush.Interface.ItemClickListener;
 import com.blackviking.campusrush.Model.FeedModel;
+import com.blackviking.campusrush.Model.UserModel;
 import com.blackviking.campusrush.Notification.APIService;
 import com.blackviking.campusrush.Notification.DataMessage;
 import com.blackviking.campusrush.Notification.MyResponse;
@@ -376,42 +377,47 @@ public class Feed extends Fragment {
                     /*---   POSTER DETAILS   ---*/
                     if (!model.getSender().equalsIgnoreCase("")) {
 
-                        userRef.child(model.getSender()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        userRef.child(model.getSender()).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                String imageLink = dataSnapshot.child("profilePicture").getValue().toString();
-                                final String imageThumbLink = dataSnapshot.child("profilePictureThumb").getValue().toString();
-                                String username = dataSnapshot.child("username").getValue().toString();
+                                UserModel currentUser = dataSnapshot.getValue(UserModel.class);
 
-                                if (!imageThumbLink.equals("")) {
+                                if (currentUser != null){
 
-                                    Picasso.with(getContext())
-                                            .load(imageThumbLink)
-                                            .networkPolicy(NetworkPolicy.OFFLINE)
-                                            .placeholder(R.drawable.profile)
-                                            .into(viewHolder.posterImage, new Callback() {
-                                                @Override
-                                                public void onSuccess() {
+                                    final String imageThumbLink = currentUser.getProfilePictureThumb();
+                                    String username = currentUser.getUsername();
 
-                                                }
+                                    if (!imageThumbLink.equals("")) {
 
-                                                @Override
-                                                public void onError() {
-                                                    Picasso.with(getContext())
-                                                            .load(imageThumbLink)
-                                                            .placeholder(R.drawable.profile)
-                                                            .into(viewHolder.posterImage);
-                                                }
-                                            });
+                                        Picasso.with(getContext())
+                                                .load(imageThumbLink)
+                                                .networkPolicy(NetworkPolicy.OFFLINE)
+                                                .placeholder(R.drawable.profile)
+                                                .into(viewHolder.posterImage, new Callback() {
+                                                    @Override
+                                                    public void onSuccess() {
 
-                                } else {
+                                                    }
 
-                                    viewHolder.posterImage.setImageResource(R.drawable.profile);
+                                                    @Override
+                                                    public void onError() {
+                                                        Picasso.with(getContext())
+                                                                .load(imageThumbLink)
+                                                                .placeholder(R.drawable.profile)
+                                                                .into(viewHolder.posterImage);
+                                                    }
+                                                });
+
+                                    } else {
+
+                                        viewHolder.posterImage.setImageResource(R.drawable.profile);
+
+                                    }
+
+                                    viewHolder.posterName.setText("@" + username);
 
                                 }
-
-                                viewHolder.posterName.setText("@" + username);
 
                             }
 
@@ -685,7 +691,6 @@ public class Feed extends Fragment {
                     });
 
                 }
-
 
             }
         };

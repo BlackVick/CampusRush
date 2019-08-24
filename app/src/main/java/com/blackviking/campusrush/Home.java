@@ -39,6 +39,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blackviking.campusrush.CampusBusiness.BusinessStatusModel;
 import com.blackviking.campusrush.CampusBusiness.CampusAds;
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.Fragments.Account;
@@ -47,6 +48,8 @@ import com.blackviking.campusrush.Fragments.Feed;
 import com.blackviking.campusrush.Fragments.Materials;
 import com.blackviking.campusrush.Fragments.Notifications;
 import com.blackviking.campusrush.Model.MaterialModel;
+import com.blackviking.campusrush.Model.RatingModel;
+import com.blackviking.campusrush.Model.UserModel;
 import com.blackviking.campusrush.Plugins.Awards.Awards;
 import com.blackviking.campusrush.Plugins.GamersHub.GamersHub;
 import com.blackviking.campusrush.Plugins.SkitCenter.SkitCenter;
@@ -204,74 +207,81 @@ public class Home extends AppCompatActivity
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                String theUsername = dataSnapshot.child("username").getValue().toString();
-                String theFullName = dataSnapshot.child("lastName").getValue().toString()
-                        + " " + dataSnapshot.child("firstName").getValue().toString();
-                final String theImage = dataSnapshot.child("profilePictureThumb").getValue().toString();
-                String security = dataSnapshot.child("riskLevel").getValue().toString();
-                String userType = dataSnapshot.child("userType").getValue().toString();
 
-                if (userType.equalsIgnoreCase("Admin")){
-                    admin.setVisibility(View.VISIBLE);
-                } else if (userType.equalsIgnoreCase("User")){
-                    admin.setVisibility(View.GONE);
-                }
+                UserModel currentUser = dataSnapshot.getValue(UserModel.class);
 
-                if (security.equalsIgnoreCase("Danger")){
+                if (currentUser != null){
 
-                    Paper.book().destroy();
+                    String theUsername = currentUser.getUsername();
+                    String theFullName = currentUser.getLastName()
+                            + " " + currentUser.getFirstName();
+                    final String theImage = currentUser.getProfilePictureThumb();
+                    String security = currentUser.getRiskLevel();
+                    String userType = currentUser.getUserType();
 
-                    FirebaseMessaging.getInstance().unsubscribeFromTopic(currentUid);
-                    FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.ADMIN_MESSAGE);
-                    FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.FEED_NOTIFICATION_TOPIC+currentUid);
-                    FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.FEED_NOTIFICATION_TOPIC);
-                    FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.SKIT_NOTIFICATION_TOPIC);
-                    FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.GAMERS_NOTIFICATION_TOPIC);
-
-                    if (isSubServiceOn) {
-                        Intent intent = new Intent(Home.this, SubscriptionService.class);
-                        stopService(intent);
+                    if (userType.equalsIgnoreCase("Admin")){
+                        admin.setVisibility(View.VISIBLE);
+                    } else if (userType.equalsIgnoreCase("User")){
+                        admin.setVisibility(View.GONE);
                     }
 
-                    mAuth.signOut();
-                    Intent signoutIntent = new Intent(Home.this, Login.class);
-                    signoutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(signoutIntent);
-                    finish();
+                    if (security.equalsIgnoreCase("Danger")){
 
-                }
+                        Paper.book().destroy();
 
+                        FirebaseMessaging.getInstance().unsubscribeFromTopic(currentUid);
+                        FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.ADMIN_MESSAGE);
+                        FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.FEED_NOTIFICATION_TOPIC+currentUid);
+                        FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.FEED_NOTIFICATION_TOPIC);
+                        FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.SKIT_NOTIFICATION_TOPIC);
+                        FirebaseMessaging.getInstance().unsubscribeFromTopic(Common.GAMERS_NOTIFICATION_TOPIC);
 
-                userName.setText("@"+theUsername);
-                userFullName.setText(theFullName);
-
-                if (!theImage.equalsIgnoreCase("")) {
-
-                    Picasso.with(getBaseContext()).load(theImage).networkPolicy(NetworkPolicy.OFFLINE)
-                            .placeholder(R.drawable.profile).into(userImage, new Callback() {
-                        @Override
-                        public void onSuccess() {
-
+                        if (isSubServiceOn) {
+                            Intent intent = new Intent(Home.this, SubscriptionService.class);
+                            stopService(intent);
                         }
 
+                        mAuth.signOut();
+                        Intent signoutIntent = new Intent(Home.this, Login.class);
+                        signoutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(signoutIntent);
+                        finish();
+
+                    }
+
+
+                    userName.setText("@"+theUsername);
+                    userFullName.setText(theFullName);
+
+                    if (!theImage.equalsIgnoreCase("")) {
+
+                        Picasso.with(getBaseContext()).load(theImage).networkPolicy(NetworkPolicy.OFFLINE)
+                                .placeholder(R.drawable.profile).into(userImage, new Callback() {
+                            @Override
+                            public void onSuccess() {
+
+                            }
+
+                            @Override
+                            public void onError() {
+                                Picasso.with(getBaseContext()).load(theImage)
+                                        .placeholder(R.drawable.profile).into(userImage);
+                            }
+                        });
+
+                    }
+
+                    userImage.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onError() {
-                            Picasso.with(getBaseContext()).load(theImage)
-                                    .placeholder(R.drawable.profile).into(userImage);
+                        public void onClick(View v) {
+                            rootLayout.closeDrawer(GravityCompat.START);
+                            Intent myProfileIntent = new Intent(Home.this, MyProfile.class);
+                            startActivity(myProfileIntent);
+                            overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
                         }
                     });
 
                 }
-
-                userImage.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        rootLayout.closeDrawer(GravityCompat.START);
-                        Intent myProfileIntent = new Intent(Home.this, MyProfile.class);
-                        startActivity(myProfileIntent);
-                        overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
-                    }
-                });
 
             }
 
@@ -286,35 +296,41 @@ public class Home extends AppCompatActivity
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                String status = dataSnapshot.child("status").getValue().toString();
-                String info = dataSnapshot.child("info").getValue().toString();
+                BusinessStatusModel currentBusStatus = dataSnapshot.getValue(BusinessStatusModel.class);
 
-                if (status.equalsIgnoreCase("Active")){
+                if (currentBusStatus != null){
 
-                    campusAds.setVisibility(View.VISIBLE);
+                    String status = currentBusStatus.getStatus();
+                    String info = currentBusStatus.getInfo();
 
-                } else {
+                    if (status.equalsIgnoreCase("Active")){
 
-                    campusAds.setVisibility(View.GONE);
-                    anticipate.setVisibility(View.VISIBLE);
-                    anticipateText.setText(info);
-                    YoYo.with(Techniques.RubberBand)
-                            .duration(500)
-                            .repeat(3)
-                            .playOn(anticipateImage);
+                        campusAds.setVisibility(View.VISIBLE);
 
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            anticipate.setVisibility(View.GONE);
-                        }
-                    }, 3000);
-                    anticipateImage.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            openCampusAdDialog();
-                        }
-                    });
+                    } else {
+
+                        campusAds.setVisibility(View.GONE);
+                        anticipate.setVisibility(View.VISIBLE);
+                        anticipateText.setText(info);
+                        YoYo.with(Techniques.RubberBand)
+                                .duration(500)
+                                .repeat(3)
+                                .playOn(anticipateImage);
+
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                anticipate.setVisibility(View.GONE);
+                            }
+                        }, 3000);
+                        anticipateImage.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                openCampusAdDialog();
+                            }
+                        });
+
+                    }
 
                 }
 
@@ -388,11 +404,17 @@ public class Home extends AppCompatActivity
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                String rateStatus = dataSnapshot.child("status").getValue().toString();
+                RatingModel currentRating = dataSnapshot.getValue(RatingModel.class);
 
-                if (rateStatus.equalsIgnoreCase("Active")){
+                if (currentRating != null){
 
-                    openRatingDialog();
+                    String rateStatus = currentRating.getStatus();
+
+                    if (rateStatus.equalsIgnoreCase("Active")){
+
+                        openRatingDialog();
+
+                    }
 
                 }
 

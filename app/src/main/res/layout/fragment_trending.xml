@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Plugins.GamersHub.GamersFragments.Trending"
+    android:animateLayoutChanges="true">
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/trendingGamesRecycler"/>
+
+    <RelativeLayout
+        android:id="@+id/trendingNav"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true"
+        android:animateLayoutChanges="true"
+        android:background="@drawable/bottom_nav_back">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:animateLayoutChanges="true"
+            android:gravity="center"
+            android:weightSum="10">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:src="@drawable/pc_gaming"
+                android:adjustViewBounds="true"
+                android:padding="14dp"
+                android:id="@+id/pcGames"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:src="@drawable/xbox"
+                android:adjustViewBounds="true"
+                android:padding="14dp"
+                android:id="@+id/xboxGames"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:src="@drawable/playstation"
+                android:adjustViewBounds="true"
+                android:padding="14dp"
+                android:id="@+id/psGames"/>
+
+            <ImageView
+                android:id="@+id/switchGames"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="match_parent"
+                android:src="@drawable/nintendo_switch"
+                android:adjustViewBounds="true"
+                android:padding="14dp"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:src="@drawable/google_stadia"
+                android:adjustViewBounds="true"
+                android:padding="14dp"
+                android:id="@+id/stadiaGames"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -39,6 +39,7 @@ import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.Common.GetTimeAgo;
 import com.blackviking.campusrush.FeedDetails;
 import com.blackviking.campusrush.ImageController.ImageViewer;
+import com.blackviking.campusrush.Model.UserModel;
 import com.blackviking.campusrush.Notification.APIService;
 import com.blackviking.campusrush.Notification.DataMessage;
 import com.blackviking.campusrush.Notification.MyResponse;
@@ -199,30 +200,36 @@ public class Messaging extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                userUsername = dataSnapshot.child("username").getValue().toString();
-                userImageLink = dataSnapshot.child("profilePictureThumb").getValue().toString();
+                UserModel currentFriend = dataSnapshot.getValue(UserModel.class);
 
-                username.setText("@"+userUsername);
+                if (currentFriend != null) {
 
-                if (!userImageLink.equalsIgnoreCase("")){
+                    userUsername = currentFriend.getUsername();
+                    userImageLink = currentFriend.getProfilePictureThumb();
 
-                    Picasso.with(getBaseContext())
-                            .load(userImageLink)
-                            .placeholder(R.drawable.profile)
-                            .into(userImage);
+                    username.setText("@" + userUsername);
 
-                }
+                    if (!userImageLink.equalsIgnoreCase("")) {
 
-                if (!userId.equalsIgnoreCase("")){
-                    userImage.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent viewUserIntent = new Intent(Messaging.this, OtherUserProfile.class);
-                            viewUserIntent.putExtra("UserId", userId);
-                            startActivity(viewUserIntent);
-                            overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
-                        }
-                    });
+                        Picasso.with(getBaseContext())
+                                .load(userImageLink)
+                                .placeholder(R.drawable.profile)
+                                .into(userImage);
+
+                    }
+
+                    if (!userId.equalsIgnoreCase("")) {
+                        userImage.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent viewUserIntent = new Intent(Messaging.this, OtherUserProfile.class);
+                                viewUserIntent.putExtra("UserId", userId);
+                                startActivity(viewUserIntent);
+                                overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+                            }
+                        });
+                    }
+
                 }
 
             }
@@ -436,40 +443,46 @@ public class Messaging extends AppCompatActivity {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                        String theQuote = dataSnapshot.child("message").getValue().toString();
-                                        String theImage = dataSnapshot.child("imageThumbUrl").getValue().toString();
-                                        String theSenderOfQuote = dataSnapshot.child("messageFrom").getValue().toString();
+                                        MessageQuoteModel currentQuote = dataSnapshot.getValue(MessageQuoteModel.class);
 
-                                        if (theSenderOfQuote.equalsIgnoreCase(userId)){
+                                        if (currentQuote != null){
 
-                                            viewHolder.myQuoter.setText("@"+userUsername);
+                                            String theQuote = currentQuote.getMessage();
+                                            String theImage = currentQuote.getImageThumbUrl();
+                                            String theSenderOfQuote = currentQuote.getMessageFrom();
 
-                                        } else {
+                                            if (theSenderOfQuote.equalsIgnoreCase(userId)){
 
-                                            viewHolder.myQuoter.setText("You");
+                                                viewHolder.myQuoter.setText("@"+userUsername);
 
-                                        }
+                                            } else {
 
-                                        if (!theImage.equalsIgnoreCase("")){
+                                                viewHolder.myQuoter.setText("You");
 
-                                            viewHolder.myQuoteImage.setVisibility(View.VISIBLE);
-                                            Picasso.with(getBaseContext())
-                                                    .load(theImage)
-                                                    .placeholder(R.drawable.image_placeholders)
-                                                    .into(viewHolder.myQuoteImage);
+                                            }
 
-                                        } else {
+                                            if (!theImage.equalsIgnoreCase("")){
 
-                                            viewHolder.myQuoteImage.setVisibility(View.GONE);
-                                        }
+                                                viewHolder.myQuoteImage.setVisibility(View.VISIBLE);
+                                                Picasso.with(getBaseContext())
+                                                        .load(theImage)
+                                                        .placeholder(R.drawable.image_placeholders)
+                                                        .into(viewHolder.myQuoteImage);
 
-                                        if (!theQuote.equalsIgnoreCase("")){
+                                            } else {
 
-                                            viewHolder.myQuoteText.setVisibility(View.VISIBLE);
-                                            viewHolder.myQuoteText.setText(theQuote);
-                                        } else {
+                                                viewHolder.myQuoteImage.setVisibility(View.GONE);
+                                            }
 
-                                            viewHolder.myQuoteText.setVisibility(View.GONE);
+                                            if (!theQuote.equalsIgnoreCase("")){
+
+                                                viewHolder.myQuoteText.setVisibility(View.VISIBLE);
+                                                viewHolder.myQuoteText.setText(theQuote);
+                                            } else {
+
+                                                viewHolder.myQuoteText.setVisibility(View.GONE);
+                                            }
+
                                         }
 
                                     }
@@ -573,40 +586,46 @@ public class Messaging extends AppCompatActivity {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                        String theQuote = dataSnapshot.child("message").getValue().toString();
-                                        String theImage = dataSnapshot.child("imageThumbUrl").getValue().toString();
-                                        String theSenderOfQuote = dataSnapshot.child("messageFrom").getValue().toString();
+                                        MessageQuoteModel currentQuote = dataSnapshot.getValue(MessageQuoteModel.class);
 
-                                        if (theSenderOfQuote.equalsIgnoreCase(userId)){
+                                        if (currentQuote != null){
 
-                                            viewHolder.otherQuoter.setText("@"+userUsername);
+                                            String theQuote = currentQuote.getMessage();
+                                            String theImage = currentQuote.getImageThumbUrl();
+                                            String theSenderOfQuote = currentQuote.getMessageFrom();
 
-                                        } else {
+                                            if (theSenderOfQuote.equalsIgnoreCase(userId)){
 
-                                            viewHolder.otherQuoter.setText("You");
+                                                viewHolder.otherQuoter.setText("@"+userUsername);
 
-                                        }
+                                            } else {
 
-                                        if (!theImage.equalsIgnoreCase("")){
+                                                viewHolder.otherQuoter.setText("You");
 
-                                            viewHolder.otherQuoteImage.setVisibility(View.VISIBLE);
-                                            Picasso.with(getBaseContext())
-                                                    .load(theImage)
-                                                    .placeholder(R.drawable.image_placeholders)
-                                                    .into(viewHolder.otherQuoteImage);
+                                            }
 
-                                        } else {
+                                            if (!theImage.equalsIgnoreCase("")){
 
-                                            viewHolder.otherQuoteImage.setVisibility(View.GONE);
-                                        }
+                                                viewHolder.otherQuoteImage.setVisibility(View.VISIBLE);
+                                                Picasso.with(getBaseContext())
+                                                        .load(theImage)
+                                                        .placeholder(R.drawable.image_placeholders)
+                                                        .into(viewHolder.otherQuoteImage);
 
-                                        if (!theQuote.equalsIgnoreCase("")){
+                                            } else {
 
-                                            viewHolder.otherQuoteText.setVisibility(View.VISIBLE);
-                                            viewHolder.otherQuoteText.setText(theQuote);
-                                        } else {
+                                                viewHolder.otherQuoteImage.setVisibility(View.GONE);
+                                            }
 
-                                            viewHolder.otherQuoteText.setVisibility(View.GONE);
+                                            if (!theQuote.equalsIgnoreCase("")){
+
+                                                viewHolder.otherQuoteText.setVisibility(View.VISIBLE);
+                                                viewHolder.otherQuoteText.setText(theQuote);
+                                            } else {
+
+                                                viewHolder.otherQuoteText.setVisibility(View.GONE);
+                                            }
+
                                         }
 
                                     }
@@ -741,53 +760,59 @@ public class Messaging extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
-                        String theQuote = dataSnapshot.child("message").getValue().toString();
-                        String theImage = dataSnapshot.child("imageThumbUrl").getValue().toString();
-                        String theSenderOfQuote = dataSnapshot.child("messageFrom").getValue().toString();
+                        MessageQuoteModel theCurrentQuote = dataSnapshot.getValue(MessageQuoteModel.class);
 
-                        myQuoteLayout.setVisibility(View.VISIBLE);
-                        myQuoter.setVisibility(View.VISIBLE);
+                        if (theCurrentQuote != null) {
 
-                        if (theSenderOfQuote.equalsIgnoreCase(userId)){
+                            String theQuote = theCurrentQuote.getMessage();
+                            String theImage = theCurrentQuote.getImageThumbUrl();
+                            String theSenderOfQuote = theCurrentQuote.getMessageFrom();
 
-                            myQuoter.setText("@"+userUsername);
+                            myQuoteLayout.setVisibility(View.VISIBLE);
+                            myQuoter.setVisibility(View.VISIBLE);
 
-                        } else {
+                            if (theSenderOfQuote.equalsIgnoreCase(userId)){
 
-                            myQuoter.setText("You");
+                                myQuoter.setText("@"+userUsername);
 
-                        }
+                            } else {
 
-                        if (!theImage.equalsIgnoreCase("")){
+                                myQuoter.setText("You");
 
-                            myQuoteImage.setVisibility(View.VISIBLE);
-                            Picasso.with(getBaseContext())
-                                    .load(theImage)
-                                    .placeholder(R.drawable.image_placeholders)
-                                    .into(myQuoteImage);
-
-                        } else {
-
-                            myQuoteImage.setVisibility(View.GONE);
-                        }
-
-                        if (!theQuote.equalsIgnoreCase("")){
-
-                            myQuoteText.setVisibility(View.VISIBLE);
-                            myQuoteText.setText(theQuote);
-                        } else {
-
-                            myQuoteText.setVisibility(View.GONE);
-                        }
-
-                        cancelQuote.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                isQuoting = false;
-                                currentQuote = "";
-                                myQuoteLayout.setVisibility(View.GONE);
                             }
-                        });
+
+                            if (!theImage.equalsIgnoreCase("")){
+
+                                myQuoteImage.setVisibility(View.VISIBLE);
+                                Picasso.with(getBaseContext())
+                                        .load(theImage)
+                                        .placeholder(R.drawable.image_placeholders)
+                                        .into(myQuoteImage);
+
+                            } else {
+
+                                myQuoteImage.setVisibility(View.GONE);
+                            }
+
+                            if (!theQuote.equalsIgnoreCase("")){
+
+                                myQuoteText.setVisibility(View.VISIBLE);
+                                myQuoteText.setText(theQuote);
+                            } else {
+
+                                myQuoteText.setVisibility(View.GONE);
+                            }
+
+                            cancelQuote.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    isQuoting = false;
+                                    currentQuote = "";
+                                    myQuoteLayout.setVisibility(View.GONE);
+                                }
+                            });
+
+                        }
 
                     }
 

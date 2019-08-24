@@ -34,10 +34,12 @@ import android.widget.Toast;
 
 import com.blackviking.campusrush.AddFeed;
 import com.blackviking.campusrush.BuildConfig;
+import com.blackviking.campusrush.CampusBusiness.BusinessProfileModel;
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.Common.Permissions;
 import com.blackviking.campusrush.ImageController.BlurImage;
 import com.blackviking.campusrush.ImageController.ImageViewer;
+import com.blackviking.campusrush.Model.UserModel;
 import com.blackviking.campusrush.R;
 import com.blackviking.campusrush.Settings.AccountSettings;
 import com.blackviking.campusrush.UserVerification;
@@ -337,74 +339,37 @@ public class MyProfile extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                serverUsername = dataSnapshot.child("username").getValue().toString();
-                serverFullName = dataSnapshot.child("lastName").getValue().toString() + " " + dataSnapshot.child("firstName").getValue().toString();
-                serverStatus = dataSnapshot.child("status").getValue().toString();
-                serverGender = dataSnapshot.child("gender").getValue().toString();
-                serverDepartment = dataSnapshot.child("department").getValue().toString();
-                serverBio = dataSnapshot.child("bio").getValue().toString();
-                serverProfilePictureThumb = dataSnapshot.child("profilePictureThumb").getValue().toString();
-                serverProfilePicture = dataSnapshot.child("profilePicture").getValue().toString();
-                serverUserType = dataSnapshot.child("userType").getValue().toString();
+                UserModel currentUser = dataSnapshot.getValue(UserModel.class);
 
-                /*---   DETAILS   ---*/
-                username.setText("@"+serverUsername);
-                fullName.setText(serverFullName);
-                status.setText(serverStatus);
-                department.setText(serverDepartment);
-                gender.setText(serverGender);
-                bio.setText(serverBio);
+                if (currentUser != null){
 
-                if (serverUserType.equalsIgnoreCase("Admin")){
-                    accountType.setText("Admin");
-                } else if (serverUserType.equalsIgnoreCase("Business")){
-                    accountType.setText("Business Account");
-                } else {
-                    accountType.setText("Regular");
+                    serverUsername = currentUser.getUsername();
+                    serverFullName = currentUser.getLastName() + " " + currentUser.getFirstName();
+                    serverStatus = currentUser.getStatus();
+                    serverGender = currentUser.getGender();
+                    serverDepartment = currentUser.getDepartment();
+                    serverBio = currentUser.getBio();
+                    serverProfilePictureThumb = currentUser.getProfilePictureThumb();
+                    serverProfilePicture = currentUser.getProfilePicture();
+                    serverUserType = currentUser.getUserType();
+
+                    /*---   DETAILS   ---*/
+                    username.setText("@"+serverUsername);
+                    fullName.setText(serverFullName);
+                    status.setText(serverStatus);
+                    department.setText(serverDepartment);
+                    gender.setText(serverGender);
+                    bio.setText(serverBio);
+
+                    if (serverUserType.equalsIgnoreCase("Admin")){
+                        accountType.setText("Admin");
+                    } else if (serverUserType.equalsIgnoreCase("Business")){
+                        accountType.setText("Business Account");
+                    } else {
+                        accountType.setText("Regular");
+                    }
+
                 }
-
-
-                /*---   ACCOUNT TYPE   ---*/
-                businessProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-                        if (dataSnapshot.child(currentUid).exists()) {
-
-                            businessLayout.setVisibility(View.VISIBLE);
-
-                            String theBusName = dataSnapshot.child(currentUid).child("businessName").getValue().toString();
-                            String theBusAddress = dataSnapshot.child(currentUid).child("businessAddress").getValue().toString();
-                            String theBusCategory = dataSnapshot.child(currentUid).child("businessCategory").getValue().toString();
-                            String theBusDescription = dataSnapshot.child(currentUid).child("businessDescription").getValue().toString();
-                            String theBusPhone = dataSnapshot.child(currentUid).child("businessPhone").getValue().toString();
-                            String theBusFacebook = dataSnapshot.child(currentUid).child("businessFacebook").getValue().toString();
-                            String theBusInstagram = dataSnapshot.child(currentUid).child("businessInstagram").getValue().toString();
-                            String theBusTwitter = dataSnapshot.child(currentUid).child("businessTwitter").getValue().toString();
-
-
-                            busName.setText(theBusName);
-                            busAddress.setText(theBusAddress);
-                            busCategory.setText(theBusCategory);
-                            busDescription.setText(theBusDescription);
-                            busPhone.setText(theBusPhone);
-                            busFacebook.setText(theBusFacebook);
-                            busInstagram.setText(theBusInstagram);
-                            busTwitter.setText(theBusTwitter);
-
-                        } else {
-
-                            businessLayout.setVisibility(View.GONE);
-
-                        }
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
 
 
                 /*---   IMAGE   ---*/
@@ -449,6 +414,55 @@ public class MyProfile extends AppCompatActivity {
                             overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
                         }
                     });
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        /*---   ACCOUNT TYPE   ---*/
+        businessProfileRef.child(currentUid)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.exists()) {
+
+                    businessLayout.setVisibility(View.VISIBLE);
+
+                    BusinessProfileModel currentBusiness = dataSnapshot.getValue(BusinessProfileModel.class);
+
+                    if (currentBusiness != null){
+
+                        String theBusName = currentBusiness.getBusinessName();
+                        String theBusAddress = currentBusiness.getBusinessAddress();
+                        String theBusCategory = currentBusiness.getBusinessCategory();
+                        String theBusDescription = currentBusiness.getBusinessDescription();
+                        String theBusPhone = currentBusiness.getBusinessPhone();
+                        String theBusFacebook = currentBusiness.getBusinessFacebook();
+                        String theBusInstagram = currentBusiness.getBusinessInstagram();
+                        String theBusTwitter = currentBusiness.getBusinessTwitter();
+
+
+                        busName.setText(theBusName);
+                        busAddress.setText(theBusAddress);
+                        busCategory.setText(theBusCategory);
+                        busDescription.setText(theBusDescription);
+                        busPhone.setText(theBusPhone);
+                        busFacebook.setText(theBusFacebook);
+                        busInstagram.setText(theBusInstagram);
+                        busTwitter.setText(theBusTwitter);
+
+                    }
+
+                } else {
+
+                    businessLayout.setVisibility(View.GONE);
+
                 }
 
             }

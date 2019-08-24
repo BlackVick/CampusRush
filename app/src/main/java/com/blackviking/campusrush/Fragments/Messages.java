@@ -16,6 +16,7 @@ import com.blackviking.campusrush.Interface.ItemClickListener;
 import com.blackviking.campusrush.Messaging.MessagesModel;
 import com.blackviking.campusrush.Messaging.MessagesViewHolder;
 import com.blackviking.campusrush.Messaging.Messaging;
+import com.blackviking.campusrush.Model.UserModel;
 import com.blackviking.campusrush.Profile.OtherUserProfile;
 import com.blackviking.campusrush.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -114,39 +115,43 @@ public class Messages extends Fragment {
 
                 final String userKey = adapter.getRef(viewHolder.getAdapterPosition()).getKey();
 
-                userRef.child(userKey).addListenerForSingleValueEvent(new ValueEventListener() {
+                userRef.child(userKey).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
-                        final String userImagelnk = dataSnapshot.child("profilePictureThumb").getValue().toString();
-                        final String serverUsername = dataSnapshot.child("username").getValue().toString();
+                        UserModel currentUser = dataSnapshot.getValue(UserModel.class);
 
-                        viewHolder.username.setText("@"+serverUsername);
+                        if (currentUser != null){
 
-                        if (!userImagelnk.equalsIgnoreCase("")){
+                            final String userImagelnk = currentUser.getProfilePictureThumb();
+                            final String serverUsername = currentUser.getUsername();
 
-                            Picasso.with(getContext())
-                                    .load(userImagelnk)
-                                    .networkPolicy(NetworkPolicy.OFFLINE)
-                                    .placeholder(R.drawable.profile)
-                                    .into(viewHolder.userImage, new Callback() {
-                                        @Override
-                                        public void onSuccess() {
+                            viewHolder.username.setText("@"+serverUsername);
 
-                                        }
+                            if (!userImagelnk.equalsIgnoreCase("")){
 
-                                        @Override
-                                        public void onError() {
-                                            Picasso.with(getContext())
-                                                    .load(userImagelnk)
-                                                    .placeholder(R.drawable.profile)
-                                                    .into(viewHolder.userImage);
-                                        }
-                                    });
+                                Picasso.with(getContext())
+                                        .load(userImagelnk)
+                                        .networkPolicy(NetworkPolicy.OFFLINE)
+                                        .placeholder(R.drawable.profile)
+                                        .into(viewHolder.userImage, new Callback() {
+                                            @Override
+                                            public void onSuccess() {
+
+                                            }
+
+                                            @Override
+                                            public void onError() {
+                                                Picasso.with(getContext())
+                                                        .load(userImagelnk)
+                                                        .placeholder(R.drawable.profile)
+                                                        .into(viewHolder.userImage);
+                                            }
+                                        });
+
+                            }
 
                         }
-
-                        userRef.removeEventListener(this);
 
                     }
 

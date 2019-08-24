@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blackviking.campusrush.Common.Common;
+import com.blackviking.campusrush.Model.UserModel;
 import com.blackviking.campusrush.R;
 import com.blackviking.campusrush.Settings.AccountSettings;
 import com.blackviking.campusrush.Settings.Help;
@@ -101,6 +102,7 @@ public class CampusAds extends AppCompatActivity {
         });
 
         activityName.setText("Campus Ads");
+
         helpActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,13 +117,20 @@ public class CampusAds extends AppCompatActivity {
         if (Common.isConnectedToInternet(getBaseContext())) {
 
             /*---   SUBSCRIPTION LOT   ---*/
-            subscriptionRef.addValueEventListener(new ValueEventListener() {
+            subscriptionRef.child(currentUid)
+                    .addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
-                    if (dataSnapshot.child(currentUid).exists()) {
+                    if (dataSnapshot.exists()) {
 
-                        subscriptionStatus = dataSnapshot.child(currentUid).child("subscriptionStatus").getValue().toString();
+                        BusinessSubscriptionModel currentSubscription = dataSnapshot.getValue(BusinessSubscriptionModel.class);
+
+                        if (currentSubscription != null){
+
+                            subscriptionStatus = currentSubscription.getSubscriptionStatus();
+
+                        }
 
                     }
 
@@ -133,11 +142,12 @@ public class CampusAds extends AppCompatActivity {
                 }
             });
 
-            businessProfileRef.addValueEventListener(new ValueEventListener() {
+            businessProfileRef.child(currentUid)
+                    .addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
-                    if (dataSnapshot.child(currentUid).exists()) {
+                    if (dataSnapshot.exists()) {
 
                         isProfileCreated = true;
 
@@ -159,34 +169,57 @@ public class CampusAds extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
-                    userType = dataSnapshot.child("userType").getValue().toString();
+                    UserModel currentUser = dataSnapshot.getValue(UserModel.class);
 
-                    if (userType.equalsIgnoreCase("Business") || userType.equalsIgnoreCase("Admin")) {
+                    if (currentUser != null){
 
-                        if (isProfileCreated) {
+                        userType = currentUser.getUserType();
 
-                            if (subscriptionStatus.equalsIgnoreCase("Active")) {
+                        if (userType.equalsIgnoreCase("Business") || userType.equalsIgnoreCase("Admin")) {
 
-                                notBusinessAccount.setVisibility(View.GONE);
-                                expiredBusinessAccount.setVisibility(View.GONE);
-                                adRecycler.setVisibility(View.VISIBLE);
-                                promoteAd.show();
+                            if (isProfileCreated) {
 
-                                loadPromotedAds();
+                                if (subscriptionStatus.equalsIgnoreCase("Active")) {
+
+                                    notBusinessAccount.setVisibility(View.GONE);
+                                    expiredBusinessAccount.setVisibility(View.GONE);
+                                    adRecycler.setVisibility(View.VISIBLE);
+                                    promoteAd.show();
+
+                                    loadPromotedAds();
+
+                                } else {
+
+                                    notBusinessAccount.setVisibility(View.GONE);
+                                    expiredBusinessAccount.setVisibility(View.VISIBLE);
+                                    adRecycler.setVisibility(View.GONE);
+
+
+                                    /*---   RENEW SUBSCRIPTION   ---*/
+                                    renewSubscription.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Intent renewSubIntent = new Intent(CampusAds.this, RenewSubscription.class);
+                                            startActivity(renewSubIntent);
+                                            overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+                                        }
+                                    });
+
+                                }
 
                             } else {
 
-                                notBusinessAccount.setVisibility(View.GONE);
-                                expiredBusinessAccount.setVisibility(View.VISIBLE);
+                                notBusinessAccount.setVisibility(View.VISIBLE);
+                                expiredBusinessAccount.setVisibility(View.GONE);
                                 adRecycler.setVisibility(View.GONE);
+                                promoteAd.hide();
 
-
-                                /*---   RENEW SUBSCRIPTION   ---*/
-                                renewSubscription.setOnClickListener(new View.OnClickListener() {
+                                /*---   CREATE BUSINESS PROFILE*/
+                                createBusinessProfile.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        Intent renewSubIntent = new Intent(CampusAds.this, RenewSubscription.class);
-                                        startActivity(renewSubIntent);
+                                        Intent setBusinessUp = new Intent(CampusAds.this, SetBusinessAccount.class);
+                                        startActivity(setBusinessUp);
                                         overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
                                     }
                                 });
@@ -195,8 +228,8 @@ public class CampusAds extends AppCompatActivity {
 
                         } else {
 
-                            notBusinessAccount.setVisibility(View.VISIBLE);
                             expiredBusinessAccount.setVisibility(View.GONE);
+                            notBusinessAccount.setVisibility(View.VISIBLE);
                             adRecycler.setVisibility(View.GONE);
                             promoteAd.hide();
 
@@ -211,23 +244,6 @@ public class CampusAds extends AppCompatActivity {
                             });
 
                         }
-
-                    } else {
-
-                        expiredBusinessAccount.setVisibility(View.GONE);
-                        notBusinessAccount.setVisibility(View.VISIBLE);
-                        adRecycler.setVisibility(View.GONE);
-                        promoteAd.hide();
-
-                        /*---   CREATE BUSINESS PROFILE*/
-                        createBusinessProfile.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent setBusinessUp = new Intent(CampusAds.this, SetBusinessAccount.class);
-                                startActivity(setBusinessUp);
-                                overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
-                            }
-                        });
 
                     }
 

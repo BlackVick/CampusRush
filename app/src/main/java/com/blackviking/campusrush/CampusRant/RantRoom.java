@@ -35,9 +35,11 @@ import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.Common.GetTimeAgo;
 import com.blackviking.campusrush.ImageController.ImageViewer;
 import com.blackviking.campusrush.Messaging.Messaging;
+import com.blackviking.campusrush.Model.UserModel;
 import com.blackviking.campusrush.R;
 import com.blackviking.campusrush.Settings.Help;
 import com.blackviking.campusrush.ViewHolder.RantViewHolder;
+import com.firebase.ui.auth.User;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -166,8 +168,14 @@ public class RantRoom extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                privacyState = dataSnapshot.child("privacy").getValue().toString();
-                myUsername = dataSnapshot.child("username").getValue().toString();
+                UserModel currentUser = dataSnapshot.getValue(UserModel.class);
+
+                if (currentUser !=  null){
+
+                    privacyState = currentUser.getPrivacy();
+                    myUsername = currentUser.getUsername();
+
+                }
 
             }
 
@@ -349,11 +357,11 @@ public class RantRoom extends AppCompatActivity {
             rantMap.put("rantTopic", rantTopic);
 
 
-
+            rantInputBox.setText("");
             rantRef.child(pushId).setValue(rantMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
-                    rantInputBox.setText("");
+
                 }
             });
 

@@ -35,6 +35,7 @@ import com.blackviking.campusrush.BuildConfig;
 import com.blackviking.campusrush.CampusRant.RantRoom;
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.Common.Permissions;
+import com.blackviking.campusrush.Model.UserModel;
 import com.blackviking.campusrush.Notification.DataMessage;
 import com.blackviking.campusrush.Notification.MyResponse;
 import com.blackviking.campusrush.R;
@@ -80,7 +81,7 @@ public class CreateAd extends AppCompatActivity {
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
     private DatabaseReference userRef, promoterRef, businessProfileRef, pushRef, feedRef;
-    private String currentUid, userName;
+    private String currentUid;
     private ImageView updateImage;
     private EditText updateText;
     private Button updateShare;
@@ -161,29 +162,19 @@ public class CreateAd extends AppCompatActivity {
         }
 
 
-        /*---   CURRENT USER   ---*/
-        userRef.child(currentUid).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                userName = dataSnapshot.child("userType").getValue().toString();
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-
         /*---   CURRENT BUSINESS   ---*/
         businessProfileRef.child(currentUid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                businessName = dataSnapshot.child("businessName").getValue().toString();
-                businessNumber = dataSnapshot.child("businessPhone").getValue().toString();
+                BusinessProfileModel currentBusiness = dataSnapshot.getValue(BusinessProfileModel.class);
+
+                if (currentBusiness != null) {
+
+                    businessName = currentBusiness.getBusinessName();
+                    businessNumber = currentBusiness.getBusinessPhone();
+
+                }
 
             }
 
@@ -430,7 +421,7 @@ public class CreateAd extends AppCompatActivity {
 
             Uri theUri = imageUri;
             CropImage.activity(imageUri)
-                    .setAspectRatio(1,1)
+                    .setAspectRatio(2,1)
                     .start(CreateAd.this);
 
         }
@@ -441,6 +432,7 @@ public class CreateAd extends AppCompatActivity {
                 imageUri = data.getData();
 
                 CropImage.activity(imageUri)
+                        .setAspectRatio(2,1)
                         .start(CreateAd.this);
             }
 

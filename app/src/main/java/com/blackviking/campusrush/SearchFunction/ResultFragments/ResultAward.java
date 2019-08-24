@@ -17,12 +17,14 @@ import android.widget.TextView;
 
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.Interface.ItemClickListener;
+import com.blackviking.campusrush.Model.UserModel;
 import com.blackviking.campusrush.Plugins.Awards.AwardListModel;
 import com.blackviking.campusrush.Plugins.Awards.AwardListViewHolder;
 import com.blackviking.campusrush.Plugins.Awards.AwardPolls;
 import com.blackviking.campusrush.Plugins.Awards.Awards;
 import com.blackviking.campusrush.R;
 import com.blackviking.campusrush.Settings.Help;
+import com.firebase.ui.auth.User;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -86,9 +88,13 @@ public class ResultAward extends Fragment {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
-                    String theDept = dataSnapshot.child("department").getValue().toString();
+                    UserModel currentUser = dataSnapshot.getValue(UserModel.class);
 
-                    currentDept = theDept;
+                    if (currentUser != null){
+
+                        currentDept = currentUser.getDepartment();
+
+                    }
 
                 }
 

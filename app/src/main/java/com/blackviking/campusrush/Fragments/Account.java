@@ -30,6 +30,7 @@ import com.blackviking.campusrush.CampusBusiness.AdDetails;
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.FeedDetails;
 import com.blackviking.campusrush.Model.FeedModel;
+import com.blackviking.campusrush.Model.UserModel;
 import com.blackviking.campusrush.Profile.MyProfile;
 import com.blackviking.campusrush.R;
 import com.blackviking.campusrush.Settings.AccountSettings;
@@ -103,30 +104,36 @@ public class Account extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                theUsername = dataSnapshot.child("username").getValue().toString();
-                theFullName = dataSnapshot.child("lastName").getValue().toString()
-                        + " " + dataSnapshot.child("firstName").getValue().toString();
-                theImage = dataSnapshot.child("profilePictureThumb").getValue().toString();
+                UserModel currentUser = dataSnapshot.getValue(UserModel.class);
+
+                if (currentUser != null){
+
+                    theUsername = currentUser.getUsername();
+                    theFullName = currentUser.getLastName()
+                            + " " + currentUser.getFirstName();
+                    theImage = currentUser.getProfilePictureThumb();
 
 
-                accountUsername.setText("@"+theUsername);
-                accountFullName.setText(theFullName);
+                    accountUsername.setText("@"+theUsername);
+                    accountFullName.setText(theFullName);
 
-                if (!theImage.equalsIgnoreCase("")) {
+                    if (!theImage.equalsIgnoreCase("")) {
 
-                    Picasso.with(getContext()).load(theImage).networkPolicy(NetworkPolicy.OFFLINE)
-                            .placeholder(R.drawable.profile).into(myProfileImage, new Callback() {
-                        @Override
-                        public void onSuccess() {
+                        Picasso.with(getContext()).load(theImage).networkPolicy(NetworkPolicy.OFFLINE)
+                                .placeholder(R.drawable.profile).into(myProfileImage, new Callback() {
+                            @Override
+                            public void onSuccess() {
 
-                        }
+                            }
 
-                        @Override
-                        public void onError() {
-                            Picasso.with(getContext()).load(theImage)
-                                    .placeholder(R.drawable.profile).into(myProfileImage);
-                        }
-                    });
+                            @Override
+                            public void onError() {
+                                Picasso.with(getContext()).load(theImage)
+                                        .placeholder(R.drawable.profile).into(myProfileImage);
+                            }
+                        });
+
+                    }
 
                 }
 

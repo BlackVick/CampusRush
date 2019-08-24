@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blackviking.campusrush.Common.Common;
+import com.blackviking.campusrush.Model.UserModel;
 import com.blackviking.campusrush.R;
 import com.blackviking.campusrush.Settings.Help;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -59,7 +60,7 @@ public class RenewSubscription extends AppCompatActivity {
     private String paystackPublicKey = "pk_live_ff14fabadbbe3bb22c5f3dc42da377993cf9b7f9";
     private MaterialEditText cardNumber, cardCVV, cardExMonth, cardExYear;
     private Button payButton;
-    private String currentPrice = "", subscriptionStatus = "";
+    private String subscriptionStatus = "";
     private int theActualPrice = 0, theActualPriceForText = 0;
 
     @Override
@@ -130,12 +131,16 @@ public class RenewSubscription extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                currentPrice = dataSnapshot.child("price").getValue().toString();
+                PriceModel currentPriceModel = dataSnapshot.getValue(PriceModel.class);
 
-                theActualPrice = Integer.parseInt(currentPrice);
-                theActualPriceForText = Integer.parseInt(currentPrice)/100;
+                if (currentPriceModel != null) {
 
-                price.setText("₦ " + theActualPriceForText + " per Month");
+                    theActualPrice = currentPriceModel.getPrice();
+                    theActualPriceForText = theActualPrice / 100;
+
+                    price.setText("₦ " + String.valueOf(theActualPriceForText) + " per Month");
+
+                }
 
             }
 
@@ -151,7 +156,13 @@ public class RenewSubscription extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                userEmail = dataSnapshot.child("email").getValue().toString();
+                UserModel currentUser = dataSnapshot.getValue(UserModel.class);
+
+                if (currentUser != null){
+
+                    userEmail = currentUser.getEmail();
+
+                }
 
             }
 

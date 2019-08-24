@@ -27,6 +27,7 @@ import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.Common.Permissions;
 import com.blackviking.campusrush.Login;
 import com.blackviking.campusrush.Model.MaterialModel;
+import com.blackviking.campusrush.Model.UserModel;
 import com.blackviking.campusrush.Notification.APIService;
 import com.blackviking.campusrush.Notification.DataMessage;
 import com.blackviking.campusrush.Notification.MyResponse;
@@ -193,7 +194,13 @@ public class AddNewSkit extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
-                    currentUserName = dataSnapshot.child("username").getValue().toString();
+                    UserModel currentUser = dataSnapshot.getValue(UserModel.class);
+
+                    if (currentUser != null) {
+
+                        currentUserName = currentUser.getUsername();
+
+                    }
 
                 }
 

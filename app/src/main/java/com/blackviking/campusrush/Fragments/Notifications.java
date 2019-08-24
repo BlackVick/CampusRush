@@ -20,6 +20,7 @@ import com.blackviking.campusrush.FeedDetails;
 import com.blackviking.campusrush.Interface.ItemClickListener;
 import com.blackviking.campusrush.Model.FeedModel;
 import com.blackviking.campusrush.Model.NotificationModel;
+import com.blackviking.campusrush.Model.UserModel;
 import com.blackviking.campusrush.Notification.APIService;
 import com.blackviking.campusrush.Profile.OtherUserProfile;
 import com.blackviking.campusrush.R;
@@ -234,9 +235,12 @@ public class Notifications extends Fragment {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                if (dataSnapshot != null) {
-                                    String username = dataSnapshot.child("username").getValue().toString();
-                                    String image = dataSnapshot.child("profilePictureThumb").getValue().toString();
+                                UserModel currentUser = dataSnapshot.getValue(UserModel.class);
+
+                                if (currentUser != null){
+
+                                    String username = currentUser.getUsername();
+                                    String image = currentUser.getProfilePictureThumb();
 
                                     viewHolder.username.setText("@" + username);
 

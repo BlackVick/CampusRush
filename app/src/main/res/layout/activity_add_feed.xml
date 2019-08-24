@@ -53,7 +53,7 @@
                     android:textSize="16sp"
                     android:drawableStart="@drawable/new_offwhite_feed_icon"
                     android:drawablePadding="15dp"
-                    android:maxLength="200"
+                    android:maxLength="350"
                     android:maxLines="4"
                     android:minLines="2"
                     android:paddingTop="10dp"

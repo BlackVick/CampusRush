@@ -89,6 +89,7 @@ public class AdDetails extends AppCompatActivity {
         });
 
         activityName.setText("Advert Detail");
+
         helpActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,95 +112,101 @@ public class AdDetails extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                final String theAdImage = dataSnapshot.child("imageUrl").getValue().toString();
-                final String theAdImageThumb = dataSnapshot.child("imageThumbUrl").getValue().toString();
-                final String theAdDescription = dataSnapshot.child("update").getValue().toString();
-                final String theAdCompany = dataSnapshot.child("business").getValue().toString();
-                final String theAdContact = dataSnapshot.child("contact").getValue().toString();
+                AdModel currentAd = dataSnapshot.getValue(AdModel.class);
 
-                if (!theAdImageThumb.equalsIgnoreCase("")){
+                if (currentAd != null){
 
-                    adImage.setVisibility(View.VISIBLE);
-                    Picasso.with(getBaseContext())
-                            .load(theAdImageThumb) // thumbnail url goes here
-                            .networkPolicy(NetworkPolicy.OFFLINE)
-                            .into(adImage, new Callback() {
-                                @Override
-                                public void onSuccess() {
-                                    Picasso.with(getBaseContext())
-                                            .load(theAdImage) // image url goes here
-                                            .placeholder(adImage.getDrawable())
-                                            .into(adImage);
-                                }
-                                @Override
-                                public void onError() {
-                                    Picasso.with(getBaseContext())
-                                            .load(theAdImageThumb) // thumbnail url goes here
-                                            .into(adImage, new Callback() {
-                                                @Override
-                                                public void onSuccess() {
-                                                    Picasso.with(getBaseContext())
-                                                            .load(theAdImage) // image url goes here
-                                                            .placeholder(adImage.getDrawable())
-                                                            .into(adImage);
-                                                }
-                                                @Override
-                                                public void onError() {
+                    final String theAdImage = currentAd.getImageUrl();
+                    final String theAdImageThumb = currentAd.getImageThumbUrl();
+                    final String theAdDescription = currentAd.getUpdate();
+                    final String theAdCompany = currentAd.getBusiness();
+                    final String theAdContact = currentAd.getContact();
 
-                                                }
-                                            });
-                                }
-                            });
+                    if (!theAdImageThumb.equalsIgnoreCase("")){
 
-                } else {
+                        adImage.setVisibility(View.VISIBLE);
+                        Picasso.with(getBaseContext())
+                                .load(theAdImageThumb) // thumbnail url goes here
+                                .networkPolicy(NetworkPolicy.OFFLINE)
+                                .into(adImage, new Callback() {
+                                    @Override
+                                    public void onSuccess() {
+                                        Picasso.with(getBaseContext())
+                                                .load(theAdImage) // image url goes here
+                                                .placeholder(adImage.getDrawable())
+                                                .into(adImage);
+                                    }
+                                    @Override
+                                    public void onError() {
+                                        Picasso.with(getBaseContext())
+                                                .load(theAdImageThumb) // thumbnail url goes here
+                                                .into(adImage, new Callback() {
+                                                    @Override
+                                                    public void onSuccess() {
+                                                        Picasso.with(getBaseContext())
+                                                                .load(theAdImage) // image url goes here
+                                                                .placeholder(adImage.getDrawable())
+                                                                .into(adImage);
+                                                    }
+                                                    @Override
+                                                    public void onError() {
 
-                    adImage.setVisibility(View.GONE);
+                                                    }
+                                                });
+                                    }
+                                });
 
-                }
+                    } else {
 
-                if (!theAdDescription.equalsIgnoreCase("")){
+                        adImage.setVisibility(View.GONE);
 
-                    adDescription.setVisibility(View.VISIBLE);
-                    adDescription.setText(theAdDescription);
+                    }
 
-                } else {
+                    if (!theAdDescription.equalsIgnoreCase("")){
 
-                    adDescription.setVisibility(View.GONE);
+                        adDescription.setVisibility(View.VISIBLE);
+                        adDescription.setText(theAdDescription);
 
-                }
+                    } else {
 
-                adCompany.setText(theAdCompany);
-                adCompany.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                        adDescription.setVisibility(View.GONE);
 
-                        if (currentBusinessId.equals(currentUid)) {
+                    }
 
-                            Intent posterProfile = new Intent(AdDetails.this, MyProfile.class);
-                            startActivity(posterProfile);
-                            overridePendingTransition(R.anim.slide_left, R.anim.slide_out);
+                    adCompany.setText(theAdCompany);
+                    adCompany.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
 
-                        } else {
+                            if (currentBusinessId.equals(currentUid)) {
 
-                            Intent posterProfile = new Intent(AdDetails.this, OtherUserProfile.class);
-                            posterProfile.putExtra("UserId", currentBusinessId);
-                            startActivity(posterProfile);
-                            overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+                                Intent posterProfile = new Intent(AdDetails.this, MyProfile.class);
+                                startActivity(posterProfile);
+                                overridePendingTransition(R.anim.slide_left, R.anim.slide_out);
+
+                            } else {
+
+                                Intent posterProfile = new Intent(AdDetails.this, OtherUserProfile.class);
+                                posterProfile.putExtra("UserId", currentBusinessId);
+                                startActivity(posterProfile);
+                                overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+
+                            }
 
                         }
+                    });
 
-                    }
-                });
+                    adContact.setText(theAdContact);
+                    adContact.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(Intent.ACTION_DIAL);
+                            intent.setData(Uri.parse("tel:"+theAdContact));
+                            startActivity(intent);
+                        }
+                    });
 
-                adContact.setText(theAdContact);
-                adContact.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(Intent.ACTION_DIAL);
-                        intent.setData(Uri.parse("tel:"+theAdContact));
-                        startActivity(intent);
-                    }
-                });
+                }
 
             }
 

@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.Interface.ItemClickListener;
 import com.blackviking.campusrush.Model.AdminManageModel;
+import com.blackviking.campusrush.Model.UserModel;
 import com.blackviking.campusrush.Plugins.SkitCenter.SkitDetails;
 import com.blackviking.campusrush.Plugins.SkitCenter.SkitModel;
 import com.blackviking.campusrush.Plugins.SkitCenter.SkitViewHolder;
@@ -353,257 +354,269 @@ public class ManagementDetail extends AppCompatActivity {
         feedLayout.setVisibility(View.VISIBLE);
         skitLayout.setVisibility(View.GONE);
 
-        adminRef.child(itemId).addListenerForSingleValueEvent(new ValueEventListener() {
+        adminRef.child(itemId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                final String theSourceType = dataSnapshot.child("sourceType").getValue().toString();
-                final String theUpdate = dataSnapshot.child("update").getValue().toString();
-                final String theSender = dataSnapshot.child("sender").getValue().toString();
-                final String theRealSender = dataSnapshot.child("realSender").getValue().toString();
-                final String theImageUrl = dataSnapshot.child("imageUrl").getValue().toString();
-                final String theImageThumbUrl = dataSnapshot.child("imageThumbUrl").getValue().toString();
-                final String theTimeStamp = dataSnapshot.child("timestamp").getValue().toString();
-                final String theUpdateType = dataSnapshot.child("updateType").getValue().toString();
+                AdminManageModel currentAdmin = dataSnapshot.getValue(AdminManageModel.class);
+
+                if (currentAdmin != null){
+
+                    final String theSourceType = currentAdmin.getSourceType();
+                    final String theUpdate = currentAdmin.getUpdate();
+                    final String theSender = currentAdmin.getSender();
+                    final String theRealSender = currentAdmin.getRealSender();
+                    final String theImageUrl = currentAdmin.getImageUrl();
+                    final String theImageThumbUrl = currentAdmin.getImageThumbUrl();
+                    final String theTimeStamp = currentAdmin.getTimestamp();
+                    final String theUpdateType = currentAdmin.getUpdateType();
 
 
-                /*---   POSTER DETAILS   ---*/
-                if (theSender.equalsIgnoreCase("")) {
+                    /*---   POSTER DETAILS   ---*/
+                    if (theSender.equalsIgnoreCase("")) {
 
-                    posterName.setText("PROTECTED");
-                    posterImage.setImageResource(R.drawable.profile);
-
-                } else {
-
-                    userRef.child(theSender).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-
-                            final String imageThumbLink = dataSnapshot.child("profilePictureThumb").getValue().toString();
-                            String username = dataSnapshot.child("username").getValue().toString();
-
-                            posterName.setText("@" + username);
-
-                            if (!imageThumbLink.equals("")) {
-
-                                Picasso.with(getBaseContext())
-                                        .load(imageThumbLink)
-                                        .networkPolicy(NetworkPolicy.OFFLINE)
-                                        .placeholder(R.drawable.profile)
-                                        .into(posterImage, new Callback() {
-                                            @Override
-                                            public void onSuccess() {
-
-                                            }
-
-                                            @Override
-                                            public void onError() {
-                                                Picasso.with(getBaseContext())
-                                                        .load(imageThumbLink)
-                                                        .placeholder(R.drawable.profile)
-                                                        .into(posterImage);
-                                            }
-                                        });
-
-                            } else {
-
-                                posterImage.setImageResource(R.drawable.profile);
-
-                            }
-
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-
-
-                    if (theSender.equals(currentUid)) {
-
-                        /*---   POSTER NAME CLICK   ---*/
-                        posterName.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-
-                                Intent posterProfile = new Intent(ManagementDetail.this, MyProfile.class);
-                                startActivity(posterProfile);
-                                overridePendingTransition(R.anim.slide_left, R.anim.slide_out);
-
-                            }
-                        });
-
-
-                        /*---   POSTER IMAGE CLICK   ---*/
-                        posterImage.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-
-                                Intent posterProfile = new Intent(ManagementDetail.this, MyProfile.class);
-                                startActivity(posterProfile);
-                                overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
-
-                            }
-                        });
+                        posterName.setText("PROTECTED");
+                        posterImage.setImageResource(R.drawable.profile);
 
                     } else {
 
-                        /*---   POSTER NAME CLICK   ---*/
-                        posterName.setOnClickListener(new View.OnClickListener() {
+                        userRef.child(theSender).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
-                            public void onClick(View v) {
+                            public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                Intent posterProfile = new Intent(ManagementDetail.this, OtherUserProfile.class);
-                                posterProfile.putExtra("UserId", theSender);
-                                startActivity(posterProfile);
-                                overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+                                UserModel currentUser = dataSnapshot.getValue(UserModel.class);
 
-                            }
-                        });
+                                if (currentUser != null){
 
+                                    final String imageThumbLink = currentUser.getProfilePictureThumb();
+                                    String username = currentUser.getUsername();
 
-                        /*---   POSTER IMAGE CLICK   ---*/
-                        posterImage.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
+                                    posterName.setText("@" + username);
 
-                                Intent posterProfile = new Intent(ManagementDetail.this, OtherUserProfile.class);
-                                posterProfile.putExtra("UserId", theSender);
-                                startActivity(posterProfile);
-                                overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+                                    if (!imageThumbLink.equals("")) {
 
-                            }
-                        });
+                                        Picasso.with(getBaseContext())
+                                                .load(imageThumbLink)
+                                                .networkPolicy(NetworkPolicy.OFFLINE)
+                                                .placeholder(R.drawable.profile)
+                                                .into(posterImage, new Callback() {
+                                                    @Override
+                                                    public void onSuccess() {
 
-                    }
+                                                    }
 
+                                                    @Override
+                                                    public void onError() {
+                                                        Picasso.with(getBaseContext())
+                                                                .load(imageThumbLink)
+                                                                .placeholder(R.drawable.profile)
+                                                                .into(posterImage);
+                                                    }
+                                                });
 
-                }
+                                    } else {
 
+                                        posterImage.setImageResource(R.drawable.profile);
 
-                /*---   FEED DETAILS   ---*/
-                /*---   POST IMAGE   ---*/
-                if (!theImageThumbUrl.equals("")) {
+                                    }
 
-                    Picasso.with(getBaseContext())
-                            .load(theImageThumbUrl) // thumbnail url goes here
-                            .networkPolicy(NetworkPolicy.OFFLINE)
-                            .into(postImage, new Callback() {
-                                @Override
-                                public void onSuccess() {
-                                    Picasso.with(getBaseContext())
-                                            .load(theImageUrl) // image url goes here
-                                            .placeholder(posterImage.getDrawable())
-                                            .into(posterImage);
                                 }
-                                @Override
-                                public void onError() {
-                                    Picasso.with(getBaseContext())
-                                            .load(theImageThumbUrl) // thumbnail url goes here
-                                            .into(postImage, new Callback() {
-                                                @Override
-                                                public void onSuccess() {
-                                                    Picasso.with(getBaseContext())
-                                                            .load(theImageUrl) // image url goes here
-                                                            .placeholder(postImage.getDrawable())
-                                                            .into(postImage);
-                                                }
-                                                @Override
-                                                public void onError() {
 
-                                                }
-                                            });
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+                        if (theSender.equals(currentUid)) {
+
+                            /*---   POSTER NAME CLICK   ---*/
+                            posterName.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    Intent posterProfile = new Intent(ManagementDetail.this, MyProfile.class);
+                                    startActivity(posterProfile);
+                                    overridePendingTransition(R.anim.slide_left, R.anim.slide_out);
+
                                 }
                             });
 
-                } else {
 
-                    postImage.setVisibility(View.GONE);
-
-                }
-
-
-                /*---   UPDATE   ---*/
-                if (!theUpdate.equals("")) {
-
-                    postText.setText(theUpdate);
-
-                } else {
-
-                    postText.setVisibility(View.GONE);
-
-                }
-
-
-                /*---  TIME   ---*/
-                postTime.setText(theTimeStamp);
-
-
-                /*---   APPROVAL   ---*/
-                approveBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        if (Common.isConnectedToInternet(getBaseContext())) {
-
-                            final Map<String, Object> newFeedMap = new HashMap<>();
-                            newFeedMap.put("sourceType", theSourceType);
-                            newFeedMap.put("update", theUpdate);
-                            newFeedMap.put("sender", theSender);
-                            newFeedMap.put("realSender", theRealSender);
-                            newFeedMap.put("imageUrl", theImageUrl);
-                            newFeedMap.put("imageThumbUrl", theImageThumbUrl);
-                            newFeedMap.put("timestamp", theTimeStamp);
-                            newFeedMap.put("updateType", theUpdateType);
-
-                            pushRef = feedRef.push();
-                            final String pushId = pushRef.getKey();
-                            feedRef.child(pushId).setValue(newFeedMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            /*---   POSTER IMAGE CLICK   ---*/
+                            posterImage.setOnClickListener(new View.OnClickListener() {
                                 @Override
-                                public void onComplete(@NonNull Task<Void> task) {
+                                public void onClick(View v) {
 
-                                    if (task.isSuccessful()) {
+                                    Intent posterProfile = new Intent(ManagementDetail.this, MyProfile.class);
+                                    startActivity(posterProfile);
+                                    overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
 
-                                        adminRef.child(itemId).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-
-                                                finish();
-                                            }
-                                        });
-
-                                    }
                                 }
                             });
 
                         } else {
 
-                            showErrorDialog("No Internet Access !");
-
-                        }
-
-                    }
-                });
-
-
-                /*---   DENIAL   ---*/
-                denyBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (Common.isConnectedToInternet(getBaseContext())){
-
-                            adminRef.child(itemId)
-                                    .removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            /*---   POSTER NAME CLICK   ---*/
+                            posterName.setOnClickListener(new View.OnClickListener() {
                                 @Override
-                                public void onSuccess(Void aVoid) {
-                                    finish();
+                                public void onClick(View v) {
+
+                                    Intent posterProfile = new Intent(ManagementDetail.this, OtherUserProfile.class);
+                                    posterProfile.putExtra("UserId", theSender);
+                                    startActivity(posterProfile);
+                                    overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+
+                                }
+                            });
+
+
+                            /*---   POSTER IMAGE CLICK   ---*/
+                            posterImage.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    Intent posterProfile = new Intent(ManagementDetail.this, OtherUserProfile.class);
+                                    posterProfile.putExtra("UserId", theSender);
+                                    startActivity(posterProfile);
+                                    overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+
                                 }
                             });
 
                         }
+
+
                     }
-                });
+
+
+                    /*---   FEED DETAILS   ---*/
+                    /*---   POST IMAGE   ---*/
+                    if (!theImageThumbUrl.equals("")) {
+
+                        Picasso.with(getBaseContext())
+                                .load(theImageThumbUrl) // thumbnail url goes here
+                                .networkPolicy(NetworkPolicy.OFFLINE)
+                                .into(postImage, new Callback() {
+                                    @Override
+                                    public void onSuccess() {
+                                        Picasso.with(getBaseContext())
+                                                .load(theImageUrl) // image url goes here
+                                                .placeholder(posterImage.getDrawable())
+                                                .into(posterImage);
+                                    }
+                                    @Override
+                                    public void onError() {
+                                        Picasso.with(getBaseContext())
+                                                .load(theImageThumbUrl) // thumbnail url goes here
+                                                .into(postImage, new Callback() {
+                                                    @Override
+                                                    public void onSuccess() {
+                                                        Picasso.with(getBaseContext())
+                                                                .load(theImageUrl) // image url goes here
+                                                                .placeholder(postImage.getDrawable())
+                                                                .into(postImage);
+                                                    }
+                                                    @Override
+                                                    public void onError() {
+
+                                                    }
+                                                });
+                                    }
+                                });
+
+                    } else {
+
+                        postImage.setVisibility(View.GONE);
+
+                    }
+
+
+                    /*---   UPDATE   ---*/
+                    if (!theUpdate.equals("")) {
+
+                        postText.setText(theUpdate);
+
+                    } else {
+
+                        postText.setVisibility(View.GONE);
+
+                    }
+
+
+                    /*---  TIME   ---*/
+                    postTime.setText(theTimeStamp);
+
+
+                    /*---   APPROVAL   ---*/
+                    approveBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            if (Common.isConnectedToInternet(getBaseContext())) {
+
+                                final Map<String, Object> newFeedMap = new HashMap<>();
+                                newFeedMap.put("sourceType", theSourceType);
+                                newFeedMap.put("update", theUpdate);
+                                newFeedMap.put("sender", theSender);
+                                newFeedMap.put("realSender", theRealSender);
+                                newFeedMap.put("imageUrl", theImageUrl);
+                                newFeedMap.put("imageThumbUrl", theImageThumbUrl);
+                                newFeedMap.put("timestamp", theTimeStamp);
+                                newFeedMap.put("updateType", theUpdateType);
+
+                                pushRef = feedRef.push();
+                                final String pushId = pushRef.getKey();
+                                feedRef.child(pushId).setValue(newFeedMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+
+                                        if (task.isSuccessful()) {
+
+                                            adminRef.child(itemId).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+
+                                                    finish();
+                                                }
+                                            });
+
+                                        }
+                                    }
+                                });
+
+                            } else {
+
+                                showErrorDialog("No Internet Access !");
+
+                            }
+
+                        }
+                    });
+
+
+                    /*---   DENIAL   ---*/
+                    denyBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (Common.isConnectedToInternet(getBaseContext())){
+
+                                adminRef.child(itemId)
+                                        .removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        finish();
+                                    }
+                                });
+
+                            }
+                        }
+                    });
+
+                }
 
             }
 

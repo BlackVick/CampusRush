@@ -34,12 +34,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blackviking.campusrush.CampusBusiness.AdDetails;
+import com.blackviking.campusrush.CampusBusiness.BusinessProfileModel;
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.FeedDetails;
 import com.blackviking.campusrush.ImageController.BlurImage;
 import com.blackviking.campusrush.ImageController.ImageViewer;
 import com.blackviking.campusrush.Messaging.Messaging;
 import com.blackviking.campusrush.Model.FeedModel;
+import com.blackviking.campusrush.Model.UserModel;
 import com.blackviking.campusrush.Notification.APIService;
 import com.blackviking.campusrush.Notification.DataMessage;
 import com.blackviking.campusrush.Notification.MyResponse;
@@ -202,89 +204,154 @@ public class OtherUserProfile extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                serverUsername = dataSnapshot.child("username").getValue().toString();
-                serverFullName = dataSnapshot.child("lastName").getValue().toString() + " " + dataSnapshot.child("firstName").getValue().toString();
-                serverStatus = dataSnapshot.child("status").getValue().toString();
-                serverGender = dataSnapshot.child("gender").getValue().toString();
-                serverDepartment = dataSnapshot.child("department").getValue().toString();
-                serverBio = dataSnapshot.child("bio").getValue().toString();
-                serverProfilePictureThumb = dataSnapshot.child("profilePictureThumb").getValue().toString();
-                serverProfilePicture = dataSnapshot.child("profilePicture").getValue().toString();
-                serverUserType = dataSnapshot.child("userType").getValue().toString();
-                serverMessagingState = dataSnapshot.child("messaging").getValue().toString();
+                UserModel currentUser = dataSnapshot.getValue(UserModel.class);
 
-                /*---   DETAILS   ---*/
-                username.setText("@"+serverUsername);
-                fullName.setText(serverFullName);
-                status.setText(serverStatus);
-                department.setText(serverDepartment);
-                gender.setText(serverGender);
-                bio.setText(serverBio);
+                if (currentUser != null){
 
-                if (serverUserType.equalsIgnoreCase("Business") || serverUserType.equalsIgnoreCase("Admin")){
-                    accountType.setText("Business Account");
-                } else {
-                    accountType.setText("Regular Account");
-                }
+                    serverUsername = currentUser.getUsername();
+                    serverFullName = currentUser.getLastName() + " " + currentUser.getFirstName();
+                    serverStatus = currentUser.getStatus();
+                    serverGender = currentUser.getGender();
+                    serverDepartment = currentUser.getDepartment();
+                    serverBio = currentUser.getBio();
+                    serverProfilePictureThumb = currentUser.getProfilePictureThumb();
+                    serverProfilePicture = currentUser.getProfilePicture();
+                    serverUserType = currentUser.getUserType();
+                    serverMessagingState = currentUser.getMessaging();
+
+                    /*---   DETAILS   ---*/
+                    username.setText("@"+serverUsername);
+                    fullName.setText(serverFullName);
+                    status.setText(serverStatus);
+                    department.setText(serverDepartment);
+                    gender.setText(serverGender);
+                    bio.setText(serverBio);
+
+                    if (serverUserType.equalsIgnoreCase("Business") || serverUserType.equalsIgnoreCase("Admin")){
+                        accountType.setText("Business Account");
+                    } else {
+                        accountType.setText("Regular Account");
+                    }
 
 
-                /*---   MESSAGING   ---*/
-                if (serverMessagingState.equalsIgnoreCase("private")){
+                    /*---   MESSAGING   ---*/
+                    if (serverMessagingState.equalsIgnoreCase("private")){
 
-                    sendUserMessage.hide();
+                        sendUserMessage.hide();
 
-                } else {
+                    } else {
 
-                    sendUserMessage.show();
-                    sendUserMessage.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (!userId.equalsIgnoreCase("")){
+                        sendUserMessage.show();
+                        sendUserMessage.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (!userId.equalsIgnoreCase("")){
 
-                                if (mAuth.getCurrentUser().isEmailVerified()) {
+                                    if (mAuth.getCurrentUser().isEmailVerified()) {
 
-                                    Intent messageIntent = new Intent(OtherUserProfile.this, Messaging.class);
-                                    messageIntent.putExtra("UserId", userId);
-                                    startActivity(messageIntent);
-                                    overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
-                                } else {
-                                    Intent verifyIntent = new Intent(OtherUserProfile.this, UserVerification.class);
-                                    startActivity(verifyIntent);
+                                        Intent messageIntent = new Intent(OtherUserProfile.this, Messaging.class);
+                                        messageIntent.putExtra("UserId", userId);
+                                        startActivity(messageIntent);
+                                        overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+                                    } else {
+                                        Intent verifyIntent = new Intent(OtherUserProfile.this, UserVerification.class);
+                                        startActivity(verifyIntent);
+                                    }
                                 }
                             }
-                        }
-                    });
+                        });
+
+                    }
+
+
+                    /*---   IMAGE   ---*/
+                    if (!serverProfilePictureThumb.equals("")){
+
+                        /*---   PROFILE IMAGE   ---*/
+                        Picasso.with(getBaseContext())
+                                .load(serverProfilePictureThumb)
+                                .networkPolicy(NetworkPolicy.OFFLINE)
+                                .placeholder(R.drawable.profile)
+                                .into(userProfileImage, new Callback() {
+                                    @Override
+                                    public void onSuccess() {
+
+                                    }
+
+                                    @Override
+                                    public void onError() {
+                                        Picasso.with(getBaseContext())
+                                                .load(serverProfilePictureThumb)
+                                                .placeholder(R.drawable.profile)
+                                                .into(userProfileImage);
+                                    }
+                                });
+
+
+                        /*---   COVER PHOTO   ---*/
+                        Picasso.with(getBaseContext())
+                                .load(serverProfilePictureThumb)
+                                .networkPolicy(NetworkPolicy.OFFLINE)
+                                .placeholder(R.drawable.image_placeholders)
+                                .into(target);
+
+
+                        userProfileImage.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent profileImgIntent = new Intent(OtherUserProfile.this, ImageViewer.class);
+                                profileImgIntent.putExtra("ImageLink", serverProfilePicture);
+                                profileImgIntent.putExtra("ImageThumbLink", serverProfilePictureThumb);
+                                startActivity(profileImgIntent);
+                                overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
+                            }
+                        });
+                    }
 
                 }
 
+            }
 
-                /*---   ACCOUNT TYPE   ---*/
-                businessProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        /*---   ACCOUNT TYPE   ---*/
+        businessProfileRef.child(userId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
-                        if (dataSnapshot.child(userId).exists()) {
+                        if (dataSnapshot.exists()) {
 
                             businessLayout.setVisibility(View.VISIBLE);
 
-                            String theBusName = dataSnapshot.child(userId).child("businessName").getValue().toString();
-                            String theBusAddress = dataSnapshot.child(userId).child("businessAddress").getValue().toString();
-                            String theBusCategory = dataSnapshot.child(userId).child("businessCategory").getValue().toString();
-                            String theBusDescription = dataSnapshot.child(userId).child("businessDescription").getValue().toString();
-                            String theBusPhone = dataSnapshot.child(userId).child("businessPhone").getValue().toString();
-                            String theBusFacebook = dataSnapshot.child(userId).child("businessFacebook").getValue().toString();
-                            String theBusInstagram = dataSnapshot.child(userId).child("businessInstagram").getValue().toString();
-                            String theBusTwitter = dataSnapshot.child(userId).child("businessTwitter").getValue().toString();
+                            BusinessProfileModel currentBusiness = dataSnapshot.getValue(BusinessProfileModel.class);
+
+                            if (currentBusiness != null){
+
+                                String theBusName = currentBusiness.getBusinessName();
+                                String theBusAddress = currentBusiness.getBusinessAddress();
+                                String theBusCategory = currentBusiness.getBusinessCategory();
+                                String theBusDescription = currentBusiness.getBusinessDescription();
+                                String theBusPhone = currentBusiness.getBusinessPhone();
+                                String theBusFacebook = currentBusiness.getBusinessFacebook();
+                                String theBusInstagram = currentBusiness.getBusinessInstagram();
+                                String theBusTwitter = currentBusiness.getBusinessTwitter();
 
 
-                            busName.setText(theBusName);
-                            busAddress.setText(theBusAddress);
-                            busCategory.setText(theBusCategory);
-                            busDescription.setText(theBusDescription);
-                            busPhone.setText(theBusPhone);
-                            busFacebook.setText(theBusFacebook);
-                            busInstagram.setText(theBusInstagram);
-                            busTwitter.setText(theBusTwitter);
+                                busName.setText(theBusName);
+                                busAddress.setText(theBusAddress);
+                                busCategory.setText(theBusCategory);
+                                busDescription.setText(theBusDescription);
+                                busPhone.setText(theBusPhone);
+                                busFacebook.setText(theBusFacebook);
+                                busInstagram.setText(theBusInstagram);
+                                busTwitter.setText(theBusTwitter);
+
+                            }
 
                         } else {
 
@@ -299,59 +366,6 @@ public class OtherUserProfile extends AppCompatActivity {
 
                     }
                 });
-
-
-                /*---   IMAGE   ---*/
-                if (!serverProfilePictureThumb.equals("")){
-
-                    /*---   PROFILE IMAGE   ---*/
-                    Picasso.with(getBaseContext())
-                            .load(serverProfilePictureThumb)
-                            .networkPolicy(NetworkPolicy.OFFLINE)
-                            .placeholder(R.drawable.profile)
-                            .into(userProfileImage, new Callback() {
-                                @Override
-                                public void onSuccess() {
-
-                                }
-
-                                @Override
-                                public void onError() {
-                                    Picasso.with(getBaseContext())
-                                            .load(serverProfilePictureThumb)
-                                            .placeholder(R.drawable.profile)
-                                            .into(userProfileImage);
-                                }
-                            });
-
-
-                    /*---   COVER PHOTO   ---*/
-                    Picasso.with(getBaseContext())
-                            .load(serverProfilePictureThumb)
-                            .networkPolicy(NetworkPolicy.OFFLINE)
-                            .placeholder(R.drawable.image_placeholders)
-                            .into(target);
-
-
-                    userProfileImage.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent profileImgIntent = new Intent(OtherUserProfile.this, ImageViewer.class);
-                            profileImgIntent.putExtra("ImageLink", serverProfilePicture);
-                            profileImgIntent.putExtra("ImageThumbLink", serverProfilePictureThumb);
-                            startActivity(profileImgIntent);
-                            overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
-                        }
-                    });
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
     }
 

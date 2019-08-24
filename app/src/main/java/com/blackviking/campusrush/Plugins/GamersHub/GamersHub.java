@@ -3,6 +3,8 @@ package com.blackviking.campusrush.Plugins.GamersHub;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -36,15 +38,10 @@ public class GamersHub extends AppCompatActivity {
 
     private TextView activityName;
     private ImageView exitActivity, helpActivity;
-    private FirebaseDatabase db = FirebaseDatabase.getInstance();
-    private DatabaseReference trendingRef, gameFeedRef, userRef;
-    private RecyclerView trendingRecycler, gameFeedRecycler;
-    private LinearLayoutManager layoutManager, layoutManager2;
-    private FirebaseRecyclerAdapter<TrendingGamesModel, TrendingGamesViewHolder> adapter;
-    private FirebaseRecyclerAdapter<GameFeedModel, GameFeedViewHolder> gameFeedAdapter;
-    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    private FloatingActionButton addGameFeed;
-    private String currentUserType, currentUid;
+
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private GamersTabsPager tabsPager;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -68,21 +65,18 @@ public class GamersHub extends AppCompatActivity {
         Paper.init(this);
 
 
-        /*---   FIREBASE   ---*/
-        trendingRef = db.getReference("GamersHubTrending");
-        gameFeedRef = db.getReference("GameFeed");
-        if (mAuth.getCurrentUser() != null)
-            currentUid = mAuth.getCurrentUser().getUid();
-        userRef = db.getReference("Users").child(currentUid);
-
-
         /*---   WIDGETS   ---*/
+        tabLayout = (TabLayout)findViewById(R.id.gamersTabs);
+        viewPager = (ViewPager)findViewById(R.id.gamersViewPager);
+
+        /*---   TABS   ---*/
+        tabsPager = new GamersTabsPager(getSupportFragmentManager());
+        viewPager.setAdapter(tabsPager);
+        tabLayout.setupWithViewPager(viewPager);
+
         activityName = (TextView)findViewById(R.id.activityName);
         exitActivity = (ImageView)findViewById(R.id.exitActivity);
         helpActivity = (ImageView)findViewById(R.id.helpIcon);
-        trendingRecycler = (RecyclerView)findViewById(R.id.trendingGamesRecycler);
-        gameFeedRecycler = (RecyclerView)findViewById(R.id.gameFeedRecycler);
-        addGameFeed = (FloatingActionButton)findViewById(R.id.addGameFeed);
 
 
         /*---   ACTIVITY BAR FUNCTIONS   ---*/
@@ -102,149 +96,6 @@ public class GamersHub extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
             }
         });
-
-        addGameFeed.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent gameFeedDetailIntent = new Intent(GamersHub.this, AddGameFeed.class);
-                startActivity(gameFeedDetailIntent);
-                overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
-            }
-        });
-
-        loadTrendingTitles();
-        loadGameFeed();
-    }
-
-    private void loadGameFeed() {
-
-        gameFeedRecycler.setHasFixedSize(true);
-        layoutManager2 = new LinearLayoutManager(this);
-        layoutManager2.setStackFromEnd(true);
-        layoutManager2.setReverseLayout(true);
-        gameFeedRecycler.setLayoutManager(layoutManager2);
-
-        gameFeedAdapter = new FirebaseRecyclerAdapter<GameFeedModel, GameFeedViewHolder>(
-                GameFeedModel.class,
-                R.layout.game_feed_item,
-                GameFeedViewHolder.class,
-                gameFeedRef.limitToLast(35)
-        ) {
-            @Override
-            protected void populateViewHolder(final GameFeedViewHolder viewHolder, final GameFeedModel model, int position) {
-
-                /*---   GET TIME AGO ALGORITHM   ---*/
-                GetTimeAgo getTimeAgo = new GetTimeAgo();
-                long lastTime = model.getTimeStamp();
-                final String lastSeenTime = getTimeAgo.getTimeAgo(lastTime, getApplicationContext());
-
-                viewHolder.gameFeedTitle.setText(model.getTitle());
-                viewHolder.gameFeedTimeStamp.setText(lastSeenTime);
-
-
-                if (!model.getImageLinkThumb().equalsIgnoreCase("")){
-
-                    Picasso.with(getBaseContext())
-                            .load(model.getImageLinkThumb())
-                            .networkPolicy(NetworkPolicy.OFFLINE)
-                            .placeholder(R.drawable.image_placeholders)
-                            .into(viewHolder.gameFeedImage, new Callback() {
-                                @Override
-                                public void onSuccess() {
-
-                                }
-
-                                @Override
-                                public void onError() {
-                                    Picasso.with(getBaseContext())
-                                            .load(model.getImageLinkThumb())
-                                            .placeholder(R.drawable.image_placeholders)
-                                            .into(viewHolder.gameFeedImage);
-                                }
-                            });
-
-                } else {
-
-                    viewHolder.gameFeedImage.setImageResource(R.drawable.controller_medium);
-
-                }
-
-
-                viewHolder.setItemClickListener(new ItemClickListener() {
-                    @Override
-                    public void onClick(View view, int position, boolean isLongClick) {
-                        Intent detailsIntent = new Intent(GamersHub.this, GameFeedDetail.class);
-                        detailsIntent.putExtra("GameFeedId", gameFeedAdapter.getRef(position).getKey());
-                        startActivity(detailsIntent);
-                        overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
-                    }
-                });
-
-            }
-        };
-        gameFeedRecycler.setAdapter(gameFeedAdapter);
-        gameFeedAdapter.notifyDataSetChanged();
-
-    }
-
-    private void loadTrendingTitles() {
-
-        trendingRecycler.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        trendingRecycler.setLayoutManager(layoutManager);
-
-
-        adapter = new FirebaseRecyclerAdapter<TrendingGamesModel, TrendingGamesViewHolder>(
-                TrendingGamesModel.class,
-                R.layout.games_trending_item,
-                TrendingGamesViewHolder.class,
-                trendingRef.orderByChild("rating")
-        ) {
-            @Override
-            protected void populateViewHolder(final TrendingGamesViewHolder viewHolder, final TrendingGamesModel model, int position) {
-
-                final String theName = adapter.getRef(position).getKey();
-
-                viewHolder.gameRating.setText(model.getRating());
-                viewHolder.gameName.setText(theName);
-
-                if (!model.getImageUrl().equals("")){
-
-                    Picasso.with(getBaseContext())
-                            .load(model.getImageUrl())
-                            .networkPolicy(NetworkPolicy.OFFLINE)
-                            .placeholder(R.drawable.image_placeholders)
-                            .into(viewHolder.gameImage, new Callback() {
-                                @Override
-                                public void onSuccess() {
-
-                                }
-
-                                @Override
-                                public void onError() {
-                                    Picasso.with(getBaseContext())
-                                            .load(model.getImageUrl())
-                                            .placeholder(R.drawable.image_placeholders)
-                                            .into(viewHolder.gameImage);
-                                }
-                            });
-
-                }
-
-                viewHolder.setItemClickListener(new ItemClickListener() {
-                    @Override
-                    public void onClick(View view, int position, boolean isLongClick) {
-                        Intent gameInfo = new Intent(GamersHub.this, GameInfo.class);
-                        gameInfo.putExtra("GameId", theName);
-                        startActivity(gameInfo);
-                        overridePendingTransition(R.anim.slide_left, R.anim.slide_left);
-                    }
-                });
-
-            }
-        };
-        trendingRecycler.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
 
     }
 

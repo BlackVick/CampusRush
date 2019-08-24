@@ -10,7 +10,7 @@
     <color name="overlayBackground">#CE000000</color>
     <color name="overlayActionBar">#7E0E0D0E</color>
     <color name="white">#ffffff</color>
-    <color name="offWhite">#dad7d7</color>
+    <color name="offWhite">#E4E3E3</color>
     <color name="transparentWhite">#B4FFFFFF</color>
     <color name="thickTransparentWhite">#E8FAF9F9</color>
     <color name="transparent">#00000000</color>

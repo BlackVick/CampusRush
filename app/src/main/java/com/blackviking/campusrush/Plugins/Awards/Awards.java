@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.blackviking.campusrush.Common.Common;
 import com.blackviking.campusrush.Interface.ItemClickListener;
+import com.blackviking.campusrush.Model.UserModel;
 import com.blackviking.campusrush.R;
 import com.blackviking.campusrush.Settings.Help;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -114,9 +115,13 @@ public class Awards extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
-                    String theDept = dataSnapshot.child("department").getValue().toString();
+                    UserModel currentUser = dataSnapshot.getValue(UserModel.class);
 
-                    currentDept = theDept;
+                    if (currentUser != null){
+
+                        currentDept = currentUser.getDepartment();
+
+                    }
 
                 }
 

@@ -10,6 +10,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blackviking.campusrush.Model.UserModel;
 import com.blackviking.campusrush.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -74,26 +75,32 @@ public class PrivacySetting extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                String privacyState = dataSnapshot.child("privacy").getValue().toString();
-                String messagingState = dataSnapshot.child("messaging").getValue().toString();
+                UserModel currentUser = dataSnapshot.getValue(UserModel.class);
 
-                if (privacyState.equalsIgnoreCase("public")){
+                if (currentUser != null){
 
-                    privacyToggle.setChecked(false);
+                    String privacyState = currentUser.getPrivacy();
+                    String messagingState = currentUser.getMessaging();
 
-                } else if (privacyState.equalsIgnoreCase("private")) {
+                    if (privacyState.equalsIgnoreCase("public")){
 
-                    privacyToggle.setChecked(true);
+                        privacyToggle.setChecked(false);
 
-                }
+                    } else if (privacyState.equalsIgnoreCase("private")) {
 
-                if (messagingState.equalsIgnoreCase("public")){
+                        privacyToggle.setChecked(true);
 
-                    messagingToggle.setChecked(false);
+                    }
 
-                } else if (messagingState.equalsIgnoreCase("private")) {
+                    if (messagingState.equalsIgnoreCase("public")){
 
-                    messagingToggle.setChecked(true);
+                        messagingToggle.setChecked(false);
+
+                    } else if (messagingState.equalsIgnoreCase("private")) {
+
+                        messagingToggle.setChecked(true);
+
+                    }
 
                 }
 

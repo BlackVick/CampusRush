@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Plugins.GamersHub.GamersFragments.GameFeed">
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/gameFeedRecycler"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/addGameFeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/campus_rush_gamers_hub"
+        android:tint="@color/colorPrimaryDark"
+        app:backgroundTint="@color/white"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="13dp"
+        app:elevation="6dp"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/campusGamersChat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_campus_gamers_chat_icon"
+        android:tint="@color/colorPrimaryDark"
+        app:backgroundTint="@color/white"
+        android:layout_toStartOf="@id/addGameFeed"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="13dp"
+        app:elevation="6dp"/>
+
+</RelativeLayout>

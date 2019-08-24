@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.blackviking.campusrush.AddFeed;
 import com.blackviking.campusrush.Common.Common;
+import com.blackviking.campusrush.Model.UserModel;
 import com.blackviking.campusrush.R;
 import com.blackviking.campusrush.Services.SubscriptionService;
 import com.blackviking.campusrush.Settings.Help;
@@ -84,7 +85,7 @@ public class SetBusinessAccount extends AppCompatActivity {
     private Button payButton;
     private boolean hasPaid = false;
     private boolean isProfileCreated = false;
-    private String currentPrice = "", subscriptionStatus = "";
+    private String subscriptionStatus = "";
     private int theActualPrice = 0, theActualPriceForText = 0;
 
     @Override
@@ -163,12 +164,16 @@ public class SetBusinessAccount extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                currentPrice = dataSnapshot.child("price").getValue().toString();
+                PriceModel currentPriceModel = dataSnapshot.getValue(PriceModel.class);
 
-                theActualPrice = Integer.parseInt(currentPrice);
-                theActualPriceForText = Integer.parseInt(currentPrice)/100;
+                if (currentPriceModel != null) {
 
-                price.setText("₦ " + theActualPriceForText + " per Month");
+                    theActualPrice = currentPriceModel.getPrice();
+                    theActualPriceForText = theActualPrice / 100;
+
+                    price.setText("₦ " + String.valueOf(theActualPriceForText) + " per Month");
+
+                }
 
             }
 
@@ -179,13 +184,20 @@ public class SetBusinessAccount extends AppCompatActivity {
         });
 
         /*---   SUBSCRIPTION LOT   ---*/
-        subscriptionRef.addValueEventListener(new ValueEventListener() {
+        subscriptionRef.child(currentUid)
+                .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                if (dataSnapshot.child(currentUid).exists()){
+                if (dataSnapshot.exists()){
 
-                    subscriptionStatus = dataSnapshot.child(currentUid).child("subscriptionStatus").getValue().toString();
+                    BusinessSubscriptionModel currentSubscription = dataSnapshot.getValue(BusinessSubscriptionModel.class);
+
+                    if (currentSubscription != null){
+
+                        subscriptionStatus = currentSubscription.getSubscriptionStatus();
+
+                    }
 
                 }
 
@@ -202,17 +214,26 @@ public class SetBusinessAccount extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                userType = dataSnapshot.child("userType").getValue().toString();
-                userEmail = dataSnapshot.child("email").getValue().toString();
+                UserModel currentUser = dataSnapshot.getValue(UserModel.class);
 
-                if (userType.equalsIgnoreCase("Business") && subscriptionStatus.equalsIgnoreCase("Active")
-                        || userType.equalsIgnoreCase("Admin") && subscriptionStatus.equalsIgnoreCase("Active")){
+                if (currentUser != null){
 
-                    hasPaid = true;
+                    userType = currentUser.getUserType();
+                    userEmail = currentUser.getEmail();
 
-                } else {
+                    if (userType.equalsIgnoreCase("Business") && subscriptionStatus.equalsIgnoreCase("Active")){
 
-                    hasPaid = false;
+                        hasPaid = true;
+
+                    } else if (userType.equalsIgnoreCase("Admin") && subscriptionStatus.equalsIgnoreCase("Active")){
+
+                        hasPaid = true;
+
+                    } else {
+
+                        hasPaid = false;
+
+                    }
 
                 }
 
