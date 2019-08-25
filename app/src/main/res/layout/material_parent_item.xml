@@ -10,7 +10,7 @@
     android:layout_marginTop="5dp"
     app:cardCornerRadius="4dp"
     app:cardElevation="8dp"
-    app:cardBackgroundColor="@color/colorPrimary">
+    app:cardBackgroundColor="@color/materialParent">
 
     <TextView
         android:id="@+id/courseTitle"

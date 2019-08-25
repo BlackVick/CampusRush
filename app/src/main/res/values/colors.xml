@@ -3,6 +3,7 @@
     <color name="colorPrimary">#CC2933</color>
     <color name="colorPrimaryDark">#CC2933</color>
     <color name="colorAccent">#CC2626</color>
+    <color name="materialParent">#852323</color>
     <color name="backgroundColor">#D6F6BC</color>
     <color name="black">#ff000000</color>
     <color name="offBlack">#212121</color>

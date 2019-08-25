@@ -31,7 +31,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="BLACK VIKING SOFTWARE"
+                android:text="B.V SOFTWARE"
                 android:textSize="25sp"
                 android:textColor="@color/black"
                 android:gravity="center"
@@ -48,7 +48,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="BLACK VIKING SOFTWARE &#169; IS AN INTERNATIONAL INFORMATION TECHNOLOGY FIRM THAT SPECIALIZES IN HUMAN-MACHINE INTERACTIONS."
+                android:text="B.V SOFTWARE &#169; IS AN INTERNATIONAL INFORMATION TECHNOLOGY FIRM THAT SPECIALIZES IN HUMAN-MACHINE INTERACTIONS."
                 android:textSize="18sp"
                 android:textColor="@color/black"
                 android:gravity="center"
@@ -58,7 +58,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="WE ARE A SPECIALIZED COMMUNITY OF PASSIONATE AND INNOVATIVE INDIVIDUALS WITH A GOAL OF REVOLUTIONIZING PRODUCT DESIGN, DEVELOPMENT AND DELIVERY TO SEAMLESSLY SOLVE DAILY HUMAN PROBLEMS. \n\n\nContact us at blackvikinc@gmail.com\n\nOr\n\nvisit our website at campus-rush.web.app"
+                android:text="WE ARE A SPECIALIZED COMMUNITY OF PASSIONATE AND INNOVATIVE INDIVIDUALS WITH A GOAL OF REVOLUTIONIZING PRODUCT DESIGN, DEVELOPMENT AND DELIVERY TO SEAMLESSLY SOLVE DAILY HUMAN PROBLEMS. \n\n\nContact us at bv.softwares@gmail.com\n\nOr\n\nvisit our website at campus-rush.web.app"
                 android:textSize="16sp"
                 android:textColor="@color/black"
                 android:gravity="center"

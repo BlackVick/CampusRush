@@ -68,7 +68,7 @@ public class About extends AppCompatActivity {
         facebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String facebookUrl = "https://web.facebook.com/Black-Viking-Software-683842492059245/?modal=admin_todo_tour";
+                String facebookUrl = "https://web.facebook.com/pg/bvsoftwares/";
 
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(facebookUrl));
@@ -79,7 +79,7 @@ public class About extends AppCompatActivity {
         twitter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String twitterUrl = "https://twitter.com/BlackVikingSoft";
+                String twitterUrl = "https://twitter.com/BVSoftwares";
 
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(twitterUrl));
@@ -90,7 +90,7 @@ public class About extends AppCompatActivity {
         youtube.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String youtubeUrl = "https://www.youtube.com/channel/UCIwe7ZdMhqO3Oqf89_k0gyw?disable_polymer=true";
+                String youtubeUrl = "https://www.youtube.com/channel/UCIwe7ZdMhqO3Oqf89_k0gyw";
 
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(youtubeUrl));
