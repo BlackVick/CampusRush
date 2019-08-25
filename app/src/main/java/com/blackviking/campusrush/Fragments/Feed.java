@@ -178,31 +178,25 @@ public class Feed extends Fragment {
                 FeedModel.class,
                 R.layout.feed_item,
                 FeedViewHolder.class,
-                feedRef.limitToLast(70)
+                feedRef.limitToLast(100)
         ) {
             @Override
             protected void populateViewHolder(final FeedViewHolder viewHolder, final FeedModel model, final int position) {
 
                 if (model.getUpdateType().equalsIgnoreCase("Ad")){
 
-                    viewHolder.posterName.setVisibility(View.GONE);
-                    viewHolder.posterImage.setVisibility(View.GONE);
-                    //viewHolder.options.setVisibility(View.GONE);
-                    viewHolder.commentBtn.setVisibility(View.GONE);
-                    viewHolder.commentCount.setVisibility(View.GONE);
-                    viewHolder.likeBtn.setVisibility(View.GONE);
-                    viewHolder.likeCount.setVisibility(View.GONE);
-                    viewHolder.postTime.setVisibility(View.GONE);
+                    viewHolder.feedLayout.setVisibility(View.GONE);
+                    viewHolder.adLayout.setVisibility(View.VISIBLE);
 
                     if (!model.getImageThumbUrl().equalsIgnoreCase("")){
 
-                        viewHolder.postImage.setVisibility(View.VISIBLE);
+                        viewHolder.adImage.setVisibility(View.VISIBLE);
 
                         Picasso.with(getContext())
                                 .load(model.getImageThumbUrl())
                                 .networkPolicy(NetworkPolicy.OFFLINE)
                                 .placeholder(R.drawable.ic_new_placeholder_icon)
-                                .into(viewHolder.postImage, new Callback() {
+                                .into(viewHolder.adImage, new Callback() {
                                     @Override
                                     public void onSuccess() {
 
@@ -213,11 +207,11 @@ public class Feed extends Fragment {
                                         Picasso.with(getContext())
                                                 .load(model.getImageThumbUrl())
                                                 .placeholder(R.drawable.ic_new_placeholder_icon)
-                                                .into(viewHolder.postImage);
+                                                .into(viewHolder.adImage);
                                     }
                                 });
 
-                        viewHolder.postImage.setOnClickListener(new View.OnClickListener() {
+                        viewHolder.adImage.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 Intent adDetail = new Intent(getContext(), AdDetails.class);
@@ -230,17 +224,17 @@ public class Feed extends Fragment {
 
                     } else {
 
-                        viewHolder.postImage.setVisibility(View.GONE);
-                        viewHolder.postText.setMaxLines(7);
+                        viewHolder.adImage.setVisibility(View.GONE);
+                        viewHolder.adText.setMaxLines(7);
 
                     }
 
 
                     if (!model.getUpdate().equalsIgnoreCase("")){
 
-                        viewHolder.postText.setVisibility(View.VISIBLE);
-                        viewHolder.postText.setText(model.getUpdate());
-                        viewHolder.postText.setOnClickListener(new View.OnClickListener() {
+                        viewHolder.adText.setVisibility(View.VISIBLE);
+                        viewHolder.adText.setText(model.getUpdate());
+                        viewHolder.adText.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 Intent adDetail = new Intent(getContext(), AdDetails.class);
@@ -253,14 +247,16 @@ public class Feed extends Fragment {
 
                     } else {
 
-                        viewHolder.postText.setVisibility(View.GONE);
+                        viewHolder.adText.setVisibility(View.GONE);
 
                     }
 
                 } else {
 
-                    /*---   OPTIONS   ---*/
+                    viewHolder.feedLayout.setVisibility(View.VISIBLE);
+                    viewHolder.adLayout.setVisibility(View.GONE);
 
+                    /*---   OPTIONS   ---*/
                     final String feedId = adapter.getRef(viewHolder.getAdapterPosition()).getKey();
                     /*if (model.getRealSender().equals(currentUid)){
 

@@ -108,7 +108,7 @@ public class AdDetails extends AppCompatActivity {
 
         promoterRef.child(currentBusinessId)
                 .child(currentAdId)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
+                .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 

@@ -3,6 +3,7 @@ package com.blackviking.campusrush.ViewHolder;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.blackviking.campusrush.Interface.ItemClickListener;
@@ -20,6 +21,11 @@ public class FeedViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     public ImageView postImage, likeBtn, commentBtn; //options;
     public CircleImageView posterImage;
     public TextView posterName, postText, likeCount, commentCount, postTime;
+    public RelativeLayout feedLayout;
+
+    public RelativeLayout adLayout;
+    public ImageView adImage;
+    public TextView adText;
 
     public FeedViewHolder(View itemView) {
         super(itemView);
@@ -34,6 +40,13 @@ public class FeedViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         likeCount = (TextView)itemView.findViewById(R.id.likeCount);
         commentCount = (TextView)itemView.findViewById(R.id.commentCount);
         postTime = (TextView)itemView.findViewById(R.id.postTime);
+        feedLayout = (RelativeLayout)itemView.findViewById(R.id.feedLayout);
+
+        adLayout = (RelativeLayout)itemView.findViewById(R.id.adLayout);
+        adImage = (ImageView)itemView.findViewById(R.id.adImage);
+        adText = (TextView)itemView.findViewById(R.id.adText);
+
+
 
     }
 

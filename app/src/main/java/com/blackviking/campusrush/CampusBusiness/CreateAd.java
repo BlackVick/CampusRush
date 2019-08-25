@@ -421,7 +421,6 @@ public class CreateAd extends AppCompatActivity {
 
             Uri theUri = imageUri;
             CropImage.activity(imageUri)
-                    .setAspectRatio(2,1)
                     .start(CreateAd.this);
 
         }
@@ -432,7 +431,6 @@ public class CreateAd extends AppCompatActivity {
                 imageUri = data.getData();
 
                 CropImage.activity(imageUri)
-                        .setAspectRatio(2,1)
                         .start(CreateAd.this);
             }
 
